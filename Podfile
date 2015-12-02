@@ -1,0 +1,10 @@
+platform :ios, '7.0'
+
+pod 'AFNetworking','~> 2.6.1'
+pod 'Masonry', '~> 0.6.3'
+pod 'SDWebImage', '~> 3.7.3'
+pod 'OpenSSL', '~> 1.0.204.1'
+pod 'Aspects','~>1.4.1'
+pod 'RESideMenu', '~> 4.0.7'
+pod 'BlocksKit', '~> 2.2.5'
+pod 'TSMessages', '~> 0.9.12'
