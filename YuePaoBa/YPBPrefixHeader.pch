@@ -12,14 +12,21 @@
 // Include any system framework and library headers here that should be included in all compilation units.
 // You will also need to set the Prefix Header build setting of one or more of your targets to reference this file.
 
+#import <objc/runtime.h>
 #import <Aspects.h>
 #import <Masonry.h>
 #import <RESideMenu.h>
+#import <BlocksKit.h>
+#import <BlocksKit+UIKit.h>
+#import <UIImageView+WebCache.h>
+#import <UIImage+ImageWithColor.h>
+#import <MJRefresh.h>
+#import "YPBConfig.h"
+#import "YPBCommonDef.h"
+#import "YPBErrorDef.h"
 #import "YPBExtensions.h"
-
-#define CONTENT_VIEW_OFFSET_CENTERX      (50.0)
-
-#define RGB(rgb)    [UIColor colorWithHexString:@#rgb]
-#define RGBA(rgb,a) [UIColor colorWithHexString:@#rgb alpha:a]
+#import "YPBUtil.h"
+#import "YPBMessageCenter.h"
+#import "YPBUser.h"
 
 #endif /* YPBPrefixHeader_pch */

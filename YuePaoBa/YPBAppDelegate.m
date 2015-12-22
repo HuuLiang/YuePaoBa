@@ -7,8 +7,14 @@
 //
 
 #import "YPBAppDelegate.h"
-#import "YPBHomeViewController.h"
 #import "YPBSideMenuViewController.h"
+#import "YPBHomeViewController.h"
+#import "YPBVIPCenterViewController.h"
+#import "YPBMessageViewController.h"
+#import "YPBMineViewController.h"
+#import "YPBSettingViewController.h"
+#import "YPBLoginViewController.h"
+#import "YPBActivateModel.h"
 
 @interface YPBAppDelegate ()
 
@@ -23,27 +29,50 @@
     
     _window                              = [[UIWindow alloc] initWithFrame:[UIScreen mainScreen].bounds];
     _window.backgroundColor              = [UIColor whiteColor];
+//    _window.rootViewController           = [self setupRootViewController];
+    return _window;
+}
+
+- (UIViewController *)setupRootViewController {
+    YPBMineViewController *mineVC = [[YPBMineViewController alloc] initWithTitle:@"个人资料"];
+    UINavigationController *mineNav = [[UINavigationController alloc] initWithRootViewController:mineVC];
+    mineNav.sideMenuItem = [YPBSideMenuItem itemWithTitle:nil image:nil delegate:mineVC];
     
-    YPBHomeViewController *homeVC = [[YPBHomeViewController alloc] init];
+    YPBHomeViewController *homeVC = [[YPBHomeViewController alloc] initWithTitle:@"今日推荐"];
     UINavigationController *homeNav = [[UINavigationController alloc] initWithRootViewController:homeVC];
+    homeNav.sideMenuItem = [YPBSideMenuItem itemWithTitle:homeVC.title image:[UIImage imageNamed:@"side_menu_hot_icon"]];
     
-    YPBSideMenuViewController *sideMenuVC = [[YPBSideMenuViewController alloc] init];
+    YPBVIPCenterViewController *vipCenterVC = [[YPBVIPCenterViewController alloc] initWithTitle:@"VIP服务区"];
+    UINavigationController *vipCenterNav = [[UINavigationController alloc] initWithRootViewController:vipCenterVC];
+    vipCenterNav.sideMenuItem = [YPBSideMenuItem itemWithTitle:vipCenterVC.title image:[UIImage imageNamed:@"side_menu_vip_icon"]];
+    
+    YPBMessageViewController *messageVC = [[YPBMessageViewController alloc] initWithTitle:@"私密聊"];
+    UINavigationController *messageNav = [[UINavigationController alloc] initWithRootViewController:messageVC];
+    messageNav.sideMenuItem = [YPBSideMenuItem itemWithTitle:messageVC.title image:[UIImage imageNamed:@"side_menu_message_icon"]];
+    
+    YPBSettingViewController *settingVC = [[YPBSettingViewController alloc] initWithTitle:@"设置"];
+    UINavigationController *settingNav = [[UINavigationController alloc] initWithRootViewController:settingVC];
+    settingNav.sideMenuItem = [YPBSideMenuItem itemWithTitle:settingVC.title image:[UIImage imageNamed:@"side_menu_setting_icon"]];
+    
+    
+    YPBSideMenuViewController *sideMenuVC = [[YPBSideMenuViewController alloc] initWithViewControllers:@[mineNav,homeNav,vipCenterNav,messageNav,settingNav]];
+    
     RESideMenu *sideMenu = [[RESideMenu alloc] initWithContentViewController:homeNav
                                                       leftMenuViewController:sideMenuVC
                                                      rightMenuViewController:nil];
     sideMenu.delegate = sideMenuVC;
-    //sideMenu.scaleContentView = NO;
-    //sideMenu.scaleBackgroundImageView = NO;
-    //sideMenu.scaleMenuView = NO;
+    sideMenu.scaleContentView = NO;
+    sideMenu.scaleBackgroundImageView = NO;
+    sideMenu.scaleMenuView = YES;
     //sideMenu.fadeMenuView = NO;
     sideMenu.parallaxEnabled = NO;
     sideMenu.bouncesHorizontally = NO;
     sideMenu.contentViewShadowEnabled = YES;
-    sideMenu.contentViewShadowOffset = CGSizeMake(3.0f, 0.0f);
-    sideMenu.contentViewShadowOpacity = 0.8f;
+    sideMenu.contentViewShadowOffset = CGSizeMake(2.0, 0.0f);
+    sideMenu.contentViewShadowOpacity = 0.8;
+    sideMenu.contentViewShadowColor = [UIColor whiteColor];
     sideMenu.contentViewInPortraitOffsetCenterX = CONTENT_VIEW_OFFSET_CENTERX;
-    _window.rootViewController = sideMenu;
-    return _window;
+    return sideMenu;
 }
 
 - (void)setupCommonStyles {
@@ -52,9 +81,12 @@
                                usingBlock:^(id<AspectInfo> aspectInfo){
                                    UIViewController *thisVC = [aspectInfo instance];
                                    thisVC.navigationController.navigationBar.translucent = NO;
-                                   thisVC.navigationController.navigationBar.barTintColor = RGB(#ff6666);
+                                   thisVC.navigationController.navigationBar.barTintColor = [UIColor colorWithHexString:@"#ff6666"];
                                    thisVC.navigationController.navigationBar.titleTextAttributes = @{NSFontAttributeName:[UIFont boldSystemFontOfSize:20.],
                                                                                                    NSForegroundColorAttributeName:[UIColor whiteColor]};
+                                   thisVC.navigationController.navigationBar.tintColor = [UIColor whiteColor];
+                                   thisVC.navigationItem.backBarButtonItem = [[UIBarButtonItem alloc] bk_initWithTitle:@"返回" style:UIBarButtonItemStylePlain handler:nil];
+                                   
                                } error:nil];
     
     [UINavigationController aspect_hookSelector:@selector(preferredStatusBarStyle)
@@ -74,8 +106,24 @@
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     // Override point for customization after application launch.
+    [[YPBErrorHandler sharedHandler] initialize];
     [self setupCommonStyles];
+
+    if ([[YPBUser currentUser] isRegistered]) {
+        self.window.rootViewController = [self setupRootViewController];
+    } else {
+        YPBLoginViewController *loginVC = [[YPBLoginViewController alloc] init];
+        self.window.rootViewController = loginVC;
+    }
     [self.window makeKeyAndVisible];
+    
+    if (![YPBUtil activationId]) {
+        [[YPBActivateModel sharedModel] requestActivationWithCompletionHandler:^(BOOL success, id obj) {
+            if (success) {
+                [YPBUtil setActivationId:obj];
+            }
+        }];
+    }
     return YES;
 }
 
@@ -101,4 +149,7 @@
     // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
 }
 
+- (void)notifyRegisterSuccessfully {
+    self.window.rootViewController = [self setupRootViewController];
+}
 @end

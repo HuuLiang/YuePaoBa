@@ -1,0 +1,51 @@
+//
+//  YPBMessageCenter.m
+//  YuePaoBa
+//
+//  Created by Sean Yue on 15/12/15.
+//  Copyright © 2015年 iqu8. All rights reserved.
+//
+
+#import "YPBMessageCenter.h"
+#import <TSMessage.h>
+
+@implementation YPBMessageCenter
+
++ (instancetype)defaultCenter {
+    static YPBMessageCenter *_defaultCenter;
+    static dispatch_once_t onceToken;
+    dispatch_once(&onceToken, ^{
+        _defaultCenter = [[self alloc] init];
+    });
+    return _defaultCenter;
+}
+
+- (UIViewController *)currentViewController {
+    UIViewController *viewController = [UIApplication sharedApplication].keyWindow.rootViewController;
+    if (viewController.presentedViewController) {
+        return viewController.presentedViewController;
+    } else {
+        return viewController;
+    }
+}
+
+- (void)showMessageWithTitle:(NSString *)title subtitle:(NSString *)subtitle {
+    [TSMessage showNotificationInViewController:[self currentViewController] title:title subtitle:subtitle type:TSMessageNotificationTypeMessage];
+}
+
+- (void)showWarningWithTitle:(NSString *)title subtitle:(NSString *)subtitle {
+    [TSMessage showNotificationInViewController:[self currentViewController] title:title subtitle:subtitle type:TSMessageNotificationTypeWarning];
+}
+
+- (void)showErrorWithTitle:(NSString *)title subtitle:(NSString *)subtitle {
+    [TSMessage showNotificationInViewController:[self currentViewController] title:title subtitle:subtitle type:TSMessageNotificationTypeError];
+}
+
+- (void)showSuccessWithTitle:(NSString *)title subtitle:(NSString *)subtitle {
+    [TSMessage showNotificationInViewController:[self currentViewController] title:title subtitle:subtitle type:TSMessageNotificationTypeSuccess];
+}
+
+- (void)dismissMessageWithCompletion:(void (^)(void))completion {
+    [TSMessage dismissActiveNotificationWithCompletion:completion];
+}
+@end

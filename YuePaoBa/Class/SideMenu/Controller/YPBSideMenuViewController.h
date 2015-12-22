@@ -10,4 +10,8 @@
 
 @interface YPBSideMenuViewController : YPBBaseViewController <RESideMenuDelegate>
 
+@property (nonatomic,retain,readonly) NSArray<UIViewController *> *viewControllers;
+
+- (instancetype)initWithViewControllers:(NSArray<UIViewController *> *)viewControllers;
+
 @end
