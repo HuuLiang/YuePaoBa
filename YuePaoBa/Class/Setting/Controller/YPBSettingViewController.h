@@ -6,8 +6,8 @@
 //  Copyright © 2015年 iqu8. All rights reserved.
 //
 
-#import "YPBBaseViewController.h"
+#import "YPBLayoutViewController.h"
 
-@interface YPBSettingViewController : YPBBaseViewController
+@interface YPBSettingViewController : YPBLayoutViewController
 
 @end

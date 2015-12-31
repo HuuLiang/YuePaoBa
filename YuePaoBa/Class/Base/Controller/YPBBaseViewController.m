@@ -45,12 +45,11 @@
 }
 
 - (void)dealloc {
-    NSLog(@"%@ dealloc\n", [self class]);
+    DLog(@"%@ dealloc\n", [self class]);
 }
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
 }
-
 @end

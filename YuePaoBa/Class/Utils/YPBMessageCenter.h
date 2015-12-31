@@ -20,6 +20,10 @@
 
 - (void)dismissMessageWithCompletion:(void (^)(void))completion;
 
+- (void)showProgressWithTitle:(NSString *)title subtitle:(NSString *)subtitle;
+- (void)proceedProgressWithPercent:(double)percent;
+- (void)hideProgress;
+
 @end
 
 #define YPBShowMessage(_title,_subtitle) [[YPBMessageCenter defaultCenter] showMessageWithTitle:_title subtitle:_subtitle]

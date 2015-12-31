@@ -31,16 +31,40 @@ return _##propertyName; \
 
 #define kScreenWidth [UIScreen mainScreen].bounds.size.width
 #define kScreenHeight [UIScreen mainScreen].bounds.size.height
+#define kDefaultTextColor [UIColor colorWithWhite:0.5 alpha:1]
+#define kDefaultBackgroundColor [UIColor colorWithWhite:0.97 alpha:1]
+#define kDefaultCellHeight   (kScreenHeight * 0.08)
+#define kDefaultDateFormat   @"yyyyMMddHHmmss"
 
 #define CONTENT_VIEW_OFFSET_CENTERX (kScreenWidth/4)
 
-#define kUserInfoKeyName     @"yuepaoba_userinfo_keyname"
-#define kUserIDKeyName       @"yuepaoba_userid_keyname"
-#define kUserGenderKeyName   @"yuepaoba_usergender_keyname"
-#define kUserNicknameKeyName @"yuepaoba_usernickname_keyname"
-#define kUserTargetHeightRangeKeyName @"yuepaoba_usertargetheighrange_keyname"
-#define kUserTargetAgeRangeKeyName    @"yuepaoba_usertargetagerange_keyname"
-#define kUserTargetCupKeyName         @"yuepaoba_usertargetcup_keyname"
+#define kUserInfoKeyName                @"yuepaoba_userinfo_keyname"
+#define kUserIDKeyName                  @"yuepaoba_userid_keyname"
+#define kUserGenderKeyName              @"yuepaoba_usergender_keyname"
+#define kUserNicknameKeyName            @"yuepaoba_usernickname_keyname"
+#define kUserLogoKeyName                @"yuepaoba_userlogo_keyname"
+#define kUserAgeKeyName                 @"yuepaoba_userage_keyname"
+#define kUserHeightKeyName              @"yuepaoba_userheight_keyname"
+#define kUserFigureKeyName              @"yuepaoba_userfigure_keyname"
+#define kUserIncomeKeyName              @"yuepaoba_userincome_keyname"
+#define kUserInterestKeyName            @"yuepaoba_userinterest_keyname"
+#define kUserProfessionKeyName          @"yuepaoba_userprofession_keyname"
+#define kUserWeChatKeyName              @"yuepaoba_userwechat_keyname"
+#define kUserAssetsKeyName              @"yuepaoba_userassets_keyname"
+
+#define kUserIsMemberKeyName            @"yuepaoba_userismember_keyname"
+#define kUserIsVIPKeyName               @"yuepaoba_userisvip_keyname"
+
+#define kUserMemberEndTimeKeyName       @"yuepaoba_usermemberendtime_keyname"
+#define kUserVIPEndTimeKeyName          @"yuepaoba_uservipendtime_keyname"
+
+#define kUserGreetCountKeyName          @"yuepaoba_usergreetcount_keyname"
+#define kUserReceiveGreetCountKeyName   @"yuepaoba_userreceivegreetcount_keyname"
+#define kUserAccessCountKeyName         @"yuepaoba_useraccesscount_keyname"
+
+#define kUserTargetHeightRangeKeyName   @"yuepaoba_usertargetheighrange_keyname"
+#define kUserTargetAgeRangeKeyName      @"yuepaoba_usertargetagerange_keyname"
+#define kUserTargetCupKeyName           @"yuepaoba_usertargetcup_keyname"
 
 #define kCurrentUserChangeNotification @"yuepaoba_current_user_change_notification"
 
@@ -53,11 +77,12 @@ typedef struct _YPBFloatRange {
     CGFloat min;
     CGFloat max;
 } YPBFloatRange;
-
+ 
 #define SWAP(A,B) { typeof(A) temp = A; A = B; B = temp; }
 
 typedef NSArray YPBPair;
 
+typedef void (^YPBProgressHandler)(double progress);
 typedef void (^YPBCompletionHandler)(BOOL success, id obj);
-
+typedef void (^YPBAction)(id obj);
 #endif /* YPBCommonDef_h */

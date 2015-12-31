@@ -7,8 +7,10 @@
 //
 
 #import "UIView+Loading.h"
+#import <MBProgressHUD.h>
 
 static const void *kUILoadingViewAssociatedKey = &kUILoadingViewAssociatedKey;
+static const void *kUIProgressingViewAssociatedKey = &kUIProgressingViewAssociatedKey;
 
 @implementation UIView (Loading)
 
@@ -34,6 +36,20 @@ static const void *kUILoadingViewAssociatedKey = &kUILoadingViewAssociatedKey;
     return loadingView;
 }
 
+- (UIView *)progressingView {
+    UIView *progressingView = objc_getAssociatedObject(self, kUIProgressingViewAssociatedKey);
+    if (progressingView) {
+        return progressingView;
+    }
+    
+    MBProgressHUD *progressHud = [[MBProgressHUD alloc] initWithView:self];
+    objc_setAssociatedObject(self, kUIProgressingViewAssociatedKey, progressHud, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
+
+    progressHud.mode = MBProgressHUDModeDeterminate;
+    [self addSubview:progressHud];
+    return progressHud;
+}
+
 - (void)beginLoading {
     if ([self.subviews containsObject:self.loadingView]) {
         return ;
@@ -51,5 +67,22 @@ static const void *kUILoadingViewAssociatedKey = &kUILoadingViewAssociatedKey;
     if ([self.subviews containsObject:self.loadingView]) {
         [self.loadingView removeFromSuperview];
     }
+}
+
+- (void)beginProgressingWithTitle:(NSString *)title subtitle:(NSString *)subtitle {
+    MBProgressHUD *progressHud = (MBProgressHUD *)self.progressingView;
+    progressHud.labelText = title;
+    progressHud.detailsLabelText = subtitle;
+    [progressHud show:YES];
+}
+
+- (void)progressWithPercent:(double)percent {
+    MBProgressHUD *progressHud = (MBProgressHUD *)self.progressingView;
+    progressHud.progress = percent;
+}
+
+- (void)endProgressing {
+    MBProgressHUD *progressHud = (MBProgressHUD *)self.progressingView;
+    [progressHud hide:YES];
 }
 @end

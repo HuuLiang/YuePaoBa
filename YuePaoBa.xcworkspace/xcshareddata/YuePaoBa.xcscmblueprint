@@ -1,0 +1,30 @@
+{
+  "DVTSourceControlWorkspaceBlueprintPrimaryRemoteRepositoryKey" : "037B248F9488341ACBA0362FFA92D5366CE8AB42",
+  "DVTSourceControlWorkspaceBlueprintWorkingCopyRepositoryLocationsKey" : {
+
+  },
+  "DVTSourceControlWorkspaceBlueprintWorkingCopyStatesKey" : {
+    "037B248F9488341ACBA0362FFA92D5366CE8AB42" : 0,
+    "D8CF8AE960BB6DE80D5FC54CEEF5CA61FD3ADB74" : 0
+  },
+  "DVTSourceControlWorkspaceBlueprintIdentifierKey" : "1291C2D7-58C4-4244-9B2A-AB7E32B39BFD",
+  "DVTSourceControlWorkspaceBlueprintWorkingCopyPathsKey" : {
+    "037B248F9488341ACBA0362FFA92D5366CE8AB42" : "YuePaoBa\/",
+    "D8CF8AE960BB6DE80D5FC54CEEF5CA61FD3ADB74" : "kuaibovideo\/"
+  },
+  "DVTSourceControlWorkspaceBlueprintNameKey" : "YuePaoBa",
+  "DVTSourceControlWorkspaceBlueprintVersion" : 204,
+  "DVTSourceControlWorkspaceBlueprintRelativePathToProjectKey" : "YuePaoBa.xcworkspace",
+  "DVTSourceControlWorkspaceBlueprintRemoteRepositoriesKey" : [
+    {
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryURLKey" : "git.coding.net:seanyue\/YuePaoBa.git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositorySystemKey" : "com.apple.dt.Xcode.sourcecontrol.Git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryIdentifierKey" : "037B248F9488341ACBA0362FFA92D5366CE8AB42"
+    },
+    {
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryURLKey" : "git.coding.net:seanyue\/kuaibov.git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositorySystemKey" : "com.apple.dt.Xcode.sourcecontrol.Git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryIdentifierKey" : "D8CF8AE960BB6DE80D5FC54CEEF5CA61FD3ADB74"
+    }
+  ]
+}

@@ -10,7 +10,7 @@
 #import "YPBActionButton.h"
 #import <ActionSheetStringPicker.h>
 #import <ActionSheetMultipleStringPicker.h>
-#import "YPBUser+Helper.h"
+#import "YPBUser+Account.h"
 #import "YPBRegisterModel.h"
 
 @interface YPBReigsterSecondViewController ()

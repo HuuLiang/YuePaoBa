@@ -14,7 +14,6 @@
 		BC1654CD1C252E9E00AB1F33 /* YPBActivateModel.m in Sources */ = {isa = PBXBuildFile; fileRef = BC1654CC1C252E9E00AB1F33 /* YPBActivateModel.m */; };
 		BC1A2D821C0EF909003D9138 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = BC1A2D811C0EF909003D9138 /* main.m */; };
 		BC1A2D8D1C0EF909003D9138 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = BC1A2D8C1C0EF909003D9138 /* Assets.xcassets */; };
-		BC1A2D901C0EF909003D9138 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = BC1A2D8E1C0EF909003D9138 /* LaunchScreen.storyboard */; };
 		BC1A2D9B1C0EF909003D9138 /* YuePaoBaTests.m in Sources */ = {isa = PBXBuildFile; fileRef = BC1A2D9A1C0EF909003D9138 /* YuePaoBaTests.m */; };
 		BC1A2DA61C0EF909003D9138 /* YuePaoBaUITests.m in Sources */ = {isa = PBXBuildFile; fileRef = BC1A2DA51C0EF909003D9138 /* YuePaoBaUITests.m */; };
 		BC1A2DB51C0EFA4C003D9138 /* YPBAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = BC1A2DB41C0EFA4C003D9138 /* YPBAppDelegate.m */; };
@@ -28,6 +27,9 @@
 		BC1AED561C0F59B6003A0C63 /* YPBVIPCenterViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BC1AED551C0F59B6003A0C63 /* YPBVIPCenterViewController.m */; };
 		BC1AED5B1C0F5A43003A0C63 /* YPBMessageViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BC1AED5A1C0F5A43003A0C63 /* YPBMessageViewController.m */; };
 		BC1AED601C0F5A8B003A0C63 /* YPBSettingViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BC1AED5F1C0F5A8B003A0C63 /* YPBSettingViewController.m */; };
+		BC1BA6021C35612000DBE0D8 /* YPBUserAvatarUpdateModel.m in Sources */ = {isa = PBXBuildFile; fileRef = BC1BA6011C35612000DBE0D8 /* YPBUserAvatarUpdateModel.m */; };
+		BC1F28211C2A404B00C2B476 /* YPBTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = BC1F28201C2A404B00C2B476 /* YPBTableViewCell.m */; };
+		BC2ED5AB1C33C5FF00BE00A2 /* YPBUserDetailUpdateModel.m in Sources */ = {isa = PBXBuildFile; fileRef = BC2ED5AA1C33C5FF00BE00A2 /* YPBUserDetailUpdateModel.m */; };
 		BC303D8E1C1FE8F70091093B /* YPBMessageCenter.m in Sources */ = {isa = PBXBuildFile; fileRef = BC303D8D1C1FE8F70091093B /* YPBMessageCenter.m */; };
 		BC31B75B1C1B2F540043E7EB /* YPBRegisterFirstViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BC31B7581C1B2F540043E7EB /* YPBRegisterFirstViewController.m */; };
 		BC31B75C1C1B2F540043E7EB /* YPBReigsterSecondViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BC31B75A1C1B2F540043E7EB /* YPBReigsterSecondViewController.m */; };
@@ -38,22 +40,40 @@
 		BC50CE121C28EE0F00CE88DD /* YPBHomeCollectionViewLayout.m in Sources */ = {isa = PBXBuildFile; fileRef = BC50CE111C28EE0F00CE88DD /* YPBHomeCollectionViewLayout.m */; };
 		BC50CE151C28F88C00CE88DD /* UIScrollView+Refresh.m in Sources */ = {isa = PBXBuildFile; fileRef = BC50CE141C28F88C00CE88DD /* UIScrollView+Refresh.m */; };
 		BC50CE191C2915A300CE88DD /* YPBHomeCell.m in Sources */ = {isa = PBXBuildFile; fileRef = BC50CE181C2915A300CE88DD /* YPBHomeCell.m */; };
-		BC50CE1C1C29365D00CE88DD /* YPBReceivedGreetingViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BC50CE1B1C29365D00CE88DD /* YPBReceivedGreetingViewController.m */; };
-		BC50CE1F1C29385A00CE88DD /* YPBGreetingUserCell.m in Sources */ = {isa = PBXBuildFile; fileRef = BC50CE1E1C29385A00CE88DD /* YPBGreetingUserCell.m */; };
-		BC50CE221C2939A600CE88DD /* YPBSentGreetingViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BC50CE211C2939A600CE88DD /* YPBSentGreetingViewController.m */; };
-		BC50CE251C2939EF00CE88DD /* YPBAccessedViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BC50CE241C2939EF00CE88DD /* YPBAccessedViewController.m */; };
 		BC50CE321C2954FF00CE88DD /* YPBUser.m in Sources */ = {isa = PBXBuildFile; fileRef = BC50CE2F1C2954FF00CE88DD /* YPBUser.m */; };
 		BC50CE331C2954FF00CE88DD /* YPBUserDetailModel.m in Sources */ = {isa = PBXBuildFile; fileRef = BC50CE311C2954FF00CE88DD /* YPBUserDetailModel.m */; };
 		BC50CE3A1C29552100CE88DD /* YPBEncryptedURLRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = BC50CE351C29552100CE88DD /* YPBEncryptedURLRequest.m */; };
 		BC50CE3B1C29552100CE88DD /* YPBURLRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = BC50CE371C29552100CE88DD /* YPBURLRequest.m */; };
 		BC50CE3C1C29552100CE88DD /* YPBURLResponse.m in Sources */ = {isa = PBXBuildFile; fileRef = BC50CE391C29552100CE88DD /* YPBURLResponse.m */; };
 		BC50CE401C29556300CE88DD /* YPBUserDetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BC50CE3F1C29556300CE88DD /* YPBUserDetailViewController.m */; };
+		BC50CE441C29565400CE88DD /* YPBUserProfileCell.m in Sources */ = {isa = PBXBuildFile; fileRef = BC50CE431C29565400CE88DD /* YPBUserProfileCell.m */; };
+		BC50CE4A1C297BB400CE88DD /* YPBUserAccessModel.m in Sources */ = {isa = PBXBuildFile; fileRef = BC50CE491C297BB400CE88DD /* YPBUserAccessModel.m */; };
+		BC5222851C29A7DA00C8333C /* YPBVIPPriviledgeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BC5222841C29A7DA00C8333C /* YPBVIPPriviledgeViewController.m */; };
 		BC5874681C279A4900A72274 /* YPBErrorHandler.m in Sources */ = {isa = PBXBuildFile; fileRef = BC5874671C279A4900A72274 /* YPBErrorHandler.m */; };
 		BC58746B1C27CB8700A72274 /* YPBRegisterModel.m in Sources */ = {isa = PBXBuildFile; fileRef = BC58746A1C27CB8700A72274 /* YPBRegisterModel.m */; };
 		BC58746E1C27FE2F00A72274 /* UIView+Loading.m in Sources */ = {isa = PBXBuildFile; fileRef = BC58746D1C27FE2F00A72274 /* UIView+Loading.m */; };
 		BC5874721C281A6700A72274 /* YPBUserListModel.m in Sources */ = {isa = PBXBuildFile; fileRef = BC5874711C281A6700A72274 /* YPBUserListModel.m */; };
 		BC5874751C281E9300A72274 /* YPBPaginator.m in Sources */ = {isa = PBXBuildFile; fileRef = BC5874741C281E9300A72274 /* YPBPaginator.m */; };
-		BC6D58D71C228E4A001C2DB1 /* YPBUser+Helper.m in Sources */ = {isa = PBXBuildFile; fileRef = BC6D58D61C228E4A001C2DB1 /* YPBUser+Helper.m */; };
+		BC5980A61C3130B80037D98C /* YPBPhotoGridViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BC5980A51C3130B80037D98C /* YPBPhotoGridViewController.m */; };
+		BC5980A91C313D5E0037D98C /* YPBPhotoBrowser.m in Sources */ = {isa = PBXBuildFile; fileRef = BC5980A81C313D5E0037D98C /* YPBPhotoBrowser.m */; };
+		BC5A6E6C1C32561F006AD77A /* YPBMineFigureViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BC5A6E6B1C32561F006AD77A /* YPBMineFigureViewController.m */; };
+		BC5F1AB61C2CF3DB0047BCF4 /* YPBUser+Account.m in Sources */ = {isa = PBXBuildFile; fileRef = BC5F1AB51C2CF3DB0047BCF4 /* YPBUser+Account.m */; };
+		BC5F1AB91C2CF42D0047BCF4 /* YPBUser+Mine.m in Sources */ = {isa = PBXBuildFile; fileRef = BC5F1AB81C2CF42D0047BCF4 /* YPBUser+Mine.m */; };
+		BC652B811C2B992100951DEA /* YPBUserPhotoBar.m in Sources */ = {isa = PBXBuildFile; fileRef = BC652B801C2B992100951DEA /* YPBUserPhotoBar.m */; };
+		BC652B841C2BB9BA00951DEA /* YPBEditMineDetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BC652B831C2BB9BA00951DEA /* YPBEditMineDetailViewController.m */; };
+		BC652B871C2BD5D800951DEA /* UITableView+Separator.m in Sources */ = {isa = PBXBuildFile; fileRef = BC652B861C2BD5D800951DEA /* UITableView+Separator.m */; };
+		BC652B8A1C2BD9B300951DEA /* YPBInputTextViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BC652B891C2BD9B300951DEA /* YPBInputTextViewController.m */; };
+		BC652B8D1C2BF8DE00951DEA /* YPBTextField.m in Sources */ = {isa = PBXBuildFile; fileRef = BC652B8C1C2BF8DE00951DEA /* YPBTextField.m */; };
+		BC6B747B1C34F5A90052777E /* YPBUserAccessQueryModel.m in Sources */ = {isa = PBXBuildFile; fileRef = BC6B747A1C34F5A90052777E /* YPBUserAccessQueryModel.m */; };
+		BC6B747E1C34F9840052777E /* YPBUserGreet.m in Sources */ = {isa = PBXBuildFile; fileRef = BC6B747D1C34F9840052777E /* YPBUserGreet.m */; };
+		BC6B74811C34FBA10052777E /* YPBMineGreetingCell.m in Sources */ = {isa = PBXBuildFile; fileRef = BC6B74801C34FBA10052777E /* YPBMineGreetingCell.m */; };
+		BC6B74841C34FCEB0052777E /* YPBMineAccessViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BC6B74831C34FCEB0052777E /* YPBMineAccessViewController.m */; };
+		BC6B74871C350ED50052777E /* YPBUploadManager.m in Sources */ = {isa = PBXBuildFile; fileRef = BC6B74861C350ED50052777E /* YPBUploadManager.m */; };
+		BC6B748A1C351AF20052777E /* NSDate+Utilities.m in Sources */ = {isa = PBXBuildFile; fileRef = BC6B74891C351AF20052777E /* NSDate+Utilities.m */; };
+		BC6B74961C3539F10052777E /* QiniuToken.m in Sources */ = {isa = PBXBuildFile; fileRef = BC6B748D1C3539F10052777E /* QiniuToken.m */; };
+		BC6B74971C3539F10052777E /* GTMBase64.m in Sources */ = {isa = PBXBuildFile; fileRef = BC6B748F1C3539F10052777E /* GTMBase64.m */; };
+		BC6B74981C3539F10052777E /* QiniuFile.m in Sources */ = {isa = PBXBuildFile; fileRef = BC6B74921C3539F10052777E /* QiniuFile.m */; };
+		BC6B74991C3539F10052777E /* QiniuUploader.m in Sources */ = {isa = PBXBuildFile; fileRef = BC6B74951C3539F10052777E /* QiniuUploader.m */; };
 		BC6D58DA1C22A07F001C2DB1 /* YPBMineProfileCell.m in Sources */ = {isa = PBXBuildFile; fileRef = BC6D58D91C22A07F001C2DB1 /* YPBMineProfileCell.m */; };
 		BC6D58DD1C22A877001C2DB1 /* YPBProfileActionButton.m in Sources */ = {isa = PBXBuildFile; fileRef = BC6D58DC1C22A877001C2DB1 /* YPBProfileActionButton.m */; };
 		BC7114A51C1AC3CA00C5001A /* YPBBaseViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BC7114A41C1AC3CA00C5001A /* YPBBaseViewController.m */; };
@@ -96,7 +116,6 @@
 		BC1A2D7D1C0EF909003D9138 /* YuePaoBa.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = YuePaoBa.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		BC1A2D811C0EF909003D9138 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		BC1A2D8C1C0EF909003D9138 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
-		BC1A2D8F1C0EF909003D9138 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		BC1A2D911C0EF909003D9138 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		BC1A2D961C0EF909003D9138 /* YuePaoBaTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = YuePaoBaTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		BC1A2D9A1C0EF909003D9138 /* YuePaoBaTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = YuePaoBaTests.m; sourceTree = "<group>"; };
@@ -128,6 +147,12 @@
 		BC1AED5A1C0F5A43003A0C63 /* YPBMessageViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YPBMessageViewController.m; sourceTree = "<group>"; };
 		BC1AED5E1C0F5A8B003A0C63 /* YPBSettingViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YPBSettingViewController.h; sourceTree = "<group>"; };
 		BC1AED5F1C0F5A8B003A0C63 /* YPBSettingViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YPBSettingViewController.m; sourceTree = "<group>"; };
+		BC1BA6001C35612000DBE0D8 /* YPBUserAvatarUpdateModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YPBUserAvatarUpdateModel.h; sourceTree = "<group>"; };
+		BC1BA6011C35612000DBE0D8 /* YPBUserAvatarUpdateModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YPBUserAvatarUpdateModel.m; sourceTree = "<group>"; };
+		BC1F281F1C2A404B00C2B476 /* YPBTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YPBTableViewCell.h; sourceTree = "<group>"; };
+		BC1F28201C2A404B00C2B476 /* YPBTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YPBTableViewCell.m; sourceTree = "<group>"; };
+		BC2ED5A91C33C5FF00BE00A2 /* YPBUserDetailUpdateModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YPBUserDetailUpdateModel.h; sourceTree = "<group>"; };
+		BC2ED5AA1C33C5FF00BE00A2 /* YPBUserDetailUpdateModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YPBUserDetailUpdateModel.m; sourceTree = "<group>"; };
 		BC303D8B1C1FE7110091093B /* YPBErrorDef.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = YPBErrorDef.h; sourceTree = "<group>"; };
 		BC303D8C1C1FE8F70091093B /* YPBMessageCenter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YPBMessageCenter.h; sourceTree = "<group>"; };
 		BC303D8D1C1FE8F70091093B /* YPBMessageCenter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YPBMessageCenter.m; sourceTree = "<group>"; };
@@ -149,14 +174,6 @@
 		BC50CE141C28F88C00CE88DD /* UIScrollView+Refresh.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIScrollView+Refresh.m"; sourceTree = "<group>"; };
 		BC50CE171C2915A300CE88DD /* YPBHomeCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YPBHomeCell.h; sourceTree = "<group>"; };
 		BC50CE181C2915A300CE88DD /* YPBHomeCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YPBHomeCell.m; sourceTree = "<group>"; };
-		BC50CE1A1C29365D00CE88DD /* YPBReceivedGreetingViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YPBReceivedGreetingViewController.h; sourceTree = "<group>"; };
-		BC50CE1B1C29365D00CE88DD /* YPBReceivedGreetingViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YPBReceivedGreetingViewController.m; sourceTree = "<group>"; };
-		BC50CE1D1C29385A00CE88DD /* YPBGreetingUserCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YPBGreetingUserCell.h; sourceTree = "<group>"; };
-		BC50CE1E1C29385A00CE88DD /* YPBGreetingUserCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YPBGreetingUserCell.m; sourceTree = "<group>"; };
-		BC50CE201C2939A600CE88DD /* YPBSentGreetingViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YPBSentGreetingViewController.h; sourceTree = "<group>"; };
-		BC50CE211C2939A600CE88DD /* YPBSentGreetingViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YPBSentGreetingViewController.m; sourceTree = "<group>"; };
-		BC50CE231C2939EF00CE88DD /* YPBAccessedViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YPBAccessedViewController.h; sourceTree = "<group>"; };
-		BC50CE241C2939EF00CE88DD /* YPBAccessedViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YPBAccessedViewController.m; sourceTree = "<group>"; };
 		BC50CE2E1C2954FF00CE88DD /* YPBUser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YPBUser.h; sourceTree = "<group>"; };
 		BC50CE2F1C2954FF00CE88DD /* YPBUser.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YPBUser.m; sourceTree = "<group>"; };
 		BC50CE301C2954FF00CE88DD /* YPBUserDetailModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YPBUserDetailModel.h; sourceTree = "<group>"; };
@@ -169,6 +186,12 @@
 		BC50CE391C29552100CE88DD /* YPBURLResponse.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YPBURLResponse.m; sourceTree = "<group>"; };
 		BC50CE3E1C29556300CE88DD /* YPBUserDetailViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YPBUserDetailViewController.h; sourceTree = "<group>"; };
 		BC50CE3F1C29556300CE88DD /* YPBUserDetailViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YPBUserDetailViewController.m; sourceTree = "<group>"; };
+		BC50CE421C29565400CE88DD /* YPBUserProfileCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YPBUserProfileCell.h; sourceTree = "<group>"; };
+		BC50CE431C29565400CE88DD /* YPBUserProfileCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YPBUserProfileCell.m; sourceTree = "<group>"; };
+		BC50CE481C297BB400CE88DD /* YPBUserAccessModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YPBUserAccessModel.h; sourceTree = "<group>"; };
+		BC50CE491C297BB400CE88DD /* YPBUserAccessModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YPBUserAccessModel.m; sourceTree = "<group>"; };
+		BC5222831C29A7DA00C8333C /* YPBVIPPriviledgeViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YPBVIPPriviledgeViewController.h; sourceTree = "<group>"; };
+		BC5222841C29A7DA00C8333C /* YPBVIPPriviledgeViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YPBVIPPriviledgeViewController.m; sourceTree = "<group>"; };
 		BC5874661C279A4900A72274 /* YPBErrorHandler.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YPBErrorHandler.h; sourceTree = "<group>"; };
 		BC5874671C279A4900A72274 /* YPBErrorHandler.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YPBErrorHandler.m; sourceTree = "<group>"; };
 		BC5874691C27CB8700A72274 /* YPBRegisterModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YPBRegisterModel.h; sourceTree = "<group>"; };
@@ -179,8 +202,47 @@
 		BC5874711C281A6700A72274 /* YPBUserListModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YPBUserListModel.m; sourceTree = "<group>"; };
 		BC5874731C281E9300A72274 /* YPBPaginator.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YPBPaginator.h; sourceTree = "<group>"; };
 		BC5874741C281E9300A72274 /* YPBPaginator.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YPBPaginator.m; sourceTree = "<group>"; };
-		BC6D58D51C228E49001C2DB1 /* YPBUser+Helper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "YPBUser+Helper.h"; sourceTree = "<group>"; };
-		BC6D58D61C228E4A001C2DB1 /* YPBUser+Helper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "YPBUser+Helper.m"; sourceTree = "<group>"; };
+		BC5980A41C3130B80037D98C /* YPBPhotoGridViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YPBPhotoGridViewController.h; sourceTree = "<group>"; };
+		BC5980A51C3130B80037D98C /* YPBPhotoGridViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YPBPhotoGridViewController.m; sourceTree = "<group>"; };
+		BC5980A71C313D5E0037D98C /* YPBPhotoBrowser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YPBPhotoBrowser.h; sourceTree = "<group>"; };
+		BC5980A81C313D5E0037D98C /* YPBPhotoBrowser.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YPBPhotoBrowser.m; sourceTree = "<group>"; };
+		BC5A6E6A1C32561F006AD77A /* YPBMineFigureViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YPBMineFigureViewController.h; sourceTree = "<group>"; };
+		BC5A6E6B1C32561F006AD77A /* YPBMineFigureViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YPBMineFigureViewController.m; sourceTree = "<group>"; };
+		BC5F1AB41C2CF3DB0047BCF4 /* YPBUser+Account.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "YPBUser+Account.h"; sourceTree = "<group>"; };
+		BC5F1AB51C2CF3DB0047BCF4 /* YPBUser+Account.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "YPBUser+Account.m"; sourceTree = "<group>"; };
+		BC5F1AB71C2CF42D0047BCF4 /* YPBUser+Mine.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "YPBUser+Mine.h"; sourceTree = "<group>"; };
+		BC5F1AB81C2CF42D0047BCF4 /* YPBUser+Mine.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "YPBUser+Mine.m"; sourceTree = "<group>"; };
+		BC652B7F1C2B992100951DEA /* YPBUserPhotoBar.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YPBUserPhotoBar.h; sourceTree = "<group>"; };
+		BC652B801C2B992100951DEA /* YPBUserPhotoBar.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YPBUserPhotoBar.m; sourceTree = "<group>"; };
+		BC652B821C2BB9BA00951DEA /* YPBEditMineDetailViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YPBEditMineDetailViewController.h; sourceTree = "<group>"; };
+		BC652B831C2BB9BA00951DEA /* YPBEditMineDetailViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YPBEditMineDetailViewController.m; sourceTree = "<group>"; };
+		BC652B851C2BD5D800951DEA /* UITableView+Separator.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UITableView+Separator.h"; sourceTree = "<group>"; };
+		BC652B861C2BD5D800951DEA /* UITableView+Separator.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UITableView+Separator.m"; sourceTree = "<group>"; };
+		BC652B881C2BD9B300951DEA /* YPBInputTextViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YPBInputTextViewController.h; sourceTree = "<group>"; };
+		BC652B891C2BD9B300951DEA /* YPBInputTextViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YPBInputTextViewController.m; sourceTree = "<group>"; };
+		BC652B8B1C2BF8DE00951DEA /* YPBTextField.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YPBTextField.h; sourceTree = "<group>"; };
+		BC652B8C1C2BF8DE00951DEA /* YPBTextField.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YPBTextField.m; sourceTree = "<group>"; };
+		BC6B74791C34F5A90052777E /* YPBUserAccessQueryModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YPBUserAccessQueryModel.h; sourceTree = "<group>"; };
+		BC6B747A1C34F5A90052777E /* YPBUserAccessQueryModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YPBUserAccessQueryModel.m; sourceTree = "<group>"; };
+		BC6B747C1C34F9840052777E /* YPBUserGreet.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YPBUserGreet.h; sourceTree = "<group>"; };
+		BC6B747D1C34F9840052777E /* YPBUserGreet.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YPBUserGreet.m; sourceTree = "<group>"; };
+		BC6B747F1C34FBA10052777E /* YPBMineGreetingCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YPBMineGreetingCell.h; sourceTree = "<group>"; };
+		BC6B74801C34FBA10052777E /* YPBMineGreetingCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YPBMineGreetingCell.m; sourceTree = "<group>"; };
+		BC6B74821C34FCEB0052777E /* YPBMineAccessViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YPBMineAccessViewController.h; sourceTree = "<group>"; };
+		BC6B74831C34FCEB0052777E /* YPBMineAccessViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YPBMineAccessViewController.m; sourceTree = "<group>"; };
+		BC6B74851C350ED50052777E /* YPBUploadManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YPBUploadManager.h; sourceTree = "<group>"; };
+		BC6B74861C350ED50052777E /* YPBUploadManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YPBUploadManager.m; sourceTree = "<group>"; };
+		BC6B74881C351AF20052777E /* NSDate+Utilities.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "NSDate+Utilities.h"; path = "../../../../../kuaibovideo/kuaibov/kuaibov/Class/Utils/Extensions/NSDate+Utilities.h"; sourceTree = "<group>"; };
+		BC6B74891C351AF20052777E /* NSDate+Utilities.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "NSDate+Utilities.m"; path = "../../../../../kuaibovideo/kuaibov/kuaibov/Class/Utils/Extensions/NSDate+Utilities.m"; sourceTree = "<group>"; };
+		BC6B748D1C3539F10052777E /* QiniuToken.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QiniuToken.m; sourceTree = "<group>"; };
+		BC6B748E1C3539F10052777E /* GTMBase64.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GTMBase64.h; sourceTree = "<group>"; };
+		BC6B748F1C3539F10052777E /* GTMBase64.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GTMBase64.m; sourceTree = "<group>"; };
+		BC6B74901C3539F10052777E /* GTMDefines.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GTMDefines.h; sourceTree = "<group>"; };
+		BC6B74911C3539F10052777E /* QiniuFile.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QiniuFile.h; sourceTree = "<group>"; };
+		BC6B74921C3539F10052777E /* QiniuFile.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QiniuFile.m; sourceTree = "<group>"; };
+		BC6B74931C3539F10052777E /* QiniuToken.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QiniuToken.h; sourceTree = "<group>"; };
+		BC6B74941C3539F10052777E /* QiniuUploader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QiniuUploader.h; sourceTree = "<group>"; };
+		BC6B74951C3539F10052777E /* QiniuUploader.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QiniuUploader.m; sourceTree = "<group>"; };
 		BC6D58D81C22A07F001C2DB1 /* YPBMineProfileCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YPBMineProfileCell.h; sourceTree = "<group>"; };
 		BC6D58D91C22A07F001C2DB1 /* YPBMineProfileCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YPBMineProfileCell.m; sourceTree = "<group>"; };
 		BC6D58DB1C22A877001C2DB1 /* YPBProfileActionButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YPBProfileActionButton.h; sourceTree = "<group>"; };
@@ -269,7 +331,6 @@
 				BC1A2DB31C0EFA4C003D9138 /* YPBAppDelegate.h */,
 				BC1A2DB41C0EFA4C003D9138 /* YPBAppDelegate.m */,
 				BC1A2D8C1C0EF909003D9138 /* Assets.xcassets */,
-				BC1A2D8E1C0EF909003D9138 /* LaunchScreen.storyboard */,
 				BC1A2D801C0EF909003D9138 /* Supporting Files */,
 				BC9A89E31C0EFAB0008816F7 /* Class */,
 			);
@@ -314,8 +375,8 @@
 				BC6D58D91C22A07F001C2DB1 /* YPBMineProfileCell.m */,
 				BC6D58DB1C22A877001C2DB1 /* YPBProfileActionButton.h */,
 				BC6D58DC1C22A877001C2DB1 /* YPBProfileActionButton.m */,
-				BC50CE1D1C29385A00CE88DD /* YPBGreetingUserCell.h */,
-				BC50CE1E1C29385A00CE88DD /* YPBGreetingUserCell.m */,
+				BC6B747F1C34FBA10052777E /* YPBMineGreetingCell.h */,
+				BC6B74801C34FBA10052777E /* YPBMineGreetingCell.m */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -370,6 +431,8 @@
 				BC5874671C279A4900A72274 /* YPBErrorHandler.m */,
 				BC303D8C1C1FE8F70091093B /* YPBMessageCenter.h */,
 				BC303D8D1C1FE8F70091093B /* YPBMessageCenter.m */,
+				BC6B74851C350ED50052777E /* YPBUploadManager.h */,
+				BC6B74861C350ED50052777E /* YPBUploadManager.m */,
 			);
 			path = Utils;
 			sourceTree = "<group>";
@@ -378,6 +441,8 @@
 			isa = PBXGroup;
 			children = (
 				BC1A7B221C1183250082A2FB /* YPBExtensions.h */,
+				BC6B74881C351AF20052777E /* NSDate+Utilities.h */,
+				BC6B74891C351AF20052777E /* NSDate+Utilities.m */,
 				BC1A7B1F1C1182FD0082A2FB /* UIImage+crop.h */,
 				BC1A7B201C1182FD0082A2FB /* UIImage+crop.m */,
 				BC1AED471C0F360D003A0C63 /* UIColor+hexColor.h */,
@@ -398,6 +463,8 @@
 				BC58746D1C27FE2F00A72274 /* UIView+Loading.m */,
 				BC50CE131C28F88C00CE88DD /* UIScrollView+Refresh.h */,
 				BC50CE141C28F88C00CE88DD /* UIScrollView+Refresh.m */,
+				BC652B851C2BD5D800951DEA /* UITableView+Separator.h */,
+				BC652B861C2BD5D800951DEA /* UITableView+Separator.m */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -505,6 +572,7 @@
 		BC50CE2C1C2954A900CE88DD /* User */ = {
 			isa = PBXGroup;
 			children = (
+				BC50CE411C2955F600CE88DD /* View */,
 				BC50CE3D1C29553000CE88DD /* Controller */,
 				BC50CE2D1C2954C400CE88DD /* Model */,
 			);
@@ -518,6 +586,8 @@
 				BC50CE2F1C2954FF00CE88DD /* YPBUser.m */,
 				BC50CE301C2954FF00CE88DD /* YPBUserDetailModel.h */,
 				BC50CE311C2954FF00CE88DD /* YPBUserDetailModel.m */,
+				BC50CE481C297BB400CE88DD /* YPBUserAccessModel.h */,
+				BC50CE491C297BB400CE88DD /* YPBUserAccessModel.m */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -531,6 +601,17 @@
 			path = Controller;
 			sourceTree = "<group>";
 		};
+		BC50CE411C2955F600CE88DD /* View */ = {
+			isa = PBXGroup;
+			children = (
+				BC50CE421C29565400CE88DD /* YPBUserProfileCell.h */,
+				BC50CE431C29565400CE88DD /* YPBUserProfileCell.m */,
+				BC652B7F1C2B992100951DEA /* YPBUserPhotoBar.h */,
+				BC652B801C2B992100951DEA /* YPBUserPhotoBar.m */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
 		BC58746F1C2819C500A72274 /* Model */ = {
 			isa = PBXGroup;
 			children = (
@@ -540,11 +621,52 @@
 			path = Model;
 			sourceTree = "<group>";
 		};
+		BC5F1AB31C2CF38B0047BCF4 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				BC5F1AB71C2CF42D0047BCF4 /* YPBUser+Mine.h */,
+				BC5F1AB81C2CF42D0047BCF4 /* YPBUser+Mine.m */,
+				BC2ED5A91C33C5FF00BE00A2 /* YPBUserDetailUpdateModel.h */,
+				BC2ED5AA1C33C5FF00BE00A2 /* YPBUserDetailUpdateModel.m */,
+				BC6B747C1C34F9840052777E /* YPBUserGreet.h */,
+				BC6B747D1C34F9840052777E /* YPBUserGreet.m */,
+				BC6B74791C34F5A90052777E /* YPBUserAccessQueryModel.h */,
+				BC6B747A1C34F5A90052777E /* YPBUserAccessQueryModel.m */,
+				BC1BA6001C35612000DBE0D8 /* YPBUserAvatarUpdateModel.h */,
+				BC1BA6011C35612000DBE0D8 /* YPBUserAvatarUpdateModel.m */,
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
+		BC6B748B1C3539B40052777E /* Vendor */ = {
+			isa = PBXGroup;
+			children = (
+				BC6B748C1C3539D60052777E /* QiniuUpload */,
+			);
+			path = Vendor;
+			sourceTree = "<group>";
+		};
+		BC6B748C1C3539D60052777E /* QiniuUpload */ = {
+			isa = PBXGroup;
+			children = (
+				BC6B748D1C3539F10052777E /* QiniuToken.m */,
+				BC6B748E1C3539F10052777E /* GTMBase64.h */,
+				BC6B748F1C3539F10052777E /* GTMBase64.m */,
+				BC6B74901C3539F10052777E /* GTMDefines.h */,
+				BC6B74911C3539F10052777E /* QiniuFile.h */,
+				BC6B74921C3539F10052777E /* QiniuFile.m */,
+				BC6B74931C3539F10052777E /* QiniuToken.h */,
+				BC6B74941C3539F10052777E /* QiniuUploader.h */,
+				BC6B74951C3539F10052777E /* QiniuUploader.m */,
+			);
+			path = QiniuUpload;
+			sourceTree = "<group>";
+		};
 		BC6D58D41C228D66001C2DB1 /* Model */ = {
 			isa = PBXGroup;
 			children = (
-				BC6D58D51C228E49001C2DB1 /* YPBUser+Helper.h */,
-				BC6D58D61C228E4A001C2DB1 /* YPBUser+Helper.m */,
+				BC5F1AB41C2CF3DB0047BCF4 /* YPBUser+Account.h */,
+				BC5F1AB51C2CF3DB0047BCF4 /* YPBUser+Account.m */,
 				BC1654CB1C252E9E00AB1F33 /* YPBActivateModel.h */,
 				BC1654CC1C252E9E00AB1F33 /* YPBActivateModel.m */,
 				BC5874691C27CB8700A72274 /* YPBRegisterModel.h */,
@@ -560,6 +682,10 @@
 				BC7114A41C1AC3CA00C5001A /* YPBBaseViewController.m */,
 				BC7114BA1C1AE87100C5001A /* YPBLayoutViewController.h */,
 				BC7114BB1C1AE87100C5001A /* YPBLayoutViewController.m */,
+				BC5980A41C3130B80037D98C /* YPBPhotoGridViewController.h */,
+				BC5980A51C3130B80037D98C /* YPBPhotoGridViewController.m */,
+				BC5980A71C313D5E0037D98C /* YPBPhotoBrowser.h */,
+				BC5980A81C313D5E0037D98C /* YPBPhotoBrowser.m */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -573,6 +699,10 @@
 				BC31B7641C1BD8560043E7EB /* YPBRadioButton.m */,
 				BC31B7661C1BEC630043E7EB /* YPBRadioButtonGroup.h */,
 				BC31B7671C1BEC630043E7EB /* YPBRadioButtonGroup.m */,
+				BC1F281F1C2A404B00C2B476 /* YPBTableViewCell.h */,
+				BC1F28201C2A404B00C2B476 /* YPBTableViewCell.m */,
+				BC652B8B1C2BF8DE00951DEA /* YPBTextField.h */,
+				BC652B8C1C2BF8DE00951DEA /* YPBTextField.m */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -595,6 +725,7 @@
 		BC9A89E31C0EFAB0008816F7 /* Class */ = {
 			isa = PBXGroup;
 			children = (
+				BC6B748B1C3539B40052777E /* Vendor */,
 				BC1AED451C0F35CA003A0C63 /* Utils */,
 				BC1AED3A1C0F307C003A0C63 /* Base */,
 				BC50CE2C1C2954A900CE88DD /* User */,
@@ -625,6 +756,7 @@
 			children = (
 				BC1A7B1B1C117C920082A2FB /* View */,
 				BCD15F111C103A95002B6C5C /* Controller */,
+				BC5F1AB31C2CF38B0047BCF4 /* Model */,
 			);
 			path = Mine;
 			sourceTree = "<group>";
@@ -634,12 +766,16 @@
 			children = (
 				BCD15F121C103AB6002B6C5C /* YPBMineViewController.h */,
 				BCD15F131C103AB6002B6C5C /* YPBMineViewController.m */,
-				BC50CE1A1C29365D00CE88DD /* YPBReceivedGreetingViewController.h */,
-				BC50CE1B1C29365D00CE88DD /* YPBReceivedGreetingViewController.m */,
-				BC50CE201C2939A600CE88DD /* YPBSentGreetingViewController.h */,
-				BC50CE211C2939A600CE88DD /* YPBSentGreetingViewController.m */,
-				BC50CE231C2939EF00CE88DD /* YPBAccessedViewController.h */,
-				BC50CE241C2939EF00CE88DD /* YPBAccessedViewController.m */,
+				BC6B74821C34FCEB0052777E /* YPBMineAccessViewController.h */,
+				BC6B74831C34FCEB0052777E /* YPBMineAccessViewController.m */,
+				BC5222831C29A7DA00C8333C /* YPBVIPPriviledgeViewController.h */,
+				BC5222841C29A7DA00C8333C /* YPBVIPPriviledgeViewController.m */,
+				BC652B821C2BB9BA00951DEA /* YPBEditMineDetailViewController.h */,
+				BC652B831C2BB9BA00951DEA /* YPBEditMineDetailViewController.m */,
+				BC652B881C2BD9B300951DEA /* YPBInputTextViewController.h */,
+				BC652B891C2BD9B300951DEA /* YPBInputTextViewController.m */,
+				BC5A6E6A1C32561F006AD77A /* YPBMineFigureViewController.h */,
+				BC5A6E6B1C32561F006AD77A /* YPBMineFigureViewController.m */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -772,7 +908,6 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				BC1A2D901C0EF909003D9138 /* LaunchScreen.storyboard in Resources */,
 				BC1A2D8D1C0EF909003D9138 /* Assets.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -846,45 +981,64 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				BC6B74981C3539F10052777E /* QiniuFile.m in Sources */,
 				BC1A2DB51C0EFA4C003D9138 /* YPBAppDelegate.m in Sources */,
 				BC5874681C279A4900A72274 /* YPBErrorHandler.m in Sources */,
 				BC50CE3C1C29552100CE88DD /* YPBURLResponse.m in Sources */,
 				BC303D8E1C1FE8F70091093B /* YPBMessageCenter.m in Sources */,
-				BC50CE221C2939A600CE88DD /* YPBSentGreetingViewController.m in Sources */,
+				BC6B74811C34FBA10052777E /* YPBMineGreetingCell.m in Sources */,
 				BCD15F141C103AB7002B6C5C /* YPBMineViewController.m in Sources */,
 				BC1AED511C0F4ADB003A0C63 /* YPBSideMenuCell.m in Sources */,
 				BC50CE3A1C29552100CE88DD /* YPBEncryptedURLRequest.m in Sources */,
 				BCD15F0F1C1032C3002B6C5C /* UIViewController+YPBSideMenu.m in Sources */,
+				BC652B8D1C2BF8DE00951DEA /* YPBTextField.m in Sources */,
 				BC50CE151C28F88C00CE88DD /* UIScrollView+Refresh.m in Sources */,
+				BC50CE441C29565400CE88DD /* YPBUserProfileCell.m in Sources */,
 				BC31B7681C1BEC630043E7EB /* YPBRadioButtonGroup.m in Sources */,
+				BC5A6E6C1C32561F006AD77A /* YPBMineFigureViewController.m in Sources */,
 				BC31B7651C1BD8560043E7EB /* YPBRadioButton.m in Sources */,
 				BC7114A51C1AC3CA00C5001A /* YPBBaseViewController.m in Sources */,
+				BC6B74841C34FCEB0052777E /* YPBMineAccessViewController.m in Sources */,
+				BC2ED5AB1C33C5FF00BE00A2 /* YPBUserDetailUpdateModel.m in Sources */,
 				BC31B75F1C1B3A350043E7EB /* YPBLoginViewController.m in Sources */,
 				BC1AED491C0F360D003A0C63 /* UIColor+hexColor.m in Sources */,
+				BC652B841C2BB9BA00951DEA /* YPBEditMineDetailViewController.m in Sources */,
+				BC652B871C2BD5D800951DEA /* UITableView+Separator.m in Sources */,
+				BC6B74961C3539F10052777E /* QiniuToken.m in Sources */,
 				BC58746E1C27FE2F00A72274 /* UIView+Loading.m in Sources */,
 				BC1654B71C25285F00AB1F33 /* NSObject+Properties.m in Sources */,
+				BC1BA6021C35612000DBE0D8 /* YPBUserAvatarUpdateModel.m in Sources */,
+				BC6B747B1C34F5A90052777E /* YPBUserAccessQueryModel.m in Sources */,
+				BC5222851C29A7DA00C8333C /* YPBVIPPriviledgeViewController.m in Sources */,
+				BC5F1AB61C2CF3DB0047BCF4 /* YPBUser+Account.m in Sources */,
 				BC31B7621C1BC2C20043E7EB /* YPBActionButton.m in Sources */,
+				BC6B747E1C34F9840052777E /* YPBUserGreet.m in Sources */,
 				BC7114AE1C1AD3DB00C5001A /* NSMutableDictionary+Safety.m in Sources */,
 				BC1AED601C0F5A8B003A0C63 /* YPBSettingViewController.m in Sources */,
 				BC50CE121C28EE0F00CE88DD /* YPBHomeCollectionViewLayout.m in Sources */,
 				BC1654BA1C25290200AB1F33 /* NSDictionary+YPBSign.m in Sources */,
 				BC1A2D821C0EF909003D9138 /* main.m in Sources */,
-				BC6D58D71C228E4A001C2DB1 /* YPBUser+Helper.m in Sources */,
+				BC1F28211C2A404B00C2B476 /* YPBTableViewCell.m in Sources */,
 				BC6D58DA1C22A07F001C2DB1 /* YPBMineProfileCell.m in Sources */,
+				BC50CE4A1C297BB400CE88DD /* YPBUserAccessModel.m in Sources */,
 				BC1A7B1E1C117C920082A2FB /* YPBAvatarView.m in Sources */,
+				BC5980A61C3130B80037D98C /* YPBPhotoGridViewController.m in Sources */,
 				BCD15F1E1C104EAB002B6C5C /* YPBUtil.m in Sources */,
+				BC652B8A1C2BD9B300951DEA /* YPBInputTextViewController.m in Sources */,
 				BC1654CD1C252E9E00AB1F33 /* YPBActivateModel.m in Sources */,
 				BC1A7B211C1182FD0082A2FB /* UIImage+crop.m in Sources */,
 				BC1AED401C0F30C4003A0C63 /* YPBSideMenuViewController.m in Sources */,
-				BC50CE1F1C29385A00CE88DD /* YPBGreetingUserCell.m in Sources */,
 				BC7114BC1C1AE87100C5001A /* YPBLayoutViewController.m in Sources */,
 				BC58746B1C27CB8700A72274 /* YPBRegisterModel.m in Sources */,
+				BC6B74871C350ED50052777E /* YPBUploadManager.m in Sources */,
+				BC5F1AB91C2CF42D0047BCF4 /* YPBUser+Mine.m in Sources */,
 				BC5874751C281E9300A72274 /* YPBPaginator.m in Sources */,
 				BCD15F1B1C104B31002B6C5C /* RACEXTRuntimeExtensions.m in Sources */,
+				BC5980A91C313D5E0037D98C /* YPBPhotoBrowser.m in Sources */,
 				BC1AED5B1C0F5A43003A0C63 /* YPBMessageViewController.m in Sources */,
 				BC50CE321C2954FF00CE88DD /* YPBUser.m in Sources */,
 				BC1654BD1C25293B00AB1F33 /* NSString+crypt.m in Sources */,
-				BC50CE251C2939EF00CE88DD /* YPBAccessedViewController.m in Sources */,
+				BC6B74971C3539F10052777E /* GTMBase64.m in Sources */,
 				BC31B75B1C1B2F540043E7EB /* YPBRegisterFirstViewController.m in Sources */,
 				BC5874721C281A6700A72274 /* YPBUserListModel.m in Sources */,
 				BC1AED561C0F59B6003A0C63 /* YPBVIPCenterViewController.m in Sources */,
@@ -892,9 +1046,11 @@
 				BC50CE401C29556300CE88DD /* YPBUserDetailViewController.m in Sources */,
 				BC1AED431C0F312F003A0C63 /* YPBHomeViewController.m in Sources */,
 				BC6D58DD1C22A877001C2DB1 /* YPBProfileActionButton.m in Sources */,
+				BC6B74991C3539F10052777E /* QiniuUploader.m in Sources */,
 				BC31B75C1C1B2F540043E7EB /* YPBReigsterSecondViewController.m in Sources */,
 				BC1A7B251C1185350082A2FB /* UIViewController+BackgroundImage.m in Sources */,
-				BC50CE1C1C29365D00CE88DD /* YPBReceivedGreetingViewController.m in Sources */,
+				BC652B811C2B992100951DEA /* YPBUserPhotoBar.m in Sources */,
+				BC6B748A1C351AF20052777E /* NSDate+Utilities.m in Sources */,
 				BC50CE191C2915A300CE88DD /* YPBHomeCell.m in Sources */,
 				BC50CE3B1C29552100CE88DD /* YPBURLRequest.m in Sources */,
 			);
@@ -930,17 +1086,6 @@
 			targetProxy = BC1A2DA21C0EF909003D9138 /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
-
-/* Begin PBXVariantGroup section */
-		BC1A2D8E1C0EF909003D9138 /* LaunchScreen.storyboard */ = {
-			isa = PBXVariantGroup;
-			children = (
-				BC1A2D8F1C0EF909003D9138 /* Base */,
-			);
-			name = LaunchScreen.storyboard;
-			sourceTree = "<group>";
-		};
-/* End PBXVariantGroup section */
 
 /* Begin XCBuildConfiguration section */
 		BC1A2DA81C0EF909003D9138 /* Debug */ = {
@@ -1032,11 +1177,13 @@
 			baseConfigurationReference = C8725E9D86861D96A4FDD277 /* Pods.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				INFOPLIST_FILE = YuePaoBa/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.iqu8.yuepaoba;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "";
 			};
 			name = Debug;
 		};
@@ -1045,11 +1192,13 @@
 			baseConfigurationReference = 4F2CAD2F163D89DC2E23A9C6 /* Pods.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				INFOPLIST_FILE = YuePaoBa/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.iqu8.yuepaoba;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "";
 			};
 			name = Release;
 		};

@@ -67,6 +67,10 @@
     return YES;
 }
 
+- (BOOL)shouldPostRestErrorNotification {
+    return YES;
+}
+
 - (YPBURLRequestMethod)requestMethod {
     return YPBURLGetRequest;
 }
@@ -211,10 +215,15 @@
         DLog(@"Error message : %@\n", errorMessage);
         
         if ([self shouldPostErrorNotification]) {
-            [[NSNotificationCenter defaultCenter] postNotificationName:kNetworkErrorNotification
-                                                                object:self
-                                                              userInfo:@{kNetworkErrorCodeKey:@(status),
-                                                                         kNetworkErrorMessageKey:errorMessage}];
+            if (status == YPBURLResponseFailedByInterface && ![self shouldPostRestErrorNotification]) {
+                //NO POST
+            } else {
+                [[NSNotificationCenter defaultCenter] postNotificationName:kNetworkErrorNotification
+                                                                    object:self
+                                                                  userInfo:@{kNetworkErrorCodeKey:@(status),
+                                                                             kNetworkErrorMessageKey:errorMessage}];
+            }
+            
         }
     }
     

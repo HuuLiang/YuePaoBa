@@ -26,4 +26,6 @@ extern const NSUInteger kSuccessResponseCode;
 - (BOOL)success;
 - (NSString *)message;
 
+- (NSUInteger)nextPage;
+
 @end

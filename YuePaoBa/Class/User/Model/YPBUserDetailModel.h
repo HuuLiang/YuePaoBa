@@ -14,6 +14,8 @@
 
 @interface YPBUserDetailModel : YPBEncryptedURLRequest
 
+@property (nonatomic,retain,readonly) YPBUser *fetchedUser;
+
 + (instancetype)sharedModel;
 - (BOOL)fetchUserDetailWithUserId:(NSString *)userId completionHandler:(YPBCompletionHandler)handler;
 

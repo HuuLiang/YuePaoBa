@@ -37,9 +37,15 @@ PODS:
   - BlocksKit/UIKit (2.2.5):
     - BlocksKit/Core
     - BlocksKit/DynamicDelegate
+  - DACircularProgress (2.3.1)
   - HexColors (2.2.1)
   - Masonry (0.6.3)
+  - MBProgressHUD (0.9.1)
   - MJRefresh (2.4.12)
+  - MWPhotoBrowser (2.1.1):
+    - DACircularProgress (~> 2.3)
+    - MBProgressHUD (~> 0.9)
+    - SDWebImage (!= 3.7.2, ~> 3.7)
   - OpenSSL (1.0.204.1)
   - RESideMenu (4.0.7)
   - SDWebImage (3.7.3):
@@ -50,6 +56,7 @@ PODS:
   - TSMessages (0.9.12):
     - HexColors (~> 2.2.0)
   - UIImage-Helpers (0.0.3)
+  - UITextView+Placeholder (1.1.0)
 
 DEPENDENCIES:
   - ActionSheetPicker-3.0 (~> 2.0.3)
@@ -58,6 +65,7 @@ DEPENDENCIES:
   - BlocksKit (~> 2.2.5)
   - Masonry (~> 0.6.3)
   - MJRefresh (~> 2.4.12)
+  - MWPhotoBrowser (~> 2.1.1)
   - OpenSSL (~> 1.0.204.1)
   - RESideMenu (~> 4.0.7)
   - SDWebImage (~> 3.7.3)
@@ -65,15 +73,19 @@ DEPENDENCIES:
   - TPKeyboardAvoiding (~> 1.2.10)
   - TSMessages (~> 0.9.12)
   - UIImage-Helpers (~> 0.0.3)
+  - UITextView+Placeholder (~> 1.1.0)
 
 SPEC CHECKSUMS:
   ActionSheetPicker-3.0: 11f2053085d3088dc1ef9d38a9f11c18b528dd9e
   AFNetworking: 8e4e60500beb8bec644cf575beee72990a76d399
   Aspects: 7595ba96a6727a58ebcbfc954497fc5d2fdde546
   BlocksKit: 7f422b971407001178d181a43b99014ea2591fe6
+  DACircularProgress: 4dd437c0fc3da5161cb289e07ac449493d41db71
   HexColors: abfd172e329dab59888614ccba6f216cec59289d
   Masonry: ff105a956abcd19a618b2028b121cb638d7a8e2f
+  MBProgressHUD: c47f2c166c126cf2ce36498d80f33e754d4e93ad
   MJRefresh: ca8e9589895977df32d379d46e6b8a5450b3ff44
+  MWPhotoBrowser: ba0d0c09ffda3a7ea10093518738c502c1c7141c
   OpenSSL: 7f853fcada78e5162c2183b4d90ebbd0aa02f5ac
   RESideMenu: f24c508404b49c667344c54aba7e590883533958
   SDWebImage: 1d2b1a1efda1ade1b00b6f8498865f8ddedc8a84
@@ -81,5 +93,6 @@ SPEC CHECKSUMS:
   TPKeyboardAvoiding: 614ebec846ec28b83d548769297fa5fb56468904
   TSMessages: c8cc7b80f2a833af533872cd02010cac061532cc
   UIImage-Helpers: 06b04a42bdd222844035602e87e936765c80f620
+  UITextView+Placeholder: 672ce543356b5b5787f354415bc3b132d47f0362
 
 COCOAPODS: 0.39.0

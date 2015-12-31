@@ -11,8 +11,13 @@
 @interface UIView (Loading)
 
 @property (nonatomic,retain,readonly) UIView *loadingView;
+@property (nonatomic,retain,readonly) UIView *progressingView;
 
 - (void)beginLoading;
 - (void)endLoading;
+
+- (void)beginProgressingWithTitle:(NSString *)title subtitle:(NSString *)subtitle;
+- (void)progressWithPercent:(double)percent;
+- (void)endProgressing;
 
 @end

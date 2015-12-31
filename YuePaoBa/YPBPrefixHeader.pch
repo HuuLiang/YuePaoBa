@@ -28,5 +28,6 @@
 #import "YPBUtil.h"
 #import "YPBMessageCenter.h"
 #import "YPBUser.h"
+#import "YPBUploadManager.h"
 
 #endif /* YPBPrefixHeader_pch */

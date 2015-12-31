@@ -19,8 +19,9 @@
 }
 
 - (BOOL)requestRegisterUser:(YPBUser *)user withCompletionHandler:(YPBCompletionHandler)handler {
+    NSDictionary *params = [self paramsFromUser:user];
     BOOL success = [self requestURLPath:YPB_USER_REGISTER_URL
-                             withParams:[self paramsFromUser:user]
+                             withParams:params
                         responseHandler:^(YPBURLResponseStatus respStatus, NSString *errorMessage)
     {
         YPBRegisterResponse *resp = self.response;
@@ -32,19 +33,19 @@
 - (NSDictionary *)paramsFromUser:(YPBUser *)user {
     NSString *bust;
     switch (user.targetCup) {
-        case YPBTargetCupUnlimited:
+        case YPBUserCupUnspecified:
             bust = @"0";
             break;
-        case YPBTargetCupA:
+        case YPBUserCupA:
             bust = @"A";
             break;
-        case YPBTargetCupB:
+        case YPBUserCupB:
             bust = @"B";
             break;
-        case YPBTargetCupC:
+        case YPBUserCupC:
             bust = @"C";
             break;
-        case YPBTargetCupCPlus:
+        case YPBUserCupCPlus:
             bust = @"C+";
             break;
         default:

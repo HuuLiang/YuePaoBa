@@ -41,6 +41,10 @@
                         responseHandler:^(YPBURLResponseStatus respStatus, NSString *errorMessage)
     {
         YPBUserDetailResponse *resp = self.response;
+        if (respStatus == YPBURLResponseSuccess) {
+            _fetchedUser = resp.userInfo;
+        }
+        
         SafelyCallBlock2(handler, respStatus==YPBURLResponseSuccess, resp.userInfo);
     }];
     return success;

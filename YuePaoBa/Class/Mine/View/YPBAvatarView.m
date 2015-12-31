@@ -17,16 +17,26 @@ static const CGSize kVIPIconSize = {24,30};
     
     UIImageView *_vipImageView;
 }
+@property (nonatomic,retain) UIImage *placeholderImage;
 @end
 
 @implementation YPBAvatarView
+
+- (UIImage *)placeholderImage {
+    if (_placeholderImage) {
+        return _placeholderImage;
+    }
+    
+    _placeholderImage = [UIImage imageNamed:@"avatar_placeholder"];
+    return _placeholderImage;
+}
 
 - (instancetype)init {
     self = [super init];
     if (self) {
         _showName = YES;
         
-        _avatarImageView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"avatar_placeholder"]];
+        _avatarImageView = [[UIImageView alloc] initWithImage:self.placeholderImage];
         _avatarImageView.backgroundColor = [UIColor whiteColor];
         _avatarImageView.layer.borderWidth = 1;
         _avatarImageView.layer.borderColor = [UIColor whiteColor].CGColor;
@@ -38,6 +48,15 @@ static const CGSize kVIPIconSize = {24,30};
                 make.height.equalTo(_avatarImageView.mas_width);
             }];
         }
+        
+        @weakify(self);
+        [_avatarImageView aspect_hookSelector:@selector(setImage:)
+                                  withOptions:AspectPositionAfter
+                                   usingBlock:^(id<AspectInfo> aspectInfo, UIImage *image)
+        {
+            @strongify(self);
+            SafelyCallBlock1(self.avatarImageLoadHandler, image==self.placeholderImage?nil:image);
+        } error:nil];
         
         _nameLabel = [[UILabel alloc] init];
         _nameLabel.textColor = [UIColor whiteColor];
@@ -96,18 +115,7 @@ static const CGSize kVIPIconSize = {24,30};
 - (void)setImageURL:(NSURL *)imageURL {
     _imageURL = imageURL;
     
-    @weakify(self);
-    [_avatarImageView sd_setImageWithURL:imageURL
-                        placeholderImage:[UIImage imageNamed:@"avatar_placeholder"]
-                               completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType, NSURL *imageURL)
-    {
-        @strongify(self);
-        self.image = image;
-        
-        if (self.avatarImageLoadHandler) {
-            self.avatarImageLoadHandler(image);
-        }
-    }];
+    [_avatarImageView sd_setImageWithURL:imageURL placeholderImage:self.placeholderImage options:SDWebImageRefreshCached|SDWebImageDelayPlaceholder];
 }
 
 - (void)setIsVIP:(BOOL)isVIP {

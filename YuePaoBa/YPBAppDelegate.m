@@ -63,8 +63,8 @@
     sideMenu.delegate = sideMenuVC;
     sideMenu.scaleContentView = NO;
     sideMenu.scaleBackgroundImageView = NO;
-    sideMenu.scaleMenuView = YES;
-    //sideMenu.fadeMenuView = NO;
+    sideMenu.scaleMenuView = NO;
+    sideMenu.fadeMenuView = NO;
     sideMenu.parallaxEnabled = NO;
     sideMenu.bouncesHorizontally = NO;
     sideMenu.contentViewShadowEnabled = YES;
@@ -76,6 +76,9 @@
 }
 
 - (void)setupCommonStyles {
+    
+    [[UINavigationBar appearance] setBackgroundImage:[UIImage imageNamed:@"nav_background"] forBarMetrics:UIBarMetricsDefault];
+    
     [UIViewController aspect_hookSelector:@selector(viewDidLoad)
                               withOptions:AspectPositionAfter
                                usingBlock:^(id<AspectInfo> aspectInfo){
@@ -108,7 +111,8 @@
     // Override point for customization after application launch.
     [[YPBErrorHandler sharedHandler] initialize];
     [self setupCommonStyles];
-
+    [YPBUploadManager registerWithSecretKey:YPB_UPLOAD_SECRET_KEY accessKey:YPB_UPLOAD_ACCESS_KEY scope:YPB_UPLOAD_SCOPE];
+    
     if ([[YPBUser currentUser] isRegistered]) {
         self.window.rootViewController = [self setupRootViewController];
     } else {

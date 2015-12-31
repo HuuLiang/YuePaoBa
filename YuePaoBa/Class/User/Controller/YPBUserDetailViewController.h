@@ -10,4 +10,6 @@
 
 @interface YPBUserDetailViewController : YPBLayoutViewController
 
+- (instancetype)initWithUserId:(NSString *)userId;
+
 @end

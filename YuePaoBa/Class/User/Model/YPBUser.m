@@ -15,6 +15,15 @@ static YPBUser *_currentUser;
 
 @implementation YPBUserPhoto
 
+- (id)copyWithZone:(NSZone *)zone {
+    YPBUserPhoto *copiedPhoto = [[self class] allocWithZone:zone];
+    copiedPhoto.userId = [self.userId copyWithZone:zone];
+    copiedPhoto.smallPhoto = [self.smallPhoto copyWithZone:zone];
+    copiedPhoto.bigPhoto = [self.bigPhoto copyWithZone:zone];
+    copiedPhoto.sort = [self.sort copyWithZone:zone];
+    return copiedPhoto;
+}
+
 @end
 
 @interface YPBUser ()
@@ -26,6 +35,59 @@ static YPBUser *_currentUser;
 
 @implementation YPBUser
 
+- (id)copyWithZone:(NSZone *)zone {
+    YPBUser *copiedUser = [[self class] allocWithZone:zone];
+    copiedUser.name = [self.name copyWithZone:zone];
+    copiedUser.userId = [self.userId copyWithZone:zone];
+    copiedUser.uuid = [self.uuid copyWithZone:zone];
+    copiedUser.nickName = [self.nickName copyWithZone:zone];
+    copiedUser.logoUrl = [self.logoUrl copyWithZone:zone];
+    copiedUser.sex = [self.sex copyWithZone:zone];
+    
+    copiedUser.age = [self.age copyWithZone:zone];
+    copiedUser.height = [self.height copyWithZone:zone];
+    copiedUser.bwh = [self.bwh copyWithZone:zone];
+    copiedUser.monthIncome = [self.monthIncome copyWithZone:zone];
+    copiedUser.note = [self.note copyWithZone:zone];
+    copiedUser.profession = [self.profession copyWithZone:zone];
+    copiedUser.weixinNum = [self.weixinNum copyWithZone:zone];
+    copiedUser.assets = [self.assets copyWithZone:zone];
+    
+    copiedUser.isMember = self.isMember;
+    copiedUser.isVip = self.isVip;
+    
+    copiedUser.memberEndTime = [self.memberEndTime copyWithZone:zone];
+    copiedUser.vipEndTime = [self.vipEndTime copyWithZone:zone];
+    
+    copiedUser.greetCount = [self.greetCount copyWithZone:zone];
+    copiedUser.accessCount = [self.accessCount copyWithZone:zone];
+    copiedUser.receiveGreetCount = [self.receiveGreetCount copyWithZone:zone];
+    copiedUser.userPhotos = [[NSArray alloc] initWithArray:self.userPhotos copyItems:YES];
+    
+    copiedUser.gender = self.gender;
+    copiedUser.targetHeight = self.targetHeight;
+    copiedUser.targetAge = self.targetAge;
+    copiedUser.targetCup = self.targetCup;
+    
+    return copiedUser;
+}
+
+- (BOOL)isEqual:(id)object {
+    if (![object isKindOfClass:[self class]]) {
+        return NO;
+    }
+    
+    if (self.userId == nil) {
+        return NO;
+    }
+    
+    return [self.userId isEqualToString:((YPBUser *)object).userId];
+}
+
+- (NSUInteger)hash {
+    return self.userId.hash;
+}
+
 + (instancetype)currentUser {
     static dispatch_once_t onceToken;
     dispatch_once(&onceToken, ^{
@@ -35,22 +97,31 @@ static YPBUser *_currentUser;
     return _currentUser;
 }
 
-+ (NSArray<NSString *> *)allCupsDescription {
-    return @[kNotLimitedDescription,@"A罩杯",@"B罩杯",@"C罩杯",@"C罩杯以上"];
++ (NSArray<NSString *> *)allTargetCupsDescription {
+    NSMutableArray *arr = [self allCupsDescription].mutableCopy;
+    arr[0] = kNotLimitedDescription;
+    return arr;
 }
 
-+ (NSArray<NSNumber *> *)allHeightValues {
++ (NSArray<NSString *> *)allCupsDescription {
+    return @[@"", @"A罩杯",@"B罩杯",@"C罩杯",@"C罩杯以上"];
+}
+
++ (NSArray<NSNumber *> *)allHeightRangeValues {
+    YPBIntRange heightRange = self.availableHeightRange;
     NSMutableArray *values = [[NSMutableArray alloc] initWithObjects:@(0), nil];
-    for (NSUInteger i = 0; i < 20; ++i) {
-        [values addObject:@(140+i*5)];
+    for (NSUInteger i = heightRange.min; i < heightRange.max+1; ++i) {
+        [values addObject:@(i)];
     }
     return values;
 }
 
 + (NSArray<NSNumber *> *)allAgeValues {
+    YPBIntRange ageRange = self.availableAgeRange;
+    
     NSMutableArray *values = [[NSMutableArray alloc] initWithObjects:@(0), nil];
-    for (NSUInteger i = 0; i < 60; ++i) {
-        [values addObject:@(18+i)];
+    for (NSUInteger i = ageRange.min; i < ageRange.max+1; ++i) {
+        [values addObject:@(i)];
     }
     return values;
 }
@@ -58,7 +129,7 @@ static YPBUser *_currentUser;
 + (NSArray<NSString *> *)allHeightRangeDescription {
     NSMutableArray *heightStrings = [NSMutableArray array];
     
-    [self.allHeightValues enumerateObjectsUsingBlock:^(NSNumber * _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
+    [self.allHeightRangeValues enumerateObjectsUsingBlock:^(NSNumber * _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
         if ([obj isEqualToNumber:@(0)]) {
             [heightStrings addObject:kNotLimitedDescription];
         } else {
@@ -80,6 +151,30 @@ static YPBUser *_currentUser;
         }
     }];
     return ageStrings;
+}
+
++ (NSArray<NSNumber *> *)allWeightRangeValues {
+    NSMutableArray *values = [NSMutableArray array];
+    YPBFloatRange weightRange = [self availableWeightRange];
+    for (CGFloat i = weightRange.min; i < weightRange.max+0.5; i+=0.5) {
+        [values addObject:@(i)];
+    }
+    return values;
+}
+
++ (YPBIntRange)availableHeightRange {
+    YPBIntRange heightRange = {140,220};
+    return heightRange;
+}
+
++ (YPBIntRange)availableAgeRange {
+    YPBIntRange ageRange = {18,45};
+    return ageRange;
+}
+
++ (YPBFloatRange)availableWeightRange {
+    YPBFloatRange weightRange = {40,125};
+    return weightRange;
 }
 
 + (YPBUserGender)genderFromString:(NSString *)genderString {
@@ -109,7 +204,7 @@ static YPBUser *_currentUser;
 - (instancetype)init {
     self = [super init];
     if (self) {
-        _targetCup = YPBTargetCupCPlus;
+        _targetCup = YPBUserCupCPlus;
         
         YPBIntRange heightRange;
         heightRange.min = 155;
@@ -125,11 +220,58 @@ static YPBUser *_currentUser;
 }
 
 - (instancetype)initFromUserInfo:(NSDictionary *)userInfo {
+    
+//    @property (nonatomic) NSString *userId;
+//    @property (nonatomic) NSString *uuid; //激活码
+//    @property (nonatomic) NSString *nickName;
+//    @property (nonatomic) NSString *logoUrl;
+//    @property (nonatomic) NSString *sex;
+//    
+//    @property (nonatomic) NSNumber *age;
+//    @property (nonatomic) NSNumber *height;
+//    @property (nonatomic) NSString *bwh; // 身材
+//    @property (nonatomic) NSString *monthIncome;
+//    @property (nonatomic) NSString *note; // 兴趣
+//    @property (nonatomic) NSString *profession;
+//    @property (nonatomic) NSString *weixinNum;
+//    @property (nonatomic) NSString *assets;
+//    
+//    @property (nonatomic) BOOL isMember;
+//    @property (nonatomic) BOOL isVip;
+//    
+//    @property (nonatomic) NSString *memberEndTime;
+//    @property (nonatomic) NSString *vipEndTime;
+//    
+//    @property (nonatomic) NSNumber *greetCount;
+//    @property (nonatomic) NSNumber *accessCount;
+//    @property (nonatomic) NSNumber *receiveGreetCount;
+//    @property (nonatomic) NSArray<YPBUserPhoto *> *userPhotos;
     self = [super init];
     if (self) {
-        _userId = userInfo[kUserIDKeyName];
-        _gender = ((NSNumber *)userInfo[kUserGenderKeyName]).unsignedIntegerValue;
-        _nickName = userInfo[kUserNicknameKeyName];
+        _userId            = userInfo[kUserIDKeyName];
+        _gender            = ((NSNumber *)userInfo[kUserGenderKeyName]).unsignedIntegerValue;
+        _nickName          = userInfo[kUserNicknameKeyName];
+        _logoUrl           = userInfo[kUserLogoKeyName];
+        _age               = userInfo[kUserAgeKeyName];
+        _height            = userInfo[kUserHeightKeyName];
+        _bwh               = userInfo[kUserFigureKeyName];
+        _monthIncome       = userInfo[kUserIncomeKeyName];
+        _note              = userInfo[kUserInterestKeyName];
+        _profession        = userInfo[kUserProfessionKeyName];
+        _weixinNum         = userInfo[kUserWeChatKeyName];
+        _assets            = userInfo[kUserAssetsKeyName];
+
+        _isMember          = ((NSNumber *)userInfo[kUserIsMemberKeyName]).boolValue;
+        _isVip             = ((NSNumber *)userInfo[kUserIsVIPKeyName]).boolValue;
+
+        _memberEndTime     = userInfo[kUserMemberEndTimeKeyName];
+        _vipEndTime        = userInfo[kUserVIPEndTimeKeyName];
+
+        _greetCount        = userInfo[kUserGreetCountKeyName];
+        _receiveGreetCount = userInfo[kUserReceiveGreetCountKeyName];
+        _accessCount       = userInfo[kUserAccessCountKeyName];
+        
+        // Target
         _targetCup = ((NSNumber *)userInfo[kUserTargetCupKeyName]).unsignedIntegerValue;
         
         NSArray *targetHeight = userInfo[kUserTargetHeightRangeKeyName];
@@ -158,8 +300,28 @@ static YPBUser *_currentUser;
     [userInfo safely_setObject:self.userId forKey:kUserIDKeyName];
     [userInfo safely_setInteger:self.gender forKey:kUserGenderKeyName];
     [userInfo safely_setObject:self.nickName forKey:kUserNicknameKeyName];
-    [userInfo safely_setInteger:self.targetCup forKey:kUserTargetCupKeyName];
+    [userInfo safely_setObject:self.logoUrl forKey:kUserLogoKeyName];
+    [userInfo safely_setObject:self.age forKey:kUserAgeKeyName];
+    [userInfo safely_setObject:self.height forKey:kUserHeightKeyName];
+    [userInfo safely_setObject:self.bwh forKey:kUserFigureKeyName];
+    [userInfo safely_setObject:self.monthIncome forKey:kUserIncomeKeyName];
+    [userInfo safely_setObject:self.note forKey:kUserInterestKeyName];
+    [userInfo safely_setObject:self.profession forKey:kUserProfessionKeyName];
+    [userInfo safely_setObject:self.weixinNum forKey:kUserWeChatKeyName];
+    [userInfo safely_setObject:self.assets forKey:kUserAssetsKeyName];
     
+    [userInfo setObject:@(self.isMember) forKey:kUserIsMemberKeyName];
+    [userInfo setObject:@(self.isVip) forKey:kUserIsVIPKeyName];
+    
+    [userInfo safely_setObject:self.memberEndTime forKey:kUserMemberEndTimeKeyName];
+    [userInfo safely_setObject:self.vipEndTime forKey:kUserVIPEndTimeKeyName];
+    
+    [userInfo safely_setObject:self.greetCount forKey:kUserGreetCountKeyName];
+    [userInfo safely_setObject:self.receiveGreetCount forKey:kUserReceiveGreetCountKeyName];
+    [userInfo safely_setObject:self.accessCount forKey:kUserAccessCountKeyName];
+    
+    //Target
+    [userInfo safely_setInteger:self.targetCup forKey:kUserTargetCupKeyName];
     [userInfo safely_setObject:@[@(self.targetHeight.min),@(self.targetHeight.max)] forKey:kUserTargetHeightRangeKeyName];
     [userInfo safely_setObject:@[@(self.targetAge.min),@(self.targetAge.max)] forKey:kUserTargetAgeRangeKeyName];
     return userInfo;
@@ -203,6 +365,18 @@ static YPBUser *_currentUser;
     return value;
 }
 
+- (NSString *)heightDescription {
+    return self.height.unsignedIntegerValue > 0 ? [NSString stringWithFormat:@"%@ cm", self.height] : nil;
+}
+
+- (NSString *)ageDescription {
+    return self.age.unsignedIntegerValue > 0 ? [NSString stringWithFormat:@"%@岁", self.age] : nil;
+}
+
+- (NSString *)weightDescription {
+    return self.weight > 0 ? [NSString stringWithFormat:@"%.1f kg", self.weight] : nil;
+}
+
 - (NSString *)targetHeightDescription {
     NSString *value1 = self.targetHeight.min == 0 ? kNotLimitedDescription : [NSString stringWithFormat:@"%ldcm", self.targetHeight.min];
     NSString *value2 = self.targetHeight.max == 0 ? kNotLimitedDescription : [NSString stringWithFormat:@"%ldcm", self.targetHeight.max];
@@ -216,7 +390,7 @@ static YPBUser *_currentUser;
 }
 
 - (NSString *)targetCupDescription {
-    return [[self class] allCupsDescription][self.targetCup];
+    return [[self class] allTargetCupsDescription][self.targetCup];
 }
 
 - (void)setSex:(NSString *)sex {
@@ -225,5 +399,54 @@ static YPBUser *_currentUser;
 
 - (NSString *)sex {
     return [[self class] stringOfGender:self.gender];
+}
+
+- (void)setWeight:(CGFloat)weight {
+    if (self.gender == YPBUserGenderMale) {
+        self.bwh = [NSString stringWithFormat:@"%.1f", weight];
+    }
+}
+
+- (CGFloat)weight {
+    if (self.gender == YPBUserGenderMale) {
+        return self.bwh.floatValue;
+    } else {
+        return 0;
+    }
+}
+
+- (CGFloat)bust {
+    NSArray<NSString *> *bwh = [self.bwh componentsSeparatedByCharactersInSet:[NSCharacterSet whitespaceCharacterSet]];
+    if (bwh.count > 0) {
+        return bwh[0].floatValue;
+    }
+    return 0;
+}
+
+- (CGFloat)waist {
+    NSArray<NSString *> *bwh = [self.bwh componentsSeparatedByCharactersInSet:[NSCharacterSet whitespaceCharacterSet]];
+    if (bwh.count > 1) {
+        return bwh[1].floatValue;
+    }
+    return 0;
+}
+
+- (CGFloat)hip {
+    NSArray<NSString *> *bwh = [self.bwh componentsSeparatedByCharactersInSet:[NSCharacterSet whitespaceCharacterSet]];
+    if (bwh.count > 2) {
+        return bwh[2].floatValue;
+    }
+    return 0;
+}
+
+- (YPBUserCup)cup {
+    NSArray<NSString *> *bwh = [self.bwh componentsSeparatedByCharactersInSet:[NSCharacterSet whitespaceCharacterSet]];
+    if (bwh.count > 3) {
+        NSUInteger index = [[[self class] allCupsDescription] indexOfObject:bwh[3]];
+        if (index != NSNotFound) {
+            return index;
+        }
+    }
+    return YPBUserCupUnspecified;
 }
 @end

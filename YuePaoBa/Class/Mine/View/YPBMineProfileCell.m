@@ -14,6 +14,10 @@
 {
     YPBAvatarView *_avatarView;
     UIImageView *_backgroundImageView;
+    
+    YPBProfileActionButton *_followedButton;
+    YPBProfileActionButton *_followingButton;
+    YPBProfileActionButton *_accessedButton;
 }
 @end
 
@@ -49,16 +53,20 @@
                 make.top.equalTo(self).offset(10);
             }];
         }
-        
         @weakify(self);
-        YPBProfileActionButton *followedButton = [[YPBProfileActionButton alloc] initWithImage:[UIImage imageNamed:@"profile_followed"]
-                                                                                         title:@"收到招呼的人" action:^(id sender) {
+        [_avatarView bk_whenTapped:^{
+            @strongify(self);
+            SafelyCallBlock(self.avatarAction);
+        }];
+        
+        _followedButton = [[YPBProfileActionButton alloc] initWithImage:[UIImage imageNamed:@"profile_followed"]
+                                                                  title:@"收到招呼的人" action:^(id sender) {
                                                                                              @strongify(self);
                                                                                              [self onFollowedAction];
                                                                                          }];
-        [self addSubview:followedButton];
+        [self addSubview:_followedButton];
         {
-            [followedButton mas_makeConstraints:^(MASConstraintMaker *make) {
+            [_followedButton mas_makeConstraints:^(MASConstraintMaker *make) {
                 make.centerX.equalTo(self).multipliedBy(0.4);
                 make.bottom.equalTo(self).offset(-10);
                 make.width.equalTo(self).multipliedBy(0.25);
@@ -66,29 +74,29 @@
             }];
         }
         
-        YPBProfileActionButton *followingButton = [[YPBProfileActionButton alloc] initWithImage:[UIImage imageNamed:@"profile_following"]
-                                                                                          title:@"打过招呼的人" action:^(id sender) {
+        _followingButton = [[YPBProfileActionButton alloc] initWithImage:[UIImage imageNamed:@"profile_following"]
+                                                                   title:@"打过招呼的人" action:^(id sender) {
                                                                                               @strongify(self);
                                                                                               [self onFollowingAction];
                                                                                           }];
-        [self addSubview:followingButton];
+        [self addSubview:_followingButton];
         {
-            [followingButton mas_makeConstraints:^(MASConstraintMaker *make) {
+            [_followingButton mas_makeConstraints:^(MASConstraintMaker *make) {
                 make.centerX.equalTo(self);
-                make.size.top.equalTo(followedButton);
+                make.size.top.equalTo(_followedButton);
             }];
         }
         
-        YPBProfileActionButton *accessedButton = [[YPBProfileActionButton alloc] initWithImage:[UIImage imageNamed:@"profile_accessed"]
-                                                                                         title:@"谁访问了我" action:^(id sender) {
+        _accessedButton = [[YPBProfileActionButton alloc] initWithImage:[UIImage imageNamed:@"profile_accessed"]
+                                                                  title:@"谁访问了我" action:^(id sender) {
                                                                                              @strongify(self);
                                                                                              [self onAccessedAction];
                                                                                          }];
-        [self addSubview:accessedButton];
+        [self addSubview:_accessedButton];
         {
-            [accessedButton mas_makeConstraints:^(MASConstraintMaker *make) {
+            [_accessedButton mas_makeConstraints:^(MASConstraintMaker *make) {
                 make.centerX.equalTo(self).multipliedBy(1.6);
-                make.size.top.equalTo(followingButton);
+                make.size.top.equalTo(_followingButton);
             }];
         }
         
@@ -98,8 +106,8 @@
         {
             [separator1 mas_makeConstraints:^(MASConstraintMaker *make) {
                 make.centerX.equalTo(self).multipliedBy(0.7);
-                make.centerY.equalTo(followedButton);
-                make.height.equalTo(followedButton).multipliedBy(0.6);
+                make.centerY.equalTo(_followedButton);
+                make.height.equalTo(_followedButton).multipliedBy(0.6);
                 make.width.mas_equalTo(0.5);
             }];
         }
@@ -130,20 +138,33 @@
 }
 
 - (void)onFollowedAction {
-    if (self.viewFollowedAction) {
-        self.viewFollowedAction();
-    }
+    SafelyCallBlock(self.viewFollowedAction);
 }
 
 - (void)onFollowingAction {
-    if (self.viewFollowingAction) {
-        self.viewFollowingAction();
-    }
+    SafelyCallBlock(self.viewFollowingAction);
 }
 
 - (void)onAccessedAction {
-    if (self.viewAccessedAction) {
-        self.viewAccessedAction();
-    }
+    SafelyCallBlock(self.viewAccessedAction);
+}
+
+- (void)setFollowedNumber:(NSUInteger)followedNumber {
+    _followedNumber = followedNumber;
+    _followedButton.badgeValue = followedNumber > 0 ? [NSString stringWithFormat:@"%ld", followedNumber] : nil;
+}
+
+- (void)setFollowingNumber:(NSUInteger)followingNumber {
+    _followingNumber = followingNumber;
+    _followingButton.badgeValue = followingNumber > 0 ? [NSString stringWithFormat:@"%ld", followingNumber] : nil;
+}
+
+- (void)setAccessedNumber:(NSUInteger)accessedNumber {
+    _accessedNumber = accessedNumber;
+    _accessedButton.badgeValue = accessedNumber > 0 ? [NSString stringWithFormat:@"%ld", accessedNumber] : nil;
+}
+
+- (UIView *)mineAvatarView {
+    return _avatarView;
 }
 @end

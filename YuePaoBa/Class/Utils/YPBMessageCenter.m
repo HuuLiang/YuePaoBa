@@ -24,6 +24,8 @@
     UIViewController *viewController = [UIApplication sharedApplication].keyWindow.rootViewController;
     if (viewController.presentedViewController) {
         return viewController.presentedViewController;
+    } else if ([viewController isKindOfClass:[RESideMenu class]]) {
+        return ((RESideMenu *)viewController).contentViewController;
     } else {
         return viewController;
     }
@@ -47,5 +49,20 @@
 
 - (void)dismissMessageWithCompletion:(void (^)(void))completion {
     [TSMessage dismissActiveNotificationWithCompletion:completion];
+}
+
+- (void)showProgressWithTitle:(NSString *)title subtitle:(NSString *)subtitle {
+    UIWindow *window = [[UIApplication sharedApplication].delegate window];
+    [window beginProgressingWithTitle:title subtitle:subtitle];
+}
+
+- (void)proceedProgressWithPercent:(double)percent {
+    UIWindow *window = [[UIApplication sharedApplication].delegate window];
+    [window progressWithPercent:percent];
+}
+
+- (void)hideProgress {
+    UIWindow *window = [[UIApplication sharedApplication].delegate window];
+    [window endProgressing];
 }
 @end

@@ -13,6 +13,7 @@ typedef void (^YPBProfileButtonAction)(id sender);
 @interface YPBProfileActionButton : UIButton
 
 @property (nonatomic,copy) YPBProfileButtonAction action;
+@property (nonatomic) NSString *badgeValue;
 
 - (instancetype)initWithImage:(UIImage *)image title:(NSString *)title action:(YPBProfileButtonAction)action;
 

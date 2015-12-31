@@ -34,6 +34,8 @@ typedef void (^YPBURLResponseHandler)(YPBURLResponseStatus respStatus, NSString 
 //- (NSURL *)standbyBaseURL; // override this method to provide a custom standby base URL to be used
 
 - (BOOL)shouldPostErrorNotification;
+- (BOOL)shouldPostRestErrorNotification;
+
 - (YPBURLRequestMethod)requestMethod;
 
 - (BOOL)requestURLPath:(NSString *)urlPath withParams:(NSDictionary *)params responseHandler:(YPBURLResponseHandler)responseHandler;

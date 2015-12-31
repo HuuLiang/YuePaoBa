@@ -20,5 +20,7 @@
 #import "NSString+crypt.h"
 #import "UIView+Loading.h"
 #import "UIScrollView+Refresh.h"
+#import "UITableView+Separator.h"
+#import "NSDate+Utilities.h"
 
 #endif /* YPBExtensions_h */

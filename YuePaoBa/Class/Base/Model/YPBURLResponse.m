@@ -33,6 +33,14 @@ const NSUInteger kSuccessResponseCode = 100;
     return self.code.message;
 }
 
+- (NSUInteger)nextPage {
+    if ([self.paginator.page isEqualToNumber:self.paginator.pages]) {
+        return NSNotFound;
+    }
+    
+    return self.paginator.page.unsignedIntegerValue+1;
+}
+
 - (void)parseResponseWithDictionary:(NSDictionary *)dic {
     [self parseDataWithDictionary:dic inInstance:self];
 }

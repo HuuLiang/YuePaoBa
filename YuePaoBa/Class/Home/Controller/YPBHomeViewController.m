@@ -10,6 +10,7 @@
 #import "YPBUserListModel.h"
 #import "YPBHomeCollectionViewLayout.h"
 #import "YPBHomeCell.h"
+#import "YPBUserDetailViewController.h"
 
 static NSString *const kHomeCellReusableIdentifier = @"HomeCellReusableIdentifier";
 
@@ -105,5 +106,11 @@ DefineLazyPropertyInitialization(NSMutableArray, users)
 
 - (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section {
     return self.users.count;
+}
+
+- (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath {
+    YPBUser *user = self.users[indexPath.item];
+    YPBUserDetailViewController *detailVC = [[YPBUserDetailViewController alloc] initWithUserId:user.userId];
+    [self.navigationController pushViewController:detailVC animated:YES];
 }
 @end

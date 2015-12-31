@@ -14,8 +14,16 @@ typedef void (^YPBProfileAction)(void);
 
 @property (nonatomic,retain) UIImage *avatarImage;
 @property (nonatomic) NSString *name;
+@property (nonatomic) BOOL isVIP;
 
+@property (nonatomic) NSUInteger followedNumber;
+@property (nonatomic) NSUInteger followingNumber;
+@property (nonatomic) NSUInteger accessedNumber;
+
+@property (nonatomic,copy) YPBProfileAction avatarAction;
 @property (nonatomic,copy) YPBProfileAction viewFollowedAction;
 @property (nonatomic,copy) YPBProfileAction viewFollowingAction;
 @property (nonatomic,copy) YPBProfileAction viewAccessedAction;
+
+@property (nonatomic,retain,readonly) UIView *mineAvatarView;
 @end
