@@ -67,7 +67,7 @@ return _##propertyName; \
 #define kUserTargetAgeRangeKeyName      @"yuepaoba_usertargetagerange_keyname"
 #define kUserTargetCupKeyName           @"yuepaoba_usertargetcup_keyname"
 
-#define kCurrentUserChangeNotification @"yuepaoba_current_user_change_notification"
+//#define kCurrentUserChangeNotification @"yuepaoba_current_user_change_notification"
 
 typedef struct _YPBIntRange {
     NSInteger min;

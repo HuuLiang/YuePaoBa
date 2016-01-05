@@ -24,6 +24,8 @@
 #define YPB_USER_ACCESS_QUERY_URL       @"/mfwcenter/queryAccess.json"
 #define YPB_USER_AVATAR_UPDATE_URL      @"/mfwcenter/updateUserlogo.json"
 #define YPB_USER_MESSAGE_QUERY_URL      @"/mfwcenter/messageQuery.json"
+#define YPB_USER_PHOTO_ADD_URL          @"/mfwcenter/photoCreate.json"
+
 #define YPB_USER_MESSAGE_PUSH_URL       @"/mfwcenter/loginPush.json"
 #define YPB_SYSTEM_CONFIG_URL           @"/mfwcenter/systemConfig.json"
 

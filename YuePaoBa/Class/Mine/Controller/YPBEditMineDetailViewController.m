@@ -283,7 +283,7 @@ DefineLazyPropertyInitialization(YPBUserDetailUpdateModel, updateModel)
         @strongify(self);
         [self.view endLoading];
         if (success) {
-            [self.user setAsCurrentUser];
+            [self.user saveAsCurrentUser];
             [[YPBMessageCenter defaultCenter] showSuccessWithTitle:@"个人资料修改成功" subtitle:nil];
             [self.navigationController popViewControllerAnimated:YES];
         }

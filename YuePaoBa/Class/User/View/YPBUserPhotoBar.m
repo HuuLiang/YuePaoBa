@@ -82,12 +82,6 @@ DefineLazyPropertyInitialization(NSMutableArray, imageViews)
     if (needsLayout) {
         [self setNeedsLayout];
     }
-    
-    if (imageURLStrings.count == 0) {
-        self.emptyLabel.hidden = NO;
-    } else {
-        self.emptyLabel.hidden = YES;
-    }
 }
 
 - (void)setUsePhotoAddItem:(BOOL)usePhotoAddItem {

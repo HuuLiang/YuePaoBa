@@ -197,7 +197,7 @@ DefineLazyPropertyInitialization(YPBRegisterModel, registerModel)
         @strongify(self);
         [[YPBMessageCenter defaultCenter] dismissMessageWithCompletion:^{
             self.user.userId = uid;
-            [self.user setAsCurrentUser];
+            [self.user saveAsCurrentUser];
             [self dismissViewControllerAnimated:YES completion:nil];
             [YPBUtil notifyRegisterSuccessfully];
         }];

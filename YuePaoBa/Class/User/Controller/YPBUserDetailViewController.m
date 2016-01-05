@@ -178,7 +178,7 @@ DefineLazyPropertyInitialization(YPBUserAccessModel, userAccessModel)
     [self setLayoutCell:profileCell cellHeight:MIN(kScreenHeight*0.4, 200) inRow:0 andSection:0];
     _profileCell = profileCell;
     
-    [self setHeaderTitle:@"个人相册" height:30 inSection:1];
+    [self setHeaderHeight:15 inSection:1];
     
     YPBTableViewCell *photoCell = [[YPBTableViewCell alloc] init];
     photoCell.selectionStyle = UITableViewCellSelectionStyleNone;
@@ -203,7 +203,7 @@ DefineLazyPropertyInitialization(YPBUserAccessModel, userAccessModel)
     [self setLayoutCell:_morePhotoCell inRow:1 andSection:1];
     
     const NSUInteger detailInfoSection = 2;
-    [self setHeaderTitle:@"详细资料" height:30 inSection:detailInfoSection];
+    [self setHeaderHeight:15 inSection:detailInfoSection];
     
     NSUInteger row = 0;
     _genderCell = [[YPBTableViewCell alloc] initWithImage:[UIImage imageNamed:@"female_icon"] title:@"性别：??"];

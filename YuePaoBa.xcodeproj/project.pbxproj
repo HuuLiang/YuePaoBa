@@ -30,6 +30,7 @@
 		BC1BA6021C35612000DBE0D8 /* YPBUserAvatarUpdateModel.m in Sources */ = {isa = PBXBuildFile; fileRef = BC1BA6011C35612000DBE0D8 /* YPBUserAvatarUpdateModel.m */; };
 		BC1F28211C2A404B00C2B476 /* YPBTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = BC1F28201C2A404B00C2B476 /* YPBTableViewCell.m */; };
 		BC23FB321C35ABD80055D68F /* YPBVIPCell.m in Sources */ = {isa = PBXBuildFile; fileRef = BC23FB311C35ABD80055D68F /* YPBVIPCell.m */; };
+		BC264AE91C3C252E009FBCB8 /* YPBUserPhotoAddModel.m in Sources */ = {isa = PBXBuildFile; fileRef = BC264AE81C3C252E009FBCB8 /* YPBUserPhotoAddModel.m */; };
 		BC2742271C3A5DD200C98E6F /* YPBMessageQueryModel.m in Sources */ = {isa = PBXBuildFile; fileRef = BC2742261C3A5DD200C98E6F /* YPBMessageQueryModel.m */; };
 		BC27422A1C3A631A00C98E6F /* YPBChatMessage.m in Sources */ = {isa = PBXBuildFile; fileRef = BC2742291C3A631A00C98E6F /* YPBChatMessage.m */; };
 		BC27422E1C3A65C700C98E6F /* YPBPersistentObject.m in Sources */ = {isa = PBXBuildFile; fileRef = BC27422D1C3A65C700C98E6F /* YPBPersistentObject.m */; };
@@ -174,6 +175,8 @@
 		BC1F28201C2A404B00C2B476 /* YPBTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YPBTableViewCell.m; sourceTree = "<group>"; };
 		BC23FB301C35ABD80055D68F /* YPBVIPCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YPBVIPCell.h; sourceTree = "<group>"; };
 		BC23FB311C35ABD80055D68F /* YPBVIPCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YPBVIPCell.m; sourceTree = "<group>"; };
+		BC264AE71C3C252E009FBCB8 /* YPBUserPhotoAddModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YPBUserPhotoAddModel.h; sourceTree = "<group>"; };
+		BC264AE81C3C252E009FBCB8 /* YPBUserPhotoAddModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YPBUserPhotoAddModel.m; sourceTree = "<group>"; };
 		BC2742251C3A5DD200C98E6F /* YPBMessageQueryModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YPBMessageQueryModel.h; sourceTree = "<group>"; };
 		BC2742261C3A5DD200C98E6F /* YPBMessageQueryModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YPBMessageQueryModel.m; sourceTree = "<group>"; };
 		BC2742281C3A631A00C98E6F /* YPBChatMessage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YPBChatMessage.h; sourceTree = "<group>"; };
@@ -762,6 +765,8 @@
 				BC6B747A1C34F5A90052777E /* YPBUserAccessQueryModel.m */,
 				BC1BA6001C35612000DBE0D8 /* YPBUserAvatarUpdateModel.h */,
 				BC1BA6011C35612000DBE0D8 /* YPBUserAvatarUpdateModel.m */,
+				BC264AE71C3C252E009FBCB8 /* YPBUserPhotoAddModel.h */,
+				BC264AE81C3C252E009FBCB8 /* YPBUserPhotoAddModel.m */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -1135,6 +1140,7 @@
 				BCD15F0F1C1032C3002B6C5C /* UIViewController+YPBSideMenu.m in Sources */,
 				BC652B8D1C2BF8DE00951DEA /* YPBTextField.m in Sources */,
 				BC50CE151C28F88C00CE88DD /* UIScrollView+Refresh.m in Sources */,
+				BC264AE91C3C252E009FBCB8 /* YPBUserPhotoAddModel.m in Sources */,
 				BC53B9C51C3BBEEA004252B1 /* QBImagePickerController.m in Sources */,
 				BC50CE441C29565400CE88DD /* YPBUserProfileCell.m in Sources */,
 				BC31B7681C1BEC630043E7EB /* YPBRadioButtonGroup.m in Sources */,

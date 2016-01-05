@@ -85,8 +85,10 @@ typedef NS_ENUM(NSUInteger, YPBUserCup) {
 + (YPBFloatRange)availableBustRange;
 
 - (BOOL)isRegistered;
-- (void)setAsCurrentUser;
+- (void)saveAsCurrentUser;
 - (NSError *)validate;
+- (void)addOriginalPhotoUrls:(NSArray<NSString *> *)originalPhotoUrls
+              thumbPhotoUrls:(NSArray<NSString *> *)thumbPhotoUrls;
 
 - (CGFloat)bust;  // 胸围
 - (CGFloat)waist; // 腰围

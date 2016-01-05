@@ -8,7 +8,8 @@
 
 #import <Foundation/Foundation.h>
 
-typedef void (^YPBUploadCompletionHandler)(NSArray *success, NSArray *failure);
+typedef void (^YPBUploadCompletionHandler)(NSArray *uploadedOriginalImages,
+                                           NSArray *uploadedThumbImages);
 
 @interface YPBUploadManager : NSObject
 
@@ -18,8 +19,15 @@ typedef void (^YPBUploadCompletionHandler)(NSArray *success, NSArray *failure);
     progressHandler:(YPBProgressHandler)progressHandler
   completionHandler:(YPBCompletionHandler)handler;
 
-+ (BOOL)uploadImages:(NSArray<UIImage *> *)images
-           withNames:(NSArray<NSString *> *)names
-     progressHandler:(YPBProgressHandler)progressHandler
-   completionHandler:(YPBUploadCompletionHandler)handler;
++ (BOOL)uploadOriginalImages:(NSArray<UIImage *> *)originalImages
+                 thumbImages:(NSArray<UIImage *> *)thumbImages
+              withFilePrefix:(NSString *)prefix
+             progressHandler:(YPBProgressHandler)progressHandler
+           completionHandler:(YPBUploadCompletionHandler)completionHandler;
+
++ (BOOL)uploadOriginalImages:(NSArray<UIImage *> *)originalImages
+                 thumbImages:(NSArray<UIImage *> *)thumbImages
+                   withNames:(NSArray<NSString *> *)names
+             progressHandler:(YPBProgressHandler)progressHandler
+           completionHandler:(YPBUploadCompletionHandler)completionHandler;
 @end

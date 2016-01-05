@@ -18,7 +18,12 @@ static NSString *const kSystemConfigKeyName = @"yuepaoba_systemconfig_keyname";
 }
 
 + (instancetype)defaultConfig {
-    YPBSystemConfig *config = [[self alloc] init];
+    YPBSystemConfig *config = [self configFromPersistence];
+    if (config) {
+        return config;
+    }
+    
+    config = [[self alloc] init];
     config.imgUrl = YPB_DEFAULT_PHOTOSERVER_URL;
     return config;
 }

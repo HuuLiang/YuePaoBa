@@ -17,6 +17,8 @@
 #import "YPBTableViewCell.h"
 #import "YPBUserPhotoBar.h"
 #import "YPBPhotoPicker.h"
+#import "YPBUserPhotoAddModel.h"
+#import "YPBPhotoBrowser.h"
 
 @interface YPBMineViewController ()
 {
@@ -30,17 +32,19 @@
 @property (nonatomic,retain) YPBMineProfileCell *profileCell;
 @property (nonatomic,retain) YPBUserDetailModel *mineDetailModel;
 @property (nonatomic,retain) YPBUserAvatarUpdateModel *avatarUpdateModel;
+@property (nonatomic,retain) YPBUserPhotoAddModel *photoAddModel;
 @end
 
 @implementation YPBMineViewController
 
 DefineLazyPropertyInitialization(YPBUserDetailModel, mineDetailModel)
 DefineLazyPropertyInitialization(YPBUserAvatarUpdateModel, avatarUpdateModel)
+DefineLazyPropertyInitialization(YPBUserPhotoAddModel, photoAddModel)
 
 - (instancetype)init {
     self = [super init];
     if (self) {
-        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(onCurrentUserChange) name:kCurrentUserChangeNotification object:nil];
+//        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(onCurrentUserChange) name:kCurrentUserChangeNotification object:nil];
     }
     return self;
 }
@@ -108,7 +112,8 @@ DefineLazyPropertyInitialization(YPBUserAvatarUpdateModel, avatarUpdateModel)
         
         if (success) {
             YPBUser *user = obj;
-            [user setAsCurrentUser];
+            [user saveAsCurrentUser];
+            [self reloadUI];
         }
     }];
 }
@@ -136,6 +141,12 @@ DefineLazyPropertyInitialization(YPBUserAvatarUpdateModel, avatarUpdateModel)
     _photoBar.photoAddAction = ^(id obj) {
         @strongify(self);
         [self pickingPhotos];
+    };
+    _photoBar.selectAction = ^(NSUInteger index) {
+        @strongify(self);
+        [YPBPhotoBrowser showPhotoBrowserInView:self.view.window
+                                     withPhotos:[YPBUser currentUser].userPhotos
+                              currentPhotoIndex:index];
     };
     [_photoCell addSubview:_photoBar];
     {
@@ -217,19 +228,27 @@ DefineLazyPropertyInitialization(YPBUserAvatarUpdateModel, avatarUpdateModel)
              [[YPBMessageCenter defaultCenter] proceedProgressWithPercent:progress];
          } completionHandler:^(BOOL success, id obj) {
              @strongify(self);
-             [[YPBMessageCenter defaultCenter] hideProgress];
+             
+             void (^Handler)(BOOL result) = ^(BOOL result){
+                 [[YPBMessageCenter defaultCenter] hideProgress];
+                 
+                 if (result) {
+                     [[YPBMessageCenter defaultCenter] showSuccessWithTitle:@"头像更新成功" inViewController:self];
+                     self.sideMenuAvatarView.image = pickedImage;
+                     
+                     [YPBUser currentUser].logoUrl = obj;
+                     [[YPBUser currentUser] saveAsCurrentUser];
+                 } else {
+                     [[YPBMessageCenter defaultCenter] showErrorWithTitle:@"头像更新失败" inViewController:self];
+                 }
+             };
              
              if (success) {
-                 [self.avatarUpdateModel updateAvatarOfUser:[YPBUser currentUser].userId withURL:obj completionHandler:^(BOOL success, id obj) {
-                     if (success) {
-                         [[YPBMessageCenter defaultCenter] showSuccessWithTitle:@"头像更新成功" inViewController:self];
-                         self.sideMenuAvatarView.image = pickedImage;
-                         
-                     }
+                 [self.avatarUpdateModel updateAvatarOfUser:[YPBUser currentUser].userId withURL:name completionHandler:^(BOOL success, id errorMsg) {
+                     Handler(success);
                  }];
              } else {
-                 DLog(@"头像图片上传失败：%@", ((NSError *)obj).localizedDescription);
-                 [[YPBMessageCenter defaultCenter] showErrorWithTitle:@"头像更新失败" inViewController:self];
+                 Handler(NO);
              }
          }];
     }];
@@ -256,39 +275,53 @@ DefineLazyPropertyInitialization(YPBUserAvatarUpdateModel, avatarUpdateModel)
             return ;
         }
         
-        const NSUInteger totalCount = originalImages.count+thumbImages.count;
-        NSMutableArray<UIImage *> *images = [NSMutableArray arrayWithCapacity:totalCount];
-        NSMutableArray<NSString *> *names = [NSMutableArray arrayWithCapacity:totalCount];
-        [originalImages enumerateObjectsUsingBlock:^(UIImage * _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
-            UIImage *thumbImage = thumbImages[idx];
-            [images addObject:obj];
-            [images addObject:thumbImage];
-            
-            NSString *uuid = [NSUUID UUID].UUIDString;
-            NSString *originalName = [NSString stringWithFormat:@"%@_%@_original.jpg", [YPBUser currentUser].userId, uuid];
-            NSString *thumbName = [NSString stringWithFormat:@"%@_%@_thumbnail.jpg", [YPBUser currentUser].userId, uuid];
-            [names addObject:originalName];
-            [names addObject:thumbName];
-        }];
-        
         [[YPBMessageCenter defaultCenter] showProgressWithTitle:@"照片上传中..." subtitle:nil];
-        [YPBUploadManager uploadImages:images withNames:names progressHandler:^(double progress) {
+        // Upload images to Qiniu Server
+        [YPBUploadManager uploadOriginalImages:originalImages thumbImages:thumbImages withFilePrefix:[YPBUser currentUser].userId progressHandler:^(double progress) {
             [[YPBMessageCenter defaultCenter] proceedProgressWithPercent:progress];
-        } completionHandler:^(NSArray *success, NSArray *failure) {
-            [[YPBMessageCenter defaultCenter] hideProgress];
+        } completionHandler:^(NSArray *uploadedOriginalImages, NSArray *uploadedThumbImages) {
             
-            if (failure.count > 0) {
-                [[YPBMessageCenter defaultCenter] showErrorWithTitle:[NSString stringWithFormat:@"%ld张照片上传失败",failure.count] inViewController:self];
+            if (uploadedOriginalImages.count == 0 || uploadedThumbImages.count == 0) {
+                [[YPBMessageCenter defaultCenter] hideProgress];
+                [[YPBMessageCenter defaultCenter] showErrorWithTitle:@"照片上传失败" inViewController:self];
+                return ;
             }
             
-//            if (success.count > 0) {
-//                self->_photoBar.imageURLStrings =
-//            }
+            // Photo Add REST API
+            @weakify(self);
+            
+            [self.photoAddModel addOriginalPhotos:uploadedOriginalImages
+                                      thumbPhotos:uploadedThumbImages
+                                           byUser:[YPBUser currentUser].userId
+                            withCompletionHandler:^(BOOL success, id obj)
+            {
+                [[YPBMessageCenter defaultCenter] hideProgress];
+                
+                @strongify(self);
+                if (!self) {
+                    return ;
+                }
+                
+                if (success) {
+                    NSUInteger failures = originalImages.count - uploadedOriginalImages.count;
+                    if (failures > 0) {
+                        [[YPBMessageCenter defaultCenter] showWarningWithTitle:[NSString stringWithFormat:@"%ld张照片添加成功，%ld张照片上传失败", uploadedOriginalImages.count, failures] inViewController:self];
+                    } else {
+                        [[YPBMessageCenter defaultCenter] showSuccessWithTitle:@"照片添加成功" inViewController:self];
+                    }
+                    
+                    [[YPBUser currentUser] addOriginalPhotoUrls:uploadedOriginalImages thumbPhotoUrls:uploadedThumbImages];
+                    [[YPBUser currentUser] saveAsCurrentUser];
+                    [self reloadPhotoBarImages];
+                } else {
+                    [[YPBMessageCenter defaultCenter] showErrorWithTitle:@"照片添加失败" inViewController:self];
+                }
+            }];
         }];
     }];
 }
 
-- (void)onCurrentUserChange {
+- (void)reloadUI {
     self.sideMenuAvatarView.imageURL = [NSURL URLWithString:[YPBUser currentUser].logoUrl];
     self.sideMenuAvatarView.name = [YPBUser currentUser].nickName;
     self.sideMenuAvatarView.isVIP = [YPBUser currentUser].isVip;
@@ -305,6 +338,10 @@ DefineLazyPropertyInitialization(YPBUserAvatarUpdateModel, avatarUpdateModel)
                                 NSFontAttributeName:[UIFont systemFontOfSize:14.]} range:NSMakeRange(0, likeString.length-suffix.length)];
     _likeCell.titleLabel.attributedText = likeString;
     
+    [self reloadPhotoBarImages];
+}
+
+- (void)reloadPhotoBarImages {
     NSMutableArray *thumbPhotos = [NSMutableArray array];
     [[YPBUser currentUser].userPhotos enumerateObjectsUsingBlock:^(YPBUserPhoto * _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
         if (obj.smallPhoto.length > 0) {

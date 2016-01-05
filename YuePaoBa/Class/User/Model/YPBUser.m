@@ -346,15 +346,15 @@ static YPBUser *_currentUser;
     return self.userId.length > 0;
 }
 
-- (void)setAsCurrentUser {
-    if (_currentUser == self) {
-        return;
-    }
+- (void)saveAsCurrentUser {
+//    if (_currentUser == self) {
+//        return;
+//    }
     
     _currentUser = self;
     [[NSUserDefaults standardUserDefaults] setObject:self.userInfo forKey:kUserInfoKeyName];
     [[NSUserDefaults standardUserDefaults] synchronize];
-    [[NSNotificationCenter defaultCenter] postNotificationName:kCurrentUserChangeNotification object:nil];
+    //[[NSNotificationCenter defaultCenter] postNotificationName:kCurrentUserChangeNotification object:nil];
 }
 
 - (NSError *)validate {
@@ -473,5 +473,25 @@ static YPBUser *_currentUser;
     } else {
         return YPBUserGenderUnknown;
     }
+}
+
+- (void)addOriginalPhotoUrls:(NSArray<NSString *> *)originalPhotoUrls
+              thumbPhotoUrls:(NSArray<NSString *> *)thumbPhotoUrls {
+    if (originalPhotoUrls.count != thumbPhotoUrls.count) {
+        return ;
+    }
+    
+    NSMutableArray<YPBUserPhoto *> *photos = self.userPhotos.mutableCopy;
+    [originalPhotoUrls enumerateObjectsUsingBlock:^(NSString * _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
+        NSString *originalPhotoUrl = obj;
+        NSString *thumbPhotoUrl = thumbPhotoUrls[idx];
+        
+        YPBUserPhoto *photo = [[YPBUserPhoto alloc] init];
+        photo.smallPhoto = thumbPhotoUrl;
+        photo.bigPhoto = originalPhotoUrl;
+        photo.userId = self.userId;
+        [photos addObject:photo];
+    }];
+    self.userPhotos = photos;
 }
 @end
