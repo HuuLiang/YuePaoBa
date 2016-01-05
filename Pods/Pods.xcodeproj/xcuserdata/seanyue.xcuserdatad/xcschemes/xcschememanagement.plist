@@ -69,6 +69,11 @@
 			<key>isShown</key>
 			<false/>
 		</dict>
+		<key>Realm.xcscheme</key>
+		<dict>
+			<key>isShown</key>
+			<false/>
+		</dict>
 		<key>SDWebImage.xcscheme</key>
 		<dict>
 			<key>isShown</key>
@@ -102,17 +107,32 @@
 	</dict>
 	<key>SuppressBuildableAutocreation</key>
 	<dict>
-		<key>1EE466B4FB048DDF8CF5DB58F5E1A4F9</key>
+		<key>0CFE9BE69733AB572D4178245A9D123E</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>2627171E58F651FD769555C72223B022</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>36DA120336DEF4929EF1972934371225</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>3C274F30D9D2B953AF7ABCD9ABDE7F38</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>3E3B500D650A5A4749A3E089783DBE88</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
 		<key>410B25DF16EA5C5B3E2698F74F9625FB</key>
-		<dict>
-			<key>primary</key>
-			<true/>
-		</dict>
-		<key>4B97AEC1CF93AA574411B79F9CC070DC</key>
 		<dict>
 			<key>primary</key>
 			<true/>
@@ -132,12 +152,7 @@
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>5EEF83CA5E1DEF9EFE183DFD22CB90E6</key>
-		<dict>
-			<key>primary</key>
-			<true/>
-		</dict>
-		<key>6B6FCEFD5960948437A75783D8A10F4B</key>
+		<key>666B2F95A149F649EA3A62A507062572</key>
 		<dict>
 			<key>primary</key>
 			<true/>
@@ -152,27 +167,17 @@
 			<key>primary</key>
 			<true/>
 		</dict>
+		<key>BFB51F34CCEB51DE4CADB80202B5DAB9</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
 		<key>DA1A7295DF2A99609DA0EEBF5E83233D</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>DAA2595D38D4C9FFF6A2F39397A04DA5</key>
-		<dict>
-			<key>primary</key>
-			<true/>
-		</dict>
 		<key>DBC9A0AF6D4571D059D2AF2422F2BD6E</key>
-		<dict>
-			<key>primary</key>
-			<true/>
-		</dict>
-		<key>DC1B42CC4240D43716C57AF52EA5B8DC</key>
-		<dict>
-			<key>primary</key>
-			<true/>
-		</dict>
-		<key>DDD92AF48CD1CBBB6501F61B977A5809</key>
 		<dict>
 			<key>primary</key>
 			<true/>
@@ -188,6 +193,11 @@
 			<true/>
 		</dict>
 		<key>E9EF397B95762DDB254C71DDCB4B1381</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>EAE76486D8B33322D542C73A34FC6503</key>
 		<dict>
 			<key>primary</key>
 			<true/>

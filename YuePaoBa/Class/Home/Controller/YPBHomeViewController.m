@@ -84,8 +84,7 @@ DefineLazyPropertyInitialization(NSMutableArray, users)
     };
     
     if (isRefresh) {
-        YPBUserGender targetGender = [YPBUser currentUser].gender == YPBUserGenderMale ? YPBUserGenderFemale : YPBUserGenderMale;
-        [self.userListModel fetchUserListWithGender:targetGender space:YPBUserSpaceHome completionHandler:handler];
+        [self.userListModel fetchUserListWithGender:[YPBUser currentUser].oppositeGender space:YPBUserSpaceHome completionHandler:handler];
     } else {
         [self.userListModel fetchUserListInNextPageWithCompletionHandler:handler];
     }

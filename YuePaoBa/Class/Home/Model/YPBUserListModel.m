@@ -43,7 +43,7 @@
     NSDictionary *params = @{@"sex":[YPBUser stringOfGender:gender],
                              @"uPosition":space == YPBUserSpaceHome ? @1 : @2,
                              @"pageNum":@(page),
-                             @"pageSize":@18
+                             @"pageSize":space == YPBUserSpaceHome?@18:@10
                              };
     BOOL success = [self requestURLPath:YPB_USER_LIST_URL
                              withParams:params

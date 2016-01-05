@@ -40,6 +40,9 @@ static NSString *const kEncryptionPassword = @"wdnxs&*@#!*qb)*&qiang";
                                    @"pV":YPB_REST_PV};
     
     NSString *sign = [signParams signWithDictionary:[self class].commonParams keyOrders:[self class].keyOrdersOfCommonParams];
+    if (!params) {
+        params = [NSDictionary dictionary];
+    }
     NSString *encryptedDataString = [params encryptedStringWithSign:sign password:kEncryptionPassword excludeKeys:@[@"key"]];
     return @{@"data":encryptedDataString, @"appId":YPB_REST_APPID};
 }

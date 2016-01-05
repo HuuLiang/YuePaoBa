@@ -28,6 +28,7 @@ return _##propertyName; \
 #define SafelyCallBlock(block) if (block) block();
 #define SafelyCallBlock1(block, arg) if (block) block(arg);
 #define SafelyCallBlock2(block, arg1, arg2) if (block) block(arg1, arg2);
+#define SafelyCallBlock3(block, arg1, arg2, arg3) if (block) block(arg1, arg2, arg3);
 
 #define kScreenWidth [UIScreen mainScreen].bounds.size.width
 #define kScreenHeight [UIScreen mainScreen].bounds.size.height
@@ -85,4 +86,5 @@ typedef NSArray YPBPair;
 typedef void (^YPBProgressHandler)(double progress);
 typedef void (^YPBCompletionHandler)(BOOL success, id obj);
 typedef void (^YPBAction)(id obj);
+typedef BOOL (^YPBStatusAction)(id obj);
 #endif /* YPBCommonDef_h */

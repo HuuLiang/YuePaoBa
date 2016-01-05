@@ -29,6 +29,13 @@
 		BC1AED601C0F5A8B003A0C63 /* YPBSettingViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BC1AED5F1C0F5A8B003A0C63 /* YPBSettingViewController.m */; };
 		BC1BA6021C35612000DBE0D8 /* YPBUserAvatarUpdateModel.m in Sources */ = {isa = PBXBuildFile; fileRef = BC1BA6011C35612000DBE0D8 /* YPBUserAvatarUpdateModel.m */; };
 		BC1F28211C2A404B00C2B476 /* YPBTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = BC1F28201C2A404B00C2B476 /* YPBTableViewCell.m */; };
+		BC23FB321C35ABD80055D68F /* YPBVIPCell.m in Sources */ = {isa = PBXBuildFile; fileRef = BC23FB311C35ABD80055D68F /* YPBVIPCell.m */; };
+		BC2742271C3A5DD200C98E6F /* YPBMessageQueryModel.m in Sources */ = {isa = PBXBuildFile; fileRef = BC2742261C3A5DD200C98E6F /* YPBMessageQueryModel.m */; };
+		BC27422A1C3A631A00C98E6F /* YPBChatMessage.m in Sources */ = {isa = PBXBuildFile; fileRef = BC2742291C3A631A00C98E6F /* YPBChatMessage.m */; };
+		BC27422E1C3A65C700C98E6F /* YPBPersistentObject.m in Sources */ = {isa = PBXBuildFile; fileRef = BC27422D1C3A65C700C98E6F /* YPBPersistentObject.m */; };
+		BC2742311C3A67C100C98E6F /* YPBPersistentManager.m in Sources */ = {isa = PBXBuildFile; fileRef = BC2742301C3A67C100C98E6F /* YPBPersistentManager.m */; };
+		BC2742341C3A791800C98E6F /* YPBMessagePushModel.m in Sources */ = {isa = PBXBuildFile; fileRef = BC2742331C3A791800C98E6F /* YPBMessagePushModel.m */; };
+		BC2742761C3A8EC600C98E6F /* YPBMineAccessCell.m in Sources */ = {isa = PBXBuildFile; fileRef = BC2742751C3A8EC600C98E6F /* YPBMineAccessCell.m */; };
 		BC2ED5AB1C33C5FF00BE00A2 /* YPBUserDetailUpdateModel.m in Sources */ = {isa = PBXBuildFile; fileRef = BC2ED5AA1C33C5FF00BE00A2 /* YPBUserDetailUpdateModel.m */; };
 		BC303D8E1C1FE8F70091093B /* YPBMessageCenter.m in Sources */ = {isa = PBXBuildFile; fileRef = BC303D8D1C1FE8F70091093B /* YPBMessageCenter.m */; };
 		BC31B75B1C1B2F540043E7EB /* YPBRegisterFirstViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BC31B7581C1B2F540043E7EB /* YPBRegisterFirstViewController.m */; };
@@ -49,6 +56,21 @@
 		BC50CE441C29565400CE88DD /* YPBUserProfileCell.m in Sources */ = {isa = PBXBuildFile; fileRef = BC50CE431C29565400CE88DD /* YPBUserProfileCell.m */; };
 		BC50CE4A1C297BB400CE88DD /* YPBUserAccessModel.m in Sources */ = {isa = PBXBuildFile; fileRef = BC50CE491C297BB400CE88DD /* YPBUserAccessModel.m */; };
 		BC5222851C29A7DA00C8333C /* YPBVIPPriviledgeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BC5222841C29A7DA00C8333C /* YPBVIPPriviledgeViewController.m */; };
+		BC53B9A41C3B6ED7004252B1 /* YPBLikeButton.m in Sources */ = {isa = PBXBuildFile; fileRef = BC53B9A31C3B6ED7004252B1 /* YPBLikeButton.m */; };
+		BC53B9A71C3BA29C004252B1 /* YPBPhotoPicker.m in Sources */ = {isa = PBXBuildFile; fileRef = BC53B9A61C3BA29C004252B1 /* YPBPhotoPicker.m */; };
+		BC53B9BE1C3BBEEA004252B1 /* QBAssetsCollectionCheckmarkView.m in Sources */ = {isa = PBXBuildFile; fileRef = BC53B9AA1C3BBEEA004252B1 /* QBAssetsCollectionCheckmarkView.m */; };
+		BC53B9BF1C3BBEEA004252B1 /* QBAssetsCollectionFooterView.m in Sources */ = {isa = PBXBuildFile; fileRef = BC53B9AC1C3BBEEA004252B1 /* QBAssetsCollectionFooterView.m */; };
+		BC53B9C01C3BBEEA004252B1 /* QBAssetsCollectionOverlayView.m in Sources */ = {isa = PBXBuildFile; fileRef = BC53B9AE1C3BBEEA004252B1 /* QBAssetsCollectionOverlayView.m */; };
+		BC53B9C11C3BBEEA004252B1 /* QBAssetsCollectionVideoIndicatorView.m in Sources */ = {isa = PBXBuildFile; fileRef = BC53B9B01C3BBEEA004252B1 /* QBAssetsCollectionVideoIndicatorView.m */; };
+		BC53B9C21C3BBEEA004252B1 /* QBAssetsCollectionViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = BC53B9B21C3BBEEA004252B1 /* QBAssetsCollectionViewCell.m */; };
+		BC53B9C31C3BBEEA004252B1 /* QBAssetsCollectionViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BC53B9B41C3BBEEA004252B1 /* QBAssetsCollectionViewController.m */; };
+		BC53B9C41C3BBEEA004252B1 /* QBAssetsCollectionViewLayout.m in Sources */ = {isa = PBXBuildFile; fileRef = BC53B9B61C3BBEEA004252B1 /* QBAssetsCollectionViewLayout.m */; };
+		BC53B9C51C3BBEEA004252B1 /* QBImagePickerController.m in Sources */ = {isa = PBXBuildFile; fileRef = BC53B9B81C3BBEEA004252B1 /* QBImagePickerController.m */; };
+		BC53B9C61C3BBEEA004252B1 /* QBImagePickerController.strings in Resources */ = {isa = PBXBuildFile; fileRef = BC53B9B91C3BBEEA004252B1 /* QBImagePickerController.strings */; };
+		BC53B9C71C3BBEEA004252B1 /* QBImagePickerGroupCell.m in Sources */ = {isa = PBXBuildFile; fileRef = BC53B9BB1C3BBEEA004252B1 /* QBImagePickerGroupCell.m */; };
+		BC53B9C81C3BBEEA004252B1 /* QBImagePickerThumbnailView.m in Sources */ = {isa = PBXBuildFile; fileRef = BC53B9BD1C3BBEEA004252B1 /* QBImagePickerThumbnailView.m */; };
+		BC53B9CB1C3BF0F3004252B1 /* YPBSystemConfigModel.m in Sources */ = {isa = PBXBuildFile; fileRef = BC53B9CA1C3BF0F3004252B1 /* YPBSystemConfigModel.m */; };
+		BC53B9CE1C3BF435004252B1 /* YPBSystemConfig.m in Sources */ = {isa = PBXBuildFile; fileRef = BC53B9CD1C3BF435004252B1 /* YPBSystemConfig.m */; };
 		BC5874681C279A4900A72274 /* YPBErrorHandler.m in Sources */ = {isa = PBXBuildFile; fileRef = BC5874671C279A4900A72274 /* YPBErrorHandler.m */; };
 		BC58746B1C27CB8700A72274 /* YPBRegisterModel.m in Sources */ = {isa = PBXBuildFile; fileRef = BC58746A1C27CB8700A72274 /* YPBRegisterModel.m */; };
 		BC58746E1C27FE2F00A72274 /* UIView+Loading.m in Sources */ = {isa = PBXBuildFile; fileRef = BC58746D1C27FE2F00A72274 /* UIView+Loading.m */; };
@@ -66,7 +88,6 @@
 		BC652B8D1C2BF8DE00951DEA /* YPBTextField.m in Sources */ = {isa = PBXBuildFile; fileRef = BC652B8C1C2BF8DE00951DEA /* YPBTextField.m */; };
 		BC6B747B1C34F5A90052777E /* YPBUserAccessQueryModel.m in Sources */ = {isa = PBXBuildFile; fileRef = BC6B747A1C34F5A90052777E /* YPBUserAccessQueryModel.m */; };
 		BC6B747E1C34F9840052777E /* YPBUserGreet.m in Sources */ = {isa = PBXBuildFile; fileRef = BC6B747D1C34F9840052777E /* YPBUserGreet.m */; };
-		BC6B74811C34FBA10052777E /* YPBMineGreetingCell.m in Sources */ = {isa = PBXBuildFile; fileRef = BC6B74801C34FBA10052777E /* YPBMineGreetingCell.m */; };
 		BC6B74841C34FCEB0052777E /* YPBMineAccessViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BC6B74831C34FCEB0052777E /* YPBMineAccessViewController.m */; };
 		BC6B74871C350ED50052777E /* YPBUploadManager.m in Sources */ = {isa = PBXBuildFile; fileRef = BC6B74861C350ED50052777E /* YPBUploadManager.m */; };
 		BC6B748A1C351AF20052777E /* NSDate+Utilities.m in Sources */ = {isa = PBXBuildFile; fileRef = BC6B74891C351AF20052777E /* NSDate+Utilities.m */; };
@@ -151,6 +172,20 @@
 		BC1BA6011C35612000DBE0D8 /* YPBUserAvatarUpdateModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YPBUserAvatarUpdateModel.m; sourceTree = "<group>"; };
 		BC1F281F1C2A404B00C2B476 /* YPBTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YPBTableViewCell.h; sourceTree = "<group>"; };
 		BC1F28201C2A404B00C2B476 /* YPBTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YPBTableViewCell.m; sourceTree = "<group>"; };
+		BC23FB301C35ABD80055D68F /* YPBVIPCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YPBVIPCell.h; sourceTree = "<group>"; };
+		BC23FB311C35ABD80055D68F /* YPBVIPCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YPBVIPCell.m; sourceTree = "<group>"; };
+		BC2742251C3A5DD200C98E6F /* YPBMessageQueryModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YPBMessageQueryModel.h; sourceTree = "<group>"; };
+		BC2742261C3A5DD200C98E6F /* YPBMessageQueryModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YPBMessageQueryModel.m; sourceTree = "<group>"; };
+		BC2742281C3A631A00C98E6F /* YPBChatMessage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YPBChatMessage.h; sourceTree = "<group>"; };
+		BC2742291C3A631A00C98E6F /* YPBChatMessage.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YPBChatMessage.m; sourceTree = "<group>"; };
+		BC27422C1C3A65C700C98E6F /* YPBPersistentObject.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YPBPersistentObject.h; sourceTree = "<group>"; };
+		BC27422D1C3A65C700C98E6F /* YPBPersistentObject.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YPBPersistentObject.m; sourceTree = "<group>"; };
+		BC27422F1C3A67C100C98E6F /* YPBPersistentManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YPBPersistentManager.h; sourceTree = "<group>"; };
+		BC2742301C3A67C100C98E6F /* YPBPersistentManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YPBPersistentManager.m; sourceTree = "<group>"; };
+		BC2742321C3A791800C98E6F /* YPBMessagePushModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YPBMessagePushModel.h; sourceTree = "<group>"; };
+		BC2742331C3A791800C98E6F /* YPBMessagePushModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YPBMessagePushModel.m; sourceTree = "<group>"; };
+		BC2742741C3A8EC600C98E6F /* YPBMineAccessCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YPBMineAccessCell.h; sourceTree = "<group>"; };
+		BC2742751C3A8EC600C98E6F /* YPBMineAccessCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YPBMineAccessCell.m; sourceTree = "<group>"; };
 		BC2ED5A91C33C5FF00BE00A2 /* YPBUserDetailUpdateModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YPBUserDetailUpdateModel.h; sourceTree = "<group>"; };
 		BC2ED5AA1C33C5FF00BE00A2 /* YPBUserDetailUpdateModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YPBUserDetailUpdateModel.m; sourceTree = "<group>"; };
 		BC303D8B1C1FE7110091093B /* YPBErrorDef.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = YPBErrorDef.h; sourceTree = "<group>"; };
@@ -192,6 +227,35 @@
 		BC50CE491C297BB400CE88DD /* YPBUserAccessModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YPBUserAccessModel.m; sourceTree = "<group>"; };
 		BC5222831C29A7DA00C8333C /* YPBVIPPriviledgeViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YPBVIPPriviledgeViewController.h; sourceTree = "<group>"; };
 		BC5222841C29A7DA00C8333C /* YPBVIPPriviledgeViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YPBVIPPriviledgeViewController.m; sourceTree = "<group>"; };
+		BC53B9A21C3B6ED7004252B1 /* YPBLikeButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YPBLikeButton.h; sourceTree = "<group>"; };
+		BC53B9A31C3B6ED7004252B1 /* YPBLikeButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YPBLikeButton.m; sourceTree = "<group>"; };
+		BC53B9A51C3BA29C004252B1 /* YPBPhotoPicker.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YPBPhotoPicker.h; sourceTree = "<group>"; };
+		BC53B9A61C3BA29C004252B1 /* YPBPhotoPicker.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YPBPhotoPicker.m; sourceTree = "<group>"; };
+		BC53B9A91C3BBEEA004252B1 /* QBAssetsCollectionCheckmarkView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QBAssetsCollectionCheckmarkView.h; sourceTree = "<group>"; };
+		BC53B9AA1C3BBEEA004252B1 /* QBAssetsCollectionCheckmarkView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QBAssetsCollectionCheckmarkView.m; sourceTree = "<group>"; };
+		BC53B9AB1C3BBEEA004252B1 /* QBAssetsCollectionFooterView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QBAssetsCollectionFooterView.h; sourceTree = "<group>"; };
+		BC53B9AC1C3BBEEA004252B1 /* QBAssetsCollectionFooterView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QBAssetsCollectionFooterView.m; sourceTree = "<group>"; };
+		BC53B9AD1C3BBEEA004252B1 /* QBAssetsCollectionOverlayView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QBAssetsCollectionOverlayView.h; sourceTree = "<group>"; };
+		BC53B9AE1C3BBEEA004252B1 /* QBAssetsCollectionOverlayView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QBAssetsCollectionOverlayView.m; sourceTree = "<group>"; };
+		BC53B9AF1C3BBEEA004252B1 /* QBAssetsCollectionVideoIndicatorView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QBAssetsCollectionVideoIndicatorView.h; sourceTree = "<group>"; };
+		BC53B9B01C3BBEEA004252B1 /* QBAssetsCollectionVideoIndicatorView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QBAssetsCollectionVideoIndicatorView.m; sourceTree = "<group>"; };
+		BC53B9B11C3BBEEA004252B1 /* QBAssetsCollectionViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QBAssetsCollectionViewCell.h; sourceTree = "<group>"; };
+		BC53B9B21C3BBEEA004252B1 /* QBAssetsCollectionViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QBAssetsCollectionViewCell.m; sourceTree = "<group>"; };
+		BC53B9B31C3BBEEA004252B1 /* QBAssetsCollectionViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QBAssetsCollectionViewController.h; sourceTree = "<group>"; };
+		BC53B9B41C3BBEEA004252B1 /* QBAssetsCollectionViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QBAssetsCollectionViewController.m; sourceTree = "<group>"; };
+		BC53B9B51C3BBEEA004252B1 /* QBAssetsCollectionViewLayout.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QBAssetsCollectionViewLayout.h; sourceTree = "<group>"; };
+		BC53B9B61C3BBEEA004252B1 /* QBAssetsCollectionViewLayout.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QBAssetsCollectionViewLayout.m; sourceTree = "<group>"; };
+		BC53B9B71C3BBEEA004252B1 /* QBImagePickerController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QBImagePickerController.h; sourceTree = "<group>"; };
+		BC53B9B81C3BBEEA004252B1 /* QBImagePickerController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QBImagePickerController.m; sourceTree = "<group>"; };
+		BC53B9B91C3BBEEA004252B1 /* QBImagePickerController.strings */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.strings; path = QBImagePickerController.strings; sourceTree = "<group>"; };
+		BC53B9BA1C3BBEEA004252B1 /* QBImagePickerGroupCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QBImagePickerGroupCell.h; sourceTree = "<group>"; };
+		BC53B9BB1C3BBEEA004252B1 /* QBImagePickerGroupCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QBImagePickerGroupCell.m; sourceTree = "<group>"; };
+		BC53B9BC1C3BBEEA004252B1 /* QBImagePickerThumbnailView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QBImagePickerThumbnailView.h; sourceTree = "<group>"; };
+		BC53B9BD1C3BBEEA004252B1 /* QBImagePickerThumbnailView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QBImagePickerThumbnailView.m; sourceTree = "<group>"; };
+		BC53B9C91C3BF0F3004252B1 /* YPBSystemConfigModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YPBSystemConfigModel.h; sourceTree = "<group>"; };
+		BC53B9CA1C3BF0F3004252B1 /* YPBSystemConfigModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YPBSystemConfigModel.m; sourceTree = "<group>"; };
+		BC53B9CC1C3BF435004252B1 /* YPBSystemConfig.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YPBSystemConfig.h; sourceTree = "<group>"; };
+		BC53B9CD1C3BF435004252B1 /* YPBSystemConfig.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YPBSystemConfig.m; sourceTree = "<group>"; };
 		BC5874661C279A4900A72274 /* YPBErrorHandler.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YPBErrorHandler.h; sourceTree = "<group>"; };
 		BC5874671C279A4900A72274 /* YPBErrorHandler.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YPBErrorHandler.m; sourceTree = "<group>"; };
 		BC5874691C27CB8700A72274 /* YPBRegisterModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YPBRegisterModel.h; sourceTree = "<group>"; };
@@ -226,8 +290,6 @@
 		BC6B747A1C34F5A90052777E /* YPBUserAccessQueryModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YPBUserAccessQueryModel.m; sourceTree = "<group>"; };
 		BC6B747C1C34F9840052777E /* YPBUserGreet.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YPBUserGreet.h; sourceTree = "<group>"; };
 		BC6B747D1C34F9840052777E /* YPBUserGreet.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YPBUserGreet.m; sourceTree = "<group>"; };
-		BC6B747F1C34FBA10052777E /* YPBMineGreetingCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YPBMineGreetingCell.h; sourceTree = "<group>"; };
-		BC6B74801C34FBA10052777E /* YPBMineGreetingCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YPBMineGreetingCell.m; sourceTree = "<group>"; };
 		BC6B74821C34FCEB0052777E /* YPBMineAccessViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YPBMineAccessViewController.h; sourceTree = "<group>"; };
 		BC6B74831C34FCEB0052777E /* YPBMineAccessViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YPBMineAccessViewController.m; sourceTree = "<group>"; };
 		BC6B74851C350ED50052777E /* YPBUploadManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YPBUploadManager.h; sourceTree = "<group>"; };
@@ -375,8 +437,8 @@
 				BC6D58D91C22A07F001C2DB1 /* YPBMineProfileCell.m */,
 				BC6D58DB1C22A877001C2DB1 /* YPBProfileActionButton.h */,
 				BC6D58DC1C22A877001C2DB1 /* YPBProfileActionButton.m */,
-				BC6B747F1C34FBA10052777E /* YPBMineGreetingCell.h */,
-				BC6B74801C34FBA10052777E /* YPBMineGreetingCell.m */,
+				BC2742741C3A8EC600C98E6F /* YPBMineAccessCell.h */,
+				BC2742751C3A8EC600C98E6F /* YPBMineAccessCell.m */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -421,6 +483,7 @@
 		BC1AED451C0F35CA003A0C63 /* Utils */ = {
 			isa = PBXGroup;
 			children = (
+				BC27422B1C3A65AF00C98E6F /* Persistence */,
 				BCD15F151C104B31002B6C5C /* rac_extobjc */,
 				BC1AED461C0F35DD003A0C63 /* Extensions */,
 				BCD15F1C1C104EAB002B6C5C /* YPBUtil.h */,
@@ -481,6 +544,7 @@
 		BC1AED521C0F5959003A0C63 /* VIPCenter */ = {
 			isa = PBXGroup;
 			children = (
+				BC23FB2F1C35AA210055D68F /* View */,
 				BC1AED531C0F597C003A0C63 /* Controller */,
 			);
 			path = VIPCenter;
@@ -499,6 +563,7 @@
 			isa = PBXGroup;
 			children = (
 				BC1AED581C0F5A1E003A0C63 /* Controller */,
+				BC2742241C3A5DB200C98E6F /* Model */,
 			);
 			path = Message;
 			sourceTree = "<group>";
@@ -527,6 +592,39 @@
 				BC1AED5F1C0F5A8B003A0C63 /* YPBSettingViewController.m */,
 			);
 			path = Controller;
+			sourceTree = "<group>";
+		};
+		BC23FB2F1C35AA210055D68F /* View */ = {
+			isa = PBXGroup;
+			children = (
+				BC23FB301C35ABD80055D68F /* YPBVIPCell.h */,
+				BC23FB311C35ABD80055D68F /* YPBVIPCell.m */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		BC2742241C3A5DB200C98E6F /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				BC2742281C3A631A00C98E6F /* YPBChatMessage.h */,
+				BC2742291C3A631A00C98E6F /* YPBChatMessage.m */,
+				BC2742251C3A5DD200C98E6F /* YPBMessageQueryModel.h */,
+				BC2742261C3A5DD200C98E6F /* YPBMessageQueryModel.m */,
+				BC2742321C3A791800C98E6F /* YPBMessagePushModel.h */,
+				BC2742331C3A791800C98E6F /* YPBMessagePushModel.m */,
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
+		BC27422B1C3A65AF00C98E6F /* Persistence */ = {
+			isa = PBXGroup;
+			children = (
+				BC27422C1C3A65C700C98E6F /* YPBPersistentObject.h */,
+				BC27422D1C3A65C700C98E6F /* YPBPersistentObject.m */,
+				BC27422F1C3A67C100C98E6F /* YPBPersistentManager.h */,
+				BC2742301C3A67C100C98E6F /* YPBPersistentManager.m */,
+			);
+			path = Persistence;
 			sourceTree = "<group>";
 		};
 		BC31B7551C1B2F540043E7EB /* Account */ = {
@@ -608,8 +706,38 @@
 				BC50CE431C29565400CE88DD /* YPBUserProfileCell.m */,
 				BC652B7F1C2B992100951DEA /* YPBUserPhotoBar.h */,
 				BC652B801C2B992100951DEA /* YPBUserPhotoBar.m */,
+				BC53B9A21C3B6ED7004252B1 /* YPBLikeButton.h */,
+				BC53B9A31C3B6ED7004252B1 /* YPBLikeButton.m */,
 			);
 			path = View;
+			sourceTree = "<group>";
+		};
+		BC53B9A81C3BBEEA004252B1 /* QBImagePickerController */ = {
+			isa = PBXGroup;
+			children = (
+				BC53B9A91C3BBEEA004252B1 /* QBAssetsCollectionCheckmarkView.h */,
+				BC53B9AA1C3BBEEA004252B1 /* QBAssetsCollectionCheckmarkView.m */,
+				BC53B9AB1C3BBEEA004252B1 /* QBAssetsCollectionFooterView.h */,
+				BC53B9AC1C3BBEEA004252B1 /* QBAssetsCollectionFooterView.m */,
+				BC53B9AD1C3BBEEA004252B1 /* QBAssetsCollectionOverlayView.h */,
+				BC53B9AE1C3BBEEA004252B1 /* QBAssetsCollectionOverlayView.m */,
+				BC53B9AF1C3BBEEA004252B1 /* QBAssetsCollectionVideoIndicatorView.h */,
+				BC53B9B01C3BBEEA004252B1 /* QBAssetsCollectionVideoIndicatorView.m */,
+				BC53B9B11C3BBEEA004252B1 /* QBAssetsCollectionViewCell.h */,
+				BC53B9B21C3BBEEA004252B1 /* QBAssetsCollectionViewCell.m */,
+				BC53B9B31C3BBEEA004252B1 /* QBAssetsCollectionViewController.h */,
+				BC53B9B41C3BBEEA004252B1 /* QBAssetsCollectionViewController.m */,
+				BC53B9B51C3BBEEA004252B1 /* QBAssetsCollectionViewLayout.h */,
+				BC53B9B61C3BBEEA004252B1 /* QBAssetsCollectionViewLayout.m */,
+				BC53B9B71C3BBEEA004252B1 /* QBImagePickerController.h */,
+				BC53B9B81C3BBEEA004252B1 /* QBImagePickerController.m */,
+				BC53B9B91C3BBEEA004252B1 /* QBImagePickerController.strings */,
+				BC53B9BA1C3BBEEA004252B1 /* QBImagePickerGroupCell.h */,
+				BC53B9BB1C3BBEEA004252B1 /* QBImagePickerGroupCell.m */,
+				BC53B9BC1C3BBEEA004252B1 /* QBImagePickerThumbnailView.h */,
+				BC53B9BD1C3BBEEA004252B1 /* QBImagePickerThumbnailView.m */,
+			);
+			path = QBImagePickerController;
 			sourceTree = "<group>";
 		};
 		BC58746F1C2819C500A72274 /* Model */ = {
@@ -641,6 +769,7 @@
 		BC6B748B1C3539B40052777E /* Vendor */ = {
 			isa = PBXGroup;
 			children = (
+				BC53B9A81C3BBEEA004252B1 /* QBImagePickerController */,
 				BC6B748C1C3539D60052777E /* QiniuUpload */,
 			);
 			path = Vendor;
@@ -686,6 +815,8 @@
 				BC5980A51C3130B80037D98C /* YPBPhotoGridViewController.m */,
 				BC5980A71C313D5E0037D98C /* YPBPhotoBrowser.h */,
 				BC5980A81C313D5E0037D98C /* YPBPhotoBrowser.m */,
+				BC53B9A51C3BA29C004252B1 /* YPBPhotoPicker.h */,
+				BC53B9A61C3BA29C004252B1 /* YPBPhotoPicker.m */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -718,6 +849,10 @@
 				BC50CE391C29552100CE88DD /* YPBURLResponse.m */,
 				BC5874731C281E9300A72274 /* YPBPaginator.h */,
 				BC5874741C281E9300A72274 /* YPBPaginator.m */,
+				BC53B9CC1C3BF435004252B1 /* YPBSystemConfig.h */,
+				BC53B9CD1C3BF435004252B1 /* YPBSystemConfig.m */,
+				BC53B9C91C3BF0F3004252B1 /* YPBSystemConfigModel.h */,
+				BC53B9CA1C3BF0F3004252B1 /* YPBSystemConfigModel.m */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -871,7 +1006,12 @@
 				TargetAttributes = {
 					BC1A2D7C1C0EF909003D9138 = {
 						CreatedOnToolsVersion = 7.1.1;
-						DevelopmentTeam = QQJ9ECA39A;
+						DevelopmentTeam = S954G7B2DA;
+						SystemCapabilities = {
+							com.apple.Push = {
+								enabled = 1;
+							};
+						};
 					};
 					BC1A2D951C0EF909003D9138 = {
 						CreatedOnToolsVersion = 7.1.1;
@@ -909,6 +1049,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				BC1A2D8D1C0EF909003D9138 /* Assets.xcassets in Resources */,
+				BC53B9C61C3BBEEA004252B1 /* QBImagePickerController.strings in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -982,33 +1123,44 @@
 			buildActionMask = 2147483647;
 			files = (
 				BC6B74981C3539F10052777E /* QiniuFile.m in Sources */,
+				BC53B9CB1C3BF0F3004252B1 /* YPBSystemConfigModel.m in Sources */,
 				BC1A2DB51C0EFA4C003D9138 /* YPBAppDelegate.m in Sources */,
 				BC5874681C279A4900A72274 /* YPBErrorHandler.m in Sources */,
 				BC50CE3C1C29552100CE88DD /* YPBURLResponse.m in Sources */,
 				BC303D8E1C1FE8F70091093B /* YPBMessageCenter.m in Sources */,
-				BC6B74811C34FBA10052777E /* YPBMineGreetingCell.m in Sources */,
 				BCD15F141C103AB7002B6C5C /* YPBMineViewController.m in Sources */,
+				BC53B9C11C3BBEEA004252B1 /* QBAssetsCollectionVideoIndicatorView.m in Sources */,
 				BC1AED511C0F4ADB003A0C63 /* YPBSideMenuCell.m in Sources */,
 				BC50CE3A1C29552100CE88DD /* YPBEncryptedURLRequest.m in Sources */,
 				BCD15F0F1C1032C3002B6C5C /* UIViewController+YPBSideMenu.m in Sources */,
 				BC652B8D1C2BF8DE00951DEA /* YPBTextField.m in Sources */,
 				BC50CE151C28F88C00CE88DD /* UIScrollView+Refresh.m in Sources */,
+				BC53B9C51C3BBEEA004252B1 /* QBImagePickerController.m in Sources */,
 				BC50CE441C29565400CE88DD /* YPBUserProfileCell.m in Sources */,
 				BC31B7681C1BEC630043E7EB /* YPBRadioButtonGroup.m in Sources */,
 				BC5A6E6C1C32561F006AD77A /* YPBMineFigureViewController.m in Sources */,
+				BC53B9C41C3BBEEA004252B1 /* QBAssetsCollectionViewLayout.m in Sources */,
+				BC27422E1C3A65C700C98E6F /* YPBPersistentObject.m in Sources */,
 				BC31B7651C1BD8560043E7EB /* YPBRadioButton.m in Sources */,
+				BC2742341C3A791800C98E6F /* YPBMessagePushModel.m in Sources */,
 				BC7114A51C1AC3CA00C5001A /* YPBBaseViewController.m in Sources */,
 				BC6B74841C34FCEB0052777E /* YPBMineAccessViewController.m in Sources */,
+				BC53B9C31C3BBEEA004252B1 /* QBAssetsCollectionViewController.m in Sources */,
 				BC2ED5AB1C33C5FF00BE00A2 /* YPBUserDetailUpdateModel.m in Sources */,
 				BC31B75F1C1B3A350043E7EB /* YPBLoginViewController.m in Sources */,
 				BC1AED491C0F360D003A0C63 /* UIColor+hexColor.m in Sources */,
+				BC2742761C3A8EC600C98E6F /* YPBMineAccessCell.m in Sources */,
+				BC53B9BF1C3BBEEA004252B1 /* QBAssetsCollectionFooterView.m in Sources */,
+				BC2742311C3A67C100C98E6F /* YPBPersistentManager.m in Sources */,
 				BC652B841C2BB9BA00951DEA /* YPBEditMineDetailViewController.m in Sources */,
 				BC652B871C2BD5D800951DEA /* UITableView+Separator.m in Sources */,
 				BC6B74961C3539F10052777E /* QiniuToken.m in Sources */,
 				BC58746E1C27FE2F00A72274 /* UIView+Loading.m in Sources */,
 				BC1654B71C25285F00AB1F33 /* NSObject+Properties.m in Sources */,
 				BC1BA6021C35612000DBE0D8 /* YPBUserAvatarUpdateModel.m in Sources */,
+				BC53B9A71C3BA29C004252B1 /* YPBPhotoPicker.m in Sources */,
 				BC6B747B1C34F5A90052777E /* YPBUserAccessQueryModel.m in Sources */,
+				BC53B9CE1C3BF435004252B1 /* YPBSystemConfig.m in Sources */,
 				BC5222851C29A7DA00C8333C /* YPBVIPPriviledgeViewController.m in Sources */,
 				BC5F1AB61C2CF3DB0047BCF4 /* YPBUser+Account.m in Sources */,
 				BC31B7621C1BC2C20043E7EB /* YPBActionButton.m in Sources */,
@@ -1017,21 +1169,28 @@
 				BC1AED601C0F5A8B003A0C63 /* YPBSettingViewController.m in Sources */,
 				BC50CE121C28EE0F00CE88DD /* YPBHomeCollectionViewLayout.m in Sources */,
 				BC1654BA1C25290200AB1F33 /* NSDictionary+YPBSign.m in Sources */,
+				BC53B9C01C3BBEEA004252B1 /* QBAssetsCollectionOverlayView.m in Sources */,
 				BC1A2D821C0EF909003D9138 /* main.m in Sources */,
 				BC1F28211C2A404B00C2B476 /* YPBTableViewCell.m in Sources */,
 				BC6D58DA1C22A07F001C2DB1 /* YPBMineProfileCell.m in Sources */,
+				BC53B9C71C3BBEEA004252B1 /* QBImagePickerGroupCell.m in Sources */,
 				BC50CE4A1C297BB400CE88DD /* YPBUserAccessModel.m in Sources */,
 				BC1A7B1E1C117C920082A2FB /* YPBAvatarView.m in Sources */,
 				BC5980A61C3130B80037D98C /* YPBPhotoGridViewController.m in Sources */,
 				BCD15F1E1C104EAB002B6C5C /* YPBUtil.m in Sources */,
 				BC652B8A1C2BD9B300951DEA /* YPBInputTextViewController.m in Sources */,
+				BC23FB321C35ABD80055D68F /* YPBVIPCell.m in Sources */,
 				BC1654CD1C252E9E00AB1F33 /* YPBActivateModel.m in Sources */,
+				BC53B9C21C3BBEEA004252B1 /* QBAssetsCollectionViewCell.m in Sources */,
 				BC1A7B211C1182FD0082A2FB /* UIImage+crop.m in Sources */,
 				BC1AED401C0F30C4003A0C63 /* YPBSideMenuViewController.m in Sources */,
 				BC7114BC1C1AE87100C5001A /* YPBLayoutViewController.m in Sources */,
 				BC58746B1C27CB8700A72274 /* YPBRegisterModel.m in Sources */,
+				BC2742271C3A5DD200C98E6F /* YPBMessageQueryModel.m in Sources */,
 				BC6B74871C350ED50052777E /* YPBUploadManager.m in Sources */,
 				BC5F1AB91C2CF42D0047BCF4 /* YPBUser+Mine.m in Sources */,
+				BC53B9BE1C3BBEEA004252B1 /* QBAssetsCollectionCheckmarkView.m in Sources */,
+				BC53B9A41C3B6ED7004252B1 /* YPBLikeButton.m in Sources */,
 				BC5874751C281E9300A72274 /* YPBPaginator.m in Sources */,
 				BCD15F1B1C104B31002B6C5C /* RACEXTRuntimeExtensions.m in Sources */,
 				BC5980A91C313D5E0037D98C /* YPBPhotoBrowser.m in Sources */,
@@ -1043,11 +1202,13 @@
 				BC5874721C281A6700A72274 /* YPBUserListModel.m in Sources */,
 				BC1AED561C0F59B6003A0C63 /* YPBVIPCenterViewController.m in Sources */,
 				BC50CE331C2954FF00CE88DD /* YPBUserDetailModel.m in Sources */,
+				BC53B9C81C3BBEEA004252B1 /* QBImagePickerThumbnailView.m in Sources */,
 				BC50CE401C29556300CE88DD /* YPBUserDetailViewController.m in Sources */,
 				BC1AED431C0F312F003A0C63 /* YPBHomeViewController.m in Sources */,
 				BC6D58DD1C22A877001C2DB1 /* YPBProfileActionButton.m in Sources */,
 				BC6B74991C3539F10052777E /* QiniuUploader.m in Sources */,
 				BC31B75C1C1B2F540043E7EB /* YPBReigsterSecondViewController.m in Sources */,
+				BC27422A1C3A631A00C98E6F /* YPBChatMessage.m in Sources */,
 				BC1A7B251C1185350082A2FB /* UIViewController+BackgroundImage.m in Sources */,
 				BC652B811C2B992100951DEA /* YPBUserPhotoBar.m in Sources */,
 				BC6B748A1C351AF20052777E /* NSDate+Utilities.m in Sources */,
@@ -1179,9 +1340,10 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				INFOPLIST_FILE = YuePaoBa/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = com.iqu8.yuepaoba;
+				PRODUCT_BUNDLE_IDENTIFIER = com.yuepaoba.app;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
 			};
@@ -1194,9 +1356,10 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				INFOPLIST_FILE = YuePaoBa/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = com.iqu8.yuepaoba;
+				PRODUCT_BUNDLE_IDENTIFIER = com.yuepaoba.app;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
 			};

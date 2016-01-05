@@ -18,7 +18,7 @@
 @interface YPBUserDetailViewController ()
 {
     YPBUserProfileCell *_profileCell;
-    YPBTableViewCell *_likeCell;
+    YPBTableViewCell *_genderCell;
     YPBTableViewCell *_figureCell;
     YPBTableViewCell *_heightCell;
     YPBTableViewCell *_professionCell;
@@ -34,6 +34,8 @@
 @property (nonatomic) NSString *userId;
 @property (nonatomic,retain) YPBUserDetailModel *userDetailModel;
 @property (nonatomic,retain) YPBUserAccessModel *userAccessModel;
+
+@property (nonatomic,retain) YPBUser *user;
 @end
 
 @implementation YPBUserDetailViewController
@@ -73,7 +75,7 @@ DefineLazyPropertyInitialization(YPBUserAccessModel, userAccessModel)
             if (self->_photoBar.imageURLStrings.count == 0) {
                 [[YPBMessageCenter defaultCenter] showWarningWithTitle:@"TA的相册空空如也~~~" subtitle:nil];
             } else {
-                YPBPhotoGridViewController *photoVC = [[YPBPhotoGridViewController alloc] initWithPhotos:self.userDetailModel.fetchedUser.userPhotos];
+                YPBPhotoGridViewController *photoVC = [[YPBPhotoGridViewController alloc] initWithPhotos:self.user.userPhotos];
                 [self.navigationController pushViewController:photoVC animated:YES];
             }
 
@@ -84,6 +86,7 @@ DefineLazyPropertyInitialization(YPBUserAccessModel, userAccessModel)
 - (void)loadUserDetail {
     @weakify(self);
     [self.userDetailModel fetchUserDetailWithUserId:self.userId
+                                             byUser:[YPBUser currentUser].userId
                                   completionHandler:^(BOOL success, id obj)
     {
         @strongify(self);
@@ -101,16 +104,12 @@ DefineLazyPropertyInitialization(YPBUserAccessModel, userAccessModel)
 }
 
 - (void)onSuccessfullyAccessedUser:(YPBUser *)user {
-    _profileCell.avatarImageURL = [NSURL URLWithString:user.logoUrl];
-    _profileCell.name = user.nickName;
-    _profileCell.isVIP = user.isVip;
-    _profileCell.displayDateButton = YES;
+    self.user = user;
     
-    NSString *suffix = @" 人喜欢了你";
-    NSMutableAttributedString *likeString = [[NSMutableAttributedString alloc] initWithString:[NSString stringWithFormat:@"%@%@", user.receiveGreetCount ?: @0, suffix]];
-    [likeString addAttributes:@{NSForegroundColorAttributeName:[UIColor redColor],
-                                NSFontAttributeName:[UIFont systemFontOfSize:14.]} range:NSMakeRange(0, likeString.length-suffix.length)];
-    _likeCell.titleLabel.attributedText = likeString;
+    _profileCell.user = user;
+    
+    _genderCell.imageView.image = user.gender==YPBUserGenderFemale?[UIImage imageNamed:@"female_icon"]:[UIImage imageNamed:@"male_icon"];
+    _genderCell.titleLabel.text = user.gender==YPBUserGenderFemale?@"性别：女":@"性别：男";
     
     _heightCell.titleLabel.text = [NSString stringWithFormat:@"身高：%@", user.height ?: @""];
     _figureCell.titleLabel.text = [NSString stringWithFormat:@"身材：%@", user.bwh ?: @""];
@@ -128,17 +127,15 @@ DefineLazyPropertyInitialization(YPBUserAccessModel, userAccessModel)
             [thumbPhotos addObject:obj.smallPhoto];
         }
     }];
-    if (thumbPhotos.count > 0) {
-        _photoBar.imageURLStrings = thumbPhotos;
-    }
+    _photoBar.imageURLStrings = thumbPhotos;
     
-    [self.userAccessModel accessUserWithUserId:user.userId
-                                    accessType:YPBUserAccessTypeViewDetail
-                             completionHandler:nil];
+//    [self.userAccessModel accessUserWithUserId:user.userId
+//                                    accessType:YPBUserAccessTypeViewDetail
+//                             completionHandler:nil];
 }
 
 - (void)greetUser {
-    if (self.userDetailModel.fetchedUser.userId.length == 0) {
+    if (self.user.userId.length == 0) {
         [[YPBMessageCenter defaultCenter] showErrorWithTitle:@"无法获取用户信息" subtitle:nil];
         return ;
     }
@@ -146,7 +143,7 @@ DefineLazyPropertyInitialization(YPBUserAccessModel, userAccessModel)
     @weakify(self);
     [_profileCell beginLoading];
     
-    [self.userAccessModel accessUserWithUserId:self.userDetailModel.fetchedUser.userId
+    [self.userAccessModel accessUserWithUserId:self.user.userId
                                     accessType:YPBUserAccessTypeGreet
                              completionHandler:^(BOOL success, id obj)
     {
@@ -157,6 +154,8 @@ DefineLazyPropertyInitialization(YPBUserAccessModel, userAccessModel)
         
         [self->_profileCell endLoading];
         if (success) {
+            self->_profileCell.liked = YES;
+            self.user.isGreet = YES;
             [[YPBMessageCenter defaultCenter] showSuccessWithTitle:@"打招呼成功" subtitle:nil];
         }
     }];
@@ -166,8 +165,15 @@ DefineLazyPropertyInitialization(YPBUserAccessModel, userAccessModel)
     YPBUserProfileCell *profileCell = [[YPBUserProfileCell alloc] init];
     @weakify(self);
     profileCell.dateAction = ^(id sender) {
+        
+    };
+    profileCell.likeAction = ^(id sender) {
         @strongify(self);
-        [self greetUser];
+        if (self.user.isGreet) {
+            [[YPBMessageCenter defaultCenter] showErrorWithTitle:@"您已经和TA打过招呼了！" inViewController:self];
+        } else {
+            [self greetUser];
+        }
     };
     [self setLayoutCell:profileCell cellHeight:MIN(kScreenHeight*0.4, 200) inRow:0 andSection:0];
     _profileCell = profileCell;
@@ -180,7 +186,7 @@ DefineLazyPropertyInitialization(YPBUserAccessModel, userAccessModel)
     _photoBar.selectAction = ^(NSUInteger index) {
         @strongify(self);
         [YPBPhotoBrowser showPhotoBrowserInView:self.view.window
-                                     withPhotos:self.userDetailModel.fetchedUser.userPhotos
+                                     withPhotos:self.user.userPhotos
                               currentPhotoIndex:index];
     };
     [photoCell addSubview:_photoBar];
@@ -200,9 +206,9 @@ DefineLazyPropertyInitialization(YPBUserAccessModel, userAccessModel)
     [self setHeaderTitle:@"详细资料" height:30 inSection:detailInfoSection];
     
     NSUInteger row = 0;
-    _likeCell = [[YPBTableViewCell alloc] initWithImage:[UIImage imageNamed:@"like_icon"] title:@"？人喜欢了你"];
-    _likeCell.selectionStyle = UITableViewCellSelectionStyleNone;
-    [self setLayoutCell:_likeCell inRow:row++ andSection:detailInfoSection];
+    _genderCell = [[YPBTableViewCell alloc] initWithImage:[UIImage imageNamed:@"female_icon"] title:@"性别：??"];
+    _genderCell.selectionStyle = UITableViewCellSelectionStyleNone;
+    [self setLayoutCell:_genderCell inRow:row++ andSection:detailInfoSection];
     
     _figureCell = [[YPBTableViewCell alloc] initWithImage:[UIImage imageNamed:@"figure_icon"] title:@"身材：?? ?? ??"];
     _figureCell.selectionStyle = UITableViewCellSelectionStyleNone;

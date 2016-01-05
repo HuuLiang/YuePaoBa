@@ -12,7 +12,11 @@ typedef void (^YPBPhotoBarSelectAction)(NSUInteger index);
 
 @interface YPBUserPhotoBar : UIScrollView
 
+@property (nonatomic) BOOL usePhotoAddItem;
 @property (nonatomic,retain) NSArray<NSString *> *imageURLStrings;
 @property (nonatomic,copy) YPBPhotoBarSelectAction selectAction;
+@property (nonatomic,copy) YPBAction photoAddAction;
+
+- (instancetype)initWithUsePhotoAddItem:(BOOL)usePhotoAddItem;
 
 @end

@@ -37,6 +37,8 @@
                                           @"accessType":@(accessType)}
                         responseHandler:^(YPBURLResponseStatus respStatus, NSString *errorMessage)
                     {
+                        NSUInteger greetCount = [YPBUser currentUser].greetCount.unsignedIntegerValue;
+                        [YPBUser currentUser].greetCount = @(greetCount+1);
                         SafelyCallBlock2(handler, respStatus==YPBURLResponseSuccess, nil);
                     }];
     return success;

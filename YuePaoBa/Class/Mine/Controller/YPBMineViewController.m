@@ -16,8 +16,9 @@
 #import "YPBMineAccessViewController.h"
 #import "YPBTableViewCell.h"
 #import "YPBUserPhotoBar.h"
+#import "YPBPhotoPicker.h"
 
-@interface YPBMineViewController () <UINavigationControllerDelegate,UIImagePickerControllerDelegate>
+@interface YPBMineViewController ()
 {
     YPBTableViewCell *_vipCell;
     YPBTableViewCell *_likeCell;
@@ -95,6 +96,7 @@ DefineLazyPropertyInitialization(YPBUserAvatarUpdateModel, avatarUpdateModel)
 - (void)refreshMineDetails {
     @weakify(self);
     [self.mineDetailModel fetchUserDetailWithUserId:[YPBUser currentUser].userId
+                                             byUser:[YPBUser currentUser].userId
                                   completionHandler:^(BOOL success, id obj)
     {
         @strongify(self);
@@ -129,7 +131,12 @@ DefineLazyPropertyInitialization(YPBUserAvatarUpdateModel, avatarUpdateModel)
     _photoCell = [[YPBTableViewCell alloc] init];
     _photoCell.selectionStyle = UITableViewCellSelectionStyleNone;
     
-    _photoBar = [[YPBUserPhotoBar alloc] init];
+    _photoBar = [[YPBUserPhotoBar alloc] initWithUsePhotoAddItem:YES];
+    @weakify(self);
+    _photoBar.photoAddAction = ^(id obj) {
+        @strongify(self);
+        [self pickingPhotos];
+    };
     [_photoCell addSubview:_photoBar];
     {
         [_photoBar mas_makeConstraints:^(MASConstraintMaker *make) {
@@ -150,7 +157,7 @@ DefineLazyPropertyInitialization(YPBUserAvatarUpdateModel, avatarUpdateModel)
     _profileCell.isVIP = [YPBUser currentUser].isVip;
     _profileCell.avatarAction = ^{
         @strongify(self);
-        [self startPhotoPicking];
+        [self pickingAvatar];
     };
     _profileCell.viewFollowedAction = ^{
         @strongify(self);
@@ -186,37 +193,99 @@ DefineLazyPropertyInitialization(YPBUserAvatarUpdateModel, avatarUpdateModel)
     return _sideMenuAvatarView;
 }
 
-- (void)presentImagePickerWithSourceType:(UIImagePickerControllerSourceType)sourceType {
-    if (![UIImagePickerController isSourceTypeAvailable:sourceType]) {
-        DLog(@"Image Picker Source Type: %ld is unavailable!", sourceType);
-        return ;
-    }
-    
-    UIImagePickerController *imagePicker = [[UIImagePickerController alloc] init];
-    imagePicker.delegate = self;
-    imagePicker.sourceType = sourceType;
-    
-    if (sourceType == UIImagePickerControllerSourceTypeCamera) {
-        imagePicker.cameraDevice = UIImagePickerControllerCameraDeviceFront;
-        imagePicker.cameraFlashMode = UIImagePickerControllerCameraFlashModeAuto;
-    }
-    [self presentViewController:imagePicker animated:YES completion:nil];
+- (void)pickingAvatar {
+    @weakify(self);
+    YPBPhotoPicker *photoPicker = [[YPBPhotoPicker alloc] init];
+    photoPicker.multiplePicking = NO;
+    [photoPicker showPickingSheetInViewController:self
+                                        withTitle:@"选取头像"
+                                completionHandler:^(BOOL success,
+                                                    NSArray<UIImage *> *originalImages,
+                                                    NSArray<UIImage *> *thumbImages)
+    {
+        if (photoPicker == nil || !success || thumbImages.count == 0) {
+            return;
+        }
+        
+        UIImage *pickedImage = thumbImages[0];
+        [[YPBMessageCenter defaultCenter] showProgressWithTitle:@"头像上传中..." subtitle:nil];
+        NSString *name = [NSString stringWithFormat:@"%@_%@_avatar.jpg", [YPBUser currentUser].userId, [[NSDate date] stringWithFormat:kDefaultDateFormat]];
+        [YPBUploadManager uploadImage:pickedImage
+                             withName:name
+                      progressHandler:^(double progress)
+         {
+             [[YPBMessageCenter defaultCenter] proceedProgressWithPercent:progress];
+         } completionHandler:^(BOOL success, id obj) {
+             @strongify(self);
+             [[YPBMessageCenter defaultCenter] hideProgress];
+             
+             if (success) {
+                 [self.avatarUpdateModel updateAvatarOfUser:[YPBUser currentUser].userId withURL:obj completionHandler:^(BOOL success, id obj) {
+                     if (success) {
+                         [[YPBMessageCenter defaultCenter] showSuccessWithTitle:@"头像更新成功" inViewController:self];
+                         self.sideMenuAvatarView.image = pickedImage;
+                         
+                     }
+                 }];
+             } else {
+                 DLog(@"头像图片上传失败：%@", ((NSError *)obj).localizedDescription);
+                 [[YPBMessageCenter defaultCenter] showErrorWithTitle:@"头像更新失败" inViewController:self];
+             }
+         }];
+    }];
 }
 
-- (void)startPhotoPicking {
+- (void)pickingPhotos {
     @weakify(self);
-    UIActionSheet *actionSheet = [[UIActionSheet alloc] bk_initWithTitle:@"选取头像"];
-    [actionSheet bk_addButtonWithTitle:@"从相册中选取" handler:^{
-        @strongify(self);
-        [self presentImagePickerWithSourceType:UIImagePickerControllerSourceTypePhotoLibrary];
-    }];
+    YPBPhotoPicker *photoPicker = [[YPBPhotoPicker alloc] init];
+    photoPicker.multiplePicking = YES;
+    photoPicker.maximumNumberOfMultiplePicking = 5;
     
-    [actionSheet bk_addButtonWithTitle:@"拍照" handler:^{
+    [photoPicker showPickingSheetInViewController:self
+                                        withTitle:@"选取照片"
+                                completionHandler:^(BOOL success,
+                                                    NSArray<UIImage *> *originalImages,
+                                                    NSArray<UIImage *> *thumbImages)
+    {
+        if (photoPicker == nil || !success || originalImages.count != thumbImages.count) {
+            return ;
+        }
+        
         @strongify(self);
-        [self presentImagePickerWithSourceType:UIImagePickerControllerSourceTypeCamera];
+        if (!self) {
+            return ;
+        }
+        
+        const NSUInteger totalCount = originalImages.count+thumbImages.count;
+        NSMutableArray<UIImage *> *images = [NSMutableArray arrayWithCapacity:totalCount];
+        NSMutableArray<NSString *> *names = [NSMutableArray arrayWithCapacity:totalCount];
+        [originalImages enumerateObjectsUsingBlock:^(UIImage * _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
+            UIImage *thumbImage = thumbImages[idx];
+            [images addObject:obj];
+            [images addObject:thumbImage];
+            
+            NSString *uuid = [NSUUID UUID].UUIDString;
+            NSString *originalName = [NSString stringWithFormat:@"%@_%@_original.jpg", [YPBUser currentUser].userId, uuid];
+            NSString *thumbName = [NSString stringWithFormat:@"%@_%@_thumbnail.jpg", [YPBUser currentUser].userId, uuid];
+            [names addObject:originalName];
+            [names addObject:thumbName];
+        }];
+        
+        [[YPBMessageCenter defaultCenter] showProgressWithTitle:@"照片上传中..." subtitle:nil];
+        [YPBUploadManager uploadImages:images withNames:names progressHandler:^(double progress) {
+            [[YPBMessageCenter defaultCenter] proceedProgressWithPercent:progress];
+        } completionHandler:^(NSArray *success, NSArray *failure) {
+            [[YPBMessageCenter defaultCenter] hideProgress];
+            
+            if (failure.count > 0) {
+                [[YPBMessageCenter defaultCenter] showErrorWithTitle:[NSString stringWithFormat:@"%ld张照片上传失败",failure.count] inViewController:self];
+            }
+            
+//            if (success.count > 0) {
+//                self->_photoBar.imageURLStrings =
+//            }
+        }];
     }];
-    [actionSheet bk_setDestructiveButtonWithTitle:@"取消" handler:nil];
-    [actionSheet showInView:self.view];
 }
 
 - (void)onCurrentUserChange {
@@ -235,6 +304,14 @@ DefineLazyPropertyInitialization(YPBUserAvatarUpdateModel, avatarUpdateModel)
     [likeString addAttributes:@{NSForegroundColorAttributeName:[UIColor redColor],
                                 NSFontAttributeName:[UIFont systemFontOfSize:14.]} range:NSMakeRange(0, likeString.length-suffix.length)];
     _likeCell.titleLabel.attributedText = likeString;
+    
+    NSMutableArray *thumbPhotos = [NSMutableArray array];
+    [[YPBUser currentUser].userPhotos enumerateObjectsUsingBlock:^(YPBUserPhoto * _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
+        if (obj.smallPhoto.length > 0) {
+            [thumbPhotos addObject:obj.smallPhoto];
+        }
+    }];
+    _photoBar.imageURLStrings = thumbPhotos;
 }
 
 - (void)didReceiveMemoryWarning {
@@ -283,45 +360,5 @@ DefineLazyPropertyInitialization(YPBUserAvatarUpdateModel, avatarUpdateModel)
 
 - (CGFloat)sideMenuItemHeight {
     return kScreenHeight * 0.3;
-}
-
-#pragma mark - UIImagePickerControllerDelegate
-
-- (void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary<NSString *,id> *)info {
-    
-    UIImage *pickedImage;
-    if (picker.sourceType == UIImagePickerControllerSourceTypePhotoLibrary) {
-        pickedImage = [info objectForKey:UIImagePickerControllerOriginalImage];
-    }
-    [picker dismissViewControllerAnimated:YES completion:nil];
-    
-    @weakify(self);
-    [[YPBMessageCenter defaultCenter] showProgressWithTitle:@"头像上传中..." subtitle:nil];
-    NSString *name = [NSString stringWithFormat:@"%@_%@_avatar.jpg", [YPBUser currentUser].userId, [[NSDate date] stringWithFormat:kDefaultDateFormat]];
-    [YPBUploadManager uploadImage:pickedImage
-                         withName:name
-                  progressHandler:^(double progress)
-     {
-         [[YPBMessageCenter defaultCenter] proceedProgressWithPercent:progress];
-     } completionHandler:^(BOOL success, id obj) {
-         @strongify(self);
-         [[YPBMessageCenter defaultCenter] hideProgress];
-         
-         if (success) {
-             [self.avatarUpdateModel updateAvatarOfUser:[YPBUser currentUser].userId withURL:obj completionHandler:^(BOOL success, id obj) {
-                 if (success) {
-                     [[YPBMessageCenter defaultCenter] showSuccessWithTitle:@"头像更新成功" subtitle:nil];
-                     self.sideMenuAvatarView.image = pickedImage;
-                 }
-             }];
-         } else {
-             DLog(@"头像图片上传失败：%@", ((NSError *)obj).localizedDescription);
-             [[YPBMessageCenter defaultCenter] showSuccessWithTitle:@"头像更新失败" subtitle:nil];
-         }
-     }];
-}
-
-- (void)imagePickerControllerDidCancel:(UIImagePickerController *)picker {
-    [picker dismissViewControllerAnimated:YES completion:nil];
 }
 @end

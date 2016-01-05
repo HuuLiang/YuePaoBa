@@ -18,6 +18,11 @@
 - (void)showErrorWithTitle:(NSString *)title subtitle:(NSString *)subtitle;
 - (void)showSuccessWithTitle:(NSString *)title subtitle:(NSString *)subtitle;
 
+- (void)showMessageWithTitle:(NSString *)title inViewController:(UIViewController *)viewController;
+- (void)showWarningWithTitle:(NSString *)title inViewController:(UIViewController *)viewController;
+- (void)showErrorWithTitle:(NSString *)title inViewController:(UIViewController *)viewController;
+- (void)showSuccessWithTitle:(NSString *)title inViewController:(UIViewController *)viewController;
+
 - (void)dismissMessageWithCompletion:(void (^)(void))completion;
 
 - (void)showProgressWithTitle:(NSString *)title subtitle:(NSString *)subtitle;

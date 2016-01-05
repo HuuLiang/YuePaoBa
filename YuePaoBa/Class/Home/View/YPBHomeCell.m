@@ -7,6 +7,7 @@
 //
 
 #import "YPBHomeCell.h"
+#import "YPBLikeButton.h"
 
 @interface YPBHomeCell ()
 {
@@ -15,6 +16,8 @@
     UIView *_footerView;
     UILabel *_nicknameLabel;
     UILabel *_detailLabel;
+    
+    YPBLikeButton *_likeButton;
 }
 @end
 
@@ -63,6 +66,17 @@
                 make.centerY.equalTo(_footerView);
             }];
         }
+        
+        _likeButton = [[YPBLikeButton alloc] initWithUserInteractionEnabled:NO];
+        [self addSubview:_likeButton];
+        {
+            [_likeButton mas_makeConstraints:^(MASConstraintMaker *make) {
+                make.top.equalTo(self).offset(5);
+                make.right.equalTo(self).offset(-5);
+                make.width.equalTo(self).multipliedBy(0.2);
+                make.height.equalTo(_likeButton.mas_width).multipliedBy(1.2);
+            }];
+        }
     }
     return self;
 }
@@ -73,6 +87,7 @@
     [_thumbImageView sd_setImageWithURL:[NSURL URLWithString:user.logoUrl]];
     _nicknameLabel.text = user.nickName;
     _detailLabel.text = [NSString stringWithFormat:@"%@cm/%@岁", user.height, user.age];
+    _likeButton.numberOfLikes = user.receiveGreetCount.unsignedIntegerValue;
 }
 
 - (void)layoutSubviews {

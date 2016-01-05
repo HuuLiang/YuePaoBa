@@ -17,6 +17,6 @@
 @property (nonatomic,retain,readonly) YPBUser *fetchedUser;
 
 + (instancetype)sharedModel;
-- (BOOL)fetchUserDetailWithUserId:(NSString *)userId completionHandler:(YPBCompletionHandler)handler;
+- (BOOL)fetchUserDetailWithUserId:(NSString *)userId byUser:(NSString *)byUserId completionHandler:(YPBCompletionHandler)handler;
 
 @end

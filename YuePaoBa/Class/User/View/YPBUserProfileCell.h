@@ -10,11 +10,10 @@
 
 @interface YPBUserProfileCell : UITableViewCell
 
-@property (nonatomic,retain) NSURL *avatarImageURL;
-@property (nonatomic) NSString *name;
-@property (nonatomic) BOOL isVIP;
-@property (nonatomic) BOOL displayDateButton;
+@property (nonatomic,retain) YPBUser *user;
+@property (nonatomic) BOOL liked;
 
 @property (nonatomic,copy) YPBAction dateAction;
+@property (nonatomic,copy) YPBAction likeAction;
 
 @end

@@ -126,6 +126,16 @@ static YPBUser *_currentUser;
     return values;
 }
 
++ (NSArray<NSNumber *> *)allBustValues {
+    YPBFloatRange bustRange = self.availableBustRange;
+    
+    NSMutableArray *values = [[NSMutableArray alloc] initWithObjects:@(0), nil];
+    for (CGFloat i = bustRange.min; i < bustRange.max+0.5; i+=0.5) {
+        [values addObject:@(i)];
+    }
+    return values;
+}
+
 + (NSArray<NSString *> *)allHeightRangeDescription {
     NSMutableArray *heightStrings = [NSMutableArray array];
     
@@ -175,6 +185,11 @@ static YPBUser *_currentUser;
 + (YPBFloatRange)availableWeightRange {
     YPBFloatRange weightRange = {40,125};
     return weightRange;
+}
+
++ (YPBFloatRange)availableBustRange {
+    YPBFloatRange bustRange = {60,120};
+    return bustRange;
 }
 
 + (YPBUserGender)genderFromString:(NSString *)genderString {
@@ -448,5 +463,15 @@ static YPBUser *_currentUser;
         }
     }
     return YPBUserCupUnspecified;
+}
+
+- (YPBUserGender)oppositeGender {
+    if (self.gender == YPBUserGenderMale) {
+        return YPBUserGenderFemale;
+    } else if (self.gender == YPBUserGenderFemale) {
+        return YPBUserGenderMale;
+    } else {
+        return YPBUserGenderUnknown;
+    }
 }
 @end

@@ -46,6 +46,7 @@ typedef NS_ENUM(NSUInteger, YPBUserCup) {
 @property (nonatomic) NSString *weixinNum;
 @property (nonatomic) NSString *assets;
 
+@property (nonatomic) BOOL isGreet;
 @property (nonatomic) BOOL isMember;
 @property (nonatomic) BOOL isVip;
 
@@ -63,6 +64,8 @@ typedef NS_ENUM(NSUInteger, YPBUserCup) {
 @property (nonatomic) YPBUserCup targetCup;
 @property (nonatomic) CGFloat weight;
 
+@property (nonatomic,readonly) YPBUserGender oppositeGender;
+
 + (instancetype)currentUser;
 //- (instancetype)init __attribute__((unavailable("cannot use init for this class, use +(instancetype)currentUser instead")));
 + (NSArray<NSString *> *)allTargetCupsDescription;
@@ -72,12 +75,14 @@ typedef NS_ENUM(NSUInteger, YPBUserCup) {
 + (NSArray<NSNumber *> *)allHeightRangeValues;
 + (NSArray<NSNumber *> *)allWeightRangeValues;
 + (NSArray<NSNumber *> *)allAgeValues;
++ (NSArray<NSNumber *> *)allBustValues;
 
 + (YPBUserGender)genderFromString:(NSString *)genderString;
 + (NSString *)stringOfGender:(YPBUserGender)gender;
 + (YPBIntRange)availableHeightRange;
 + (YPBIntRange)availableAgeRange;
 + (YPBFloatRange)availableWeightRange;
++ (YPBFloatRange)availableBustRange;
 
 - (BOOL)isRegistered;
 - (void)setAsCurrentUser;

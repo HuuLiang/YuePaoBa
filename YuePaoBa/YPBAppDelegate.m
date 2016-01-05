@@ -76,8 +76,11 @@
 }
 
 - (void)setupCommonStyles {
-    
+    [[UIBarButtonItem appearance] setTitleTextAttributes:@{NSForegroundColorAttributeName:[UIColor whiteColor]} forState:UIControlStateNormal];
     [[UINavigationBar appearance] setBackgroundImage:[UIImage imageNamed:@"nav_background"] forBarMetrics:UIBarMetricsDefault];
+    [[UINavigationBar appearance] setTintColor:[UIColor whiteColor]];
+    [[UINavigationBar appearance] setTitleTextAttributes:@{NSFontAttributeName:[UIFont boldSystemFontOfSize:20.],
+                                                          NSForegroundColorAttributeName:[UIColor whiteColor]}];
     
     [UIViewController aspect_hookSelector:@selector(viewDidLoad)
                               withOptions:AspectPositionAfter
@@ -85,9 +88,9 @@
                                    UIViewController *thisVC = [aspectInfo instance];
                                    thisVC.navigationController.navigationBar.translucent = NO;
                                    thisVC.navigationController.navigationBar.barTintColor = [UIColor colorWithHexString:@"#ff6666"];
-                                   thisVC.navigationController.navigationBar.titleTextAttributes = @{NSFontAttributeName:[UIFont boldSystemFontOfSize:20.],
-                                                                                                   NSForegroundColorAttributeName:[UIColor whiteColor]};
-                                   thisVC.navigationController.navigationBar.tintColor = [UIColor whiteColor];
+//                                   thisVC.navigationController.navigationBar.titleTextAttributes = @{NSFontAttributeName:[UIFont boldSystemFontOfSize:20.],
+//                                                                                                   NSForegroundColorAttributeName:[UIColor whiteColor]};
+//                                   thisVC.navigationController.navigationBar.tintColor = [UIColor whiteColor];
                                    thisVC.navigationItem.backBarButtonItem = [[UIBarButtonItem alloc] bk_initWithTitle:@"返回" style:UIBarButtonItemStylePlain handler:nil];
                                    
                                } error:nil];
@@ -128,6 +131,11 @@
             }
         }];
     }
+    
+    [[YPBSystemConfigModel sharedModel] fetchSystemConfigWithCompletionHandler:^(BOOL success, id obj) {
+        YPBSystemConfig *systemConfig = obj;
+        [systemConfig persist];
+    }];
     return YES;
 }
 

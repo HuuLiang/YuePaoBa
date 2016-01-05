@@ -8,12 +8,14 @@
 
 #import "YPBUserProfileCell.h"
 #import "YPBAvatarView.h"
+#import "YPBLikeButton.h"
 
 @interface YPBUserProfileCell ()
 {
     YPBAvatarView *_avatarView;
     UIImageView *_backgroundImageView;
     UIButton *_dateButton;
+    YPBLikeButton *_likeButton;
 }
 @end
 
@@ -50,7 +52,6 @@
         }
         
         _dateButton = [[UIButton alloc] init];
-        _dateButton.hidden = YES;
         UIImage *image = [UIImage animatedImageWithImages:@[[UIImage imageNamed:@"date_normal_button"],
                                                             [UIImage imageNamed:@"date_highlight_button"]] duration:0.5];
         [_dateButton setImage:image forState:UIControlStateNormal];
@@ -69,28 +70,39 @@
             @strongify(self);
             SafelyCallBlock1(self.dateAction, sender);
         } forControlEvents:UIControlEventTouchUpInside];
+        
+        _likeButton = [[YPBLikeButton alloc] initWithUserInteractionEnabled:YES];
+        [self addSubview:_likeButton];
+        {
+            [_likeButton mas_makeConstraints:^(MASConstraintMaker *make) {
+                make.right.equalTo(self).offset(-5);
+                make.top.equalTo(self).offset(5);
+                make.width.equalTo(self).multipliedBy(0.15);
+                make.height.equalTo(_likeButton.mas_width);
+            }];
+        }
+        
+        [_likeButton bk_addEventHandler:^(id sender) {
+            @strongify(self);
+            SafelyCallBlock1(self.likeAction, sender);
+        } forControlEvents:UIControlEventTouchUpInside];
     }
     return self;
 }
 
-- (void)setName:(NSString *)name {
-    _name = name;
-    _avatarView.name = name;
+- (void)setUser:(YPBUser *)user {
+    _user = user;
+    
+    _avatarView.imageURL = [NSURL URLWithString:user.logoUrl];
+    [_backgroundImageView sd_setImageWithURL:_avatarView.imageURL placeholderImage:nil options:SDWebImageRefreshCached|SDWebImageDelayPlaceholder];
+    _avatarView.name = user.nickName;
+    _avatarView.isVIP = user.isVip;
+    
+    self.liked = user.isGreet;
 }
 
-- (void)setAvatarImageURL:(NSURL *)avatarImageURL {
-    _avatarImageURL = avatarImageURL;
-    _avatarView.imageURL = avatarImageURL;
-    [_backgroundImageView sd_setImageWithURL:avatarImageURL placeholderImage:nil options:SDWebImageRefreshCached|SDWebImageDelayPlaceholder];
-}
-
-- (void)setIsVIP:(BOOL)isVIP {
-    _isVIP = isVIP;
-    _avatarView.isVIP = isVIP;
-}
-
-- (void)setDisplayDateButton:(BOOL)displayDateButton {
-    _displayDateButton = displayDateButton;
-    _dateButton.hidden = !displayDateButton;
+- (void)setLiked:(BOOL)liked {
+    _liked = liked;
+    _likeButton.selected = liked;
 }
 @end

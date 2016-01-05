@@ -47,6 +47,22 @@
     [TSMessage showNotificationInViewController:[self currentViewController] title:title subtitle:subtitle type:TSMessageNotificationTypeSuccess];
 }
 
+- (void)showMessageWithTitle:(NSString *)title inViewController:(UIViewController *)viewController {
+    [TSMessage showNotificationInViewController:viewController title:title subtitle:nil type:TSMessageNotificationTypeMessage];
+}
+
+- (void)showWarningWithTitle:(NSString *)title inViewController:(UIViewController *)viewController {
+    [TSMessage showNotificationInViewController:viewController title:title subtitle:nil type:TSMessageNotificationTypeWarning];
+}
+
+- (void)showErrorWithTitle:(NSString *)title inViewController:(UIViewController *)viewController {
+    [TSMessage showNotificationInViewController:viewController title:title subtitle:nil type:TSMessageNotificationTypeError];
+}
+
+- (void)showSuccessWithTitle:(NSString *)title inViewController:(UIViewController *)viewController {
+    [TSMessage showNotificationInViewController:viewController title:title subtitle:nil type:TSMessageNotificationTypeSuccess];
+}
+
 - (void)dismissMessageWithCompletion:(void (^)(void))completion {
     [TSMessage dismissActiveNotificationWithCompletion:completion];
 }

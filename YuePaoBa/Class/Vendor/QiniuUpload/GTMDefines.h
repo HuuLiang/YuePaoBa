@@ -125,8 +125,8 @@ GTM_EXTERN void _GTMUnitTestDevLog(NSString *format, ...);
 do {                                                                   \
 if (!(condition)) {                                                  \
 [[NSAssertionHandler currentHandler]                               \
-handleFailureInFunction:[NSString stringWithCString:__PRETTY_FUNCTION__] \
-file:[NSString stringWithCString:__FILE__]  \
+handleFailureInFunction:[NSString stringWithUTF8String:__PRETTY_FUNCTION__] \
+file:[NSString stringWithUTF8String:__FILE__]  \
 lineNumber:__LINE__                               \
 description:__VA_ARGS__];                          \
 }                                                                    \

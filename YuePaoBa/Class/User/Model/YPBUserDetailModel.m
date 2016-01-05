@@ -30,14 +30,17 @@
     return [YPBUserDetailResponse class];
 }
 
-- (BOOL)fetchUserDetailWithUserId:(NSString *)userId completionHandler:(YPBCompletionHandler)handler {
+- (BOOL)fetchUserDetailWithUserId:(NSString *)userId
+                           byUser:(NSString *)byUserId
+                completionHandler:(YPBCompletionHandler)handler
+{
     if (userId.length == 0) {
         SafelyCallBlock2(handler, NO, nil);
         return NO;
     }
     
     BOOL success = [self requestURLPath:YPB_USER_DETAIL_URL
-                             withParams:@{@"userId":userId}
+                             withParams:@{@"userId":userId, @"currentUserId":byUserId}
                         responseHandler:^(YPBURLResponseStatus respStatus, NSString *errorMessage)
     {
         YPBUserDetailResponse *resp = self.response;
