@@ -13,12 +13,19 @@ typedef NS_ENUM(NSUInteger, YPBPhotoPickingSourceType) {
     YPBPhotoPickingSourceCamera
 };
 
+typedef NS_ENUM(NSUInteger, YPBPhotoPickingCameraDevice) {
+    YPBPhotoPickingCameraDeviceRear,
+    YPBPhotoPickingCameraDeviceFront
+};
+
 typedef void (^YPBPhotoPickingCompletionHandler)(BOOL success, NSArray<UIImage *> *originalImages, NSArray<UIImage *> *thumbImages);
 
 @interface YPBPhotoPicker : NSObject
 
 @property (nonatomic) BOOL multiplePicking;
 @property (nonatomic) NSUInteger maximumNumberOfMultiplePicking;
+@property (nonatomic) BOOL allowsEditing;
+@property (nonatomic) YPBPhotoPickingCameraDevice cameraDevice;
 
 - (void)showPickingSheetInViewController:(UIViewController *)viewController
                                withTitle:(NSString *)title

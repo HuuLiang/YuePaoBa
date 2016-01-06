@@ -83,7 +83,7 @@
     
     [actionSheet bk_addButtonWithTitle:@"拍照" handler:^{
         @strongify(self);
-        [self pickingInViewController:viewController withSourceType:YPBPhotoPickingSourceLibrary completionHandler:handler];
+        [self pickingInViewController:viewController withSourceType:YPBPhotoPickingSourceCamera completionHandler:handler];
     }];
     [actionSheet bk_setDestructiveButtonWithTitle:@"取消" handler:^{
         SafelyCallBlock3(self.completionHandler, NO, nil, nil);
@@ -104,8 +104,9 @@
         }
         
         self.imagePicker.sourceType = UIImagePickerControllerSourceTypeCamera;
-        self.imagePicker.cameraDevice = UIImagePickerControllerCameraDeviceFront;
-        self.imagePicker.cameraFlashMode = UIImagePickerControllerCameraFlashModeAuto;
+        self.imagePicker.cameraDevice = self.cameraDevice==YPBPhotoPickingCameraDeviceFront?UIImagePickerControllerCameraDeviceFront:UIImagePickerControllerCameraDeviceRear;
+        self.imagePicker.cameraFlashMode = UIImagePickerControllerCameraFlashModeOff;
+        self.imagePicker.allowsEditing = self.allowsEditing;
         
         [viewController presentViewController:self.imagePicker animated:YES completion:nil];
     } else if (sourceType == YPBPhotoPickingSourceLibrary) {
@@ -120,15 +121,27 @@
 #pragma mark - UIImagePickerControllerDelegate
 
 - (void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary<NSString *,id> *)info {
+    @weakify(self);
+    UIImage *pickedImage = [info objectForKey:UIImagePickerControllerEditedImage];
+    ALAssetsLibrary *assetsLibrary = [[ALAssetsLibrary alloc] init];
+    [assetsLibrary writeImageToSavedPhotosAlbum:[pickedImage CGImage]
+                                    orientation:(ALAssetOrientation)pickedImage.imageOrientation
+                                completionBlock:^(NSURL *assetURL, NSError *error)
+    {
+        [assetsLibrary assetForURL:assetURL resultBlock:^(ALAsset *asset) {
+            @strongify(self);
+            UIImage *originalImage = [UIImage imageWithCGImage:asset.defaultRepresentation.fullResolutionImage];
+            UIImage *thumbImage = [UIImage imageWithCGImage:asset.thumbnail];
+            SafelyCallBlock3(self.completionHandler, YES, @[originalImage], @[thumbImage]);
+            self.completionHandler = nil;
+        } failureBlock:^(NSError *error) {
+            @strongify(self);
+            SafelyCallBlock3(self.completionHandler, NO, nil, nil);
+            self.completionHandler = nil;
+        }];
+    }];
     
-    UIImage *pickedImage;
-    if (picker.sourceType == UIImagePickerControllerSourceTypePhotoLibrary) {
-        pickedImage = [info objectForKey:UIImagePickerControllerOriginalImage];
-    }
     [picker dismissViewControllerAnimated:YES completion:nil];
-    
-    //SafelyCallBlock2(self.completionHandler, YES, pickedImage);
-    self.completionHandler = nil;
 }
 
 - (void)imagePickerControllerDidCancel:(UIImagePickerController *)picker {

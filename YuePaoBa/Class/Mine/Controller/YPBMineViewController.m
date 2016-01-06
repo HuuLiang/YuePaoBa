@@ -129,6 +129,7 @@ DefineLazyPropertyInitialization(YPBUserPhotoAddModel, photoAddModel)
     [self setLayoutCell:_vipCell cellHeight:kScreenHeight*0.08 inRow:0 andSection:1];
     
     _likeCell = [[YPBTableViewCell alloc] initWithImage:[UIImage imageNamed:@"like_icon"] title:@"？人喜欢了你"];
+    _likeCell.selectionStyle = UITableViewCellSelectionStyleNone;
     [self setLayoutCell:_likeCell cellHeight:kScreenHeight*0.08 inRow:1 andSection:1];
     
     [self setHeaderHeight:15 inSection:2];
@@ -207,7 +208,8 @@ DefineLazyPropertyInitialization(YPBUserPhotoAddModel, photoAddModel)
 - (void)pickingAvatar {
     @weakify(self);
     YPBPhotoPicker *photoPicker = [[YPBPhotoPicker alloc] init];
-    photoPicker.multiplePicking = NO;
+    photoPicker.allowsEditing = YES;
+    photoPicker.cameraDevice = YPBPhotoPickingCameraDeviceFront;
     [photoPicker showPickingSheetInViewController:self
                                         withTitle:@"选取头像"
                                 completionHandler:^(BOOL success,
@@ -218,7 +220,7 @@ DefineLazyPropertyInitialization(YPBUserPhotoAddModel, photoAddModel)
             return;
         }
         
-        UIImage *pickedImage = thumbImages[0];
+        UIImage *pickedImage = originalImages[0];
         [[YPBMessageCenter defaultCenter] showProgressWithTitle:@"头像上传中..." subtitle:nil];
         NSString *name = [NSString stringWithFormat:@"%@_%@_avatar.jpg", [YPBUser currentUser].userId, [[NSDate date] stringWithFormat:kDefaultDateFormat]];
         [YPBUploadManager uploadImage:pickedImage
@@ -244,7 +246,7 @@ DefineLazyPropertyInitialization(YPBUserPhotoAddModel, photoAddModel)
              };
              
              if (success) {
-                 [self.avatarUpdateModel updateAvatarOfUser:[YPBUser currentUser].userId withURL:name completionHandler:^(BOOL success, id errorMsg) {
+                 [self.avatarUpdateModel updateAvatarOfUser:[YPBUser currentUser].userId withURL:obj completionHandler:^(BOOL success, id errorMsg) {
                      Handler(success);
                  }];
              } else {

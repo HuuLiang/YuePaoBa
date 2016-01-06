@@ -1,14 +1,14 @@
 //
-//  UIImage+crop.m
-//  saker
+//  UIImage+Utilities.m
+//  YuePaoBa
 //
-//  Created by ZHANGPENG on 14-8-22.
-//  Copyright (c) 2014年 kc. All rights reserved.
+//  Created by Sean Yue on 16/1/6.
+//  Copyright © 2016年 iqu8. All rights reserved.
 //
 
-#import "UIImage+crop.h"
+#import "UIImage+Utilities.h"
 
-@implementation UIImage (crop)
+@implementation UIImage (Utilities)
 
 - (UIImage *)crop:(CGRect)rect
 {
@@ -27,6 +27,5 @@
     
     return result;
 }
-
 
 @end

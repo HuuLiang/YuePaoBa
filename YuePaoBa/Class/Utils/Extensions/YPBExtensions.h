@@ -13,7 +13,7 @@
 #import "UIColor+hexColor.h"
 #import "UIViewController+YPBSideMenu.h"
 #import "UIViewController+BackgroundImage.h"
-#import "UIImage+crop.h"
+#import "UIImage+Utilities.h"
 #import "NSMutableDictionary+Safety.h"
 #import "NSObject+Properties.h"
 #import "NSDictionary+YPBSign.h"
