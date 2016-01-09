@@ -23,11 +23,15 @@
 #define YPB_USER_DETAIL_UPDATE_URL      @"/mfwcenter/updateUser.json"
 #define YPB_USER_ACCESS_QUERY_URL       @"/mfwcenter/queryAccess.json"
 #define YPB_USER_AVATAR_UPDATE_URL      @"/mfwcenter/updateUserlogo.json"
-#define YPB_USER_MESSAGE_QUERY_URL      @"/mfwcenter/messageQuery.json"
 #define YPB_USER_PHOTO_ADD_URL          @"/mfwcenter/photoCreate.json"
+#define YPB_PHOTO_BARRAGE_QUERY_URL     @"/mfwcenter/queryBarrages.json"
 
 #define YPB_USER_MESSAGE_PUSH_URL       @"/mfwcenter/loginPush.json"
 #define YPB_SYSTEM_CONFIG_URL           @"/mfwcenter/systemConfig.json"
+#define YPB_FEEDBACK_URL                @"/mfwcenter/feedback.json"
+
+#define YPB_AGREEMENT_URL               @"http://7xomw1.com2.z0.glb.qiniucdn.com/mfw/mfwuseragree.html"
+#define YPB_QANDA_URL                   @"http://7xomw1.com2.z0.glb.qiniucdn.com/mfw/mfwuserquestions.html"
 
 #define YPB_UPLOAD_SCOPE                @"mfw-photo"
 #define YPB_UPLOAD_SECRET_KEY           @"K9cjaa7iip6LxVT9zo45p7DiVxEIo158NTUfJ7dq"

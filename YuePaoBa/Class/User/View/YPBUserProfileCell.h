@@ -12,6 +12,7 @@
 
 @property (nonatomic,retain) YPBUser *user;
 @property (nonatomic) BOOL liked;
+@property (nonatomic) NSUInteger numberOfLikes;
 
 @property (nonatomic,copy) YPBAction dateAction;
 @property (nonatomic,copy) YPBAction likeAction;

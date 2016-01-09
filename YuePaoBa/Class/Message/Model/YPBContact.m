@@ -1,0 +1,77 @@
+//
+//  YPBContact.m
+//  YuePaoBa
+//
+//  Created by Sean Yue on 16/1/6.
+//  Copyright © 2016年 iqu8. All rights reserved.
+//
+
+#import "YPBContact.h"
+#import "YPBPersistentManager.h"
+#import "YPBPushedMessage.h"
+#import <Realm/RLMResults.h>
+
+@implementation YPBContact
+
++ (NSString *)namespace {
+    return kUserContactPersistenceNamespace;
+}
+
++ (NSString *)primaryKey {
+    return @"userId";
+}
+
++ (NSArray<YPBContact *> *)allContacts {
+    RLMResults *results = [self allObjectsInRealm:[self classRealm]];
+    if (results.count == 0) {
+        return nil;
+    }
+    
+    results = [results sortedResultsUsingProperty:@"recentTime" ascending:NO];
+    return [self objectsFromResults:results];
+}
+
++ (instancetype)existingContactWithUserId:(NSString *)userId {
+    return [self objectInRealm:[self classRealm] forPrimaryKey:userId];
+}
+
++ (instancetype)contactWithUser:(YPBUser *)user {
+    if (![user isRegistered]) {
+        return nil;
+    }
+    
+    YPBContact *contact = [self objectInRealm:[self classRealm] forPrimaryKey:user.userId];
+    if (!contact) {
+        contact = [[self alloc] init];
+        contact.userId = user.userId;
+        contact.logoUrl = user.logoUrl;
+        contact.nickName = user.nickName;
+    }
+    
+    return contact;
+}
+
++ (instancetype)contactWithPushedMessage:(YPBPushedMessage *)message {
+    if (message.userId.length == 0) {
+        return nil;
+    }
+    
+    YPBContact *contact = [self objectInRealm:[self classRealm] forPrimaryKey:message.userId];
+    if (!contact) {
+        contact = [[self alloc] init];
+        contact.userId = message.userId;
+        contact.logoUrl = message.logoUrl;
+        contact.nickName = message.nickName;
+    }
+    
+    return contact;
+}
+
++ (BOOL)refreshContactRecentTimeWithUser:(YPBUser *)user {
+    YPBContact *contact = [self contactWithUser:user];
+    
+    [contact beginUpdate];
+    contact.recentTime = [YPBUtil currentDateString];
+    return [contact endUpdate] == nil;
+}
+@end

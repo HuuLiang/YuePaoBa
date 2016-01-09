@@ -81,10 +81,14 @@ const NSUInteger kSuccessResponseCode = 100;
             NSMutableArray *arr = [[NSMutableArray alloc] init];
             [instance setValue:arr forKey:propertyName];
             
-            for (NSDictionary *subDic in (NSArray *)value) {
-                id subinstance = [[subclass alloc] init];
-                [arr addObject:subinstance];
-                [self parseDataWithDictionary:subDic inInstance:subinstance];
+            for (id subobj in (NSArray *)value) {
+                if ([subobj isKindOfClass:[NSDictionary class]]) {
+                    id subinstance = [[subclass alloc] init];
+                    [arr addObject:subinstance];
+                    [self parseDataWithDictionary:(NSDictionary *)subobj inInstance:subinstance];
+                } else if ([subobj isKindOfClass:[NSString class]]) {
+                    [arr addObject:subobj];
+                }
             }
         }
     }];

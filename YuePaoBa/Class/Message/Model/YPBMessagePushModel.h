@@ -7,15 +7,19 @@
 //
 
 #import "YPBEncryptedURLRequest.h"
+#import "YPBPushedMessage.h"
 
 @interface YPBMessagePushResponse : YPBURLResponse
-
+@property (nonatomic,retain) NSArray<YPBPushedMessage *> *msgList;
 @end
 
 @interface YPBMessagePushModel : YPBEncryptedURLRequest
 
++ (instancetype)sharedModel;
+
+- (void)startMessagePushPolling;
+
 - (BOOL)fetchMessageWithUserId:(NSString *)userId
-                      loginSeq:(NSUInteger)loginSeq
                  loginDuration:(NSUInteger)duration
              completionHandler:(YPBCompletionHandler)handler;
 

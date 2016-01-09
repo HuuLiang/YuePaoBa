@@ -19,6 +19,7 @@
 #import <BlocksKit.h>
 #import <BlocksKit+UIKit.h>
 #import <UIImageView+WebCache.h>
+#import <UIButton+WebCache.h>
 #import <UIImage+ImageWithColor.h>
 #import <MJRefresh.h>
 #import "YPBConfig.h"

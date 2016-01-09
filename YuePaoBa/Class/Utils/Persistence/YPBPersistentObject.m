@@ -8,20 +8,52 @@
 
 #import "YPBPersistentObject.h"
 #import "YPBPersistentManager.h"
+#import <Realm/Realm.h>
 
 static NSString *kDefaultPersistentNamespace = @"yuepaoba_default_persistent_namespace";
 
 @implementation YPBPersistentObject
 
-- (NSString *)namespace {
++ (NSString *)namespace {
     return kDefaultPersistentNamespace;
 }
 
-- (void)persist {
-    [[YPBPersistentManager sharedManager] persistentObject:self];
+- (NSError *)persist {
+    return [[YPBPersistentManager sharedManager] persistentObject:self];
 }
 
 + (NSString *)primaryKey {
     return [super primaryKey];
+}
+
++ (NSArray *)objectsFromPersistence {
+    return [[YPBPersistentManager sharedManager] persistentObjectsWithObjectClass:[self class]];
+}
+
++ (NSArray *)objectsFromResults:(RLMResults *)results {
+    NSMutableArray *arr = [NSMutableArray array];
+    for (YPBPersistentObject *object in results) {
+        [arr addObject:object];
+    }
+    return arr.count > 0 ? arr : nil;
+}
+
++ (RLMRealm *)classRealm {
+    return [[YPBPersistentManager sharedManager] realmWithNamespace:[self namespace]];
+}
+
+- (void)beginUpdate {
+    [self.realm beginWriteTransaction];
+}
+
+- (NSError *)endUpdate {
+    if (self.realm) {
+        NSError *error;
+        [self.realm commitWriteTransaction:&error];
+        return error;
+    } else {
+        return [self persist];
+    }
+    
 }
 @end

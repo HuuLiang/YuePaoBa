@@ -13,7 +13,10 @@
 
 + (instancetype)sharedManager;
 
-- (void)persistentObject:(YPBPersistentObject *)object;
+- (NSArray *)persistentObjectsWithObjectClass:(Class)objClass;
+- (NSError *)persistentObject:(YPBPersistentObject *)object;
 - (void)persistentObjects:(YPBPersistentObjectArray *)objects;
+
+- (RLMRealm *)realmWithNamespace:(NSString *)namespace;
 
 @end

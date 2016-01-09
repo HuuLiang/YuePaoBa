@@ -8,12 +8,22 @@
 
 #import <Foundation/Foundation.h>
 #import <Realm/RLMObject.h>
+#import <Realm/RLMProperty.h>
+#import <Realm/RLMResults.h>
 
 @interface YPBPersistentObject : RLMObject
 
 + (NSString *)primaryKey;
-- (NSString *)namespace;
-- (void)persist;
++ (NSString *)namespace;
+- (NSError *)persist;
+
++ (NSArray *)objectsFromPersistence;
++ (NSArray *)objectsFromResults:(RLMResults *)results;
+
++ (RLMRealm *)classRealm;
+
+- (void)beginUpdate;
+- (NSError *)endUpdate;
 
 @end
 

@@ -105,4 +105,9 @@
     _liked = liked;
     _likeButton.selected = liked;
 }
+
+- (void)setNumberOfLikes:(NSUInteger)numberOfLikes {
+    _numberOfLikes = numberOfLikes;
+    _likeButton.numberOfLikes = numberOfLikes;
+}
 @end

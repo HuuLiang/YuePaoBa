@@ -20,7 +20,9 @@
 - (instancetype)initWithImage:(UIImage *)image title:(NSString *)title subtitle:(NSString *)subtitle {
     self = [super init];
     if (self) {
-        self.iconImageView.image = image;
+        if (image) {
+            self.iconImageView.image = image;
+        }
         self.titleLabel.text = title;
         
         if (subtitle) {

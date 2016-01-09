@@ -10,11 +10,12 @@
 #import "YPBSideMenuViewController.h"
 #import "YPBHomeViewController.h"
 #import "YPBVIPCenterViewController.h"
-#import "YPBMessageViewController.h"
+#import "YPBContactViewController.h"
 #import "YPBMineViewController.h"
 #import "YPBSettingViewController.h"
 #import "YPBLoginViewController.h"
 #import "YPBActivateModel.h"
+#import "YPBMessagePushModel.h"
 
 @interface YPBAppDelegate ()
 
@@ -46,16 +47,16 @@
     UINavigationController *vipCenterNav = [[UINavigationController alloc] initWithRootViewController:vipCenterVC];
     vipCenterNav.sideMenuItem = [YPBSideMenuItem itemWithTitle:vipCenterVC.title image:[UIImage imageNamed:@"side_menu_vip_icon"]];
     
-    YPBMessageViewController *messageVC = [[YPBMessageViewController alloc] initWithTitle:@"私密聊"];
-    UINavigationController *messageNav = [[UINavigationController alloc] initWithRootViewController:messageVC];
-    messageNav.sideMenuItem = [YPBSideMenuItem itemWithTitle:messageVC.title image:[UIImage imageNamed:@"side_menu_message_icon"]];
+    YPBContactViewController *contactVC = [[YPBContactViewController alloc] initWithTitle:@"私密聊"];
+    UINavigationController *contactNav = [[UINavigationController alloc] initWithRootViewController:contactVC];
+    contactNav.sideMenuItem = [YPBSideMenuItem itemWithTitle:contactVC.title image:[UIImage imageNamed:@"side_menu_message_icon"] delegate:contactVC];
     
     YPBSettingViewController *settingVC = [[YPBSettingViewController alloc] initWithTitle:@"设置"];
     UINavigationController *settingNav = [[UINavigationController alloc] initWithRootViewController:settingVC];
     settingNav.sideMenuItem = [YPBSideMenuItem itemWithTitle:settingVC.title image:[UIImage imageNamed:@"side_menu_setting_icon"]];
     
     
-    YPBSideMenuViewController *sideMenuVC = [[YPBSideMenuViewController alloc] initWithViewControllers:@[mineNav,homeNav,vipCenterNav,messageNav,settingNav]];
+    YPBSideMenuViewController *sideMenuVC = [[YPBSideMenuViewController alloc] initWithViewControllers:@[mineNav,homeNav,vipCenterNav,contactNav,settingNav]];
     
     RESideMenu *sideMenu = [[RESideMenu alloc] initWithContentViewController:homeNav
                                                       leftMenuViewController:sideMenuVC
@@ -117,7 +118,7 @@
     [YPBUploadManager registerWithSecretKey:YPB_UPLOAD_SECRET_KEY accessKey:YPB_UPLOAD_ACCESS_KEY scope:YPB_UPLOAD_SCOPE];
     
     if ([[YPBUser currentUser] isRegistered]) {
-        self.window.rootViewController = [self setupRootViewController];
+        [self notifyLoginSuccessfully];
     } else {
         YPBLoginViewController *loginVC = [[YPBLoginViewController alloc] init];
         self.window.rootViewController = loginVC;
@@ -161,7 +162,10 @@
     // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
 }
 
-- (void)notifyRegisterSuccessfully {
+- (void)notifyLoginSuccessfully {
     self.window.rootViewController = [self setupRootViewController];
+    
+    [YPBUtil accumalateLoginFrequency];
+    [[YPBMessagePushModel sharedModel] startMessagePushPolling];
 }
 @end

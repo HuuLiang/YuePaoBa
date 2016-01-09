@@ -14,7 +14,7 @@ static const void *kUIProgressingViewAssociatedKey = &kUIProgressingViewAssociat
 
 @implementation UIView (Loading)
 
-- (UIView *)loadingView {
+- (UIView *)ypb_loadingView {
     UIView *loadingView = objc_getAssociatedObject(self, kUILoadingViewAssociatedKey);
     if (loadingView) {
         return loadingView;
@@ -36,7 +36,7 @@ static const void *kUIProgressingViewAssociatedKey = &kUIProgressingViewAssociat
     return loadingView;
 }
 
-- (UIView *)progressingView {
+- (UIView *)ypb_progressingView {
     UIView *progressingView = objc_getAssociatedObject(self, kUIProgressingViewAssociatedKey);
     if (progressingView) {
         return progressingView;
@@ -51,38 +51,38 @@ static const void *kUIProgressingViewAssociatedKey = &kUIProgressingViewAssociat
 }
 
 - (void)beginLoading {
-    if ([self.subviews containsObject:self.loadingView]) {
+    if ([self.subviews containsObject:self.ypb_loadingView]) {
         return ;
     }
     
-    [self addSubview:self.loadingView];
+    [self addSubview:self.ypb_loadingView];
     {
-        [self.loadingView mas_makeConstraints:^(MASConstraintMaker *make) {
+        [self.ypb_loadingView mas_makeConstraints:^(MASConstraintMaker *make) {
             make.edges.equalTo(self);
         }];
     }
 }
 
 - (void)endLoading {
-    if ([self.subviews containsObject:self.loadingView]) {
-        [self.loadingView removeFromSuperview];
+    if ([self.subviews containsObject:self.ypb_loadingView]) {
+        [self.ypb_loadingView removeFromSuperview];
     }
 }
 
 - (void)beginProgressingWithTitle:(NSString *)title subtitle:(NSString *)subtitle {
-    MBProgressHUD *progressHud = (MBProgressHUD *)self.progressingView;
+    MBProgressHUD *progressHud = (MBProgressHUD *)self.ypb_progressingView;
     progressHud.labelText = title;
     progressHud.detailsLabelText = subtitle;
     [progressHud show:YES];
 }
 
 - (void)progressWithPercent:(double)percent {
-    MBProgressHUD *progressHud = (MBProgressHUD *)self.progressingView;
+    MBProgressHUD *progressHud = (MBProgressHUD *)self.ypb_progressingView;
     progressHud.progress = percent;
 }
 
 - (void)endProgressing {
-    MBProgressHUD *progressHud = (MBProgressHUD *)self.progressingView;
+    MBProgressHUD *progressHud = (MBProgressHUD *)self.ypb_progressingView;
     [progressHud hide:YES];
 }
 @end

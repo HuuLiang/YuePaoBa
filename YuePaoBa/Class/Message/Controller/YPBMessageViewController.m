@@ -7,27 +7,213 @@
 //
 
 #import "YPBMessageViewController.h"
+#import "YPBContact.h"
+#import "YPBChatMessage.h"
+#import "YPBUserDetailViewController.h"
 
-@interface YPBMessageViewController () <UITableViewDataSource,UITableViewSeparatorDelegate>
+@interface YPBMessageViewController ()
 {
-    UITableView *_layoutTableView;
+
 }
+@property (nonatomic,readonly) NSString *userId;
+@property (nonatomic,readonly) NSString *logoUrl;
+@property (nonatomic,retain) NSMutableArray<YPBChatMessage *> *chatMessages;
 @end
 
 @implementation YPBMessageViewController
 
+DefineLazyPropertyInitialization(NSMutableArray, chatMessages)
+
++ (instancetype)showMessageWithUser:(YPBUser *)user inViewController:(UIViewController *)viewController {
+    YPBMessageViewController *messageVC = [[self alloc] initWithUser:user];
+    [viewController.navigationController pushViewController:messageVC animated:YES];
+    return messageVC;
+}
+
++ (instancetype)showMessageWithContact:(YPBContact *)contact inViewController:(UIViewController *)viewController {
+    YPBMessageViewController *messageVC = [[self alloc] initWithContact:contact];
+    [viewController.navigationController pushViewController:messageVC animated:YES];
+    return messageVC;
+}
+
+- (instancetype)init {
+    self = [super init];
+    if (self) {
+        self.allowsSendVoice = NO;
+        self.allowsSendMultiMedia = NO;
+        self.allowsSendFace = NO;
+        
+        [[NSNotificationCenter defaultCenter] addObserver:self
+                                                 selector:@selector(onMessagePushNotification:)
+                                                     name:kMessagePushNotification
+                                                   object:nil];
+    }
+    return self;
+}
+
+- (void)dealloc {
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
+}
+
+- (instancetype)initWithUser:(YPBUser *)user {
+    self = [self init];
+    if (self) {
+        _user = user;
+    }
+    return self;
+}
+
+- (instancetype)initWithContact:(YPBContact *)contact {
+    self = [self init];
+    if (self) {
+        _contact = contact;
+    }
+    return self;
+}
+
+- (NSString *)userId {
+    return _user ? _user.userId : _contact.userId;
+}
+
+- (NSString *)logoUrl {
+    return _user ? _user.logoUrl : _contact.logoUrl;
+}
+
 - (void)viewDidLoad {
     [super viewDidLoad];
-    // Do any additional setup after loading the view.
-    _layoutTableView = [[UITableView alloc] init];
-    _layoutTableView.delegate = self;
-    _layoutTableView.dataSource = self;
-    [self.view addSubview:_layoutTableView];
-    {
-        [_layoutTableView mas_makeConstraints:^(MASConstraintMaker *make) {
-            make.edges.equalTo(self.view);
+    
+    self.messageTableView.backgroundColor = [UIColor colorWithWhite:0.95 alpha:1];
+    self.title = self.user ? self.user.nickName : self.contact.nickName;
+    self.messageSender = [YPBUser currentUser].userId;
+
+}
+
+- (void)reloadChatMessages {
+    self.chatMessages = [YPBChatMessage allMessagesForUser:self.userId].mutableCopy;
+    
+    NSMutableArray<XHMessage *> *messages = [NSMutableArray array];
+    [self.chatMessages enumerateObjectsUsingBlock:^(YPBChatMessage * _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
+        XHMessage *message = [[XHMessage alloc] initWithText:obj.msg sender:obj.sendUserId timestamp:[YPBUtil dateFromString:obj.msgTime]];
+        if ([obj.sendUserId isEqualToString:[YPBUser currentUser].userId]) {
+            message.bubbleMessageType = XHBubbleMessageTypeSending;
+        } else {
+            message.bubbleMessageType = XHBubbleMessageTypeReceiving;
+        }
+        [messages addObject:message];
+    }];
+    self.messages = messages;
+}
+
+- (void)viewWillAppear:(BOOL)animated {
+    [super viewWillAppear:animated];
+    [self reloadChatMessages];
+}
+
+- (void)viewDidAppear:(BOOL)animated {
+    [super viewDidAppear:animated];
+    
+    YPBContact *contact = [YPBContact existingContactWithUserId:self.userId];
+    [contact beginUpdate];
+    contact.unreadMessages = @(0);
+    [contact endUpdate];
+    
+    YPBChatMessage *lastMessage = self.chatMessages.lastObject;
+    if (lastMessage.msgType.unsignedIntegerValue == YPBChatMessageTypeOption) {
+        @weakify(self);
+        [self showOptionsWithChatMessage:lastMessage completion:^(NSUInteger idx, NSString *selection) {
+            @strongify(self);
+            if (selection.length > 0) {
+                [self addTextMessage:selection
+                          withSender:[YPBUser currentUser].userId
+                            receiver:self.userId
+                            dateTime:[YPBUtil stringFromDate:[NSDate date]]];
+            }
+            [self.messageInputView.inputTextView becomeFirstResponder];
         }];
+    } else {
+        [self.messageInputView.inputTextView becomeFirstResponder];
     }
+    
+    
+}
+
+- (void)viewWillDisappear:(BOOL)animated {
+    [super viewWillDisappear:animated];
+    
+    if (self.chatMessages.count == 0) {
+        return ;
+    }
+    
+    YPBChatMessage *recentChatMessage = self.chatMessages.lastObject;
+    YPBContact *contact = [YPBContact existingContactWithUserId:self.userId];
+    if ([contact.recentTime isEqualToString:recentChatMessage.msgTime]
+        && [contact.recentMessage isEqualToString:recentChatMessage.msg]) {
+        return ;
+    }
+    
+    [contact beginUpdate];
+    contact.recentTime = recentChatMessage.msgTime;
+    contact.recentMessage = recentChatMessage.msg;
+    [contact endUpdate];
+}
+
+- (void)showOptionsWithChatMessage:(YPBChatMessage *)chatMessage
+                        completion:(void (^)(NSUInteger idx, NSString *selection))completion
+{
+    UIActionSheet *actionSheet = [UIActionSheet bk_actionSheetWithTitle:chatMessage.msg];
+    
+    NSArray<NSString *> *options = [chatMessage.options componentsSeparatedByString:@";"];
+    [options enumerateObjectsUsingBlock:^(NSString * _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
+        [actionSheet bk_addButtonWithTitle:obj handler:^{
+            SafelyCallBlock2(completion, idx, obj);
+        }];
+    }];
+    
+    [actionSheet bk_setDestructiveButtonWithTitle:@"不想回答" handler:^{
+        SafelyCallBlock2(completion, NSNotFound, nil);
+    }];
+    [actionSheet showInView:self.view];
+}
+
+- (void)onMessagePushNotification:(NSNotification *)notification {
+    NSArray<YPBChatMessage *> *messages = notification.object;
+    NSArray<YPBChatMessage *> *filteredMessages = [messages bk_select:^BOOL(YPBChatMessage *msg) {
+        return [msg.receiveUserId isEqualToString:self.userId];
+    }];
+    
+    NSArray<YPBChatMessage *> *sortedMessages = [filteredMessages sortedArrayUsingComparator:^NSComparisonResult(id  _Nonnull obj1, id  _Nonnull obj2) {
+        YPBChatMessage *message1 = obj1;
+        YPBChatMessage *message2 = obj2;
+        return [message1.msgTime compare:message2.msgTime];
+    }];
+    
+    [sortedMessages enumerateObjectsUsingBlock:^(YPBChatMessage * _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
+        [self addChatMessage:obj];
+    }];
+}
+
+- (void)addTextMessage:(NSString *)message
+            withSender:(NSString *)sender
+              receiver:(NSString *)receiver
+              dateTime:(NSString *)dateTime
+{
+    YPBChatMessage *chatMessage = [YPBChatMessage chatMessage];
+    chatMessage.sendUserId = sender;
+    chatMessage.receiveUserId = receiver;
+    chatMessage.msgType = @(YPBChatMessageTypeWord);
+    chatMessage.msg = message;
+    chatMessage.msgTime = dateTime;
+    [self addChatMessage:chatMessage];
+}
+
+- (void)addChatMessage:(YPBChatMessage *)chatMessage {
+    [chatMessage persist];
+    [self.chatMessages addObject:chatMessage];
+    
+    XHMessage *xhMsg = [[XHMessage alloc] initWithText:chatMessage.msg
+                                                sender:chatMessage.sendUserId
+                                             timestamp:[YPBUtil dateFromString:chatMessage.msgTime]];
+    [self addMessage:xhMsg];
 }
 
 - (void)didReceiveMemoryWarning {
@@ -35,13 +221,43 @@
     // Dispose of any resources that can be recreated.
 }
 
-#pragma mark - UITableViewDataSource,UITableViewSeparatorDelegate
+#pragma mark - XHMessageTableViewControllerDelegate
 
-- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    return nil;
+- (void)didSendText:(NSString *)text fromSender:(NSString *)sender onDate:(NSDate *)date {
+    [self addTextMessage:text withSender:sender receiver:self.userId dateTime:[YPBUtil stringFromDate:date]];
+    [self finishSendMessageWithBubbleMessageType:XHBubbleMessageMediaTypeText];
+//    if ([YPBUser currentUser].isVip) {
+//        [self addTextMessage:text withSender:sender receiver:self.userId dateTime:[YPBUtil stringFromDate:date]];
+//    } else {
+//        [[YPBMessageCenter defaultCenter] showErrorWithTitle:@"您还未开通VIP" inViewController:self];
+//    }
 }
 
-- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    return 0;
+- (void)configureCell:(XHMessageTableViewCell *)cell atIndexPath:(NSIndexPath *)indexPath {
+    XHMessage *message = self.messages[indexPath.row];
+    if ([message.sender isEqualToString:[YPBUser currentUser].userId]) {
+        [cell.avatarButton sd_setImageWithURL:[NSURL URLWithString:[YPBUser currentUser].logoUrl]
+                                     forState:UIControlStateNormal
+                             placeholderImage:[UIImage imageNamed:@"avatar_placeholder"]];
+        [cell.avatarButton bk_removeEventHandlersForControlEvents:UIControlEventTouchUpInside];
+    } else {
+        [cell.avatarButton sd_setImageWithURL:[NSURL URLWithString:self.logoUrl]
+                                     forState:UIControlStateNormal
+                             placeholderImage:[UIImage imageNamed:@"avatar_placeholder"]];
+        @weakify(self);
+        [cell.avatarButton bk_addEventHandler:^(id sender) {
+            @strongify(self);
+            YPBUserDetailViewController *detailVC = [[YPBUserDetailViewController alloc] initWithUserId:self.userId];
+            [self.navigationController pushViewController:detailVC animated:YES];
+        } forControlEvents:UIControlEventTouchUpInside];
+    }
+    
 }
+//- (BOOL)shouldLoadMoreMessagesScrollToTop {
+//    return YES;
+//}
+//
+//- (void)loadMoreMessagesScrollTotop {
+//    self.loadingMoreMessage = YES;
+//}
 @end

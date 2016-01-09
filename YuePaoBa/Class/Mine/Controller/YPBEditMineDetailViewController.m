@@ -145,13 +145,13 @@ DefineLazyPropertyInitialization(YPBUserDetailUpdateModel, updateModel)
     inputVC.placeholder = @"输入微信号";
     inputVC.note = @"微信资料输入后无法修改\n为了让有缘人及时找到，请正确填写。";
     inputVC.text = self->_wechatCell.subtitleLabel.text;
-    inputVC.completionHandler = ^BOOL(NSString *text) {
+    inputVC.completionHandler = ^BOOL(id sender, NSString *text) {
         @strongify(self);
         self.user.weixinNum = text;
         self->_wechatCell.subtitleLabel.text = text;
         return YES;
     };
-    inputVC.changeHandler = ^BOOL(NSString *text) {
+    inputVC.changeHandler = ^BOOL(id sender, NSString *text) {
         return text.length > 0;
     };
     [self.navigationController pushViewController:inputVC animated:YES];
@@ -164,7 +164,7 @@ DefineLazyPropertyInitialization(YPBUserDetailUpdateModel, updateModel)
     inputVC.placeholder = @"填写您的兴趣爱好，例如音乐、电影等";
     inputVC.text = self->_interestCell.subtitleLabel.text;
     inputVC.limitedTextLength = 50;
-    inputVC.completionHandler = ^BOOL(NSString *text) {
+    inputVC.completionHandler = ^BOOL(id sender, NSString *text) {
         @strongify(self);
         self.user.note = text;
         self->_interestCell.subtitleLabel.text = text;
@@ -196,7 +196,7 @@ DefineLazyPropertyInitialization(YPBUserDetailUpdateModel, updateModel)
     inputVC.title = @"编辑职业";
     inputVC.placeholder = @"输入职业";
     inputVC.text = self->_professionCell.subtitleLabel.text;
-    inputVC.completionHandler = ^BOOL(NSString *text) {
+    inputVC.completionHandler = ^BOOL(id sender, NSString *text) {
         @strongify(self);
         self.user.profession = text;
         self->_professionCell.subtitleLabel.text = text;

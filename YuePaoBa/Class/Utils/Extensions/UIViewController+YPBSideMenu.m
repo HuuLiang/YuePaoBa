@@ -7,6 +7,7 @@
 //
 
 #import "UIViewController+YPBSideMenu.h"
+#import "YPBSideMenuViewController.h"
 
 #define kDefaultSideMenuItemHeight (kScreenHeight * 0.1)
 
@@ -44,15 +45,28 @@
 @end
 
 static const void* kSideMenuItemAssociatedKey = &kSideMenuItemAssociatedKey;
+static const void* kSideMenuVCAssociatedKey = &kSideMenuVCAssociatedKey;
 
 @implementation UIViewController (YPBSideMenu)
 
 - (YPBSideMenuItem *)sideMenuItem {
-    return objc_getAssociatedObject(self, kSideMenuItemAssociatedKey);
+    YPBSideMenuItem *sideMenuItem = objc_getAssociatedObject(self, kSideMenuItemAssociatedKey);
+    if (sideMenuItem) {
+        return sideMenuItem;
+    }
+    return self.navigationController.sideMenuItem;
 }
 
 - (void)setSideMenuItem:(YPBSideMenuItem *)sideMenuItem {
+    sideMenuItem.viewController = self;
     objc_setAssociatedObject(self, kSideMenuItemAssociatedKey, sideMenuItem, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
 }
 
+- (YPBSideMenuViewController *)sideMenuVC {
+    return objc_getAssociatedObject(self, kSideMenuVCAssociatedKey);
+}
+
+- (void)setSideMenuVC:(YPBSideMenuViewController *)sideMenuVC {
+    objc_setAssociatedObject(self, kSideMenuVCAssociatedKey, sideMenuVC, OBJC_ASSOCIATION_ASSIGN);
+}
 @end

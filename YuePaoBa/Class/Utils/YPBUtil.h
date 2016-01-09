@@ -8,6 +8,8 @@
 
 #import <Foundation/Foundation.h>
 
+@class YPBUser;
+
 @interface YPBUtil : NSObject
 
 + (RESideMenu *)sideMenuViewController;
@@ -16,10 +18,19 @@
 + (void)setActivationId:(NSString *)activationId;
 
 + (void)notifyRegisterSuccessfully;
++ (NSDate *)registerDate;
++ (NSUInteger)secondsSinceRegister;
 
 + (NSString *)deviceName;
 + (NSString *)appVersion;
 + (NSString *)appId;
 + (NSNumber *)pV;
+
++ (NSUInteger)loginFrequency;
++ (void)accumalateLoginFrequency;
+
++ (NSString *)currentDateString;
++ (NSDate *)dateFromString:(NSString *)dateString;
++ (NSString *)stringFromDate:(NSDate *)date;
 
 @end

@@ -8,8 +8,8 @@
 
 #import "YPBBaseViewController.h"
 
-typedef BOOL (^YPBInputTextCompletionHandler)(NSString *text);
-typedef BOOL (^YPBInputTextChangeHandler)(NSString *text);
+typedef BOOL (^YPBInputTextCompletionHandler)(id sender, NSString *text);
+typedef BOOL (^YPBInputTextChangeHandler)(id sender, NSString *text);
 
 @interface YPBInputTextViewController : YPBBaseViewController
 
@@ -18,6 +18,7 @@ typedef BOOL (^YPBInputTextChangeHandler)(NSString *text);
 @property (nonatomic) NSString *placeholder;
 @property (nonatomic) NSString *text;
 @property (nonatomic) NSString *note;
+@property (nonatomic) NSString *completeButtonTitle;
 
 @property (nonatomic,copy) YPBInputTextCompletionHandler completionHandler;
 @property (nonatomic,copy) YPBInputTextChangeHandler changeHandler;

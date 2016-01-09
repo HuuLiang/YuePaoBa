@@ -13,15 +13,29 @@ typedef NS_ENUM(NSUInteger, YPBChatMessageType) {
     YPBChatMessageTypeUnknown,
     YPBChatMessageTypeWord,
     YPBChatMessageTypePhoto,
-    YPBChatMessageTypeVoice
+    YPBChatMessageTypeVoice,
+    YPBChatMessageTypeOption
 };
+
+@class YPBPushedMessage;
 
 @interface YPBChatMessage : YPBPersistentObject
 
+@property (nonatomic) NSString *msgId;
 @property (nonatomic) NSString *sendUserId;
 @property (nonatomic) NSString *receiveUserId;
-@property (nonatomic) NSNumber *msgType;
+
+@property (nonatomic) NSNumber<RLMInt> *msgType;
 @property (nonatomic) NSString *msg;
 @property (nonatomic) NSString *msgTime;
 
+@property (nonatomic) NSString *options;
+
++ (instancetype)chatMessage;
++ (NSArray<YPBChatMessage *> *)allMessagesForUser:(NSString *)userId;
++ (instancetype)lastMessageForUser:(NSString *)userId;
+
++ (instancetype)chatMessageFromPushedMessage:(YPBPushedMessage *)message;
 @end
+
+RLM_ARRAY_TYPE(YPBChatMessage)

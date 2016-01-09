@@ -9,6 +9,7 @@
 #import <UIKit/UIKit.h>
 
 @class YPBSideMenuItem;
+@class YPBSideMenuViewController;
 
 @protocol YPBSideMenuItemDelegate <NSObject>
 
@@ -16,6 +17,7 @@
 - (void)sideMenuController:(UIViewController *)viewController willAddToSideMenuCell:(UITableViewCell *)cell;
 - (BOOL)sideMenuController:(UIViewController *)sideMenuVC shouldPresentContentViewController:(UIViewController *)contentVC;
 - (CGFloat)sideMenuItemHeight;
+- (NSString *)badgeValueOfSideMenuItem:(YPBSideMenuItem *)sideMenuItem;
 
 @end
 
@@ -24,6 +26,7 @@
 @property (nonatomic) UIImage *image;
 @property (nonatomic) CGFloat height; // menu cell height
 @property (nonatomic,assign) id<YPBSideMenuItemDelegate> delegate;
+@property (nonatomic,weak) UIViewController *viewController;
 
 + (instancetype)itemWithTitle:(NSString *)title
                         image:(UIImage *)image;
@@ -46,4 +49,6 @@
 @interface UIViewController (YPBSideMenu)
 
 @property (nonatomic,retain) YPBSideMenuItem *sideMenuItem;
+@property (nonatomic,weak) YPBSideMenuViewController *sideMenuVC;
+
 @end

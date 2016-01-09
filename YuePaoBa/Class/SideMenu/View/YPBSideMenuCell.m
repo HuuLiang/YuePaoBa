@@ -12,6 +12,7 @@
 {
     UIImageView *_iconImageView;
     UILabel *_titleLabel;
+    UILabel *_badgeLabel;
 }
 @end
 
@@ -43,6 +44,22 @@
             }];
         }
         
+        _badgeLabel = [[UILabel alloc] init];
+        _badgeLabel.clipsToBounds = YES;
+        _badgeLabel.backgroundColor = [UIColor redColor];
+        _badgeLabel.textAlignment = NSTextAlignmentCenter;
+        _badgeLabel.textColor = [UIColor whiteColor];
+        _badgeLabel.hidden = YES;
+        [self addSubview:_badgeLabel];
+        {
+            [_badgeLabel mas_makeConstraints:^(MASConstraintMaker *make) {
+                make.centerY.equalTo(self);
+                make.right.equalTo(self).offset(-15);
+                make.height.equalTo(self).multipliedBy(0.4);
+                make.width.equalTo(_badgeLabel.mas_height);
+            }];
+        }
+        
         _titleLabel = [[UILabel alloc] init];
         _titleLabel.textColor = [UIColor whiteColor];
         _titleLabel.text = title;
@@ -51,6 +68,7 @@
             [_titleLabel mas_makeConstraints:^(MASConstraintMaker *make) {
                 make.centerY.equalTo(self);
                 make.left.equalTo(_iconImageView.mas_right).offset(20);
+                make.right.equalTo(_badgeLabel.mas_left).with.offset(-10);
             }];
         }
     }
@@ -61,6 +79,8 @@
     [super layoutSubviews];
     
     _titleLabel.font = [UIFont systemFontOfSize:CGRectGetHeight(_iconImageView.frame)/2.5];
+    _badgeLabel.font = [UIFont systemFontOfSize:CGRectGetHeight(_badgeLabel.frame)*0.7];
+    _badgeLabel.layer.cornerRadius = CGRectGetHeight(_badgeLabel.frame)/2;
 }
 
 - (void)setTitle:(NSString *)title {
@@ -73,4 +93,8 @@
     _iconImageView.image = iconImage;
 }
 
+- (void)setBadgeValue:(NSString *)badgeValue {
+    _badgeLabel.text = badgeValue;
+    _badgeLabel.hidden = badgeValue.length == 0;
+}
 @end

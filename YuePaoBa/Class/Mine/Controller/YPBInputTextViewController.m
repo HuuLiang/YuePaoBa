@@ -77,7 +77,7 @@
     self.view.backgroundColor = kDefaultBackgroundColor;
     
     @weakify(self);
-    self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] bk_initWithTitle:@"保存"
+    self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] bk_initWithTitle:self.completeButtonTitle ?: @"保存"
                                                                                  style:UIBarButtonItemStylePlain
                                                                                handler:^(id sender)
     {
@@ -175,8 +175,10 @@
 }
 
 - (BOOL)doSave {
+    [self.inputView resignFirstResponder];
+    
     if (self.completionHandler) {
-        if (self.completionHandler(self.text)) {
+        if (self.completionHandler(self, self.text)) {
             [self.navigationController popViewControllerAnimated:YES];
             return YES;
         }
@@ -193,7 +195,7 @@
     }
     
     if (self.changeHandler) {
-        self.navigationItem.rightBarButtonItem.enabled = self.changeHandler(self.text);
+        self.navigationItem.rightBarButtonItem.enabled = self.changeHandler(self, self.text);
     } else {
         self.navigationItem.rightBarButtonItem.enabled = YES;
     }

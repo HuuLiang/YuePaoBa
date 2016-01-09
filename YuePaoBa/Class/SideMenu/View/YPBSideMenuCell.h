@@ -12,6 +12,7 @@
 
 @property (nonatomic) NSString *title;
 @property (nonatomic) UIImage *iconImage;
+@property (nonatomic) NSString *badgeValue;
 
 - (instancetype)initWithTitle:(NSString *)title iconImage:(UIImage *)iconImage;
 

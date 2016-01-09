@@ -11,6 +11,8 @@
 #import "YPBUserListModel.h"
 #import "YPBUserAccessModel.h"
 #import "YPBUserDetailViewController.h"
+#import "YPBMessageViewController.h"
+#import "YPBContact.h"
 
 static NSString *const kVIPCellReusableIdentifier = @"VIPCellReusableIdentifier";
 
@@ -108,7 +110,9 @@ DefineLazyPropertyInitialization(YPBUserAccessModel, userAccessModel)
         @weakify(self);
         cell.dateAction = ^(id sender) {
             @strongify(self);
-            
+            if ([YPBContact refreshContactRecentTimeWithUser:user]) {
+                [YPBMessageViewController showMessageWithUser:user inViewController:self];
+            }
         };
     }
     return cell;

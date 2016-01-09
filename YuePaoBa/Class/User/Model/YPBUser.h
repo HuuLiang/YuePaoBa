@@ -23,6 +23,7 @@ typedef NS_ENUM(NSUInteger, YPBUserCup) {
 };
 
 @interface YPBUserPhoto : NSObject <NSCopying>
+@property (nonatomic) NSNumber *id;
 @property (nonatomic) NSString *userId;
 @property (nonatomic) NSString *smallPhoto;
 @property (nonatomic) NSString *bigPhoto;

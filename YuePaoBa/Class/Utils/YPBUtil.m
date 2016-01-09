@@ -15,6 +15,11 @@
 static NSString *const kActivationKeyChainServiceName = @"YPB_ACTIVATION_KEYCHAIN_SERVICENAME";
 static NSString *const kActivationKeyChainUserName = @"YPB_ACTIVATION_KEYCHAIN_USERNAME";
 
+static NSString *const kRegisterDateKeyChainServiceName = @"YPB_REGISTERDATE_KEYCHAIN_SERVICENAME";
+static NSString *const kRegisterDateKeyChainUserName = @"YPB_REGISTERDATE_KEYCHAIN_USERNAME";
+
+static NSString *const kLoginFrequencyKeyName = @"YPB_LOGINFREQUENCY_KEYNAME";
+
 @implementation YPBUtil
 
 + (RESideMenu *)sideMenuViewController {
@@ -26,8 +31,29 @@ static NSString *const kActivationKeyChainUserName = @"YPB_ACTIVATION_KEYCHAIN_U
 }
 
 + (void)notifyRegisterSuccessfully {
+    [SFHFKeychainUtils storeUsername:kRegisterDateKeyChainUserName
+                         andPassword:[self currentDateString]
+                      forServiceName:kRegisterDateKeyChainServiceName
+                      updateExisting:NO
+                               error:nil];
+    
     YPBAppDelegate *delegate = (YPBAppDelegate *)[UIApplication sharedApplication].delegate;
-    [delegate notifyRegisterSuccessfully];
+    [delegate notifyLoginSuccessfully];
+}
+
++ (NSDate *)registerDate {
+    NSString *dateString = [SFHFKeychainUtils getPasswordForUsername:kRegisterDateKeyChainUserName
+                                                      andServiceName:kRegisterDateKeyChainServiceName
+                                                               error:nil];
+    NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
+    [dateFormatter setDateFormat:kDefaultDateFormat];
+    return [dateFormatter dateFromString:dateString];
+}
+
++ (NSUInteger)secondsSinceRegister {
+    NSDate *registerDate = [self registerDate];
+    NSDateComponents *dateComps = [[NSCalendar currentCalendar] components:NSCalendarUnitSecond fromDate:registerDate toDate:[NSDate date] options:0];
+    return dateComps.second;
 }
 
 + (NSString *)activationId {
@@ -59,5 +85,33 @@ static NSString *const kActivationKeyChainUserName = @"YPB_ACTIVATION_KEYCHAIN_U
 
 + (NSNumber *)pV {
     return @200;
+}
+
++ (NSUInteger)loginFrequency {
+    NSNumber *times = [[NSUserDefaults standardUserDefaults] objectForKey:kLoginFrequencyKeyName];;
+    return times.unsignedIntegerValue;
+}
+
++ (void)accumalateLoginFrequency {
+    NSUInteger loginFreq = [self loginFrequency];
+    [[NSUserDefaults standardUserDefaults] setObject:@(loginFreq+1) forKey:kLoginFrequencyKeyName];
+}
+
++ (NSString *)currentDateString {
+    NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
+    [dateFormatter setDateFormat:kDefaultDateFormat];
+    return [dateFormatter stringFromDate:[NSDate date]];
+}
+
++ (NSDate *)dateFromString:(NSString *)dateString {
+    NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
+    [dateFormatter setDateFormat:kDefaultDateFormat];
+    return [dateFormatter dateFromString:dateString];
+}
+
++ (NSString *)stringFromDate:(NSDate *)date {
+    NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
+    [dateFormatter setDateFormat:kDefaultDateFormat];
+    return [dateFormatter stringFromDate:date];
 }
 @end

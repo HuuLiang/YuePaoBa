@@ -24,6 +24,10 @@ DefineLazyPropertyInitialization(NSMutableDictionary, cells)
     self = [super init];
     if (self) {
         _viewControllers = viewControllers;
+        
+        [viewControllers enumerateObjectsUsingBlock:^(UIViewController * _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
+            obj.sideMenuVC = self;
+        }];
     }
     return self;
 }
@@ -43,6 +47,16 @@ DefineLazyPropertyInitialization(NSMutableDictionary, cells)
         [_layoutTableView mas_makeConstraints:^(MASConstraintMaker *make) {
             make.edges.equalTo(self.view).insets(UIEdgeInsetsMake(0, 0, 0,rightOffset));
         }];
+    }
+}
+
+- (NSUInteger)selectedIndex {
+    return [self.viewControllers indexOfObject:self.sideMenuViewController.contentViewController];
+}
+
+- (void)setSelectedIndex:(NSUInteger)selectedIndex {
+    if (selectedIndex < self.viewControllers.count) {
+        [self.sideMenuViewController setContentViewController:self.viewControllers[selectedIndex] animated:YES];
     }
 }
 
@@ -70,7 +84,7 @@ DefineLazyPropertyInitialization(NSMutableDictionary, cells)
         && [viewController.sideMenuItem.delegate respondsToSelector:@selector(sideMenuController:willAddToSideMenuCell:)]) {
         [viewController.sideMenuItem.delegate sideMenuController:self willAddToSideMenuCell:cell];
     }
-    
+    [self.cells setObject:cell forKey:@(indexPath.row)];
     return cell;
 }
 
@@ -100,5 +114,17 @@ DefineLazyPropertyInitialization(NSMutableDictionary, cells)
     
     [self.sideMenuViewController hideMenuViewController];
     [self.sideMenuViewController setContentViewController:viewController animated:YES];
+}
+
+#pragma mark - RESideMenuDelegate
+
+- (void)sideMenu:(RESideMenu *)sideMenu willShowMenuViewController:(UIViewController *)menuViewController {
+    [self.cells enumerateKeysAndObjectsUsingBlock:^(NSNumber * _Nonnull key, YPBSideMenuCell * _Nonnull obj, BOOL * _Nonnull stop) {
+        UIViewController *viewController = self.viewControllers[key.unsignedIntegerValue];
+        if (viewController.sideMenuItem.delegate
+            && [viewController.sideMenuItem.delegate respondsToSelector:@selector(badgeValueOfSideMenuItem:)]) {
+            obj.badgeValue = [viewController.sideMenuItem.delegate badgeValueOfSideMenuItem:viewController.sideMenuItem];
+        }
+    }];
 }
 @end

@@ -122,7 +122,12 @@
 
 - (void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary<NSString *,id> *)info {
     @weakify(self);
-    UIImage *pickedImage = [info objectForKey:UIImagePickerControllerEditedImage];
+    UIImage *pickedImage;
+    if (picker.allowsEditing) {
+        pickedImage = [info objectForKey:UIImagePickerControllerEditedImage];
+    } else {
+        pickedImage = [info objectForKey:UIImagePickerControllerOriginalImage];
+    }
     ALAssetsLibrary *assetsLibrary = [[ALAssetsLibrary alloc] init];
     [assetsLibrary writeImageToSavedPhotosAlbum:[pickedImage CGImage]
                                     orientation:(ALAssetOrientation)pickedImage.imageOrientation
@@ -130,7 +135,9 @@
     {
         [assetsLibrary assetForURL:assetURL resultBlock:^(ALAsset *asset) {
             @strongify(self);
-            UIImage *originalImage = [UIImage imageWithCGImage:asset.defaultRepresentation.fullResolutionImage];
+            UIImage *originalImage = [UIImage imageWithCGImage:asset.defaultRepresentation.fullResolutionImage
+                                                         scale:asset.defaultRepresentation.scale
+                                                   orientation:pickedImage.imageOrientation];
             UIImage *thumbImage = [UIImage imageWithCGImage:asset.thumbnail];
             SafelyCallBlock3(self.completionHandler, YES, @[originalImage], @[thumbImage]);
             self.completionHandler = nil;

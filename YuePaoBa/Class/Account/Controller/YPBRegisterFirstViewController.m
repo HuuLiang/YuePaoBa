@@ -169,6 +169,8 @@ DefineLazyPropertyInitialization(YPBUser, user)
         return ;
     }
     
+    [_nicknameTextField resignFirstResponder];
+    
     @weakify(self);
     UIAlertView *alertView = [[UIAlertView alloc] bk_initWithTitle:@"信息确认" message:@"注册后，性别和昵称将无法修改。是否确认？"];
     [alertView bk_setCancelButtonWithTitle:@"取消" handler:nil];

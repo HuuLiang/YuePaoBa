@@ -10,8 +10,8 @@
 
 @interface UIView (Loading)
 
-@property (nonatomic,retain,readonly) UIView *loadingView;
-@property (nonatomic,retain,readonly) UIView *progressingView;
+@property (nonatomic,retain,readonly) UIView *ypb_loadingView;
+@property (nonatomic,retain,readonly) UIView *ypb_progressingView;
 
 - (void)beginLoading;
 - (void)endLoading;

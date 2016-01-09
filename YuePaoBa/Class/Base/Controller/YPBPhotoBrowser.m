@@ -13,7 +13,7 @@ static const CGFloat kViewFadeAnimationDuration = 0.3;
 
 static YPBPhotoBrowser *_sharedPhotoBrowser;
 
-@interface YPBPhotoBrowser ()
+@interface YPBPhotoBrowser () <MWPhotoBrowserDelegate>
 @property (nonatomic,retain) MWPhotoBrowser *photoBrowser;
 @end
 
@@ -26,14 +26,21 @@ static YPBPhotoBrowser *_sharedPhotoBrowser;
     return _sharedPhotoBrowser;
 }
 
++ (instancetype)showingPhotoBrowser {
+    return _sharedPhotoBrowser;
+}
+
 - (instancetype)initWithUserPhotos:(NSArray *)userPhotos {
-    self = [super init];
+    self = [self init];
     if (self) {
+        _photos = userPhotos;
+        
         NSMutableArray *photos = [NSMutableArray array];
         [userPhotos enumerateObjectsUsingBlock:^(YPBUserPhoto * _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
             [photos addObject:[MWPhoto photoWithURL:[NSURL URLWithString:obj.bigPhoto]]];
         }];
         _photoBrowser = [[MWPhotoBrowser alloc] initWithPhotos:photos];
+        _photoBrowser.delegate = self;
         _photoBrowser.displayActionButton = NO;
     }
     return self;
@@ -58,6 +65,8 @@ static YPBPhotoBrowser *_sharedPhotoBrowser;
         @strongify(self);
         [self hide];
     }];
+    
+    
 }
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -65,8 +74,12 @@ static YPBPhotoBrowser *_sharedPhotoBrowser;
     [self.photoBrowser reloadData];
 }
 
-- (void)setCurrentPhotoIndex:(NSUInteger)photoIndex {
-    [self.photoBrowser setCurrentPhotoIndex:photoIndex];
+- (NSUInteger)currentPhotoIndex {
+    return self.photoBrowser.currentIndex;
+}
+
+- (void)setCurrentPhotoIndex:(NSUInteger)currentPhotoIndex {
+    [self.photoBrowser setCurrentPhotoIndex:currentPhotoIndex];
 }
 
 - (void)showInView:(UIView *)view {
@@ -95,6 +108,10 @@ static YPBPhotoBrowser *_sharedPhotoBrowser;
             }
         }];
     }
+}
+
+- (void)photoBrowser:(MWPhotoBrowser *)photoBrowser didDisplayPhotoAtIndex:(NSUInteger)index {
+    SafelyCallBlock1(self.displayAction, index);
 }
 
 - (void)didReceiveMemoryWarning {

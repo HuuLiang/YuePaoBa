@@ -13,7 +13,9 @@
 #import "YPBTableViewCell.h"
 #import "YPBUserPhotoBar.h"
 #import "YPBPhotoGridViewController.h"
-#import "YPBPhotoBrowser.h"
+#import "YPBUserPhotoViewController.h"
+#import "YPBMessageViewController.h"
+#import "YPBContact.h"
 
 @interface YPBUserDetailViewController ()
 {
@@ -107,6 +109,7 @@ DefineLazyPropertyInitialization(YPBUserAccessModel, userAccessModel)
     self.user = user;
     
     _profileCell.user = user;
+    _profileCell.numberOfLikes = user.receiveGreetCount.unsignedIntegerValue;
     
     _genderCell.imageView.image = user.gender==YPBUserGenderFemale?[UIImage imageNamed:@"female_icon"]:[UIImage imageNamed:@"male_icon"];
     _genderCell.titleLabel.text = user.gender==YPBUserGenderFemale?@"性别：女":@"性别：男";
@@ -155,6 +158,7 @@ DefineLazyPropertyInitialization(YPBUserAccessModel, userAccessModel)
         [self->_profileCell endLoading];
         if (success) {
             self->_profileCell.liked = YES;
+            self->_profileCell.numberOfLikes = self->_profileCell.numberOfLikes+1;
             self.user.isGreet = YES;
             [[YPBMessageCenter defaultCenter] showSuccessWithTitle:@"打招呼成功" subtitle:nil];
         }
@@ -165,7 +169,10 @@ DefineLazyPropertyInitialization(YPBUserAccessModel, userAccessModel)
     YPBUserProfileCell *profileCell = [[YPBUserProfileCell alloc] init];
     @weakify(self);
     profileCell.dateAction = ^(id sender) {
-        
+        @strongify(self);
+        if ([YPBContact refreshContactRecentTimeWithUser:self.user]) {
+            [YPBMessageViewController showMessageWithUser:self.user inViewController:self];
+        }
     };
     profileCell.likeAction = ^(id sender) {
         @strongify(self);
@@ -185,9 +192,9 @@ DefineLazyPropertyInitialization(YPBUserAccessModel, userAccessModel)
     _photoBar = [[YPBUserPhotoBar alloc] init];
     _photoBar.selectAction = ^(NSUInteger index) {
         @strongify(self);
-        [YPBPhotoBrowser showPhotoBrowserInView:self.view.window
-                                     withPhotos:self.user.userPhotos
-                              currentPhotoIndex:index];
+        [YPBUserPhotoViewController showPhotoBrowserInView:self.view.window
+                                                withPhotos:self.user.userPhotos
+                                         currentPhotoIndex:index];
     };
     [photoCell addSubview:_photoBar];
     {
