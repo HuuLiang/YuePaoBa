@@ -27,6 +27,7 @@ typedef void (^YPBLayoutTableViewAction)(NSIndexPath *indexPath, UITableViewCell
 
 - (UITableViewCell *)cellAtIndexPath:(NSIndexPath *)indexPath;
 - (CGFloat)cellHeightAtIndexPath:(NSIndexPath *)indexPath;
+- (NSDictionary<NSIndexPath *, UITableViewCell *> *)allCells;
 
 // Header height & title
 - (void)setHeaderHeight:(CGFloat)height inSection:(NSUInteger)section;

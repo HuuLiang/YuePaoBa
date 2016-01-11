@@ -25,67 +25,21 @@
         _thumbImageView = [[UIImageView alloc] init];
         _thumbImageView.clipsToBounds = YES;
         [self addSubview:_thumbImageView];
-        {
-            [_thumbImageView mas_makeConstraints:^(MASConstraintMaker *make) {
-                make.left.equalTo(self).offset(30);
-                make.height.equalTo(self).multipliedBy(0.8);
-                make.width.equalTo(_thumbImageView.mas_height);
-                make.centerY.equalTo(self);
-            }];
-        }
-        
-//        _notiView = [[UIView alloc] init];
-//        _notiView.backgroundColor = [UIColor redColor];
-//        [self addSubview:_notiView];
-//        {
-//            [_notiView mas_makeConstraints:^(MASConstraintMaker *make) {
-//                make.centerY.equalTo(self);
-//                make.right.equalTo(self).offset(-15);
-//                make.height.equalTo(self).dividedBy(3);
-//                make.width.equalTo(_notiView.mas_height);
-//            }];
-//        }
-//        
+
         _notiLabel = [[UILabel alloc] init];
         _notiLabel.clipsToBounds = YES;
         _notiLabel.backgroundColor = [UIColor redColor];
         _notiLabel.textColor = [UIColor whiteColor];
         _notiLabel.textAlignment = NSTextAlignmentCenter;
         _notiLabel.hidden = YES;
-        _notiLabel.adjustsFontSizeToFitWidth = YES;
         [self addSubview:_notiLabel];
-        {
-            [_notiLabel mas_makeConstraints:^(MASConstraintMaker *make) {
-                make.centerY.equalTo(self);
-                make.right.equalTo(self).offset(-15);
-                make.height.equalTo(self).dividedBy(3);
-                make.width.equalTo(_notiLabel.mas_height);
-            }];
-        }
         
         _titleLabel = [[UILabel alloc] init];
-        _titleLabel.font = [UIFont boldSystemFontOfSize:16.];
         [self addSubview:_titleLabel];
-        {
-            [_titleLabel mas_makeConstraints:^(MASConstraintMaker *make) {
-                make.left.equalTo(_thumbImageView.mas_right).offset(15);
-                make.right.equalTo(_notiLabel.mas_left).offset(-15);
-                make.bottom.equalTo(self.mas_centerY);
-            }];
-        }
-        
+
         _subtitleLabel = [[UILabel alloc] init];
-        _subtitleLabel.font = [UIFont systemFontOfSize:14.];
         _subtitleLabel.textColor = kDefaultTextColor;
         [self addSubview:_subtitleLabel];
-        {
-            [_subtitleLabel mas_makeConstraints:^(MASConstraintMaker *make) {
-                make.left.right.equalTo(_titleLabel);
-                make.top.equalTo(_titleLabel.mas_bottom).offset(5);
-            }];
-        }
-        
-        
     }
     return self;
 }
@@ -93,9 +47,34 @@
 - (void)layoutSubviews {
     [super layoutSubviews];
     
-    _thumbImageView.layer.cornerRadius = CGRectGetHeight(_thumbImageView.frame)/2;
-    //_notiLabel.font = [UIFont systemFontOfSize:CGRectGetHeight(_notiLabel.frame)*0.8];
-    _notiLabel.layer.cornerRadius = CGRectGetHeight(_notiLabel.frame)/2;
+    const CGFloat thumbHeight = lround(self.bounds.size.height * 0.8);
+    const CGFloat thumbWidth = thumbHeight;
+    const CGFloat thumbX = 30;
+    const CGFloat thumbY = (self.bounds.size.height - thumbHeight) / 2;
+    _thumbImageView.frame = CGRectMake(thumbX, thumbY, thumbWidth, thumbHeight);
+    _thumbImageView.layer.cornerRadius = thumbHeight / 2;
+    
+    const CGFloat notiHeight = lround(self.bounds.size.height / 3);
+    const CGFloat notiWidth = notiHeight;
+    const CGFloat notiX = self.bounds.size.width - 15 - notiWidth;
+    const CGFloat notiY = (self.bounds.size.height - notiHeight) / 2;
+    _notiLabel.frame = CGRectMake(notiX, notiY, notiWidth, notiHeight);
+    _notiLabel.layer.cornerRadius = notiHeight/2;
+    _notiLabel.font = [UIFont boldSystemFontOfSize:notiHeight * 0.5];
+    
+    const CGFloat titleX = CGRectGetMaxX(_thumbImageView.frame)+15;
+    const CGFloat titleWidth = CGRectGetMinX(_notiLabel.frame) - titleX - 15;
+    const CGFloat titleHeight = lround(self.bounds.size.height * 0.2);
+    const CGFloat titleY = self.bounds.size.height / 2 - titleHeight;
+    _titleLabel.frame = CGRectMake(titleX, titleY, titleWidth, titleHeight);
+    _titleLabel.font = [UIFont boldSystemFontOfSize:titleHeight];
+    
+    const CGFloat subtitleX = titleX;
+    const CGFloat subtitleY = CGRectGetMaxY(_titleLabel.frame)+5;
+    const CGFloat subtitleWidth = titleWidth;
+    const CGFloat subtitleHeight = lround(titleHeight * 0.9);
+    _subtitleLabel.frame = CGRectMake(subtitleX, subtitleY, subtitleWidth, subtitleHeight);
+    _subtitleLabel.font = [UIFont systemFontOfSize:subtitleHeight];
 }
 
 - (void)setImageURL:(NSURL *)imageURL {

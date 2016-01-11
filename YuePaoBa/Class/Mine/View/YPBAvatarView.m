@@ -8,8 +8,6 @@
 
 #import "YPBAvatarView.h"
 
-static const CGSize kVIPIconSize = {24,30};
-
 @interface YPBAvatarView ()
 {
     UIImageView *_avatarImageView;
@@ -42,12 +40,6 @@ static const CGSize kVIPIconSize = {24,30};
         _avatarImageView.layer.borderColor = [UIColor whiteColor].CGColor;
         _avatarImageView.layer.masksToBounds = YES;
         [self addSubview:_avatarImageView];
-        {
-            [_avatarImageView mas_makeConstraints:^(MASConstraintMaker *make) {
-                make.left.right.top.equalTo(self);
-                make.height.equalTo(_avatarImageView.mas_width);
-            }];
-        }
         
         @weakify(self);
         [_avatarImageView aspect_hookSelector:@selector(setImage:)
@@ -62,19 +54,10 @@ static const CGSize kVIPIconSize = {24,30};
         _nameLabel.textColor = [UIColor whiteColor];
         _nameLabel.textAlignment = NSTextAlignmentCenter;
         [self addSubview:_nameLabel];
-        {
-            [self nameLabelRemakeConstraints];
-        }
         
         _vipImageView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"vip_icon"]];
         _vipImageView.hidden = YES;
         [self addSubview:_vipImageView];
-        {
-            [_vipImageView mas_makeConstraints:^(MASConstraintMaker *make) {
-                make.size.mas_equalTo(kVIPIconSize);
-                make.right.bottom.equalTo(_avatarImageView);
-            }];
-        }
     }
     return self;
 }
@@ -91,20 +74,24 @@ static const CGSize kVIPIconSize = {24,30};
     return self;
 }
 
-- (void)nameLabelRemakeConstraints {
-    [_nameLabel mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.equalTo(_avatarImageView.mas_bottom).offset(15);
-        make.centerX.equalTo(self);
-        make.width.equalTo(self).multipliedBy(2);
-        make.height.equalTo(self).multipliedBy(0.15);
-    }];
-}
-
 - (void)layoutSubviews {
     [super layoutSubviews];
+
+    const CGFloat imageSize = lround(MIN(self.bounds.size.width, self.bounds.size.height));
+    _avatarImageView.frame = CGRectMake(0, 0, imageSize, imageSize);
+    _avatarImageView.layer.cornerRadius = imageSize / 2;
     
-    _avatarImageView.layer.cornerRadius = CGRectGetWidth(_avatarImageView.frame) / 2;
-    _nameLabel.font = [UIFont boldSystemFontOfSize:CGRectGetHeight(_nameLabel.frame)];
+    const CGFloat nameWidth = self.bounds.size.width * 2;
+    const CGFloat nameHeight = lround(self.bounds.size.height * 0.15);
+    const CGFloat nameX = (self.bounds.size.width-nameWidth)/2;
+    const CGFloat nameY = lround(CGRectGetMaxY(_avatarImageView.frame) + self.bounds.size.height*0.1);
+    _nameLabel.frame = CGRectMake(nameX, nameY, nameWidth, nameHeight);
+    _nameLabel.font = [UIFont boldSystemFontOfSize:nameHeight];
+    
+    const CGSize kVIPIconSize = {24,30};
+    _vipImageView.frame = CGRectMake(CGRectGetMaxX(_avatarImageView.frame)-kVIPIconSize.width,
+                                     CGRectGetMaxY(_avatarImageView.frame)-kVIPIconSize.height,
+                                     kVIPIconSize.width, kVIPIconSize.height);
 }
 
 - (void)setName:(NSString *)name {
@@ -121,7 +108,6 @@ static const CGSize kVIPIconSize = {24,30};
 - (void)setIsVIP:(BOOL)isVIP {
     _isVIP = isVIP;
     _vipImageView.hidden = !isVIP;
-    
 }
 
 - (void)setShowName:(BOOL)showName {

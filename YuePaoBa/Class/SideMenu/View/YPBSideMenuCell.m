@@ -36,9 +36,8 @@
         [self addSubview:_iconImageView];
         {
             [_iconImageView mas_makeConstraints:^(MASConstraintMaker *make) {
-//                make.height.equalTo(self).multipliedBy(0.6);
-//                make.width.equalTo(_iconImageView.mas_height);
-                make.size.mas_equalTo(CGSizeMake(kScreenHeight*0.06, kScreenHeight*0.06));
+                make.height.equalTo(self).multipliedBy(0.6);
+                make.width.equalTo(_iconImageView.mas_height);
                 make.centerY.equalTo(self);
                 make.left.equalTo(self).offset(20);
             }];
@@ -63,12 +62,13 @@
         _titleLabel = [[UILabel alloc] init];
         _titleLabel.textColor = [UIColor whiteColor];
         _titleLabel.text = title;
+        _titleLabel.adjustsFontSizeToFitWidth = YES;
         [self addSubview:_titleLabel];
         {
             [_titleLabel mas_makeConstraints:^(MASConstraintMaker *make) {
-                make.centerY.equalTo(self);
                 make.left.equalTo(_iconImageView.mas_right).offset(20);
                 make.right.equalTo(_badgeLabel.mas_left).with.offset(-10);
+                make.top.bottom.equalTo(_iconImageView);
             }];
         }
     }
@@ -78,8 +78,7 @@
 - (void)layoutSubviews {
     [super layoutSubviews];
     
-    _titleLabel.font = [UIFont systemFontOfSize:CGRectGetHeight(_iconImageView.frame)/2.5];
-    _badgeLabel.font = [UIFont systemFontOfSize:CGRectGetHeight(_badgeLabel.frame)*0.7];
+    _badgeLabel.font = [UIFont systemFontOfSize:CGRectGetHeight(_badgeLabel.frame)*0.5];
     _badgeLabel.layer.cornerRadius = CGRectGetHeight(_badgeLabel.frame)/2;
 }
 
@@ -96,5 +95,6 @@
 - (void)setBadgeValue:(NSString *)badgeValue {
     _badgeLabel.text = badgeValue;
     _badgeLabel.hidden = badgeValue.length == 0;
+    [self setNeedsLayout];
 }
 @end

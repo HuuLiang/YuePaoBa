@@ -86,6 +86,11 @@
                  loginDuration:(NSUInteger)duration
              completionHandler:(YPBCompletionHandler)handler
 {
+    if (userId.length == 0) {
+        SafelyCallBlock2(handler, NO, nil);
+        return NO;
+    }
+    
     @weakify(self);
     NSDictionary *params = @{@"userId":userId,
                              @"loginSeq":@([YPBUtil loginFrequency]),

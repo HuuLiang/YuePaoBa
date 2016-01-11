@@ -57,7 +57,7 @@ DefineLazyPropertyInitialization(NSMutableArray, userGreets)
     _layoutTableView.dataSource = self;
     _layoutTableView.hasRowSeparator = YES;
     _layoutTableView.hasSectionBorder = YES;
-    _layoutTableView.rowHeight = kScreenHeight * 0.15;
+    _layoutTableView.rowHeight = MAX(kScreenHeight * 0.15, 80);
     [_layoutTableView registerClass:[YPBMineAccessCell class] forCellReuseIdentifier:kMineAccessCellReusableIdentifier];
     [self.view addSubview:_layoutTableView];
     {

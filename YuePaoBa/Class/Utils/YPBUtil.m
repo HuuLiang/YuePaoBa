@@ -18,6 +18,9 @@ static NSString *const kActivationKeyChainUserName = @"YPB_ACTIVATION_KEYCHAIN_U
 static NSString *const kRegisterDateKeyChainServiceName = @"YPB_REGISTERDATE_KEYCHAIN_SERVICENAME";
 static NSString *const kRegisterDateKeyChainUserName = @"YPB_REGISTERDATE_KEYCHAIN_USERNAME";
 
+static NSString *const kRegisterUserIdKeyChainServiceName = @"YPB_REGISTERUSERID_KEYCHAIN_SERVICENAME";
+static NSString *const kRegisterUserIdKeyChainUserName = @"YPB_REGISTERUSERID_KEYCHAIN_USERNAME";
+
 static NSString *const kLoginFrequencyKeyName = @"YPB_LOGINFREQUENCY_KEYNAME";
 
 @implementation YPBUtil
@@ -31,6 +34,11 @@ static NSString *const kLoginFrequencyKeyName = @"YPB_LOGINFREQUENCY_KEYNAME";
 }
 
 + (void)notifyRegisterSuccessfully {
+    [SFHFKeychainUtils storeUsername:kRegisterUserIdKeyChainUserName
+                         andPassword:[YPBUser currentUser].userId
+                      forServiceName:kRegisterUserIdKeyChainServiceName
+                      updateExisting:NO error:nil];
+    
     [SFHFKeychainUtils storeUsername:kRegisterDateKeyChainUserName
                          andPassword:[self currentDateString]
                       forServiceName:kRegisterDateKeyChainServiceName
@@ -39,6 +47,12 @@ static NSString *const kLoginFrequencyKeyName = @"YPB_LOGINFREQUENCY_KEYNAME";
     
     YPBAppDelegate *delegate = (YPBAppDelegate *)[UIApplication sharedApplication].delegate;
     [delegate notifyLoginSuccessfully];
+}
+
++ (NSString *)deviceRegisteredUserId {
+    return [SFHFKeychainUtils getPasswordForUsername:kRegisterUserIdKeyChainUserName
+                                      andServiceName:kRegisterUserIdKeyChainServiceName
+                                               error:nil];
 }
 
 + (NSDate *)registerDate {

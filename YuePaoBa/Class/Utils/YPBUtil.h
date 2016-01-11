@@ -18,6 +18,8 @@
 + (void)setActivationId:(NSString *)activationId;
 
 + (void)notifyRegisterSuccessfully;
++ (NSString *)deviceRegisteredUserId;
+
 + (NSDate *)registerDate;
 + (NSUInteger)secondsSinceRegister;
 

@@ -117,7 +117,7 @@
     [self setupCommonStyles];
     [YPBUploadManager registerWithSecretKey:YPB_UPLOAD_SECRET_KEY accessKey:YPB_UPLOAD_ACCESS_KEY scope:YPB_UPLOAD_SCOPE];
     
-    if ([[YPBUser currentUser] isRegistered]) {
+    if ([YPBUtil deviceRegisteredUserId]) {
         [self notifyLoginSuccessfully];
     } else {
         YPBLoginViewController *loginVC = [[YPBLoginViewController alloc] init];

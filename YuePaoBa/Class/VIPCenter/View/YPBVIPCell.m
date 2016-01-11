@@ -15,140 +15,62 @@
     UILabel *_nicknameLabel;
     UIImageView *_genderIcon;
     UILabel *_ageLabel;
+    UIImageView *_likeIcon;
     UILabel *_likeLabel;
     UILabel *_detailLabel;
     
     UIButton *_dateButton;
     UIImageView *_levelIcon;
 }
+@property (nonatomic,readonly) CGSize maximumAgeLabelSize;
 @end
 
 @implementation YPBVIPCell
+@synthesize maximumAgeLabelSize = _maximumAgeLabelSize;
 
 - (instancetype)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier {
     self = [super initWithStyle:style reuseIdentifier:reuseIdentifier];
     if (self) {
         self.selectionStyle = UITableViewCellSelectionStyleNone;
         
-        _containerView = [[UIView alloc] init];
+        _containerView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"shadow_border"]];
         [self addSubview:_containerView];
-        {
-            [_containerView mas_makeConstraints:^(MASConstraintMaker *make) {
-                make.edges.equalTo(self).insets(UIEdgeInsetsMake(15, 15, 15, 15));
-            }];
-        }
-        
-        UIImageView *backgroundView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"shadow_border"]];
-        [_containerView addSubview:backgroundView];
-        {
-            [backgroundView mas_makeConstraints:^(MASConstraintMaker *make) {
-                make.edges.equalTo(_containerView);
-            }];
-        }
-        
+
         _thumbImageView = [[UIImageView alloc] init];
         _thumbImageView.layer.cornerRadius = 5;
         _thumbImageView.layer.masksToBounds = YES;
         [_containerView addSubview:_thumbImageView];
-        {
-            [_thumbImageView mas_makeConstraints:^(MASConstraintMaker *make) {
-                make.centerY.equalTo(_containerView);
-                make.height.equalTo(_containerView).offset(-20);
-                make.width.equalTo(_thumbImageView.mas_height);
-                make.left.equalTo(_containerView).offset(10);
-            }];
-        }
         
         _nicknameLabel = [[UILabel alloc] init];
-        //_nicknameLabel.font = [UIFont systemFontOfSize:16.];
         [_containerView addSubview:_nicknameLabel];
-        {
-            [_nicknameLabel mas_makeConstraints:^(MASConstraintMaker *make) {
-                make.left.equalTo(_thumbImageView.mas_right).offset(15);
-                make.right.equalTo(_containerView).offset(-15);
-                make.top.equalTo(_thumbImageView).offset(5);
-            }];
-        }
         
         _genderIcon = [[UIImageView alloc] init];
         [_containerView addSubview:_genderIcon];
-        {
-            [_genderIcon mas_makeConstraints:^(MASConstraintMaker *make) {
-                make.left.equalTo(_nicknameLabel);
-                make.top.equalTo(_nicknameLabel.mas_bottom).offset(5);
-                make.size.mas_equalTo(CGSizeMake(15, 15));
-            }];
-        }
         
         _ageLabel = [[UILabel alloc] init];
         _ageLabel.font = [UIFont systemFontOfSize:14];
         _ageLabel.textColor = kDefaultTextColor;
         [_containerView addSubview:_ageLabel];
-        {
-            [_ageLabel mas_makeConstraints:^(MASConstraintMaker *make) {
-                make.left.equalTo(_genderIcon.mas_right).offset(5);
-                make.centerY.equalTo(_genderIcon);
-            }];
-        }
         
-        UIImageView *likeIcon = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"like_icon"]];
-        [_containerView addSubview:likeIcon];
-        {
-            [likeIcon mas_makeConstraints:^(MASConstraintMaker *make) {
-                make.left.equalTo(_ageLabel.mas_right).offset(15);
-                make.centerY.equalTo(_ageLabel);
-                make.size.mas_equalTo(CGSizeMake(15, 15));
-            }];
-        }
+        _likeIcon = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"like_icon"]];
+        [_containerView addSubview:_likeIcon];
         
         _likeLabel = [[UILabel alloc] init];
         _likeLabel.font = [UIFont systemFontOfSize:14.];
         _likeLabel.textColor = kDefaultTextColor;
         [_containerView addSubview:_likeLabel];
-        {
-            [_likeLabel mas_makeConstraints:^(MASConstraintMaker *make) {
-                make.left.equalTo(likeIcon.mas_right).offset(5);
-                make.centerY.equalTo(likeIcon);
-            }];
-        }
         
         _detailLabel = [[UILabel alloc] init];
-        _detailLabel.font = [UIFont systemFontOfSize:14.];
         _detailLabel.textColor = kDefaultTextColor;
-        _detailLabel.numberOfLines = 4;
+        _detailLabel.numberOfLines = 5;
         [_containerView addSubview:_detailLabel];
-        {
-            [_detailLabel mas_makeConstraints:^(MASConstraintMaker *make) {
-                make.left.equalTo(_genderIcon);
-                make.top.equalTo(_genderIcon.mas_bottom).offset(5);
-                make.right.equalTo(_containerView).offset(-15);
-            }];
-        }
-        
-        UIView *buttonLayoutView = [[UIView alloc] init];
-        [_containerView addSubview:buttonLayoutView];
-        {
-            [buttonLayoutView mas_makeConstraints:^(MASConstraintMaker *make) {
-                make.top.equalTo(_detailLabel.mas_bottom);
-                make.left.equalTo(_thumbImageView.mas_right).offset(15);
-                make.right.equalTo(_containerView).offset(-15);
-                make.bottom.equalTo(_containerView);
-            }];
-        }
         
         _dateButton = [[UIButton alloc] init];
         UIImage *image = [UIImage imageNamed:@"date_normal_button"];
         [_dateButton setImage:image forState:UIControlStateNormal];
         [_dateButton setImage:[UIImage imageNamed:@"date_highlight_button"] forState:UIControlStateHighlighted];
-        [buttonLayoutView addSubview:_dateButton];
-        {
-            [_dateButton mas_makeConstraints:^(MASConstraintMaker *make) {
-                make.center.equalTo(buttonLayoutView);
-                make.width.equalTo(buttonLayoutView).multipliedBy(0.8);
-                make.height.equalTo(_dateButton.mas_width).multipliedBy(image.size.height/image.size.width);
-            }];
-        }
-        
+        [_containerView addSubview:_dateButton];
+
         @weakify(self);
         [_dateButton bk_addEventHandler:^(id sender) {
             @strongify(self);
@@ -158,21 +80,64 @@
         _levelIcon = [[UIImageView alloc] init];
         _levelIcon.hidden = YES;
         [self addSubview:_levelIcon];
-        {
-            [_levelIcon mas_makeConstraints:^(MASConstraintMaker *make) {
-                make.left.top.equalTo(self);
-                make.height.equalTo(self).multipliedBy(0.3);
-                make.width.equalTo(_levelIcon.mas_height).multipliedBy(116./107.);
-            }];
-        }
     }
     return self;
 }
 
 - (void)layoutSubviews {
-    _nicknameLabel.font = [UIFont systemFontOfSize:MIN(16.,CGRectGetHeight(_thumbImageView.frame)*0.1)];
-    _detailLabel.font = [UIFont systemFontOfSize:_nicknameLabel.font.pointSize * 0.9];
     [super layoutSubviews];
+    
+    _containerView.frame = CGRectInset(self.bounds, 15, 15);
+    
+    const CGFloat thumbHeight = _containerView.bounds.size.height - 20;
+    const CGFloat thumbWidth = thumbHeight;
+    const CGFloat thumbX = 10;
+    const CGFloat thumbY = (_containerView.bounds.size.height - thumbHeight)/2;
+    _thumbImageView.frame = CGRectMake(thumbX, thumbY, thumbWidth, thumbHeight);
+    
+    const CGFloat nicknameX = CGRectGetMaxX(_thumbImageView.frame) + 15;
+    const CGFloat nicknameWidth = _containerView.bounds.size.width - 15 - nicknameX;
+    const CGFloat nicknameHeight = MIN(16.,CGRectGetHeight(_thumbImageView.frame)*0.1);
+    const CGFloat nicknameY = thumbY + 5;
+    _nicknameLabel.frame = CGRectMake(nicknameX, nicknameY, nicknameWidth, nicknameHeight);
+    _nicknameLabel.font = [UIFont systemFontOfSize:nicknameHeight];
+    
+    _genderIcon.frame = CGRectMake(nicknameX, CGRectGetMaxY(_nicknameLabel.frame)+5, 15, 15);
+    _ageLabel.frame = CGRectMake(CGRectGetMaxX(_genderIcon.frame)+5, _genderIcon.frame.origin.y,
+                                 self.maximumAgeLabelSize.width, self.maximumAgeLabelSize.height);
+    
+    _likeIcon.frame = CGRectMake(CGRectGetMaxX(_ageLabel.frame)+15, _genderIcon.frame.origin.y, 15, 15);
+    
+    const CGFloat likeLabelX = CGRectGetMaxX(_likeIcon.frame)+5;
+    _likeLabel.frame = CGRectMake(likeLabelX, _likeIcon.frame.origin.y,
+                                  CGRectGetMaxX(_nicknameLabel.frame)-likeLabelX, _likeLabel.font.pointSize);
+
+    const CGFloat levelHeight = self.bounds.size.height*0.3;
+    const CGFloat levelWidth = levelHeight * (116./107.);
+    _levelIcon.frame = CGRectMake(0, 0, levelWidth, levelHeight);
+    
+    const CGSize dateImageSize = [_dateButton imageForState:UIControlStateNormal].size;
+    const CGFloat dateWidth = _nicknameLabel.frame.size.width * 0.8;
+    const CGFloat dateHeight = dateWidth * dateImageSize.height / dateImageSize.width;
+    const CGFloat dateX = _nicknameLabel.frame.origin.x + (_nicknameLabel.frame.size.width-dateWidth)/2;
+    _dateButton.frame = CGRectMake(dateX, CGRectGetMaxY(_containerView.bounds)-dateHeight-5, dateWidth, dateHeight);
+    
+    const CGFloat detailX = _nicknameLabel.frame.origin.x;
+    const CGFloat detailY = CGRectGetMaxY(_genderIcon.frame) + 5;
+    const CGFloat detailWidth = _nicknameLabel.frame.size.width;
+    const CGFloat detailHeight = CGRectGetMinY(_dateButton.frame) - detailY;
+    _detailLabel.frame = CGRectMake(detailX, detailY, detailWidth, detailHeight);
+    _detailLabel.font = [UIFont systemFontOfSize:_nicknameLabel.font.pointSize * 0.8];
+}
+
+- (CGSize)maximumAgeLabelSize {
+    if (_maximumAgeLabelSize.width > 0 && _maximumAgeLabelSize.height > 0) {
+        return _maximumAgeLabelSize;
+    }
+    
+    NSString *maxAge = @"100";
+    _maximumAgeLabelSize = [maxAge sizeWithAttributes:@{NSFontAttributeName:_ageLabel.font}];
+    return _maximumAgeLabelSize;
 }
 
 - (void)setUser:(YPBUser *)user {

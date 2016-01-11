@@ -6,9 +6,9 @@
 //  Copyright © 2015年 iqu8. All rights reserved.
 //
 
-#import "YPBBaseViewController.h"
+#import "YPBLayoutViewController.h"
 
-@interface YPBSideMenuViewController : YPBBaseViewController <RESideMenuDelegate>
+@interface YPBSideMenuViewController : YPBLayoutViewController <RESideMenuDelegate>
 
 @property (nonatomic,retain,readonly) NSArray<UIViewController *> *viewControllers;
 @property (nonatomic) NSUInteger selectedIndex;

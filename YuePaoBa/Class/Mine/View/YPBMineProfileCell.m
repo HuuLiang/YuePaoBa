@@ -18,6 +18,9 @@
     YPBProfileActionButton *_followedButton;
     YPBProfileActionButton *_followingButton;
     YPBProfileActionButton *_accessedButton;
+    
+    UIView *_separator1;
+    UIView *_separator2;
 }
 @end
 
@@ -28,51 +31,30 @@
     if (self) {
         self.selectionStyle = UITableViewCellSelectionStyleNone;
         
-        UIView *backgroundMaskView = [[UIView alloc] init];
-        backgroundMaskView.backgroundColor = [UIColor colorWithWhite:0 alpha:0.6];
-        
         _backgroundImageView = [[UIImageView alloc] init];
         _backgroundImageView.contentMode = UIViewContentModeScaleAspectFill;
         _backgroundImageView.clipsToBounds = YES;
         self.backgroundView = _backgroundImageView;
+        
+        UIView *backgroundMaskView = [[UIView alloc] initWithFrame:_backgroundImageView.bounds];
+        backgroundMaskView.backgroundColor = [UIColor colorWithWhite:0 alpha:0.6];
+        backgroundMaskView.autoresizingMask = UIViewAutoresizingFlexibleHeight|UIViewAutoresizingFlexibleWidth;
         [_backgroundImageView addSubview:backgroundMaskView];
-        {
-            [backgroundMaskView mas_makeConstraints:^(MASConstraintMaker *make) {
-                make.edges.equalTo(_backgroundImageView);
-            }];
-        }
         
         _avatarView = [[YPBAvatarView alloc] init];
-        //_avatarView.showName = NO;
-        [self addSubview:_avatarView];
-        {
-            [_avatarView mas_makeConstraints:^(MASConstraintMaker *make) {
-                make.height.equalTo(self).multipliedBy(0.4);
-                make.width.equalTo(_avatarView.mas_height);
-                make.centerX.equalTo(self);
-                make.top.equalTo(self).offset(10);
-            }];
-        }
         @weakify(self);
         [_avatarView bk_whenTapped:^{
             @strongify(self);
             SafelyCallBlock(self.avatarAction);
         }];
-        
+        [self addSubview:_avatarView];
+
         _followedButton = [[YPBProfileActionButton alloc] initWithImage:[UIImage imageNamed:@"profile_followed"]
                                                                   title:@"收到招呼的人" action:^(id sender) {
                                                                                              @strongify(self);
                                                                                              [self onFollowedAction];
                                                                                          }];
         [self addSubview:_followedButton];
-        {
-            [_followedButton mas_makeConstraints:^(MASConstraintMaker *make) {
-                make.centerX.equalTo(self).multipliedBy(0.4);
-                make.bottom.equalTo(self).offset(-10);
-                make.width.equalTo(self).multipliedBy(0.25);
-                make.height.equalTo(self).dividedBy(3);
-            }];
-        }
         
         _followingButton = [[YPBProfileActionButton alloc] initWithImage:[UIImage imageNamed:@"profile_following"]
                                                                    title:@"打过招呼的人" action:^(id sender) {
@@ -80,12 +62,6 @@
                                                                                               [self onFollowingAction];
                                                                                           }];
         [self addSubview:_followingButton];
-        {
-            [_followingButton mas_makeConstraints:^(MASConstraintMaker *make) {
-                make.centerX.equalTo(self);
-                make.size.top.equalTo(_followedButton);
-            }];
-        }
         
         _accessedButton = [[YPBProfileActionButton alloc] initWithImage:[UIImage imageNamed:@"profile_accessed"]
                                                                   title:@"谁访问了我" action:^(id sender) {
@@ -93,37 +69,52 @@
                                                                                              [self onAccessedAction];
                                                                                          }];
         [self addSubview:_accessedButton];
-        {
-            [_accessedButton mas_makeConstraints:^(MASConstraintMaker *make) {
-                make.centerX.equalTo(self).multipliedBy(1.6);
-                make.size.top.equalTo(_followingButton);
-            }];
-        }
         
-        UIView *separator1 = [[UIView alloc] init];
-        separator1.backgroundColor = [UIColor colorWithWhite:0.5 alpha:1];
-        [self addSubview:separator1];
-        {
-            [separator1 mas_makeConstraints:^(MASConstraintMaker *make) {
-                make.centerX.equalTo(self).multipliedBy(0.7);
-                make.centerY.equalTo(_followedButton);
-                make.height.equalTo(_followedButton).multipliedBy(0.6);
-                make.width.mas_equalTo(0.5);
-            }];
-        }
+        _separator1 = [[UIView alloc] init];
+        _separator1.backgroundColor = [UIColor colorWithWhite:0.5 alpha:1];
+        [self addSubview:_separator1];
         
-        UIView *separator2 = [[UIView alloc] init];
-        separator2.backgroundColor = separator1.backgroundColor;
-        [self addSubview:separator2];
-        {
-            [separator2 mas_makeConstraints:^(MASConstraintMaker *make) {
-                make.centerX.equalTo(self).multipliedBy(1.3);
-                make.size.centerY.equalTo(separator1);
-            }];
-        }
-        
+        _separator2 = [[UIView alloc] init];
+        _separator2.backgroundColor = _separator1.backgroundColor;
+        [self addSubview:_separator2];
     }
     return self;
+}
+
+- (void)layoutSubviews {
+    [super layoutSubviews];
+    
+    const CGFloat followedWidth = self.bounds.size.width / 4;
+    const CGFloat followedHeight = lround(self.bounds.size.height / 3);
+    const CGFloat followedX = self.bounds.size.width * 0.2 - followedWidth / 2;
+    const CGFloat followedY = self.bounds.size.height - 10 - followedHeight;
+    _followedButton.frame = CGRectMake(followedX, followedY, followedWidth, followedHeight);
+    
+    const CGFloat followingWidth = followedWidth;
+    const CGFloat followingHeight = followedHeight;
+    const CGFloat followingX = self.bounds.size.width / 2 - followingWidth / 2;
+    const CGFloat followingY = followedY;
+    _followingButton.frame = CGRectMake(followingX, followingY, followingWidth, followingHeight);
+    
+    const CGFloat accessWidth = followedWidth;
+    const CGFloat accessHeight = followedHeight;
+    const CGFloat accessX = self.bounds.size.width * 0.8 - accessWidth / 2;
+    const CGFloat accessY = followingY;
+    _accessedButton.frame = CGRectMake(accessX, accessY, accessWidth, accessHeight);
+    
+    const CGFloat separatorWidth = 0.5;
+    const CGFloat separatorHeight = followedHeight * 0.6;
+    const CGFloat separatorX = lround(self.bounds.size.width * 0.35);
+    const CGFloat separatorY = _followedButton.frame.origin.y + (CGRectGetHeight(_followedButton.frame)-separatorHeight)/2;
+    _separator1.frame = CGRectMake(separatorX, separatorY, separatorWidth, separatorHeight);
+    _separator2.frame = CGRectMake(lround(self.bounds.size.width * 0.65), separatorY, separatorWidth, separatorHeight);
+    
+    const CGFloat avatarWidth = lround(self.bounds.size.width * 0.25);
+    const CGFloat avatarX = (self.bounds.size.width-avatarWidth)/2;
+    const CGFloat avatarY = 10;
+    const CGFloat avatarHeight = CGRectGetMinY(_followedButton.frame)-avatarY*2;
+    
+    _avatarView.frame = CGRectMake(avatarX, avatarY, avatarWidth, avatarHeight);
 }
 
 - (void)setAvatarImage:(UIImage *)avatarImage {

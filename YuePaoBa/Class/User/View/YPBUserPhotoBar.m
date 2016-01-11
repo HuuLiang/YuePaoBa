@@ -28,11 +28,6 @@ DefineLazyPropertyInitialization(NSMutableArray, imageViews)
         _emptyLabel.textColor = kDefaultTextColor;
         _emptyLabel.text = @"TA的相册空空如也~~~";
         [self addSubview:_emptyLabel];
-        {
-            [_emptyLabel mas_makeConstraints:^(MASConstraintMaker *make) {
-                make.center.equalTo(self);
-            }];
-        }
     }
     return self;
 }
@@ -54,6 +49,7 @@ DefineLazyPropertyInitialization(NSMutableArray, imageViews)
     
     const NSUInteger imageCount = self.imageViews.count;
     _emptyLabel.hidden = imageCount > 0;
+    _emptyLabel.center = CGPointMake(CGRectGetWidth(self.bounds)/2, CGRectGetHeight(self.bounds)/2);
     
     const CGFloat imageSize = CGRectGetHeight(self.bounds)-kInterItemSpacing*2;
     self.contentSize = CGSizeMake(imageSize*imageCount+kInterItemSpacing*(imageCount+1), CGRectGetHeight(self.bounds));

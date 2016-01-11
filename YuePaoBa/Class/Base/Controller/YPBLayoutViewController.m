@@ -73,11 +73,23 @@ DefineLazyPropertyInitialization(NSMutableDictionary, headerTitles)
 }
 
 - (UITableViewCell *)cellAtIndexPath:(NSIndexPath *)indexPath {
-    return self.cells[indexPath];
+    NSIndexPath *cellIndexPath = indexPath;
+    if ([indexPath class] != [NSIndexPath class]) {
+        cellIndexPath = [NSIndexPath indexPathForRow:indexPath.row inSection:indexPath.section];
+    }
+    return self.cells[cellIndexPath];
 }
 
 - (CGFloat)cellHeightAtIndexPath:(NSIndexPath *)indexPath {
-    return self.cellHeights[indexPath].floatValue;
+    NSIndexPath *cellIndexPath = indexPath;
+    if ([indexPath class] != [NSIndexPath class]) {
+        cellIndexPath = [NSIndexPath indexPathForRow:indexPath.row inSection:indexPath.section];
+    }
+    return self.cellHeights[cellIndexPath].floatValue;
+}
+
+- (NSDictionary<NSIndexPath *, UITableViewCell *> *)allCells {
+    return self.cells;
 }
 
 #pragma mark - UITableViewDelegate,UITableViewDataSource
@@ -91,7 +103,8 @@ DefineLazyPropertyInitialization(NSMutableDictionary, headerTitles)
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    UITableViewCell *cell = [self cellAtIndexPath:indexPath];
+    NSIndexPath *cellIndexPath = [NSIndexPath indexPathForRow:indexPath.row inSection:indexPath.section];
+    UITableViewCell *cell = [self cellAtIndexPath:cellIndexPath];
     return cell;
 }
 

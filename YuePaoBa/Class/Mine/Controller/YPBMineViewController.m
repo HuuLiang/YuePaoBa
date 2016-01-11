@@ -99,6 +99,10 @@ DefineLazyPropertyInitialization(YPBUserPhotoAddModel, photoAddModel)
 
 - (void)refreshMineDetails {
     @weakify(self);
+    if ([YPBUser currentUser].userId == nil) {
+        [YPBUser currentUser].userId = [YPBUtil deviceRegisteredUserId];
+    }
+    
     [self.mineDetailModel fetchUserDetailWithUserId:[YPBUser currentUser].userId
                                              byUser:[YPBUser currentUser].userId
                                   completionHandler:^(BOOL success, id obj)
@@ -385,12 +389,9 @@ DefineLazyPropertyInitialization(YPBUserPhotoAddModel, photoAddModel)
         }
     }
     
-//    [[YPBUserDetailModel sharedModel] fetchUserDetailWithUserId:[YPBUser currentUser].userId completionHandler:^(BOOL success, id obj) {
-//        if (success) {
-//            YPBUser *user = obj;
-//            [user setAsCurrentUser];
-//        }
-//    }];
+    if ([YPBUser currentUser].userId == nil) {
+        [self refreshMineDetails];
+    }
 }
 
 - (BOOL)sideMenuController:(UIViewController *)sideMenuVC shouldPresentContentViewController:(UIViewController *)contentVC {
