@@ -284,7 +284,7 @@ DefineLazyPropertyInitialization(YPBUserDetailUpdateModel, updateModel)
         [self.view endLoading];
         if (success) {
             [self.user saveAsCurrentUser];
-            [[YPBMessageCenter defaultCenter] showSuccessWithTitle:@"个人资料修改成功" subtitle:nil];
+            [[YPBMessageCenter defaultCenter] showSuccessWithTitle:@"个人资料修改成功" inViewController:self];
             [self.navigationController popViewControllerAnimated:YES];
         }
     }];

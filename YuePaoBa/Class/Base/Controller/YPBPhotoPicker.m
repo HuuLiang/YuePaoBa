@@ -112,7 +112,7 @@
     } else if (sourceType == YPBPhotoPickingSourceLibrary) {
         self.qbImagePicker.allowsMultipleSelection = self.multiplePicking;
         self.qbImagePicker.maximumNumberOfSelection = self.maximumNumberOfMultiplePicking;
-        
+
         UINavigationController *nav = [[UINavigationController alloc] initWithRootViewController:self.qbImagePicker];
         [viewController presentViewController:nav animated:YES completion:nil];
     }

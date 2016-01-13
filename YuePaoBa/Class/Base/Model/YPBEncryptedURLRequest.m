@@ -20,7 +20,7 @@ static NSString *const kEncryptionPassword = @"wdnxs&*@#!*qb)*&qiang";
              kEncryptionKeyName:kSignKey,
              @"imsi":@"999999999999999",
              @"channelNo":YPB_CHANNEL_NO,
-             @"pV":@(1)
+             @"pV":YPB_REST_PV
              };
 }
 

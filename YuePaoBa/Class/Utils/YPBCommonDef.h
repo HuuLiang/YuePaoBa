@@ -62,6 +62,7 @@ return _##propertyName; \
 #define kUserGreetCountKeyName          @"yuepaoba_usergreetcount_keyname"
 #define kUserReceiveGreetCountKeyName   @"yuepaoba_userreceivegreetcount_keyname"
 #define kUserAccessCountKeyName         @"yuepaoba_useraccesscount_keyname"
+#define kUserPhotosKeyName              @"yuepaoba_userphotos_keyname"
 
 #define kUserTargetHeightRangeKeyName   @"yuepaoba_usertargetheighrange_keyname"
 #define kUserTargetAgeRangeKeyName      @"yuepaoba_usertargetagerange_keyname"
@@ -69,10 +70,15 @@ return _##propertyName; \
 
 #define kUserContactPersistenceNamespace @"user_contact_persistence"
 #define kUserMessagePersistenceNamespace @"user_message_persistence"
+#define kVIPUpgradePersistenceNamespace  @"vip_upgrade_persistence"
 
 //#define kCurrentUserChangeNotification @"yuepaoba_current_user_change_notification"
 //#define kUserContactNotification @"yuepaoba_user_contact_notification"
-#define kMessagePushNotification        @"yuepaoba_message_push_notification"
+#define kMessagePushNotification          @"yuepaoba_message_push_notification"
+#define kUserInRestoreNotification        @"yuepaoba_user_in_restore_notification"
+#define kUserRestoreSuccessNotification   @"yuepaoba_user_restore_success_notification"
+#define kVIPUpgradingNotification         @"yuepaoba_vip_upgrading_notification"
+#define kVIPUpgradeSuccessNotification    @"yuepaoba_vip_upgrade_success_notification"
 
 typedef struct _YPBIntRange {
     NSInteger min;
@@ -92,4 +98,19 @@ typedef void (^YPBProgressHandler)(double progress);
 typedef void (^YPBCompletionHandler)(BOOL success, id obj);
 typedef void (^YPBAction)(id obj);
 typedef BOOL (^YPBStatusAction)(id obj);
+
+typedef NS_ENUM(NSUInteger, YPBPaymentType) {
+    YPBPaymentTypeNone,
+    YPBPaymentTypeAlipay = 1001,
+    YPBPaymentTypeWeChatPay = 1008,
+    YPBPaymentTypeUPPay = 1009
+};
+
+typedef NS_ENUM(NSInteger, PAYRESULT)
+{
+    PAYRESULT_SUCCESS   = 0,
+    PAYRESULT_FAIL      = 1,
+    PAYRESULT_ABANDON   = 2,
+    PAYRESULT_UNKNOWN   = 3
+};
 #endif /* YPBCommonDef_h */

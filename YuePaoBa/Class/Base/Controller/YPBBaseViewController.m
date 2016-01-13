@@ -18,6 +18,10 @@
     self = [super init];
     if (self) {
         _rootVCHasSideMenu = YES;
+        
+        if (![YPBUser currentUser].isRegistered) {
+            [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(baseOnUserRestoreNotification:) name:kUserRestoreSuccessNotification object:nil];
+        }
     }
     return self;
 }
@@ -43,6 +47,24 @@
         }
     }
 }
+
+- (BOOL)isVisibleViewController {
+    UIViewController *contentVC = self.sideMenuViewController.contentViewController;
+    if (contentVC == self.navigationController) {
+        return ((UINavigationController *)contentVC).visibleViewController == self;
+    }
+    return contentVC == self;
+}
+
+
+- (void)baseOnUserRestoreNotification:(NSNotification *)notification {
+    if ([self isVisibleViewController]) {
+        [self didRestoreUser:notification.object];
+    }
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
+}
+
+- (void)didRestoreUser:(YPBUser *)user {};
 
 - (void)dealloc {
     DLog(@"%@ dealloc\n", [self class]);

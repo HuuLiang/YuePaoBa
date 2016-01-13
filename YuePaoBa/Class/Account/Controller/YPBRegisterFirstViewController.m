@@ -164,7 +164,7 @@ DefineLazyPropertyInitialization(YPBUser, user)
     
     NSError *error = [self.user validate];
     if (error) {
-        [[YPBMessageCenter defaultCenter] showErrorWithTitle:error.userInfo[kErrorMessageKeyName] subtitle:nil];
+        [[YPBMessageCenter defaultCenter] showErrorWithTitle:error.userInfo[kErrorMessageKeyName] inViewController:self];
         [_nicknameTextField becomeFirstResponder];
         return ;
     }

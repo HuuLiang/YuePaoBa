@@ -21,9 +21,48 @@ static YPBUser *_currentUser;
     copiedPhoto.smallPhoto = [self.smallPhoto copyWithZone:zone];
     copiedPhoto.bigPhoto = [self.bigPhoto copyWithZone:zone];
     copiedPhoto.sort = [self.sort copyWithZone:zone];
+    copiedPhoto.id = [self.id copyWithZone:zone];
     return copiedPhoto;
 }
 
+- (NSDictionary *)dictionaryRepresentation {
+    NSMutableDictionary *dic = [NSMutableDictionary dictionary];
+    [dic safely_setObject:self.userId forKey:@"userId"];
+    [dic safely_setObject:self.smallPhoto forKey:@"smallPhoto"];
+    [dic safely_setObject:self.bigPhoto forKey:@"bigPhoto"];
+    [dic safely_setObject:self.sort forKey:@"sort"];
+    [dic safely_setObject:self.id forKey:@"id"];
+    return dic;
+}
+
+- (instancetype)initFromDictionary:(NSDictionary *)dic {
+    self = [super init];
+    if (self) {
+        self.userId = dic[@"userId"];
+        self.smallPhoto = dic[@"smallPhoto"];
+        self.bigPhoto = dic[@"bigPhoto"];
+        self.sort = dic[@"sort"];
+        self.id = dic[@"id"];
+    }
+    return self;
+}
+
++ (NSArray<YPBUserPhoto *> *)userPhotosFromArray:(NSArray<NSDictionary *> *)arr {
+    NSMutableArray<YPBUserPhoto *> *userPhotos = [NSMutableArray array];
+    [arr enumerateObjectsUsingBlock:^(NSDictionary * _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
+        YPBUserPhoto *userPhoto = [[self alloc] initFromDictionary:obj];
+        [userPhotos addObject:userPhoto];
+    }];
+    return userPhotos.count > 0 ? userPhotos : nil;
+}
+
++ (NSArray<NSDictionary *> *)dictionariesFromUserPhotos:(NSArray<YPBUserPhoto *> *)userPhotos {
+    NSMutableArray<NSDictionary *> *arr = [NSMutableArray array];
+    [userPhotos enumerateObjectsUsingBlock:^(YPBUserPhoto * _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
+        [arr addObject:obj.dictionaryRepresentation];
+    }];
+    return arr.count > 0 ? arr : nil;
+}
 @end
 
 @interface YPBUser ()
@@ -53,10 +92,7 @@ static YPBUser *_currentUser;
     copiedUser.weixinNum = [self.weixinNum copyWithZone:zone];
     copiedUser.assets = [self.assets copyWithZone:zone];
     
-    copiedUser.isMember = self.isMember;
     copiedUser.isVip = self.isVip;
-    
-    copiedUser.memberEndTime = [self.memberEndTime copyWithZone:zone];
     copiedUser.vipEndTime = [self.vipEndTime copyWithZone:zone];
     
     copiedUser.greetCount = [self.greetCount copyWithZone:zone];
@@ -276,15 +312,13 @@ static YPBUser *_currentUser;
         _weixinNum         = userInfo[kUserWeChatKeyName];
         _assets            = userInfo[kUserAssetsKeyName];
 
-        _isMember          = ((NSNumber *)userInfo[kUserIsMemberKeyName]).boolValue;
         _isVip             = ((NSNumber *)userInfo[kUserIsVIPKeyName]).boolValue;
-
-        _memberEndTime     = userInfo[kUserMemberEndTimeKeyName];
         _vipEndTime        = userInfo[kUserVIPEndTimeKeyName];
 
         _greetCount        = userInfo[kUserGreetCountKeyName];
         _receiveGreetCount = userInfo[kUserReceiveGreetCountKeyName];
         _accessCount       = userInfo[kUserAccessCountKeyName];
+        _userPhotos        = [YPBUserPhoto userPhotosFromArray:userInfo[kUserPhotosKeyName]];
         
         // Target
         _targetCup = ((NSNumber *)userInfo[kUserTargetCupKeyName]).unsignedIntegerValue;
@@ -325,16 +359,13 @@ static YPBUser *_currentUser;
     [userInfo safely_setObject:self.weixinNum forKey:kUserWeChatKeyName];
     [userInfo safely_setObject:self.assets forKey:kUserAssetsKeyName];
     
-    [userInfo setObject:@(self.isMember) forKey:kUserIsMemberKeyName];
     [userInfo setObject:@(self.isVip) forKey:kUserIsVIPKeyName];
-    
-    [userInfo safely_setObject:self.memberEndTime forKey:kUserMemberEndTimeKeyName];
     [userInfo safely_setObject:self.vipEndTime forKey:kUserVIPEndTimeKeyName];
     
     [userInfo safely_setObject:self.greetCount forKey:kUserGreetCountKeyName];
     [userInfo safely_setObject:self.receiveGreetCount forKey:kUserReceiveGreetCountKeyName];
     [userInfo safely_setObject:self.accessCount forKey:kUserAccessCountKeyName];
-    
+    [userInfo safely_setObject:[YPBUserPhoto dictionariesFromUserPhotos:self.userPhotos] forKey:kUserPhotosKeyName];
     //Target
     [userInfo safely_setInteger:self.targetCup forKey:kUserTargetCupKeyName];
     [userInfo safely_setObject:@[@(self.targetHeight.min),@(self.targetHeight.max)] forKey:kUserTargetHeightRangeKeyName];

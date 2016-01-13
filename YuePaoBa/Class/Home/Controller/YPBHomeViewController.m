@@ -11,6 +11,8 @@
 #import "YPBHomeCollectionViewLayout.h"
 #import "YPBHomeCell.h"
 #import "YPBUserDetailViewController.h"
+#import "YPBVIPEntranceView.h"
+#import "YPBVIPPriviledgeViewController.h"
 
 static NSString *const kHomeCellReusableIdentifier = @"HomeCellReusableIdentifier";
 
@@ -26,6 +28,10 @@ static NSString *const kHomeCellReusableIdentifier = @"HomeCellReusableIdentifie
 
 DefineLazyPropertyInitialization(YPBUserListModel, userListModel)
 DefineLazyPropertyInitialization(NSMutableArray, users)
+
+- (void)didRestoreUser:(YPBUser *)user {
+    [_layoutCollectionView YPB_triggerPullToRefresh];
+}
 
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -51,15 +57,36 @@ DefineLazyPropertyInitialization(NSMutableArray, users)
         @strongify(self);
         [self loadOrRefreshData:YES];
     }];
-    [_layoutCollectionView YPB_triggerPullToRefresh];
+    
+    if ([YPBUser currentUser].isRegistered) {
+        [_layoutCollectionView YPB_triggerPullToRefresh];
+    }
     
     [_layoutCollectionView YPB_addPagingRefreshWithHandler:^{
         @strongify(self);
         [self loadOrRefreshData:NO];
     }];
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(onVIPUpgradeSuccessNotification:) name:kVIPUpgradeSuccessNotification object:nil];
+}
+
+- (void)dealloc {
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
 }
 
 - (void)loadOrRefreshData:(BOOL)isRefresh {
+    if (![YPBUser currentUser].isVip && [self.userListModel.paginator.page isEqualToNumber:[YPBSystemConfig sharedConfig].firstPayPages]) {
+        [_layoutCollectionView YPB_endPullToRefresh];
+        
+        @weakify(self);
+        [YPBVIPEntranceView showVIPEntranceInView:self.view canClose:YES withEnterAction:^(id obj) {
+            @strongify(self);
+            YPBVIPPriviledgeViewController *vipVC = [[YPBVIPPriviledgeViewController alloc] init];
+            [self.navigationController pushViewController:vipVC animated:YES];
+        }];
+        return ;
+    }
+    
     @weakify(self);
     YPBCompletionHandler handler = ^(BOOL success, id obj) {
         @strongify(self);
@@ -80,6 +107,8 @@ DefineLazyPropertyInitialization(NSMutableArray, users)
             if (self.userListModel.hasNoMoreData) {
                 [self->_layoutCollectionView YPB_pagingRefreshNoMoreData];
             }
+        } else if ([obj isKindOfClass:[NSString class]]) {
+            [[YPBMessageCenter defaultCenter] showErrorWithTitle:obj inViewController:self];
         }
     };
     
@@ -88,6 +117,10 @@ DefineLazyPropertyInitialization(NSMutableArray, users)
     } else {
         [self.userListModel fetchUserListInNextPageWithCompletionHandler:handler];
     }
+}
+
+- (void)onVIPUpgradeSuccessNotification:(NSNotification *)notification {
+    [[YPBVIPEntranceView VIPEntranceInView:self.view] hide];
 }
 
 - (void)didReceiveMemoryWarning {

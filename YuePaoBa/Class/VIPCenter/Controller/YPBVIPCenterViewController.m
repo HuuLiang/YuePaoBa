@@ -13,6 +13,8 @@
 #import "YPBUserDetailViewController.h"
 #import "YPBMessageViewController.h"
 #import "YPBContact.h"
+#import "YPBVIPEntranceView.h"
+#import "YPBVIPPriviledgeViewController.h"
 
 static NSString *const kVIPCellReusableIdentifier = @"VIPCellReusableIdentifier";
 
@@ -31,6 +33,10 @@ static NSString *const kVIPCellReusableIdentifier = @"VIPCellReusableIdentifier"
 DefineLazyPropertyInitialization(YPBUserListModel, userListModel)
 DefineLazyPropertyInitialization(NSMutableArray, users)
 DefineLazyPropertyInitialization(YPBUserAccessModel, userAccessModel)
+
+- (void)didRestoreUser:(YPBUser *)user {
+    [_layoutTableView YPB_triggerPullToRefresh];
+}
 
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -53,12 +59,33 @@ DefineLazyPropertyInitialization(YPBUserAccessModel, userAccessModel)
         @strongify(self);
         [self loadDataWithRefresh:YES];
     }];
-    [_layoutTableView YPB_triggerPullToRefresh];
+    
+    if ([YPBUser currentUser].isRegistered) {
+        [_layoutTableView YPB_triggerPullToRefresh];
+    }
     
     [_layoutTableView YPB_addPagingRefreshWithHandler:^{
         @strongify(self);
         [self loadDataWithRefresh:NO];
     }];
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(onVIPUpgradeSuccessNotification:) name:kVIPUpgradeSuccessNotification object:nil];
+}
+
+- (void)dealloc {
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
+}
+
+- (void)viewDidAppear:(BOOL)animated {
+    [super viewDidAppear:animated];
+    if (![YPBUser currentUser].isVip) {
+        @weakify(self);
+        [YPBVIPEntranceView showVIPEntranceInView:self.view canClose:NO withEnterAction:^(id obj) {
+            @strongify(self);
+            YPBVIPPriviledgeViewController *vipVC = [[YPBVIPPriviledgeViewController alloc] init];
+            [self.navigationController pushViewController:vipVC animated:YES];
+        }];
+    }
 }
 
 - (void)loadDataWithRefresh:(BOOL)isRefresh {
@@ -90,6 +117,11 @@ DefineLazyPropertyInitialization(YPBUserAccessModel, userAccessModel)
     } else {
         [self.userListModel fetchUserListInNextPageWithCompletionHandler:handler];
     }
+}
+
+- (void)onVIPUpgradeSuccessNotification:(NSNotification *)notification {
+    YPBVIPEntranceView *entranceView = [YPBVIPEntranceView VIPEntranceInView:self.view];
+    [entranceView hide];
 }
 
 - (void)didReceiveMemoryWarning {

@@ -15,4 +15,7 @@
 @property (nonatomic) NSString *subtitle;
 @property (nonatomic) NSUInteger numberOfNotifications;
 
+@property (nonatomic,copy) YPBAction avatarTapAction;
+@property (nonatomic,copy) YPBAction notificationTapAction;
+
 @end

@@ -70,7 +70,7 @@ DefineLazyPropertyInitialization(YPBFeedbackModel, feedbackModel)
                     [textVC.view.window endLoading];
                     
                     if (success) {
-                        [[YPBMessageCenter defaultCenter] showSuccessWithTitle:@"您的意见反馈已经发送成功" subtitle:nil];
+                        [[YPBMessageCenter defaultCenter] showSuccessWithTitle:@"您的意见反馈已经发送成功" inViewController:self];
                         [textVC.navigationController popViewControllerAnimated:YES];
                     }
                 }];

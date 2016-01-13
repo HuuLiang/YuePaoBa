@@ -37,6 +37,11 @@
                           space:(YPBUserSpace)space
                            page:(NSUInteger)page
               completionHandler:(YPBCompletionHandler)handler {
+    if (gender == YPBUserGenderUnknown) {
+        SafelyCallBlock2(handler, NO, @"当前用户未登录，请登录后再尝试刷新");
+        return NO;
+    }
+    
     _requestedGender = gender;
     _requestedSpace = space;
     
@@ -55,7 +60,7 @@
                             _paginator = resp.paginator;
                         }
                         
-                        SafelyCallBlock2(handler, respStatus==YPBURLResponseSuccess, resp.list);
+                        SafelyCallBlock2(handler, respStatus==YPBURLResponseSuccess, resp.list.count>0?resp.list:nil);
                     }];
     return success;
 }

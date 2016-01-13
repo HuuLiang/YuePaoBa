@@ -42,6 +42,13 @@
     return NO;
 }
 
+- (void)notifyLoginPush {
+    if ([YPBUser currentUser].isRegistered) {
+        [YPBUtil accumalateLoginFrequency];
+        [self startMessagePushPolling];
+    }
+}
+
 - (void)startMessagePushPolling {
     @weakify(self);
     

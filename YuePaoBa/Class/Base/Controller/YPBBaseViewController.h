@@ -13,5 +13,7 @@
 @property (nonatomic) BOOL rootVCHasSideMenu;
 
 - (instancetype)initWithTitle:(NSString *)title;
+- (BOOL)isVisibleViewController;
+- (void)didRestoreUser:(YPBUser *)user;
 
 @end

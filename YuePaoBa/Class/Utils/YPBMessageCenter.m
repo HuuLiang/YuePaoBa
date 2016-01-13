@@ -20,7 +20,7 @@
     return _defaultCenter;
 }
 
-- (UIViewController *)currentViewController {
++ (UIViewController *)currentViewController {
     UIViewController *viewController = [UIApplication sharedApplication].keyWindow.rootViewController;
     if (viewController.presentedViewController) {
         return viewController.presentedViewController;
@@ -31,36 +31,36 @@
     }
 }
 
-- (void)showMessageWithTitle:(NSString *)title subtitle:(NSString *)subtitle {
-    [TSMessage showNotificationInViewController:[self currentViewController] title:title subtitle:subtitle type:TSMessageNotificationTypeMessage];
-}
-
-- (void)showWarningWithTitle:(NSString *)title subtitle:(NSString *)subtitle {
-    [TSMessage showNotificationInViewController:[self currentViewController] title:title subtitle:subtitle type:TSMessageNotificationTypeWarning];
-}
-
-- (void)showErrorWithTitle:(NSString *)title subtitle:(NSString *)subtitle {
-    [TSMessage showNotificationInViewController:[self currentViewController] title:title subtitle:subtitle type:TSMessageNotificationTypeError];
-}
-
-- (void)showSuccessWithTitle:(NSString *)title subtitle:(NSString *)subtitle {
-    [TSMessage showNotificationInViewController:[self currentViewController] title:title subtitle:subtitle type:TSMessageNotificationTypeSuccess];
-}
+//- (void)showMessageWithTitle:(NSString *)title subtitle:(NSString *)subtitle {
+//    [TSMessage showNotificationInViewController:[self currentViewController] title:title subtitle:subtitle type:TSMessageNotificationTypeMessage];
+//}
+//
+//- (void)showWarningWithTitle:(NSString *)title subtitle:(NSString *)subtitle {
+//    [TSMessage showNotificationInViewController:[self currentViewController] title:title subtitle:subtitle type:TSMessageNotificationTypeWarning];
+//}
+//
+//- (void)showErrorWithTitle:(NSString *)title subtitle:(NSString *)subtitle {
+//    [TSMessage showNotificationInViewController:[self currentViewController] title:title subtitle:subtitle type:TSMessageNotificationTypeError];
+//}
+//
+//- (void)showSuccessWithTitle:(NSString *)title subtitle:(NSString *)subtitle {
+//    [TSMessage showNotificationInViewController:[self currentViewController] title:title subtitle:subtitle type:TSMessageNotificationTypeSuccess];
+//}
 
 - (void)showMessageWithTitle:(NSString *)title inViewController:(UIViewController *)viewController {
-    [TSMessage showNotificationInViewController:viewController title:title subtitle:nil type:TSMessageNotificationTypeMessage];
+    [TSMessage showNotificationInViewController:viewController ?: [YPBMessageCenter currentViewController] title:title subtitle:nil type:TSMessageNotificationTypeMessage];
 }
 
 - (void)showWarningWithTitle:(NSString *)title inViewController:(UIViewController *)viewController {
-    [TSMessage showNotificationInViewController:viewController title:title subtitle:nil type:TSMessageNotificationTypeWarning];
+    [TSMessage showNotificationInViewController:viewController ?: [YPBMessageCenter currentViewController] title:title subtitle:nil type:TSMessageNotificationTypeWarning];
 }
 
 - (void)showErrorWithTitle:(NSString *)title inViewController:(UIViewController *)viewController {
-    [TSMessage showNotificationInViewController:viewController title:title subtitle:nil type:TSMessageNotificationTypeError];
+    [TSMessage showNotificationInViewController:viewController ?: [YPBMessageCenter currentViewController] title:title subtitle:nil type:TSMessageNotificationTypeError];
 }
 
 - (void)showSuccessWithTitle:(NSString *)title inViewController:(UIViewController *)viewController {
-    [TSMessage showNotificationInViewController:viewController title:title subtitle:nil type:TSMessageNotificationTypeSuccess];
+    [TSMessage showNotificationInViewController:viewController ?: [YPBMessageCenter currentViewController] title:title subtitle:nil type:TSMessageNotificationTypeSuccess];
 }
 
 - (void)dismissMessageWithCompletion:(void (^)(void))completion {

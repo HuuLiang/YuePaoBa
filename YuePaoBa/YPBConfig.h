@@ -13,6 +13,8 @@
 
 #define YPB_REST_APPID       @"QUBA_2003"
 #define YPB_REST_PV          @"100"
+#define YPB_REST_APP_VERSION     ((NSString *)([NSBundle mainBundle].infoDictionary[@"CFBundleShortVersionString"]))
+#define YPB_PAYMENT_RESERVE_DATA [NSString stringWithFormat:@"%@$%@", YPB_REST_APPID, YPB_CHANNEL_NO]
 
 #define YPB_BASE_URL                    @"http://120.24.252.114:8094"
 #define YPB_USER_ACTIVATION_URL         @"/mfwcenter/jihuo.json"
@@ -25,6 +27,10 @@
 #define YPB_USER_AVATAR_UPDATE_URL      @"/mfwcenter/updateUserlogo.json"
 #define YPB_USER_PHOTO_ADD_URL          @"/mfwcenter/photoCreate.json"
 #define YPB_PHOTO_BARRAGE_QUERY_URL     @"/mfwcenter/queryBarrages.json"
+#define YPB_USER_VIP_UPGRADE_URL        @"/mfwcenter/updateUserVip.json"
+
+#define YPB_PAYMENT_COMMIT_URL          @"http://120.24.252.114:8084/paycenter/qubaPr.json"
+#define YPB_ALIPAY_SCHEME               @"comyuepaobaappalipayschemeurl"
 
 #define YPB_USER_MESSAGE_PUSH_URL       @"/mfwcenter/loginPush.json"
 #define YPB_SYSTEM_CONFIG_URL           @"/mfwcenter/systemConfig.json"

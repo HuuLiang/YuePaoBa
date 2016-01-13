@@ -23,10 +23,12 @@ DefineLazyPropertyInitialization(NSMutableArray, imageViews)
 - (instancetype)init {
     self = [super init];
     if (self) {
-        _emptyLabel = [[UILabel alloc] init];
+        _emptyLabel = [[UILabel alloc] initWithFrame:self.bounds];
+        _emptyLabel.autoresizingMask = UIViewAutoresizingFlexibleHeight|UIViewAutoresizingFlexibleWidth;
         _emptyLabel.font = [UIFont systemFontOfSize:16.];
         _emptyLabel.textColor = kDefaultTextColor;
         _emptyLabel.text = @"TA的相册空空如也~~~";
+        _emptyLabel.textAlignment = NSTextAlignmentCenter;
         [self addSubview:_emptyLabel];
     }
     return self;
@@ -49,7 +51,6 @@ DefineLazyPropertyInitialization(NSMutableArray, imageViews)
     
     const NSUInteger imageCount = self.imageViews.count;
     _emptyLabel.hidden = imageCount > 0;
-    _emptyLabel.center = CGPointMake(CGRectGetWidth(self.bounds)/2, CGRectGetHeight(self.bounds)/2);
     
     const CGFloat imageSize = CGRectGetHeight(self.bounds)-kInterItemSpacing*2;
     self.contentSize = CGSizeMake(imageSize*imageCount+kInterItemSpacing*(imageCount+1), CGRectGetHeight(self.bounds));

@@ -8,7 +8,9 @@
 
 #import <Foundation/Foundation.h>
 
+extern NSString *const kPaymentInfoKeyName;
 @class YPBUser;
+@class YPBPaymentInfo;
 
 @interface YPBUtil : NSObject
 
@@ -23,10 +25,12 @@
 + (NSDate *)registerDate;
 + (NSUInteger)secondsSinceRegister;
 
++ (NSArray<YPBPaymentInfo *> *)allPaymentInfos;
++ (NSArray<YPBPaymentInfo *> *)payingPaymentInfos;
++ (NSArray<YPBPaymentInfo *> *)paidNotProcessedPaymentInfos;
++ (BOOL)isPaid;
+
 + (NSString *)deviceName;
-+ (NSString *)appVersion;
-+ (NSString *)appId;
-+ (NSNumber *)pV;
 
 + (NSUInteger)loginFrequency;
 + (void)accumalateLoginFrequency;
@@ -34,5 +38,7 @@
 + (NSString *)currentDateString;
 + (NSDate *)dateFromString:(NSString *)dateString;
 + (NSString *)stringFromDate:(NSDate *)date;
+
++ (NSString *)priceStringWithValue:(NSUInteger)priceValue;
 
 @end

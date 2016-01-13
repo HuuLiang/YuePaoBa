@@ -17,11 +17,22 @@
 #import "YPBActivateModel.h"
 #import "YPBMessagePushModel.h"
 
-@interface YPBAppDelegate ()
+#import "WXApi.h"
+#import "YPBPaymentInfo.h"
+#import "YPBWeChatPayQueryOrderRequest.h"
+#import "YPBPaymentModel.h"
+#import "YPBUserVIPUpgradeModel.h"
+#import "WeChatPayManager.h"
+#import "AlipayManager.h"
+#import <AlipaySDK/AlipaySDK.h>
 
+@interface YPBAppDelegate () <WXApiDelegate>
+@property (nonatomic,retain) YPBWeChatPayQueryOrderRequest *wechatPayOrderQueryRequest;
 @end
 
 @implementation YPBAppDelegate
+
+DefineLazyPropertyInitialization(YPBWeChatPayQueryOrderRequest, wechatPayOrderQueryRequest)
 
 - (UIWindow *)window {
     if (_window) {
@@ -118,7 +129,7 @@
     [YPBUploadManager registerWithSecretKey:YPB_UPLOAD_SECRET_KEY accessKey:YPB_UPLOAD_ACCESS_KEY scope:YPB_UPLOAD_SCOPE];
     
     if ([YPBUtil deviceRegisteredUserId]) {
-        [self notifyLoginSuccessfully];
+        [self notifyUserLogin];
     } else {
         YPBLoginViewController *loginVC = [[YPBLoginViewController alloc] init];
         self.window.rootViewController = loginVC;
@@ -136,7 +147,12 @@
     [[YPBSystemConfigModel sharedModel] fetchSystemConfigWithCompletionHandler:^(BOOL success, id obj) {
         YPBSystemConfig *systemConfig = obj;
         [systemConfig persist];
+        
+        [WXApi registerApp:[YPBSystemConfig sharedConfig].weixinInfo.appId];
     }];
+    
+    [[YPBPaymentModel sharedModel] startRetryingToCommitUnprocessedOrders];
+    [[YPBUserVIPUpgradeModel sharedModel] startRetryingToCommitUnprocessedVIPInfos];
     return YES;
 }
 
@@ -155,6 +171,7 @@
 }
 
 - (void)applicationDidBecomeActive:(UIApplication *)application {
+    [self checkPayment];
     // Restart any tasks that were paused (or not yet started) while the application was inactive. If the application was previously in the background, optionally refresh the user interface.
 }
 
@@ -162,10 +179,57 @@
     // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
 }
 
-- (void)notifyLoginSuccessfully {
+- (BOOL)application:(UIApplication *)application openURL:(NSURL *)url sourceApplication:(NSString *)sourceApplication annotation:(id)annotation {
+    [[AlipaySDK defaultService] processOrderWithPaymentResult:url standbyCallback:^(NSDictionary *resultDic) {
+        [[AlipayManager shareInstance] sendNotificationByResult:resultDic];
+    }];
+    [WXApi handleOpenURL:url delegate:self];
+    return YES;
+}
+
+- (void)checkPayment {
+    NSArray<YPBPaymentInfo *> *payingPaymentInfos = [YPBUtil payingPaymentInfos];
+    [payingPaymentInfos enumerateObjectsUsingBlock:^(YPBPaymentInfo * _Nonnull paymentInfo, NSUInteger idx, BOOL * _Nonnull stop) {
+        YPBPaymentType paymentType = paymentInfo.paymentType.unsignedIntegerValue;
+        if (paymentType == YPBPaymentTypeWeChatPay) {
+            [self.wechatPayOrderQueryRequest queryOrderWithNo:paymentInfo.orderId completionHandler:^(BOOL success, NSString *trade_state, double total_fee) {
+                if ([trade_state isEqualToString:@"SUCCESS"]) {
+                    paymentInfo.paymentResult = @(PAYRESULT_SUCCESS);
+                    paymentInfo.paymentStatus = @(YPBPaymentStatusNotProcessed);
+                    [paymentInfo save];
+                }
+                
+                [[NSNotificationCenter defaultCenter] postNotificationName:kVIPUpgradingNotification object:paymentInfo];
+            }];
+        }
+    }];
+}
+
+- (void)notifyUserLogin {
     self.window.rootViewController = [self setupRootViewController];
     
-    [YPBUtil accumalateLoginFrequency];
-    [[YPBMessagePushModel sharedModel] startMessagePushPolling];
+    [[YPBMessagePushModel sharedModel] notifyLoginPush];
+    [[NSNotificationCenter defaultCenter] postNotificationName:kUserInRestoreNotification object:nil];
 }
+
+#pragma mark - WeChat delegate
+
+- (void)onReq:(BaseReq *)req {
+    
+}
+
+- (void)onResp:(BaseResp *)resp {
+    if([resp isKindOfClass:[PayResp class]]){
+        PAYRESULT payResult;
+        if (resp.errCode == WXErrCodeUserCancel) {
+            payResult = PAYRESULT_ABANDON;
+        } else if (resp.errCode == WXSuccess) {
+            payResult = PAYRESULT_SUCCESS;
+        } else {
+            payResult = PAYRESULT_FAIL;
+        }
+        [[WeChatPayManager sharedInstance] sendNotificationByResult:payResult];
+    }
+}
+
 @end

@@ -20,6 +20,8 @@
 #import "YPBUserPhotoAddModel.h"
 #import "YPBPhotoBrowser.h"
 
+static NSString *const kNoUserInfoErrorMessage = @"无法获取用户详细信息，请刷新后重试";
+
 @interface YPBMineViewController ()
 {
     YPBTableViewCell *_vipCell;
@@ -44,7 +46,7 @@ DefineLazyPropertyInitialization(YPBUserPhotoAddModel, photoAddModel)
 - (instancetype)init {
     self = [super init];
     if (self) {
-//        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(onCurrentUserChange) name:kCurrentUserChangeNotification object:nil];
+        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(onUserRestoreNotification) name:kUserInRestoreNotification object:nil];
     }
     return self;
 }
@@ -68,15 +70,12 @@ DefineLazyPropertyInitialization(YPBUserPhotoAddModel, photoAddModel)
         @strongify(self);
         
         YPBUser *user = [YPBUser currentUser];
-        
-        YPBEditMineDetailViewController *editVC = [[YPBEditMineDetailViewController alloc] initWithUser:user.copy];
-        [self.navigationController pushViewController:editVC animated:YES];
-//        if (user.isRegistered) {
-//            YPBEditMineDetailViewController *editVC = [[YPBEditMineDetailViewController alloc] initWithUser:user.copy];
-//            [self.navigationController pushViewController:editVC animated:YES];
-//        } else {
-//            [[YPBMessageCenter defaultCenter] showErrorWithTitle:@"无法获取用户详细信息，请刷新后重试" subtitle:nil];
-//        }
+        if (user.isRegistered) {
+            YPBEditMineDetailViewController *editVC = [[YPBEditMineDetailViewController alloc] initWithUser:user.copy];
+            [self.navigationController pushViewController:editVC animated:YES];
+        } else {
+            [[YPBMessageCenter defaultCenter] showErrorWithTitle:kNoUserInfoErrorMessage inViewController:self];
+        }
         
     }];
     
@@ -84,9 +83,8 @@ DefineLazyPropertyInitialization(YPBUserPhotoAddModel, photoAddModel)
         @strongify(self);
         [self refreshMineDetails];
     }];
-    [self.layoutTableView YPB_triggerPullToRefresh];
-    
     [self initLayoutCells];
+    [self reloadUI];
     
     self.layoutTableViewAction = ^(NSIndexPath *indexPath, UITableViewCell *cell) {
         @strongify(self);
@@ -97,14 +95,23 @@ DefineLazyPropertyInitialization(YPBUserPhotoAddModel, photoAddModel)
     };
 }
 
+- (void)viewWillAppear:(BOOL)animated {
+    [super viewWillAppear:animated];
+    
+    if (![YPBUser currentUser].isRegistered) {
+        [self.layoutTableView YPB_triggerPullToRefresh];
+    }
+}
+
+- (void)onUserRestoreNotification {
+    [self refreshMineDetails];
+}
+
 - (void)refreshMineDetails {
     @weakify(self);
-    if ([YPBUser currentUser].userId == nil) {
-        [YPBUser currentUser].userId = [YPBUtil deviceRegisteredUserId];
-    }
-    
-    [self.mineDetailModel fetchUserDetailWithUserId:[YPBUser currentUser].userId
-                                             byUser:[YPBUser currentUser].userId
+    NSString *userId = [YPBUtil deviceRegisteredUserId];
+    [self.mineDetailModel fetchUserDetailWithUserId:userId
+                                             byUser:userId
                                   completionHandler:^(BOOL success, id obj)
     {
         @strongify(self);
@@ -115,9 +122,15 @@ DefineLazyPropertyInitialization(YPBUserPhotoAddModel, photoAddModel)
         [self.layoutTableView YPB_endPullToRefresh];
         
         if (success) {
+            BOOL isRestore = ![YPBUser currentUser].isRegistered;
+
             YPBUser *user = obj;
             [user saveAsCurrentUser];
             [self reloadUI];
+            
+            if (isRestore) {
+                [[NSNotificationCenter defaultCenter] postNotificationName:kUserRestoreSuccessNotification object:user];
+            }
         }
     }];
 }
@@ -145,7 +158,11 @@ DefineLazyPropertyInitialization(YPBUserPhotoAddModel, photoAddModel)
     @weakify(self);
     _photoBar.photoAddAction = ^(id obj) {
         @strongify(self);
-        [self pickingPhotos];
+        if ([YPBUser currentUser].isRegistered) {
+            [self pickingPhotos];
+        } else {
+            [[YPBMessageCenter defaultCenter] showErrorWithTitle:kNoUserInfoErrorMessage inViewController:self];
+        }
     };
     _photoBar.selectAction = ^(NSUInteger index) {
         @strongify(self);
@@ -169,26 +186,40 @@ DefineLazyPropertyInitialization(YPBUserPhotoAddModel, photoAddModel)
     
     @weakify(self);
     _profileCell = [[YPBMineProfileCell alloc] init];
-    _profileCell.name = [YPBUser currentUser].nickName;
-    _profileCell.isVIP = [YPBUser currentUser].isVip;
+//    _profileCell.name = [YPBUser currentUser].nickName;
+//    _profileCell.isVIP = [YPBUser currentUser].isVip;
     _profileCell.avatarAction = ^{
         @strongify(self);
         [self pickingAvatar];
     };
     _profileCell.viewFollowedAction = ^{
         @strongify(self);
-        YPBMineAccessViewController *recvVC = [[YPBMineAccessViewController alloc] initWithAccessType:YPBMineAccessTypeGreetingReceived];
-        [self.navigationController pushViewController:recvVC animated:YES];
+        
+        if ([YPBUser currentUser].isRegistered) {
+            YPBMineAccessViewController *recvVC = [[YPBMineAccessViewController alloc] initWithAccessType:YPBMineAccessTypeGreetingReceived];
+            [self.navigationController pushViewController:recvVC animated:YES];
+        } else {
+            [[YPBMessageCenter defaultCenter] showErrorWithTitle:kNoUserInfoErrorMessage inViewController:self];
+        }
+        
     };
     _profileCell.viewFollowingAction = ^{
         @strongify(self);
-        YPBMineAccessViewController *recvVC = [[YPBMineAccessViewController alloc] initWithAccessType:YPBMineAccessTypeGreetingSent];
-        [self.navigationController pushViewController:recvVC animated:YES];
+        if ([YPBUser currentUser].isRegistered) {
+            YPBMineAccessViewController *recvVC = [[YPBMineAccessViewController alloc] initWithAccessType:YPBMineAccessTypeGreetingSent];
+            [self.navigationController pushViewController:recvVC animated:YES];
+        } else {
+            [[YPBMessageCenter defaultCenter] showErrorWithTitle:kNoUserInfoErrorMessage inViewController:self];
+        }
     };
     _profileCell.viewAccessedAction = ^{
         @strongify(self);
-        YPBMineAccessViewController *recvVC = [[YPBMineAccessViewController alloc] initWithAccessType:YPBMineAccessTypeAccessViewed];
-        [self.navigationController pushViewController:recvVC animated:YES];
+        if ([YPBUser currentUser].isRegistered) {
+            YPBMineAccessViewController *recvVC = [[YPBMineAccessViewController alloc] initWithAccessType:YPBMineAccessTypeAccessViewed];
+            [self.navigationController pushViewController:recvVC animated:YES];
+        } else {
+            [[YPBMessageCenter defaultCenter] showErrorWithTitle:kNoUserInfoErrorMessage inViewController:self];
+        }
     };
     return _profileCell;
 }
@@ -333,28 +364,33 @@ DefineLazyPropertyInitialization(YPBUserPhotoAddModel, photoAddModel)
     self.sideMenuAvatarView.isVIP = [YPBUser currentUser].isVip;
     
     self.profileCell.name = [YPBUser currentUser].nickName;
+    self.profileCell.avatarURL = [NSURL URLWithString:[YPBUser currentUser].logoUrl];
     self.profileCell.isVIP = [YPBUser currentUser].isVip;
     self.profileCell.followedNumber = [YPBUser currentUser].receiveGreetCount.unsignedIntegerValue;
     self.profileCell.followingNumber = [YPBUser currentUser].greetCount.unsignedIntegerValue;
     self.profileCell.accessedNumber = [YPBUser currentUser].accessCount.unsignedIntegerValue;
     
-    NSString *suffix = @" 人喜欢了你";
-    NSMutableAttributedString *likeString = [[NSMutableAttributedString alloc] initWithString:[NSString stringWithFormat:@"%@%@", [YPBUser currentUser].receiveGreetCount ?: @0, suffix]];
-    [likeString addAttributes:@{NSForegroundColorAttributeName:[UIColor redColor],
-                                NSFontAttributeName:[UIFont systemFontOfSize:14.]} range:NSMakeRange(0, likeString.length-suffix.length)];
-    _likeCell.titleLabel.attributedText = likeString;
+    if (_likeCell) {
+        NSString *suffix = @" 人喜欢了你";
+        NSMutableAttributedString *likeString = [[NSMutableAttributedString alloc] initWithString:[NSString stringWithFormat:@"%@%@", [YPBUser currentUser].receiveGreetCount ?: @0, suffix]];
+        [likeString addAttributes:@{NSForegroundColorAttributeName:[UIColor redColor],
+                                    NSFontAttributeName:[UIFont systemFontOfSize:14.]} range:NSMakeRange(0, likeString.length-suffix.length)];
+        _likeCell.titleLabel.attributedText = likeString;
+    }
     
     [self reloadPhotoBarImages];
 }
 
 - (void)reloadPhotoBarImages {
-    NSMutableArray *thumbPhotos = [NSMutableArray array];
-    [[YPBUser currentUser].userPhotos enumerateObjectsUsingBlock:^(YPBUserPhoto * _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
-        if (obj.smallPhoto.length > 0) {
-            [thumbPhotos addObject:obj.smallPhoto];
-        }
-    }];
-    _photoBar.imageURLStrings = thumbPhotos;
+    if (_photoBar) {
+        NSMutableArray *thumbPhotos = [NSMutableArray array];
+        [[YPBUser currentUser].userPhotos enumerateObjectsUsingBlock:^(YPBUserPhoto * _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
+            if (obj.smallPhoto.length > 0) {
+                [thumbPhotos addObject:obj.smallPhoto];
+            }
+        }];
+        _photoBar.imageURLStrings = thumbPhotos;
+    }
 }
 
 - (void)didReceiveMemoryWarning {
@@ -367,11 +403,10 @@ DefineLazyPropertyInitialization(YPBUserPhotoAddModel, photoAddModel)
 - (void)sideMenuController:(UIViewController *)viewController willAddToSideMenuCell:(UITableViewCell *)cell {
     cell.selectionStyle = UITableViewCellSelectionStyleNone;
     
-    @weakify(viewController,self);
+    @weakify(viewController);
     self.sideMenuAvatarView.avatarImageLoadHandler = ^(UIImage *image) {
-        @strongify(viewController,self);
+        @strongify(viewController);
         viewController.backgroundImageView.image = image;
-        self.profileCell.avatarImage = image;
     };
     
     self.sideMenuAvatarView.imageURL = [NSURL URLWithString:[YPBUser currentUser].logoUrl];
@@ -387,10 +422,6 @@ DefineLazyPropertyInitialization(YPBUserPhotoAddModel, photoAddModel)
                 make.height.equalTo(cell).multipliedBy(0.8);
             }];
         }
-    }
-    
-    if ([YPBUser currentUser].userId == nil) {
-        [self refreshMineDetails];
     }
 }
 

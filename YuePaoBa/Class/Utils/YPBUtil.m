@@ -10,6 +10,7 @@
 #import "YPBAppDelegate.h"
 #import <SFHFKeychainUtils.h>
 #import <sys/sysctl.h>
+#import "YPBPaymentInfo.h"
 
 // Activation
 static NSString *const kActivationKeyChainServiceName = @"YPB_ACTIVATION_KEYCHAIN_SERVICENAME";
@@ -22,6 +23,8 @@ static NSString *const kRegisterUserIdKeyChainServiceName = @"YPB_REGISTERUSERID
 static NSString *const kRegisterUserIdKeyChainUserName = @"YPB_REGISTERUSERID_KEYCHAIN_USERNAME";
 
 static NSString *const kLoginFrequencyKeyName = @"YPB_LOGINFREQUENCY_KEYNAME";
+
+NSString *const kPaymentInfoKeyName = @"YPB_PAYMENTINFO_KEYNAME";
 
 @implementation YPBUtil
 
@@ -46,7 +49,7 @@ static NSString *const kLoginFrequencyKeyName = @"YPB_LOGINFREQUENCY_KEYNAME";
                                error:nil];
     
     YPBAppDelegate *delegate = (YPBAppDelegate *)[UIApplication sharedApplication].delegate;
-    [delegate notifyLoginSuccessfully];
+    [delegate notifyUserLogin];
 }
 
 + (NSString *)deviceRegisteredUserId {
@@ -78,6 +81,41 @@ static NSString *const kLoginFrequencyKeyName = @"YPB_LOGINFREQUENCY_KEYNAME";
     [SFHFKeychainUtils storeUsername:kActivationKeyChainUserName andPassword:activationId forServiceName:kActivationKeyChainServiceName updateExisting:NO error:nil];
 }
 
++ (NSArray<YPBPaymentInfo *> *)allPaymentInfos {
+    NSArray<NSDictionary *> *paymentInfoArr = [[NSUserDefaults standardUserDefaults] objectForKey:kPaymentInfoKeyName];
+    
+    NSMutableArray *paymentInfos = [NSMutableArray array];
+    [paymentInfoArr enumerateObjectsUsingBlock:^(NSDictionary * _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
+        YPBPaymentInfo *paymentInfo = [YPBPaymentInfo paymentInfoFromDictionary:obj];
+        [paymentInfos addObject:paymentInfo];
+    }];
+    return paymentInfos;
+}
+
++ (NSArray<YPBPaymentInfo *> *)payingPaymentInfos {
+    return [self.allPaymentInfos bk_select:^BOOL(id obj) {
+        YPBPaymentInfo *paymentInfo = obj;
+        return paymentInfo.paymentStatus.unsignedIntegerValue == YPBPaymentStatusPaying;
+    }];
+}
+
++ (NSArray<YPBPaymentInfo *> *)paidNotProcessedPaymentInfos {
+    return [self.allPaymentInfos bk_select:^BOOL(id obj) {
+        YPBPaymentInfo *paymentInfo = obj;
+        return paymentInfo.paymentStatus.unsignedIntegerValue == YPBPaymentStatusNotProcessed;
+    }];
+}
+
++ (BOOL)isPaid {
+    return [self.allPaymentInfos bk_any:^BOOL(id obj) {
+        YPBPaymentInfo *paymentInfo = obj;
+        if (paymentInfo.paymentResult.unsignedIntegerValue == PAYRESULT_SUCCESS) {
+            return YES;
+        }
+        return NO;
+    }];
+}
+
 + (NSString *)deviceName {
     size_t size;
     int nR = sysctlbyname("hw.machine", NULL, &size, NULL, 0);
@@ -87,18 +125,6 @@ static NSString *const kLoginFrequencyKeyName = @"YPB_LOGINFREQUENCY_KEYNAME";
     free(machine);
     
     return name;
-}
-
-+ (NSString *)appVersion {
-    return [NSBundle mainBundle].infoDictionary[@"CFBundleShortVersionString"];
-}
-
-+ (NSString *)appId {
-    return @"QUBA_2001";
-}
-
-+ (NSNumber *)pV {
-    return @200;
 }
 
 + (NSUInteger)loginFrequency {
@@ -127,5 +153,10 @@ static NSString *const kLoginFrequencyKeyName = @"YPB_LOGINFREQUENCY_KEYNAME";
     NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
     [dateFormatter setDateFormat:kDefaultDateFormat];
     return [dateFormatter stringFromDate:date];
+}
+
++ (NSString *)priceStringWithValue:(NSUInteger)priceValue {
+    BOOL showInteger = (NSUInteger)(priceValue) % 100 == 0;
+    return showInteger ? [NSString stringWithFormat:@"%ld", priceValue/100] : [NSString stringWithFormat:@"%.2f", priceValue/100.];
 }
 @end

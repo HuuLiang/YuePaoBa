@@ -48,10 +48,7 @@ typedef NS_ENUM(NSUInteger, YPBUserCup) {
 @property (nonatomic) NSString *assets;
 
 @property (nonatomic) BOOL isGreet;
-@property (nonatomic) BOOL isMember;
 @property (nonatomic) BOOL isVip;
-
-@property (nonatomic) NSString *memberEndTime;
 @property (nonatomic) NSString *vipEndTime;
 
 @property (nonatomic) NSNumber *greetCount;

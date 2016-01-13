@@ -13,10 +13,10 @@
 + (instancetype)defaultCenter;
 - (instancetype)init __attribute__((unavailable("cannot use init for this class, use +(instancetype)defaultCenter instead")));
 
-- (void)showMessageWithTitle:(NSString *)title subtitle:(NSString *)subtitle;
-- (void)showWarningWithTitle:(NSString *)title subtitle:(NSString *)subtitle;
-- (void)showErrorWithTitle:(NSString *)title subtitle:(NSString *)subtitle;
-- (void)showSuccessWithTitle:(NSString *)title subtitle:(NSString *)subtitle;
+//- (void)showMessageWithTitle:(NSString *)title subtitle:(NSString *)subtitle;
+//- (void)showWarningWithTitle:(NSString *)title subtitle:(NSString *)subtitle;
+//- (void)showErrorWithTitle:(NSString *)title subtitle:(NSString *)subtitle;
+//- (void)showSuccessWithTitle:(NSString *)title subtitle:(NSString *)subtitle;
 
 - (void)showMessageWithTitle:(NSString *)title inViewController:(UIViewController *)viewController;
 - (void)showWarningWithTitle:(NSString *)title inViewController:(UIViewController *)viewController;
@@ -31,7 +31,7 @@
 
 @end
 
-#define YPBShowMessage(_title,_subtitle) [[YPBMessageCenter defaultCenter] showMessageWithTitle:_title subtitle:_subtitle]
-#define YPBShowWarning(_title,_subtitle) [[YPBMessageCenter defaultCenter] showWarningWithTitle:_title subtitle:_subtitle]
-#define YPBShowError(_title,_subtitle) [[YPBMessageCenter defaultCenter] showErrorWithTitle:_title subtitle:_subtitle]
-#define YPBShowSuccess(_title,_subtitle) [[YPBMessageCenter defaultCenter] showSuccessWithTitle:_title subtitle:_subtitle]
+#define YPBShowMessage(_title) [[YPBMessageCenter defaultCenter] showMessageWithTitle:_title inViewController:nil]
+#define YPBShowWarning(_title) [[YPBMessageCenter defaultCenter] showWarningWithTitle:_title inViewController:nil]
+#define YPBShowError(_title) [[YPBMessageCenter defaultCenter] showErrorWithTitle:_title inViewController:nil]
+#define YPBShowSuccess(_title) [[YPBMessageCenter defaultCenter] showSuccessWithTitle:_title inViewController:nil]

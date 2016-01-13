@@ -19,6 +19,7 @@
 #import "NSDictionary+YPBSign.h"
 #import "NSString+crypt.h"
 #import "UIView+Loading.h"
+#import "UIView+YPBMask.h"
 #import "UIScrollView+Refresh.h"
 #import "UITableView+Separator.h"
 #import "NSDate+Utilities.h"

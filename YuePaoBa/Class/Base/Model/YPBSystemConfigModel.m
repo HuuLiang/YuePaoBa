@@ -31,6 +31,10 @@
     return [YPBSystemConfigResponse class];
 }
 
+- (BOOL)shouldPostErrorNotification {
+    return NO;
+}
+
 - (BOOL)fetchSystemConfigWithCompletionHandler:(YPBCompletionHandler)handler {
     @weakify(self);
     BOOL ret = [self requestURLPath:YPB_SYSTEM_CONFIG_URL

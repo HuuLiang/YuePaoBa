@@ -10,6 +10,9 @@
 #import "YPBContact.h"
 #import "YPBContactCell.h"
 #import "YPBMessageViewController.h"
+#import "YPBUserDetailViewController.h"
+#import "YPBVIPEntranceView.h"
+#import "YPBVIPPriviledgeViewController.h"
 
 static NSString *const kContactCellReusableIdentifier = @"ContactCellReusableIdentifier";
 
@@ -53,6 +56,8 @@ static NSString *const kContactCellReusableIdentifier = @"ContactCellReusableIde
             make.edges.equalTo(self.view);
         }];
     }
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(onVIPUpgradeSuccessNotification:) name:kVIPUpgradeSuccessNotification object:nil];
 }
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -66,7 +71,13 @@ static NSString *const kContactCellReusableIdentifier = @"ContactCellReusableIde
 }
 
 - (void)onMessagePushNotification:(NSNotification *)notification {
-    [self reloadContacts];
+    if ([self isVisibleViewController]) {
+        [self reloadContacts];
+    }
+}
+
+- (void)onVIPUpgradeSuccessNotification:(NSNotification *)notification {
+    [[YPBVIPEntranceView VIPEntranceInView:self.view] hide];
 }
 
 - (void)didReceiveMemoryWarning {
@@ -85,6 +96,19 @@ static NSString *const kContactCellReusableIdentifier = @"ContactCellReusableIde
         cell.title = contact.nickName;
         cell.subtitle = contact.recentMessage;
         cell.numberOfNotifications = contact.unreadMessages.unsignedIntegerValue;
+        
+        @weakify(self);
+        cell.avatarTapAction = ^(id obj) {
+            @strongify(self);
+            YPBUserDetailViewController *detailVC = [[YPBUserDetailViewController alloc] initWithUserId:contact.userId];
+            [self.navigationController pushViewController:detailVC animated:YES];
+        };
+        
+        cell.notificationTapAction = ^(id obj) {
+            @strongify(self);
+            YPBContact *contact = self.contacts[indexPath.row];
+            [YPBMessageViewController showMessageWithContact:contact inViewController:self];
+        };
     }
     return cell;
 }
@@ -96,8 +120,16 @@ static NSString *const kContactCellReusableIdentifier = @"ContactCellReusableIde
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
     
-    YPBContact *contact = self.contacts[indexPath.row];
-    [YPBMessageViewController showMessageWithContact:contact inViewController:self];
+    if ([YPBUser currentUser].isVip) {
+        YPBContact *contact = self.contacts[indexPath.row];
+        [YPBMessageViewController showMessageWithContact:contact inViewController:self];
+    } else {
+        [YPBVIPEntranceView showVIPEntranceInView:self.view canClose:YES withEnterAction:^(id obj) {
+            YPBVIPPriviledgeViewController *vipVC = [[YPBVIPPriviledgeViewController alloc] init];
+            [self.navigationController pushViewController:vipVC animated:YES];
+        }];
+    }
+    
 }
 
 #pragma mark - YPBSideMenuItemDelegate

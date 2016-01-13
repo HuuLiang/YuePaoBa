@@ -113,7 +113,7 @@ DefineLazyPropertyInitialization(NSMutableArray, userGreets)
                     } else if (_accessType == YPBMineAccessTypeAccessViewed) {
                         noDataMsg = @"没有人访问过你";
                     }
-                    [[YPBMessageCenter defaultCenter] showWarningWithTitle:noDataMsg subtitle:nil];
+                    [[YPBMessageCenter defaultCenter] showWarningWithTitle:noDataMsg inViewController:self];
                 }
             }
             

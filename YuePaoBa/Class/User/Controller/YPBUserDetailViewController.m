@@ -75,7 +75,7 @@ DefineLazyPropertyInitialization(YPBUserAccessModel, userAccessModel)
         @strongify(self);
         if (cell == self->_morePhotoCell) {
             if (self->_photoBar.imageURLStrings.count == 0) {
-                [[YPBMessageCenter defaultCenter] showWarningWithTitle:@"TA的相册空空如也~~~" subtitle:nil];
+                [[YPBMessageCenter defaultCenter] showWarningWithTitle:@"TA的相册空空如也~~~" inViewController:self];
             } else {
                 YPBPhotoGridViewController *photoVC = [[YPBPhotoGridViewController alloc] initWithPhotos:self.user.userPhotos];
                 [self.navigationController pushViewController:photoVC animated:YES];
@@ -139,7 +139,7 @@ DefineLazyPropertyInitialization(YPBUserAccessModel, userAccessModel)
 
 - (void)greetUser {
     if (self.user.userId.length == 0) {
-        [[YPBMessageCenter defaultCenter] showErrorWithTitle:@"无法获取用户信息" subtitle:nil];
+        [[YPBMessageCenter defaultCenter] showErrorWithTitle:@"无法获取用户信息" inViewController:self];
         return ;
     }
     
@@ -160,7 +160,7 @@ DefineLazyPropertyInitialization(YPBUserAccessModel, userAccessModel)
             self->_profileCell.liked = YES;
             self->_profileCell.numberOfLikes = self->_profileCell.numberOfLikes+1;
             self.user.isGreet = YES;
-            [[YPBMessageCenter defaultCenter] showSuccessWithTitle:@"打招呼成功" subtitle:nil];
+            [[YPBMessageCenter defaultCenter] showSuccessWithTitle:@"打招呼成功" inViewController:self];
         }
     }];
 }

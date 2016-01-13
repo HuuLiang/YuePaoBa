@@ -190,7 +190,7 @@ DefineLazyPropertyInitialization(YPBRegisterModel, registerModel)
 }
 
 - (void)onRegisterSuccessfullyWithUserId:(NSString *)uid {
-    YPBShowSuccess(@"注册成功", nil);
+    [[YPBMessageCenter defaultCenter] showSuccessWithTitle:@"注册成功" inViewController:self];
     
     @weakify(self);
     [self bk_performBlock:^(id receiver) {

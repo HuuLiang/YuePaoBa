@@ -117,15 +117,20 @@
     _avatarView.frame = CGRectMake(avatarX, avatarY, avatarWidth, avatarHeight);
 }
 
-- (void)setAvatarImage:(UIImage *)avatarImage {
-    _avatarImage = avatarImage;
-    _avatarView.image = avatarImage;
-    _backgroundImageView.image = avatarImage;
+- (void)setAvatarURL:(NSURL *)avatarURL {
+    _avatarURL = avatarURL;
+    _avatarView.imageURL = avatarURL;
+    [_backgroundImageView sd_setImageWithURL:avatarURL];
 }
 
 - (void)setName:(NSString *)name {
     _name = name;
     _avatarView.name = name;
+}
+
+- (void)setIsVIP:(BOOL)isVIP {
+    _isVIP = isVIP;
+    _avatarView.isVIP = isVIP;
 }
 
 - (void)onFollowedAction {

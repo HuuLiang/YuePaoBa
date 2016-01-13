@@ -17,7 +17,7 @@
 }
 
 + (NSString *)imageURLWithName:(NSString *)name {
-    NSString *baseURL = [YPBSystemConfig defaultConfig].imgUrl;
+    NSString *baseURL = [YPBSystemConfig sharedConfig].imgUrl;
     if (![baseURL hasSuffix:@"/"]) {
         baseURL = [baseURL stringByAppendingString:@"/"];
     }

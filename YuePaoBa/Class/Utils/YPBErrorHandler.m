@@ -37,9 +37,9 @@ NSString *const kNetworkErrorMessageKey = @"YPBNetworkErrorMessageKey";
     YPBURLResponseStatus resp = (YPBURLResponseStatus)(((NSNumber *)userInfo[kNetworkErrorCodeKey]).unsignedIntegerValue);
     
     if (resp == YPBURLResponseFailedByInterface) {
-        YPBShowError(@"网络数据返回失败", nil);
+        YPBShowError(@"网络数据返回失败");
     } else if (resp == YPBURLResponseFailedByNetwork) {
-        YPBShowError(@"网络错误，请检查网络连接", nil);
+        YPBShowError(@"网络错误，请检查网络连接");
     }
     
 }

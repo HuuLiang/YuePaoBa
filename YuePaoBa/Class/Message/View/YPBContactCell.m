@@ -11,9 +11,14 @@
 @interface YPBContactCell ()
 {
     UIImageView *_thumbImageView;
+    UIView *_thumbContainer;
+    
     UILabel *_titleLabel;
     UILabel *_subtitleLabel;
+    UIView *_messageContainer;
+    
     UILabel *_notiLabel;
+    UIView *_notiContainer;
 }
 @end
 
@@ -25,7 +30,13 @@
         _thumbImageView = [[UIImageView alloc] init];
         _thumbImageView.clipsToBounds = YES;
         [self addSubview:_thumbImageView];
-
+        
+        @weakify(self);
+        [_thumbImageView bk_whenTapped:^{
+            @strongify(self);
+            SafelyCallBlock1(self.avatarTapAction, nil);
+        }];
+        
         _notiLabel = [[UILabel alloc] init];
         _notiLabel.clipsToBounds = YES;
         _notiLabel.backgroundColor = [UIColor redColor];
@@ -33,6 +44,11 @@
         _notiLabel.textAlignment = NSTextAlignmentCenter;
         _notiLabel.hidden = YES;
         [self addSubview:_notiLabel];
+        
+        [_notiLabel bk_whenTapped:^{
+            @strongify(self);
+            SafelyCallBlock1(self.notificationTapAction, nil);
+        }];
         
         _titleLabel = [[UILabel alloc] init];
         [self addSubview:_titleLabel];
@@ -100,5 +116,18 @@
         _notiLabel.text = @(numberOfNotifications).stringValue;
     }
     _notiLabel.hidden = numberOfNotifications==0;
+}
+
+- (UIView *)hitTest:(CGPoint)point withEvent:(UIEvent *)event {
+    if (![self pointInside:point withEvent:event]) {
+        return nil;
+    }
+    
+    if (CGRectContainsPoint(CGRectMake(0, 0, CGRectGetMaxX(_thumbImageView.frame), self.bounds.size.height), point)) {
+        return _thumbImageView;
+    } else if (CGRectContainsPoint(CGRectMake(CGRectGetMinX(_notiLabel.frame)-15, 0, _notiLabel.frame.size.width+30, self.bounds.size.height), point)) {
+        return _notiLabel;
+    }
+    return self;
 }
 @end

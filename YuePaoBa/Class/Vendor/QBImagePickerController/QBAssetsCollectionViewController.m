@@ -199,7 +199,7 @@
     
     if (minimumNumberOfSelection <= self.maximumNumberOfSelection) {
         if (numberOfSelections > self.maximumNumberOfSelection) {
-            [[YPBMessageCenter defaultCenter] showErrorWithTitle:[NSString stringWithFormat:@"最多只可选择%lu张照片", (unsigned long)self.maximumNumberOfSelection] subtitle:nil];
+            [[YPBMessageCenter defaultCenter] showErrorWithTitle:[NSString stringWithFormat:@"最多只可选择%lu张照片", (unsigned long)self.maximumNumberOfSelection] inViewController:self];
         }
         return (numberOfSelections <= self.maximumNumberOfSelection);
     }
