@@ -85,6 +85,10 @@ DefineLazyPropertyInitialization(NSMutableArray, barrageLabels)
     return self;
 }
 
+- (void)dealloc {
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
+}
+
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
@@ -98,6 +102,10 @@ DefineLazyPropertyInitialization(NSMutableArray, barrageLabels)
     
     self.tapPhotoAction = ^(id sender) {
         @strongify(self);
+        if (!self) {
+            return ;
+        }
+        
         [self showHideHeaderFooterView];
     };
     
@@ -174,6 +182,12 @@ DefineLazyPropertyInitialization(NSMutableArray, barrageLabels)
     _inputTextField = [[UITextField alloc] init];
     _inputTextField.font = [UIFont systemFontOfSize:16.];
     _inputTextField.placeholder = @"输入弹幕信息";
+    _inputTextField.returnKeyType = UIReturnKeySend;
+    _inputTextField.bk_shouldReturnBlock = ^BOOL(UITextField *textField) {
+        @strongify(self);
+        [self sendBarrage:textField.text];
+        return YES;
+    };
     [_footerView addSubview:_inputTextField];
     {
         [_inputTextField mas_makeConstraints:^(MASConstraintMaker *make) {
@@ -191,6 +205,10 @@ DefineLazyPropertyInitialization(NSMutableArray, barrageLabels)
         }
         [self sendBarrage:self->_inputTextField.text];
     } forControlEvents:UIControlEventTouchUpInside];
+//    [[NSNotificationCenter defaultCenter] addObserver:self
+//                                             selector:@selector(onKeyboardNotification:)
+//                                                 name:UIKeyboardDidHideNotification
+//                                               object:nil];
 }
 
 - (void)viewDidAppear:(BOOL)animated {
@@ -203,6 +221,11 @@ DefineLazyPropertyInitialization(NSMutableArray, barrageLabels)
     BOOL toShow = _headerView.hidden && _footerView.hidden;
     
     if (toShow) {
+        [[NSNotificationCenter defaultCenter] addObserver:self
+                                                 selector:@selector(onKeyboardNotification:)
+                                                     name:UIKeyboardWillChangeFrameNotification
+                                                   object:nil];
+        
         _headerView.hidden = NO;
         [_headerView mas_updateConstraints:^(MASConstraintMaker *make) {
             make.top.equalTo(self.view);
@@ -217,6 +240,10 @@ DefineLazyPropertyInitialization(NSMutableArray, barrageLabels)
             [self.view layoutIfNeeded];
         }];
     } else { //toHide
+        [[NSNotificationCenter defaultCenter] removeObserver:self
+                                                        name:UIKeyboardWillChangeFrameNotification
+                                                      object:nil];
+        
         [_headerView mas_updateConstraints:^(MASConstraintMaker *make) {
             make.top.equalTo(self.view).offset(-kHeaderViewHeight);
         }];
@@ -230,6 +257,7 @@ DefineLazyPropertyInitialization(NSMutableArray, barrageLabels)
             _headerView.hidden = YES;
             _footerView.hidden = YES;
         }];
+        [self->_inputTextField resignFirstResponder];
     }
 }
 
@@ -320,8 +348,21 @@ DefineLazyPropertyInitialization(NSMutableArray, barrageLabels)
         
         if (success) {
             self->_inputTextField.text = nil;
+            [self->_inputTextField resignFirstResponder];
             [self fireBarrage:barrage withDelay:0];
         }
+    }];
+}
+
+- (void)onKeyboardNotification:(NSNotification *)notification {
+    CGRect keyboardFrame = [[notification.userInfo objectForKey:UIKeyboardFrameEndUserInfoKey] CGRectValue];
+    if (keyboardFrame.size.height == 0 || keyboardFrame.size.width == 0) {
+        return ;
+    }
+    
+    CGRect frameInView = [self.view convertRect:keyboardFrame fromView:nil];
+    [_footerView mas_updateConstraints:^(MASConstraintMaker *make) {
+        make.bottom.equalTo(self.view).offset(frameInView.origin.y-self.view.bounds.size.height);
     }];
 }
 
