@@ -134,12 +134,25 @@ DefineLazyPropertyInitialization(NSMutableArray, imageViews)
         }
     }
     
-    [self.imageViews enumerateObjectsUsingBlock:^(UIImageView * _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
+    [self.imageViews enumerateObjectsUsingBlock:^(UIImageView * _Nonnull imageView, NSUInteger idx, BOOL * _Nonnull stop) {
         @weakify(self);
-        [obj bk_whenTapped:^{
+        [imageView.gestureRecognizers enumerateObjectsUsingBlock:^(__kindof UIGestureRecognizer * _Nonnull ges, NSUInteger idx, BOOL * _Nonnull stop) {
+            if ([ges isKindOfClass:[UITapGestureRecognizer class]] || [ges isKindOfClass:[UILongPressGestureRecognizer class]]) {
+                [imageView removeGestureRecognizer:ges];
+            }
+        }];
+        
+        [imageView bk_whenTapped:^{
             @strongify(self);
             SafelyCallBlock1(self.selectAction, idx);
         }];
+        
+        [imageView addGestureRecognizer:[[UILongPressGestureRecognizer alloc] bk_initWithHandler:^(UIGestureRecognizer *sender, UIGestureRecognizerState state, CGPoint location) {
+            if (state == UIGestureRecognizerStateBegan) {
+                @strongify(self);
+                SafelyCallBlock1(self.holdAction, idx);
+            }
+        }]];
     }];
     return diff != 0;
 }
@@ -157,7 +170,7 @@ DefineLazyPropertyInitialization(NSMutableArray, imageViews)
     @weakify(self);
     [_photoAddImageView bk_whenTapped:^{
         @strongify(self);
-        SafelyCallBlock1(self.photoAddAction, nil);
+        SafelyCallBlock1(self.photoAddAction, self);
     }];
     return _photoAddImageView;
 }

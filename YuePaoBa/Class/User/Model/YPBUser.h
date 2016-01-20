@@ -92,6 +92,7 @@ typedef NS_ENUM(NSUInteger, YPBUserCup) {
 - (CGFloat)waist; // 腰围
 - (CGFloat)hip;   // 臀围
 - (YPBUserCup)cup;
+- (NSString *)figureDescription;
 
 - (NSString *)heightDescription;
 - (NSString *)ageDescription;
@@ -100,6 +101,8 @@ typedef NS_ENUM(NSUInteger, YPBUserCup) {
 - (NSString *)targetHeightDescription;
 - (NSString *)targetAgeDescription;
 - (NSString *)targetCupDescription;
+
+- (BOOL)deleteUserPhoto:(YPBUserPhoto *)photo;
 
 @end
 

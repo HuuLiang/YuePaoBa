@@ -28,6 +28,7 @@
     YPBTableViewCell *_assetsCell;
 }
 @property (nonatomic,retain) YPBUserDetailUpdateModel *updateModel;
+@property (nonatomic) BOOL canEditWeChat;
 @end
 
 @implementation YPBEditMineDetailViewController
@@ -38,6 +39,7 @@ DefineLazyPropertyInitialization(YPBUserDetailUpdateModel, updateModel)
     self = [super init];
     if (self) {
         _user = user;
+        _canEditWeChat = user.weixinNum.length == 0;
     }
     return self;
 }
@@ -89,7 +91,7 @@ DefineLazyPropertyInitialization(YPBUserDetailUpdateModel, updateModel)
 - (void)initCellLayouts {
     _wechatCell = [self newCellWithCommonStylesAndImage:[UIImage imageNamed:@"wechat_icon"]
                                                   title:@"微信" subtitle:self.user.weixinNum];
-    if (self.user.weixinNum.length > 0) {
+    if (!self.canEditWeChat) {
         _wechatCell.accessoryType = UITableViewCellAccessoryNone;
         _wechatCell.selectionStyle = UITableViewCellSelectionStyleNone;
     }
@@ -108,7 +110,8 @@ DefineLazyPropertyInitialization(YPBUserDetailUpdateModel, updateModel)
     [self setLayoutCell:_heightCell inRow:0 andSection:1];
     
     _figureCell = [self newCellWithCommonStylesAndImage:[UIImage imageNamed:@"figure_icon"]
-                                                  title:self.user.gender == YPBUserGenderFemale ? @"身材" : @"体重" subtitle:self.user.bwh];
+                                                  title:self.user.gender == YPBUserGenderFemale ? @"身材" : @"体重"
+                                               subtitle:self.user.gender == YPBUserGenderFemale ? self.user.bwh : (self.user.bwh.length > 0 ? [self.user.bwh stringByAppendingString:@" kg"] :nil)];
     [self setLayoutCell:_figureCell inRow:1 andSection:1];
     
     _ageCell = [self newCellWithCommonStylesAndImage:[UIImage imageNamed:@"age_icon"]
@@ -135,7 +138,7 @@ DefineLazyPropertyInitialization(YPBUserDetailUpdateModel, updateModel)
 }
 
 - (void)onWechatCell {
-    if (self.user.weixinNum.length > 0) {
+    if (!self.canEditWeChat) {
         return ;
     }
     
@@ -285,6 +288,8 @@ DefineLazyPropertyInitialization(YPBUserDetailUpdateModel, updateModel)
         if (success) {
             [self.user saveAsCurrentUser];
             [[YPBMessageCenter defaultCenter] showSuccessWithTitle:@"个人资料修改成功" inViewController:self];
+            
+            SafelyCallBlock1(self.successHandler, self.user);
             [self.navigationController popViewControllerAnimated:YES];
         }
     }];

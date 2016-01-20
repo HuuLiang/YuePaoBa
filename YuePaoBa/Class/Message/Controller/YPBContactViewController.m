@@ -120,7 +120,7 @@ static NSString *const kContactCellReusableIdentifier = @"ContactCellReusableIde
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
     
-    if ([YPBUser currentUser].isVip) {
+    if ([YPBUtil isVIP]) {
         YPBContact *contact = self.contacts[indexPath.row];
         [YPBMessageViewController showMessageWithContact:contact inViewController:self];
     } else {

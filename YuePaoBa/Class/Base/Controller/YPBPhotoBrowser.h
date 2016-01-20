@@ -15,6 +15,8 @@ typedef void (^YPBPhotoBrowserDisplayAction)(NSUInteger index);
 @property (nonatomic,retain,readonly) NSArray<YPBUserPhoto *> *photos;
 @property (nonatomic) NSUInteger currentPhotoIndex;
 @property (nonatomic,copy) YPBPhotoBrowserDisplayAction displayAction;
+@property (nonatomic) BOOL hideOnTap;
+@property (nonatomic,copy) YPBAction tapPhotoAction;
 
 + (instancetype)showPhotoBrowserInView:(UIView *)view withPhotos:(NSArray *)photos currentPhotoIndex:(NSUInteger)index;
 + (instancetype)showingPhotoBrowser;

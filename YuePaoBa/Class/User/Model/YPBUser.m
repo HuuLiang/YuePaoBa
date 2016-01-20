@@ -411,6 +411,16 @@ static YPBUser *_currentUser;
     return value;
 }
 
+- (NSString *)figureDescription {
+    if (self.gender == YPBUserGenderUnknown) {
+        return @"身材：？？？";
+    } else if (self.gender == YPBUserGenderMale) {
+        return [NSString stringWithFormat:@"体重：%@", [self weightDescription] ?: @""];
+    } else {
+        return [NSString stringWithFormat:@"身材：%@", self.bwh ?: @""];
+    }
+}
+
 - (NSString *)heightDescription {
     return self.height.unsignedIntegerValue > 0 ? [NSString stringWithFormat:@"%@ cm", self.height] : nil;
 }
@@ -521,8 +531,29 @@ static YPBUser *_currentUser;
         photo.smallPhoto = thumbPhotoUrl;
         photo.bigPhoto = originalPhotoUrl;
         photo.userId = self.userId;
-        [photos addObject:photo];
+        [photos insertObject:photo atIndex:0];
     }];
     self.userPhotos = photos;
+}
+
+- (NSArray<YPBUserPhoto *> *)userPhotos {
+    return [_userPhotos sortedArrayUsingComparator:^NSComparisonResult(id  _Nonnull obj1, id  _Nonnull obj2) {
+        YPBUserPhoto *photo1 = obj1;
+        YPBUserPhoto *photo2 = obj2;
+        return -[photo1.id compare:photo2.id];
+    }];
+}
+
+- (BOOL)deleteUserPhoto:(YPBUserPhoto *)photo {
+    NSMutableArray *photoArr = _userPhotos.mutableCopy;
+    YPBUserPhoto *deletePhoto = [_userPhotos bk_match:^BOOL(YPBUserPhoto *itrPhoto) {
+        return itrPhoto.id && [itrPhoto.id isEqualToNumber:photo.id];
+    }];
+    
+    if (deletePhoto) {
+        [photoArr removeObject:deletePhoto];
+        _userPhotos = photoArr;
+    }
+    return deletePhoto != nil;
 }
 @end

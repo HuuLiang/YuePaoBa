@@ -30,6 +30,14 @@ static YPBPhotoBrowser *_sharedPhotoBrowser;
     return _sharedPhotoBrowser;
 }
 
+- (instancetype)init {
+    self = [super init];
+    if (self) {
+        _hideOnTap = YES;
+    }
+    return self;
+}
+
 - (instancetype)initWithUserPhotos:(NSArray *)userPhotos {
     self = [self init];
     if (self) {
@@ -61,12 +69,13 @@ static YPBPhotoBrowser *_sharedPhotoBrowser;
     [self.photoBrowser didMoveToParentViewController:self];
     
     @weakify(self);
-    [self.view bk_whenTapped:^{
+    [self.photoBrowser.view bk_whenTapped:^{
         @strongify(self);
-        [self hide];
+        if (self.hideOnTap) {
+            [self hide];
+        }
+        SafelyCallBlock1(self.tapPhotoAction, self);
     }];
-    
-    
 }
 
 - (void)viewWillAppear:(BOOL)animated {

@@ -112,6 +112,8 @@
 		BC5874751C281E9300A72274 /* YPBPaginator.m in Sources */ = {isa = PBXBuildFile; fileRef = BC5874741C281E9300A72274 /* YPBPaginator.m */; };
 		BC5980A91C313D5E0037D98C /* YPBPhotoBrowser.m in Sources */ = {isa = PBXBuildFile; fileRef = BC5980A81C313D5E0037D98C /* YPBPhotoBrowser.m */; };
 		BC5A6E6C1C32561F006AD77A /* YPBMineFigureViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BC5A6E6B1C32561F006AD77A /* YPBMineFigureViewController.m */; };
+		BC5CF57A1C4F69C400A6CE41 /* YPBUserPhotoDeleteModel.m in Sources */ = {isa = PBXBuildFile; fileRef = BC5CF5791C4F69C400A6CE41 /* YPBUserPhotoDeleteModel.m */; };
+		BC5CF57D1C4FB6F300A6CE41 /* YPBSendBarrageModel.m in Sources */ = {isa = PBXBuildFile; fileRef = BC5CF57C1C4FB6F300A6CE41 /* YPBSendBarrageModel.m */; };
 		BC5F1AB61C2CF3DB0047BCF4 /* YPBUser+Account.m in Sources */ = {isa = PBXBuildFile; fileRef = BC5F1AB51C2CF3DB0047BCF4 /* YPBUser+Account.m */; };
 		BC5F1AB91C2CF42D0047BCF4 /* YPBUser+Mine.m in Sources */ = {isa = PBXBuildFile; fileRef = BC5F1AB81C2CF42D0047BCF4 /* YPBUser+Mine.m */; };
 		BC652B811C2B992100951DEA /* YPBUserPhotoBar.m in Sources */ = {isa = PBXBuildFile; fileRef = BC652B801C2B992100951DEA /* YPBUserPhotoBar.m */; };
@@ -374,6 +376,10 @@
 		BC5980A81C313D5E0037D98C /* YPBPhotoBrowser.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YPBPhotoBrowser.m; sourceTree = "<group>"; };
 		BC5A6E6A1C32561F006AD77A /* YPBMineFigureViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YPBMineFigureViewController.h; sourceTree = "<group>"; };
 		BC5A6E6B1C32561F006AD77A /* YPBMineFigureViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YPBMineFigureViewController.m; sourceTree = "<group>"; };
+		BC5CF5781C4F69C400A6CE41 /* YPBUserPhotoDeleteModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YPBUserPhotoDeleteModel.h; sourceTree = "<group>"; };
+		BC5CF5791C4F69C400A6CE41 /* YPBUserPhotoDeleteModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YPBUserPhotoDeleteModel.m; sourceTree = "<group>"; };
+		BC5CF57B1C4FB6F300A6CE41 /* YPBSendBarrageModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YPBSendBarrageModel.h; sourceTree = "<group>"; };
+		BC5CF57C1C4FB6F300A6CE41 /* YPBSendBarrageModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YPBSendBarrageModel.m; sourceTree = "<group>"; };
 		BC5F1AB41C2CF3DB0047BCF4 /* YPBUser+Account.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "YPBUser+Account.h"; sourceTree = "<group>"; };
 		BC5F1AB51C2CF3DB0047BCF4 /* YPBUser+Account.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "YPBUser+Account.m"; sourceTree = "<group>"; };
 		BC5F1AB71C2CF42D0047BCF4 /* YPBUser+Mine.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "YPBUser+Mine.h"; sourceTree = "<group>"; };
@@ -868,6 +874,8 @@
 				BC50CE491C297BB400CE88DD /* YPBUserAccessModel.m */,
 				BCFB2A651C3FC04B003E327D /* YPBPhotoBarrageModel.h */,
 				BCFB2A661C3FC04B003E327D /* YPBPhotoBarrageModel.m */,
+				BC5CF57B1C4FB6F300A6CE41 /* YPBSendBarrageModel.h */,
+				BC5CF57C1C4FB6F300A6CE41 /* YPBSendBarrageModel.m */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -989,6 +997,8 @@
 				BC1BA6011C35612000DBE0D8 /* YPBUserAvatarUpdateModel.m */,
 				BC264AE71C3C252E009FBCB8 /* YPBUserPhotoAddModel.h */,
 				BC264AE81C3C252E009FBCB8 /* YPBUserPhotoAddModel.m */,
+				BC5CF5781C4F69C400A6CE41 /* YPBUserPhotoDeleteModel.h */,
+				BC5CF5791C4F69C400A6CE41 /* YPBUserPhotoDeleteModel.m */,
 				BC1B49A91C44F6B900ECB0BA /* YPBUserVIPUpgradeModel.h */,
 				BC1B49AA1C44F6B900ECB0BA /* YPBUserVIPUpgradeModel.m */,
 				BC25EA331C4642B8003F8CD7 /* YPBVipUpgradeInfo.h */,
@@ -1446,6 +1456,7 @@
 				BC1B49A61C44F4B300ECB0BA /* YPBPaymentInfo.m in Sources */,
 				BCFB2A6A1C3FC441003E327D /* YPBUserPhotoViewController.m in Sources */,
 				BC53B9C71C3BBEEA004252B1 /* QBImagePickerGroupCell.m in Sources */,
+				BC5CF57D1C4FB6F300A6CE41 /* YPBSendBarrageModel.m in Sources */,
 				BC50CE4A1C297BB400CE88DD /* YPBUserAccessModel.m in Sources */,
 				BC1B49AB1C44F6B900ECB0BA /* YPBUserVIPUpgradeModel.m in Sources */,
 				BC5704DF1C45F74800DEFAB6 /* Order.m in Sources */,
@@ -1466,6 +1477,7 @@
 				BC22DDFC1C3CBCF200305F58 /* UIImage+Utilities.m in Sources */,
 				BC5874751C281E9300A72274 /* YPBPaginator.m in Sources */,
 				BCD15F1B1C104B31002B6C5C /* RACEXTRuntimeExtensions.m in Sources */,
+				BC5CF57A1C4F69C400A6CE41 /* YPBUserPhotoDeleteModel.m in Sources */,
 				BC5704E61C45F74800DEFAB6 /* RSADataSigner.m in Sources */,
 				BC5980A91C313D5E0037D98C /* YPBPhotoBrowser.m in Sources */,
 				BC1AED5B1C0F5A43003A0C63 /* YPBMessageViewController.m in Sources */,

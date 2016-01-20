@@ -69,7 +69,7 @@ DefineLazyPropertyInitialization(YPBUserAccessModel, userAccessModel)
         [self loadDataWithRefresh:NO];
     }];
     
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(onVIPUpgradeSuccessNotification:) name:kVIPUpgradeSuccessNotification object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(onVIPUpgradeSuccessNotification) name:kVIPUpgradeSuccessNotification object:nil];
 }
 
 - (void)dealloc {
@@ -78,7 +78,7 @@ DefineLazyPropertyInitialization(YPBUserAccessModel, userAccessModel)
 
 - (void)viewDidAppear:(BOOL)animated {
     [super viewDidAppear:animated];
-    if (![YPBUser currentUser].isVip) {
+    if (![YPBUtil isVIP]) {
         @weakify(self);
         [YPBVIPEntranceView showVIPEntranceInView:self.view canClose:NO withEnterAction:^(id obj) {
             @strongify(self);
@@ -119,7 +119,7 @@ DefineLazyPropertyInitialization(YPBUserAccessModel, userAccessModel)
     }
 }
 
-- (void)onVIPUpgradeSuccessNotification:(NSNotification *)notification {
+- (void)onVIPUpgradeSuccessNotification {
     YPBVIPEntranceView *entranceView = [YPBVIPEntranceView VIPEntranceInView:self.view];
     [entranceView hide];
 }

@@ -16,6 +16,8 @@
 #import "YPBUserPhotoViewController.h"
 #import "YPBMessageViewController.h"
 #import "YPBContact.h"
+#import "YPBVIPEntranceView.h"
+#import "YPBVIPPriviledgeViewController.h"
 
 @interface YPBUserDetailViewController ()
 {
@@ -30,7 +32,7 @@
     YPBTableViewCell *_assetsCell;
     YPBTableViewCell *_ageCell;
     
-    YPBTableViewCell *_morePhotoCell;
+//    YPBTableViewCell *_morePhotoCell;
     YPBUserPhotoBar *_photoBar;
 }
 @property (nonatomic) NSString *userId;
@@ -71,18 +73,18 @@ DefineLazyPropertyInitialization(YPBUserAccessModel, userAccessModel)
     }];
     [self.layoutTableView YPB_triggerPullToRefresh];
     
-    self.layoutTableViewAction = ^(NSIndexPath *indexPath, UITableViewCell *cell) {
-        @strongify(self);
-        if (cell == self->_morePhotoCell) {
-            if (self->_photoBar.imageURLStrings.count == 0) {
-                [[YPBMessageCenter defaultCenter] showWarningWithTitle:@"TA的相册空空如也~~~" inViewController:self];
-            } else {
-                YPBPhotoGridViewController *photoVC = [[YPBPhotoGridViewController alloc] initWithPhotos:self.user.userPhotos];
-                [self.navigationController pushViewController:photoVC animated:YES];
-            }
-
-        }
-    };
+//    self.layoutTableViewAction = ^(NSIndexPath *indexPath, UITableViewCell *cell) {
+//        @strongify(self);
+//        if (cell == self->_morePhotoCell) {
+//            if (self->_photoBar.imageURLStrings.count == 0) {
+//                [[YPBMessageCenter defaultCenter] showWarningWithTitle:@"TA的相册空空如也~~~" inViewController:self];
+//            } else {
+//                YPBPhotoGridViewController *photoVC = [[YPBPhotoGridViewController alloc] initWithPhotos:self.user.userPhotos];
+//                [self.navigationController pushViewController:photoVC animated:YES];
+//            }
+//
+//        }
+//    };
 }
 
 - (void)loadUserDetail {
@@ -114,15 +116,15 @@ DefineLazyPropertyInitialization(YPBUserAccessModel, userAccessModel)
     _genderCell.imageView.image = user.gender==YPBUserGenderFemale?[UIImage imageNamed:@"female_icon"]:[UIImage imageNamed:@"male_icon"];
     _genderCell.titleLabel.text = user.gender==YPBUserGenderFemale?@"性别：女":@"性别：男";
     
-    _heightCell.titleLabel.text = [NSString stringWithFormat:@"身高：%@", user.height ?: @""];
-    _figureCell.titleLabel.text = [NSString stringWithFormat:@"身材：%@", user.bwh ?: @""];
+    _heightCell.titleLabel.text = [NSString stringWithFormat:@"身高：%@", user.heightDescription ?: @""];
+    _figureCell.titleLabel.text = user.figureDescription;
     _professionCell.titleLabel.text = [NSString stringWithFormat:@"职业：%@", user.profession ?: @""];
     _interestCell.titleLabel.text = [NSString stringWithFormat:@"兴趣：%@", user.note ?: @""];
     _wechatCell.titleLabel.text = [NSString stringWithFormat:@"微信：%@", user.weixinNum ?: @""];
     _incomeCell.titleLabel.text = [NSString stringWithFormat:@"月收入：%@", user.monthIncome ?: @""];
     _assetsCell.titleLabel.text = [NSString stringWithFormat:@"资产情况：%@", user.assets ?: @""];
-    _ageCell.titleLabel.text = [NSString stringWithFormat:@"年龄：%@", user.age ?: @""];
-    _morePhotoCell.titleLabel.text = user.userPhotos.count > 0 ? [NSString stringWithFormat:@"查看所有照片(%ld张)", user.userPhotos.count] : @"查看所有照片";
+    _ageCell.titleLabel.text = [NSString stringWithFormat:@"年龄：%@", user.ageDescription ?: @""];
+//    _morePhotoCell.titleLabel.text = user.userPhotos.count > 0 ? [NSString stringWithFormat:@"查看所有照片(%ld张)", user.userPhotos.count] : @"查看所有照片";
     
     NSMutableArray *thumbPhotos = [NSMutableArray array];
     [user.userPhotos enumerateObjectsUsingBlock:^(YPBUserPhoto * _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
@@ -141,6 +143,14 @@ DefineLazyPropertyInitialization(YPBUserAccessModel, userAccessModel)
     if (self.user.userId.length == 0) {
         [[YPBMessageCenter defaultCenter] showErrorWithTitle:@"无法获取用户信息" inViewController:self];
         return ;
+    }
+    
+    if (![YPBUtil isVIP] && [YPBUser currentUser].greetCount.unsignedIntegerValue >= 5) {
+        [YPBVIPEntranceView showVIPEntranceInView:self.view canClose:YES withEnterAction:^(id obj) {
+            YPBVIPPriviledgeViewController *vipVC = [[YPBVIPPriviledgeViewController alloc] init];
+            [self.navigationController pushViewController:vipVC animated:YES];
+        }];
+        return;
     }
     
     @weakify(self);
@@ -170,6 +180,11 @@ DefineLazyPropertyInitialization(YPBUserAccessModel, userAccessModel)
     @weakify(self);
     profileCell.dateAction = ^(id sender) {
         @strongify(self);
+        if (!self.user.isRegistered) {
+            [[YPBMessageCenter defaultCenter] showErrorWithTitle:@"无法获取用户信息" inViewController:self];
+            return ;
+        }
+        
         if ([YPBContact refreshContactRecentTimeWithUser:self.user]) {
             [YPBMessageViewController showMessageWithUser:self.user inViewController:self];
         }
@@ -204,10 +219,10 @@ DefineLazyPropertyInitialization(YPBUserAccessModel, userAccessModel)
     }
     [self setLayoutCell:photoCell cellHeight:kScreenHeight*0.15 inRow:0 andSection:1];
     
-    _morePhotoCell = [[YPBTableViewCell alloc] init];
-    _morePhotoCell.titleLabel.text = @"查看所有照片";
-    _morePhotoCell.titleLabel.textAlignment = NSTextAlignmentCenter;
-    [self setLayoutCell:_morePhotoCell inRow:1 andSection:1];
+//    _morePhotoCell = [[YPBTableViewCell alloc] init];
+//    _morePhotoCell.titleLabel.text = @"查看所有照片";
+//    _morePhotoCell.titleLabel.textAlignment = NSTextAlignmentCenter;
+//    [self setLayoutCell:_morePhotoCell inRow:1 andSection:1];
     
     const NSUInteger detailInfoSection = 2;
     [self setHeaderHeight:15 inSection:detailInfoSection];

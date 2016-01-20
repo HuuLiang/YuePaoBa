@@ -75,7 +75,7 @@ DefineLazyPropertyInitialization(NSMutableArray, users)
 }
 
 - (void)loadOrRefreshData:(BOOL)isRefresh {
-    if (![YPBUser currentUser].isVip && [self.userListModel.paginator.page isEqualToNumber:[YPBSystemConfig sharedConfig].firstPayPages]) {
+    if (!isRefresh && ![YPBUtil isVIP] && [self.userListModel.paginator.page isEqualToNumber:[YPBSystemConfig sharedConfig].firstPayPages]) {
         [_layoutCollectionView YPB_endPullToRefresh];
         
         @weakify(self);

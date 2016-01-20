@@ -11,9 +11,8 @@
 @interface YPBUserVIPUpgradeModel : YPBEncryptedURLRequest
 
 + (instancetype)sharedModel;
-- (BOOL)upgradeToVIPWithMonths:(NSNumber *)months
-                   upgradeTime:(NSString *)upgradeTime
-             completionHandler:(YPBCompletionHandler)handler;
-- (void)startRetryingToCommitUnprocessedVIPInfos;
+- (BOOL)upgradeToVIPWithExpireTime:(NSString *)expireTime
+                 completionHandler:(YPBCompletionHandler)handler;
+- (void)startRetryingToSynchronizeVIPInfos;
 
 @end

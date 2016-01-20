@@ -28,7 +28,12 @@ extern NSString *const kPaymentInfoKeyName;
 + (NSArray<YPBPaymentInfo *> *)allPaymentInfos;
 + (NSArray<YPBPaymentInfo *> *)payingPaymentInfos;
 + (NSArray<YPBPaymentInfo *> *)paidNotProcessedPaymentInfos;
-+ (BOOL)isPaid;
+
++ (NSString *)vipExpireDate;
++ (void)setVIPExpireDate:(NSString *)dateString;
++ (NSString *)shortVIPExpireDate;
++ (NSString *)renewVIPByMonths:(NSUInteger)months;
++ (BOOL)isVIP;
 
 + (NSString *)deviceName;
 

@@ -48,7 +48,7 @@ DefineLazyPropertyInitialization(NSMutableArray, maskViews)
     }
     
     @weakify(self);
-    YPBActionButton *loginButton = [[YPBActionButton alloc] initWithTitle:@"注  册" action:^(id sender) {
+    YPBActionButton *loginButton = [[YPBActionButton alloc] initWithTitle:@"进   入" action:^(id sender) {
         @strongify(self);
         
         YPBRegisterFirstViewController *registerFirstVC = [[YPBRegisterFirstViewController alloc] init];

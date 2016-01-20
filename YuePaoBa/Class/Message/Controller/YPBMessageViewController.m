@@ -224,13 +224,13 @@ DefineLazyPropertyInitialization(NSMutableArray, chatMessages)
 #pragma mark - XHMessageTableViewControllerDelegate
 
 - (void)didSendText:(NSString *)text fromSender:(NSString *)sender onDate:(NSDate *)date {
-    [self addTextMessage:text withSender:sender receiver:self.userId dateTime:[YPBUtil stringFromDate:date]];
-    [self finishSendMessageWithBubbleMessageType:XHBubbleMessageMediaTypeText];
-//    if ([YPBUser currentUser].isVip) {
-//        [self addTextMessage:text withSender:sender receiver:self.userId dateTime:[YPBUtil stringFromDate:date]];
-//    } else {
-//        [[YPBMessageCenter defaultCenter] showErrorWithTitle:@"您还未开通VIP" inViewController:self];
-//    }
+    
+    if ([YPBUtil isVIP]) {
+        [self addTextMessage:text withSender:sender receiver:self.userId dateTime:[YPBUtil stringFromDate:date]];
+        [self finishSendMessageWithBubbleMessageType:XHBubbleMessageMediaTypeText];
+    } else {
+        [[YPBMessageCenter defaultCenter] showErrorWithTitle:@"您还未开通VIP" inViewController:self];
+    }
 }
 
 - (void)configureCell:(XHMessageTableViewCell *)cell atIndexPath:(NSIndexPath *)indexPath {
@@ -252,6 +252,8 @@ DefineLazyPropertyInitialization(NSMutableArray, chatMessages)
         } forControlEvents:UIControlEventTouchUpInside];
     }
     
+    cell.avatarButton.layer.cornerRadius = CGRectGetWidth(cell.avatarButton.frame) / 2;
+    cell.avatarButton.layer.masksToBounds = YES;
 }
 //- (BOOL)shouldLoadMoreMessagesScrollToTop {
 //    return YES;

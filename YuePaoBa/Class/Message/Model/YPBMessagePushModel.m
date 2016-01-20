@@ -38,8 +38,23 @@
     return [YPBMessagePushResponse class];
 }
 
+- (instancetype)init {
+    self = [super init];
+    if (self) {
+        if (![YPBUser currentUser].isRegistered) {
+            [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(onUserRestoreSuccessNotification) name:kUserRestoreSuccessNotification object:nil];
+        }
+    }
+    return self;
+}
+
 - (BOOL)shouldPostErrorNotification {
     return NO;
+}
+
+- (void)onUserRestoreSuccessNotification {
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
+    [self notifyLoginPush];
 }
 
 - (void)notifyLoginPush {

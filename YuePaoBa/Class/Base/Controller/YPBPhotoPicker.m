@@ -174,7 +174,9 @@
     NSMutableArray<UIImage *> *thumbImages = [NSMutableArray array];
     [assets enumerateObjectsUsingBlock:^(id  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
         ALAsset *asset = obj;
-        UIImage *originalImage = [UIImage imageWithCGImage:asset.defaultRepresentation.fullResolutionImage];
+        UIImage *originalImage = [UIImage imageWithCGImage:asset.defaultRepresentation.fullResolutionImage
+                                                     scale:asset.defaultRepresentation.scale
+                                               orientation:(UIImageOrientation)asset.defaultRepresentation.orientation];
         UIImage *thumbImage = [UIImage imageWithCGImage:asset.thumbnail];
         [originalImages addObject:originalImage];
         [thumbImages addObject:thumbImage];
@@ -192,7 +194,9 @@
 - (void)qb_imagePickerController:(QBImagePickerController *)imagePickerController didSelectAsset:(ALAsset *)asset {
     [imagePickerController dismissViewControllerAnimated:YES completion:nil];
     
-    UIImage *originalImage = [UIImage imageWithCGImage:asset.defaultRepresentation.fullResolutionImage];
+    UIImage *originalImage = [UIImage imageWithCGImage:asset.defaultRepresentation.fullResolutionImage
+                                                 scale:asset.defaultRepresentation.scale
+                                           orientation:(UIImageOrientation)asset.defaultRepresentation.orientation];
     UIImage *thumbImage = [UIImage imageWithCGImage:asset.thumbnail];
     if (originalImage && thumbImage) {
         SafelyCallBlock3(self.completionHandler, YES, @[originalImage], @[thumbImage]);

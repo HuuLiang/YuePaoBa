@@ -8,13 +8,14 @@
 
 #import <UIKit/UIKit.h>
 
-typedef void (^YPBPhotoBarSelectAction)(NSUInteger index);
+typedef void (^YPBPhotoBarAction)(NSUInteger index);
 
 @interface YPBUserPhotoBar : UIScrollView
 
 @property (nonatomic) BOOL usePhotoAddItem;
 @property (nonatomic,retain) NSArray<NSString *> *imageURLStrings;
-@property (nonatomic,copy) YPBPhotoBarSelectAction selectAction;
+@property (nonatomic,copy) YPBPhotoBarAction selectAction;
+@property (nonatomic,copy) YPBPhotoBarAction holdAction;
 @property (nonatomic,copy) YPBAction photoAddAction;
 
 - (instancetype)initWithUsePhotoAddItem:(BOOL)usePhotoAddItem;

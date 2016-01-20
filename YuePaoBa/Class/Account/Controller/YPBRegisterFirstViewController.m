@@ -27,7 +27,7 @@ DefineLazyPropertyInitialization(YPBUser, user)
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
-    self.title = @"注册";
+    self.title = @"设置个人信息";
     
     UIImageView *backgroundImageView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"register_background"]];
     backgroundImageView.contentMode = UIViewContentModeScaleAspectFill;
@@ -50,7 +50,7 @@ DefineLazyPropertyInitialization(YPBUser, user)
     }];
     
     UILabel *promptLabel = [[UILabel alloc] init];
-    promptLabel.text = @"注册后不能修改以上信息";
+    promptLabel.text = @"进入后不能修改以上信息";
     promptLabel.textColor = [UIColor redColor];
     promptLabel.font = [UIFont systemFontOfSize:14.];
     [self.view addSubview:promptLabel];

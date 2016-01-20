@@ -65,7 +65,7 @@
     
     const CGFloat thumbHeight = lround(self.bounds.size.height * 0.8);
     const CGFloat thumbWidth = thumbHeight;
-    const CGFloat thumbX = 30;
+    const CGFloat thumbX = 15;
     const CGFloat thumbY = (self.bounds.size.height - thumbHeight) / 2;
     _thumbImageView.frame = CGRectMake(thumbX, thumbY, thumbWidth, thumbHeight);
     _thumbImageView.layer.cornerRadius = thumbHeight / 2;
@@ -126,7 +126,9 @@
     if (CGRectContainsPoint(CGRectMake(0, 0, CGRectGetMaxX(_thumbImageView.frame), self.bounds.size.height), point)) {
         return _thumbImageView;
     } else if (CGRectContainsPoint(CGRectMake(CGRectGetMinX(_notiLabel.frame)-15, 0, _notiLabel.frame.size.width+30, self.bounds.size.height), point)) {
-        return _notiLabel;
+        if (!_notiLabel.hidden) {
+            return _notiLabel;
+        }
     }
     return self;
 }

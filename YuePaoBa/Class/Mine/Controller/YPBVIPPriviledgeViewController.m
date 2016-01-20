@@ -71,7 +71,7 @@ DefineLazyPropertyInitialization(YPBUserVIPUpgradeModel, vipUpgradeModel)
     } forControlEvents:UIControlEventTouchUpInside];
     
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(onVIPUpgradingNotification:) name:kVIPUpgradingNotification object:nil];
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(onVIPUpgradeSuccessNotification:) name:kVIPUpgradeSuccessNotification object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(onVIPUpgradeSuccessNotification) name:kVIPUpgradeSuccessNotification object:nil];
 }
 
 - (void)dealloc {
@@ -163,18 +163,17 @@ DefineLazyPropertyInitialization(YPBUserVIPUpgradeModel, vipUpgradeModel)
     PAYRESULT result = paymentInfo.paymentResult.unsignedIntegerValue;
     if (result == PAYRESULT_SUCCESS) {
         [self.paymentPopView hide];
-        [[YPBMessageCenter defaultCenter] showSuccessWithTitle:@"支付成功" inViewController:self];
-        [[NSNotificationCenter defaultCenter] postNotificationName:kVIPUpgradeSuccessNotification object:nil];
         
-        [self.vipUpgradeModel upgradeToVIPWithMonths:paymentInfo.monthsPaid
-                                         upgradeTime:paymentInfo.paymentTime
-                                   completionHandler:^(BOOL success, id obj)
-        {
-            if (success) {
-                
-                [[NSNotificationCenter defaultCenter] postNotificationName:kVIPUpgradeSuccessNotification object:nil];
-            }
-        }];
+        if ([YPBUtil isVIP]) {
+            [[YPBMessageCenter defaultCenter] showSuccessWithTitle:@"VIP续费成功" inViewController:self];
+        } else {
+            [[YPBMessageCenter defaultCenter] showSuccessWithTitle:@"VIP开通成功" inViewController:self];
+        }
+        
+        
+        NSString *vipExpireTime = [YPBUtil renewVIPByMonths:paymentInfo.monthsPaid.unsignedIntegerValue];
+        [self.vipUpgradeModel upgradeToVIPWithExpireTime:vipExpireTime completionHandler:nil];
+        [[NSNotificationCenter defaultCenter] postNotificationName:kVIPUpgradeSuccessNotification object:nil];
     } else if (result == PAYRESULT_ABANDON) {
         [[YPBMessageCenter defaultCenter] showWarningWithTitle:@"已取消支付" inViewController:self];
     } else {
@@ -184,7 +183,7 @@ DefineLazyPropertyInitialization(YPBUserVIPUpgradeModel, vipUpgradeModel)
     [[YPBPaymentModel sharedModel] commitPaymentInfo:paymentInfo];
 }
 
-- (void)onVIPUpgradeSuccessNotification:(NSNotification *)notification {
+- (void)onVIPUpgradeSuccessNotification {
     [self.navigationController popToRootViewControllerAnimated:YES];
 }
 

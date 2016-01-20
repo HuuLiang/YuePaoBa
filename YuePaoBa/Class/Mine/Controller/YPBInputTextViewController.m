@@ -26,43 +26,6 @@
     self = [super init];
     if (self) {
         _isTextBlock = isTextBlock;
-        
-        if (isTextBlock) {
-            _inputTextView = [[UITextView alloc] init];
-            _inputTextView.font = [UIFont systemFontOfSize:14.];
-            _inputTextView.textColor = kDefaultTextColor;
-            _inputTextView.backgroundColor = [UIColor whiteColor];
-            _inputTextView.layer.cornerRadius = 4;
-            _inputTextView.layer.borderWidth = 0.5;
-            _inputTextView.layer.borderColor = [UIColor colorWithWhite:0.8 alpha:1].CGColor;
-            _inputTextView.delegate = self;
-            [self.view addSubview:_inputTextView];
-            {
-                [_inputTextView mas_makeConstraints:^(MASConstraintMaker *make) {
-                    make.left.equalTo(self.view).offset(15);
-                    make.top.equalTo(self.view).offset(15);
-                    make.right.equalTo(self.view).offset(-15);
-                    make.height.mas_equalTo(100);
-                }];
-            }
-        } else {
-            _inputTextField = [[YPBTextField alloc] init];
-            _inputTextField.delegate = self;
-            _inputTextField.returnKeyType = UIReturnKeyDone;
-            [self.view addSubview:_inputTextField];
-            {
-                [_inputTextField mas_makeConstraints:^(MASConstraintMaker *make) {
-                    make.left.equalTo(self.view).offset(15);
-                    make.right.equalTo(self.view).offset(-15);
-                    make.top.equalTo(self.view).offset(15);
-                    make.height.mas_equalTo(44);
-                }];
-            }
-            
-            [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(textFieldChangeNotification:) name:UITextFieldTextDidChangeNotification object:nil];
-        }
-        
-        
     }
     return self;
 }
@@ -76,6 +39,45 @@
     // Do any additional setup after loading the view.
     self.view.backgroundColor = kDefaultBackgroundColor;
     
+    if (self.isTextBlock) {
+        _inputTextView = [[UITextView alloc] init];
+        _inputTextView.font = [UIFont systemFontOfSize:14.];
+        _inputTextView.textColor = kDefaultTextColor;
+        _inputTextView.backgroundColor = [UIColor whiteColor];
+        _inputTextView.layer.cornerRadius = 4;
+        _inputTextView.layer.borderWidth = 0.5;
+        _inputTextView.layer.borderColor = [UIColor colorWithWhite:0.8 alpha:1].CGColor;
+        _inputTextView.delegate = self;
+        _inputTextView.placeholder = self.placeholder;
+        _inputTextView.text = self.text;
+        [self.view addSubview:_inputTextView];
+        {
+            [_inputTextView mas_makeConstraints:^(MASConstraintMaker *make) {
+                make.left.equalTo(self.view).offset(15);
+                make.top.equalTo(self.view).offset(15);
+                make.right.equalTo(self.view).offset(-15);
+                make.height.mas_equalTo(100);
+            }];
+        }
+    } else {
+        _inputTextField = [[YPBTextField alloc] init];
+        _inputTextField.delegate = self;
+        _inputTextField.returnKeyType = UIReturnKeyDone;
+        _inputTextField.placeholder = self.placeholder;
+        _inputTextField.text = self.text;
+        [self.view addSubview:_inputTextField];
+        {
+            [_inputTextField mas_makeConstraints:^(MASConstraintMaker *make) {
+                make.left.equalTo(self.view).offset(15);
+                make.right.equalTo(self.view).offset(-15);
+                make.top.equalTo(self.view).offset(15);
+                make.height.mas_equalTo(44);
+            }];
+        }
+        
+        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(textFieldChangeNotification:) name:UITextFieldTextDidChangeNotification object:nil];
+    }
+    
     @weakify(self);
     self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] bk_initWithTitle:self.completeButtonTitle ?: @"保存"
                                                                                  style:UIBarButtonItemStylePlain
@@ -85,7 +87,7 @@
         [self doSave];
     }];
     [self.navigationItem.rightBarButtonItem setTitlePositionAdjustment:UIOffsetMake(-5, 0) forBarMetrics:UIBarMetricsDefault];
-    self.navigationItem.rightBarButtonItem.enabled = NO;
+    self.navigationItem.rightBarButtonItem.enabled = self.text.length > 0;
 }
 
 - (UILabel *)noteLabel {
@@ -138,6 +140,8 @@
 }
 
 - (void)setText:(NSString *)text {
+    _text = text;
+    
     if (_isTextBlock) {
         _inputTextView.text = text;
     } else {
@@ -145,14 +149,6 @@
     }
     
     self.navigationItem.rightBarButtonItem.enabled = text.length > 0;
-}
-
-- (NSString *)text {
-    if (_isTextBlock) {
-        return _inputTextView.text;
-    } else {
-        return _inputTextField.text;
-    }
 }
 
 - (void)setLimitedTextLength:(NSUInteger)limitedTextLength {
@@ -174,6 +170,11 @@
     _textLimitLabel.hidden = limitedTextLength == 0;
 }
 
+- (void)setCompleteButtonTitle:(NSString *)completeButtonTitle {
+    _completeButtonTitle = completeButtonTitle;
+    
+}
+
 - (BOOL)doSave {
     [self.inputView resignFirstResponder];
     
@@ -190,6 +191,8 @@
 }
 
 - (void)doChangeText {
+    _text = self.isTextBlock ? _inputTextView.text : _inputTextField.text;
+    
     if (self.limitedTextLength > 0) {
         _textLimitLabel.text = [NSString stringWithFormat:@"还可以输入%ld个字", self.limitedTextLength - self.text.length];
     }

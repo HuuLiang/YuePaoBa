@@ -19,7 +19,7 @@
     UITableViewCell *_ageCell;
     UITableViewCell *_cupCell;
 }
-@property (nonatomic,retain) UIView *titleView;
+//@property (nonatomic,retain) UIView *titleView;
 @property (nonatomic,retain) YPBUser *user;
 @property (nonatomic,retain) YPBRegisterModel *registerModel;
 @end
@@ -39,7 +39,7 @@ DefineLazyPropertyInitialization(YPBRegisterModel, registerModel)
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
-    self.title = @"注册";
+    self.title = @"设置交友对象";
     
     UIImageView *backgroundImageView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"register_background"]];
     backgroundImageView.contentMode = UIViewContentModeScaleAspectFill;
@@ -49,24 +49,24 @@ DefineLazyPropertyInitialization(YPBRegisterModel, registerModel)
             make.edges.equalTo(self.view);
         }];
     }
-    
-    [self.view addSubview:self.titleView];
-    {
-        [self.titleView mas_makeConstraints:^(MASConstraintMaker *make) {
-            make.centerX.equalTo(self.view);
-            make.centerY.equalTo(self.view).dividedBy(3);
-            make.left.right.equalTo(self.view).insets(UIEdgeInsetsMake(0, 30, 0, 30));
-            make.height.mas_equalTo(60);
-        }];
-    }
+//    
+//    [self.view addSubview:self.titleView];
+//    {
+//        [self.titleView mas_makeConstraints:^(MASConstraintMaker *make) {
+//            make.centerX.equalTo(self.view);
+//            make.centerY.equalTo(self.view).dividedBy(3);
+//            make.left.right.equalTo(self.view).insets(UIEdgeInsetsMake(0, 30, 0, 30));
+//            make.height.mas_equalTo(60);
+//        }];
+//    }
     
     self.layoutTableView.layer.cornerRadius = 8;
     self.layoutTableView.rowHeight = MAX(kScreenHeight * 0.08, 50);
     self.layoutTableView.scrollEnabled = NO;
     self.layoutTableView.separatorInset = UIEdgeInsetsZero;
     [self.layoutTableView mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.left.right.equalTo(self.titleView);
-        make.top.equalTo(self.titleView.mas_bottom).offset(30);
+        make.left.right.equalTo(self.view).insets(UIEdgeInsetsMake(0, 30, 0, 30));
+        make.top.equalTo(self.view).offset(30);
         make.height.mas_equalTo(self.layoutTableView.rowHeight*3);
     }];
     
@@ -108,63 +108,63 @@ DefineLazyPropertyInitialization(YPBRegisterModel, registerModel)
     [self initLayoutCells];
 }
 
-- (UIView *)titleView {
-    if (_titleView) {
-        return _titleView;
-    }
-    
-    _titleView = [[UIView alloc] init];
-    _titleView.backgroundColor = [UIColor whiteColor];
-    _titleView.layer.cornerRadius = 8;
-    
-    UIImageView *loadingBackgroundView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"register_loading_background"]];
-    [_titleView addSubview:loadingBackgroundView];
-    {
-        [loadingBackgroundView mas_makeConstraints:^(MASConstraintMaker *make) {
-            make.centerX.equalTo(_titleView).dividedBy(2);
-            make.centerY.equalTo(_titleView);
-            make.height.equalTo(_titleView).offset(-6);
-            make.width.equalTo(loadingBackgroundView.mas_height);
-        }];
-    }
-    
-    NSMutableArray *images = [NSMutableArray array];
-    for (NSUInteger i = 0; i < 12; ++i) {
-        [images addObject:[UIImage imageNamed:[NSString stringWithFormat:@"loading_%ld", i+1]]];
-    }
-    UIImageView *loadingView = [[UIImageView alloc] initWithImage:[UIImage animatedImageWithImages:images duration:1]];
-    [_titleView addSubview:loadingView];
-    {
-        [loadingView mas_makeConstraints:^(MASConstraintMaker *make) {
-            make.edges.equalTo(loadingBackgroundView).insets(UIEdgeInsetsMake(5, 5, 5, 5));
-        }];
-    }
-    
-    UILabel *titleLabel = [[UILabel alloc] init];
-    titleLabel.font = [UIFont systemFontOfSize:16.];
-    titleLabel.text = @"设置你的交友对象";
-    titleLabel.textColor = [UIColor redColor];
-    [_titleView addSubview:titleLabel];
-    {
-        [titleLabel mas_makeConstraints:^(MASConstraintMaker *make) {
-            make.bottom.equalTo(loadingBackgroundView.mas_centerY);
-            make.left.equalTo(loadingBackgroundView.mas_right).offset(10);
-        }];
-    }
-    
-    UILabel *subtitleLabel = [[UILabel alloc] init];
-    subtitleLabel.text = @"系统将为你匹配";
-    subtitleLabel.textColor = [UIColor grayColor];
-    subtitleLabel.font = [UIFont systemFontOfSize:14.];
-    [_titleView addSubview:subtitleLabel];
-    {
-        [subtitleLabel mas_makeConstraints:^(MASConstraintMaker *make) {
-            make.left.equalTo(titleLabel);
-            make.top.equalTo(titleLabel.mas_bottom).offset(3);
-        }];
-    }
-    return _titleView;
-}
+//- (UIView *)titleView {
+//    if (_titleView) {
+//        return _titleView;
+//    }
+//    
+//    _titleView = [[UIView alloc] init];
+//    _titleView.backgroundColor = [UIColor whiteColor];
+//    _titleView.layer.cornerRadius = 8;
+//    
+////    UIImageView *loadingBackgroundView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"register_loading_background"]];
+////    [_titleView addSubview:loadingBackgroundView];
+////    {
+////        [loadingBackgroundView mas_makeConstraints:^(MASConstraintMaker *make) {
+////            make.centerX.equalTo(_titleView).dividedBy(2);
+////            make.centerY.equalTo(_titleView);
+////            make.height.equalTo(_titleView).offset(-6);
+////            make.width.equalTo(loadingBackgroundView.mas_height);
+////        }];
+////    }
+//    
+////    NSMutableArray *images = [NSMutableArray array];
+////    for (NSUInteger i = 0; i < 12; ++i) {
+////        [images addObject:[UIImage imageNamed:[NSString stringWithFormat:@"loading_%ld", i+1]]];
+////    }
+////    UIImageView *loadingView = [[UIImageView alloc] initWithImage:[UIImage animatedImageWithImages:images duration:1]];
+////    [_titleView addSubview:loadingView];
+////    {
+////        [loadingView mas_makeConstraints:^(MASConstraintMaker *make) {
+////            make.edges.equalTo(loadingBackgroundView).insets(UIEdgeInsetsMake(5, 5, 5, 5));
+////        }];
+////    }
+//    
+//    UILabel *titleLabel = [[UILabel alloc] init];
+//    titleLabel.font = [UIFont systemFontOfSize:16.];
+//    titleLabel.text = @"设置你的交友对象";
+//    titleLabel.textColor = [UIColor redColor];
+//    [_titleView addSubview:titleLabel];
+//    {
+//        [titleLabel mas_makeConstraints:^(MASConstraintMaker *make) {
+//            make.bottom.equalTo(_titleView.mas_centerY);
+//            make.centerX.equalTo(_titleView);
+//        }];
+//    }
+//    
+//    UILabel *subtitleLabel = [[UILabel alloc] init];
+//    subtitleLabel.text = @"系统将为你匹配";
+//    subtitleLabel.textColor = [UIColor grayColor];
+//    subtitleLabel.font = [UIFont systemFontOfSize:14.];
+//    [_titleView addSubview:subtitleLabel];
+//    {
+//        [subtitleLabel mas_makeConstraints:^(MASConstraintMaker *make) {
+//            make.left.equalTo(titleLabel);
+//            make.top.equalTo(titleLabel.mas_bottom).offset(3);
+//        }];
+//    }
+//    return _titleView;
+//}
 
 - (void)initLayoutCells {
     _heightCell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleValue1 reuseIdentifier:nil];

@@ -60,7 +60,7 @@ static AlipayManager *alipayManager;
     
     order.tradeNO       = _orderId;         //订单ID（由商家自行制定）
     order.productName   = [YPBSystemConfig sharedConfig].alipayInfo.productInfo; //商品标题
-    order.productDescription = [NSString stringWithFormat:@"%@终身会员", order.productName]; //商品描述
+    order.productDescription = YPB_PAYMENT_RESERVE_DATA; //商品描述
     order.amount        = [NSString stringWithFormat:@"%.2f", _price/100.];           //商品价格
     order.notifyURL     =  [YPBSystemConfig sharedConfig].alipayInfo.notifyUrl; //回调URL
     
@@ -105,9 +105,9 @@ static AlipayManager *alipayManager;
     if([[_resultDic allKeys] containsObject:@"resultStatus"])
     {
         NSString * resultStatues  = _resultDic[@"resultStatus"];
-        if(resultStatues && [resultStatues isEqualToString:@"6001"]) {
+        if([resultStatues isEqualToString:@"6001"]) {
             payResult = PAYRESULT_ABANDON;
-        } else if (resultStatues && [resultStatues isEqualToString:@"9000"]) {
+        } else if ([resultStatues isEqualToString:@"9000"]) {
             payResult = PAYRESULT_SUCCESS;
         } else {
             payResult = PAYRESULT_FAIL;

@@ -27,6 +27,10 @@
     return [YPBActivateResponse class];
 }
 
+- (BOOL)shouldPostErrorNotification {
+    return NO;
+}
+
 - (BOOL)requestActivationWithCompletionHandler:(YPBCompletionHandler)handler {
     NSString *appVersion = [NSBundle mainBundle].infoDictionary[@"CFBundleShortVersionString"];
     NSDictionary *params = @{@"channelNo":YPB_CHANNEL_NO,

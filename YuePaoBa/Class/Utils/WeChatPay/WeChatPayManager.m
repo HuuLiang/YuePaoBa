@@ -38,9 +38,9 @@
         //错误提示
         NSString *debug = [req getDebugifo];
         
-        NSLog(@"%@\n\n",debug);
+        DLog(@"%@\n\n",debug);
     }else{
-        NSLog(@"%@\n\n",[req getDebugifo]);
+        DLog(@"%@\n\n",[req getDebugifo]);
         //[self alert:@"确认" msg:@"下单成功，点击OK后调起支付！"];
         
         NSMutableString *stamp  = [dict objectForKey:@"timestamp"];

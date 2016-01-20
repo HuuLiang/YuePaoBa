@@ -123,6 +123,12 @@
     [_backgroundImageView sd_setImageWithURL:avatarURL];
 }
 
+- (void)setAvatarImage:(UIImage *)avatarImage {
+    _avatarImage = avatarImage;
+    _avatarView.image = avatarImage;
+    _backgroundImageView.image = avatarImage;
+}
+
 - (void)setName:(NSString *)name {
     _name = name;
     _avatarView.name = name;

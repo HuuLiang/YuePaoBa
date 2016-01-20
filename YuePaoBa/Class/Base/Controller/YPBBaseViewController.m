@@ -48,6 +48,11 @@
     }
 }
 
+- (void)viewWillDisappear:(BOOL)animated {
+    [super viewWillDisappear:animated];
+    [[YPBMessageCenter defaultCenter] dismissMessageWithCompletion:nil];
+}
+
 - (BOOL)isVisibleViewController {
     UIViewController *contentVC = self.sideMenuViewController.contentViewController;
     if (contentVC == self.navigationController) {

@@ -152,7 +152,7 @@ DefineLazyPropertyInitialization(YPBWeChatPayQueryOrderRequest, wechatPayOrderQu
     }];
     
     [[YPBPaymentModel sharedModel] startRetryingToCommitUnprocessedOrders];
-    [[YPBUserVIPUpgradeModel sharedModel] startRetryingToCommitUnprocessedVIPInfos];
+    [[YPBUserVIPUpgradeModel sharedModel] startRetryingToSynchronizeVIPInfos];
     return YES;
 }
 
@@ -201,6 +201,11 @@ DefineLazyPropertyInitialization(YPBWeChatPayQueryOrderRequest, wechatPayOrderQu
                 
                 [[NSNotificationCenter defaultCenter] postNotificationName:kVIPUpgradingNotification object:paymentInfo];
             }];
+        } else {
+            paymentInfo.paymentResult = @(PAYRESULT_FAIL);
+            paymentInfo.paymentStatus = @(YPBPaymentStatusNotProcessed);
+            [paymentInfo save];
+            [[NSNotificationCenter defaultCenter] postNotificationName:kVIPUpgradingNotification object:paymentInfo];
         }
     }];
 }

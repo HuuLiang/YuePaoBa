@@ -18,8 +18,7 @@ typedef NS_ENUM(NSUInteger, YPBVipUpgradeStatus) {
 
 @property (nonatomic) NSString *upgradeId;
 @property (nonatomic) NSString *userId;
-@property (nonatomic) NSNumber<RLMInt> *upgradeMonths;
-@property (nonatomic) NSString *upgradeTime;
+@property (nonatomic) NSString *vipExpireTime;
 @property (nonatomic) NSNumber<RLMInt> *upgradeStatus;
 
 + (NSArray<YPBVipUpgradeInfo *> *)allUncomittedInfos;

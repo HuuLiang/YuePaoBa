@@ -141,7 +141,7 @@
                 [self.operationQueue addOperation:theOperation];
             }
         } failureBlock:^(NSError *error) {
-            NSLog(@"Error: Cannot load asset from photo stream - %@", [error localizedDescription]);
+            DLog(@"Error: Cannot load asset from photo stream - %@", [error localizedDescription]);
         }];
         
     }

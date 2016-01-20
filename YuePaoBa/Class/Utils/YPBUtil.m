@@ -22,6 +22,9 @@ static NSString *const kRegisterDateKeyChainUserName = @"YPB_REGISTERDATE_KEYCHA
 static NSString *const kRegisterUserIdKeyChainServiceName = @"YPB_REGISTERUSERID_KEYCHAIN_SERVICENAME";
 static NSString *const kRegisterUserIdKeyChainUserName = @"YPB_REGISTERUSERID_KEYCHAIN_USERNAME";
 
+static NSString *const kVIPExpireDateKeyChainServiceName = @"YPB_VIP_EXPIRE_DATE_KEYCHAIN_SERVICENAME";
+static NSString *const kVIPExpireDateKeyChainUserName = @"YPB_VIP_EXPIRE_DATE_KEYCHAIN_USERNAME";
+
 static NSString *const kLoginFrequencyKeyName = @"YPB_LOGINFREQUENCY_KEYNAME";
 
 NSString *const kPaymentInfoKeyName = @"YPB_PAYMENTINFO_KEYNAME";
@@ -106,14 +109,41 @@ NSString *const kPaymentInfoKeyName = @"YPB_PAYMENTINFO_KEYNAME";
     }];
 }
 
-+ (BOOL)isPaid {
-    return [self.allPaymentInfos bk_any:^BOOL(id obj) {
-        YPBPaymentInfo *paymentInfo = obj;
-        if (paymentInfo.paymentResult.unsignedIntegerValue == PAYRESULT_SUCCESS) {
-            return YES;
-        }
-        return NO;
-    }];
++ (NSString *)vipExpireDate {
+    NSString *expireDate = [SFHFKeychainUtils getPasswordForUsername:kVIPExpireDateKeyChainUserName
+                                                      andServiceName:kVIPExpireDateKeyChainServiceName
+                                                               error:nil];
+    return expireDate;
+}
+
++ (void)setVIPExpireDate:(NSString *)dateString {
+    [SFHFKeychainUtils storeUsername:kVIPExpireDateKeyChainUserName
+                         andPassword:dateString
+                      forServiceName:kVIPExpireDateKeyChainServiceName
+                      updateExisting:YES error:nil];
+}
+
++ (NSString *)shortVIPExpireDate {
+    NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
+    [formatter setDateFormat:@"yyyy/MM/dd"];
+    NSDate *longDate = [self dateFromString:[self vipExpireDate]];
+    return [formatter stringFromDate:longDate];
+}
+
++ (NSString *)renewVIPByMonths:(NSUInteger)months {
+    NSDate *expireDate = [self dateFromString:[self vipExpireDate]];
+    if (!expireDate) {
+        expireDate = [NSDate date];
+    }
+    
+    NSDate *renewDate = [expireDate dateByAddingMonths:months];
+    NSString *dateString = [self stringFromDate:renewDate];
+    [self setVIPExpireDate:dateString];
+    return dateString;
+}
+
++ (BOOL)isVIP {
+    return [YPBUser currentUser].isVip || [self vipExpireDate].length != 0;
 }
 
 + (NSString *)deviceName {

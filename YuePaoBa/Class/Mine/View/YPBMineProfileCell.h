@@ -12,7 +12,7 @@ typedef void (^YPBProfileAction)(void);
 
 @interface YPBMineProfileCell : UITableViewCell
 
-//@property (nonatomic,retain) UIImage *avatarImage;
+@property (nonatomic,retain) UIImage *avatarImage;
 @property (nonatomic) NSURL *avatarURL;
 @property (nonatomic) NSString *name;
 @property (nonatomic) BOOL isVIP;

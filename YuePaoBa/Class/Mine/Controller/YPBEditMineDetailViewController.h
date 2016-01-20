@@ -11,6 +11,7 @@
 @interface YPBEditMineDetailViewController : YPBLayoutViewController
 
 @property (nonatomic,retain,readonly) YPBUser *user;
+@property (nonatomic,copy) YPBAction successHandler;
 
 - (instancetype)initWithUser:(YPBUser *)user;
 

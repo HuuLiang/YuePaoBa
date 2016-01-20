@@ -18,6 +18,7 @@
 #import "YPBUserPhotoBar.h"
 #import "YPBPhotoPicker.h"
 #import "YPBUserPhotoAddModel.h"
+#import "YPBUserPhotoDeleteModel.h"
 #import "YPBPhotoBrowser.h"
 
 static NSString *const kNoUserInfoErrorMessage = @"无法获取用户详细信息，请刷新后重试";
@@ -29,12 +30,23 @@ static NSString *const kNoUserInfoErrorMessage = @"无法获取用户详细信�
     
     YPBTableViewCell *_photoCell;
     YPBUserPhotoBar *_photoBar;
+    
+    YPBTableViewCell *_genderCell;
+    YPBTableViewCell *_figureCell;
+    YPBTableViewCell *_heightCell;
+    YPBTableViewCell *_professionCell;
+    YPBTableViewCell *_interestCell;
+    YPBTableViewCell *_wechatCell;
+    YPBTableViewCell *_incomeCell;
+    YPBTableViewCell *_assetsCell;
+    YPBTableViewCell *_ageCell;
 }
 @property (nonatomic,retain) YPBAvatarView *sideMenuAvatarView;
 @property (nonatomic,retain) YPBMineProfileCell *profileCell;
 @property (nonatomic,retain) YPBUserDetailModel *mineDetailModel;
 @property (nonatomic,retain) YPBUserAvatarUpdateModel *avatarUpdateModel;
 @property (nonatomic,retain) YPBUserPhotoAddModel *photoAddModel;
+@property (nonatomic,retain) YPBUserPhotoDeleteModel *photoDeleteModel;
 @end
 
 @implementation YPBMineViewController
@@ -42,11 +54,13 @@ static NSString *const kNoUserInfoErrorMessage = @"无法获取用户详细信�
 DefineLazyPropertyInitialization(YPBUserDetailModel, mineDetailModel)
 DefineLazyPropertyInitialization(YPBUserAvatarUpdateModel, avatarUpdateModel)
 DefineLazyPropertyInitialization(YPBUserPhotoAddModel, photoAddModel)
+DefineLazyPropertyInitialization(YPBUserPhotoDeleteModel, photoDeleteModel)
 
 - (instancetype)init {
     self = [super init];
     if (self) {
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(onUserRestoreNotification) name:kUserInRestoreNotification object:nil];
+        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(onVIPUpgradeSuccessNotification) name:kVIPUpgradeSuccessNotification object:nil];
     }
     return self;
 }
@@ -71,7 +85,12 @@ DefineLazyPropertyInitialization(YPBUserPhotoAddModel, photoAddModel)
         
         YPBUser *user = [YPBUser currentUser];
         if (user.isRegistered) {
+            @weakify(self);
             YPBEditMineDetailViewController *editVC = [[YPBEditMineDetailViewController alloc] initWithUser:user.copy];
+            editVC.successHandler = ^(id obj) {
+                @strongify(self);
+                [self reloadDetailInfos];
+            };
             [self.navigationController pushViewController:editVC animated:YES];
         } else {
             [[YPBMessageCenter defaultCenter] showErrorWithTitle:kNoUserInfoErrorMessage inViewController:self];
@@ -136,20 +155,10 @@ DefineLazyPropertyInitialization(YPBUserPhotoAddModel, photoAddModel)
 }
 
 - (void)initLayoutCells {
-    [self setLayoutCell:self.profileCell cellHeight:kScreenWidth/1.5 inRow:0 andSection:0];
+    NSUInteger section = 0;
+    [self setLayoutCell:self.profileCell cellHeight:kScreenWidth/1.5 inRow:0 andSection:section];
     
-    [self setHeaderHeight:15 inSection:1];
-    
-    _vipCell = [[YPBTableViewCell alloc] initWithImage:[UIImage imageNamed:@"vip_icon"] title:@"开通VIP"];
-    _vipCell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
-    _vipCell.iconImageView.contentMode = UIViewContentModeCenter;
-    [self setLayoutCell:_vipCell cellHeight:kScreenHeight*0.08 inRow:0 andSection:1];
-    
-    _likeCell = [[YPBTableViewCell alloc] initWithImage:[UIImage imageNamed:@"like_icon"] title:@"？人喜欢了你"];
-    _likeCell.selectionStyle = UITableViewCellSelectionStyleNone;
-    [self setLayoutCell:_likeCell cellHeight:kScreenHeight*0.08 inRow:1 andSection:1];
-    
-    [self setHeaderHeight:15 inSection:2];
+    [self setHeaderHeight:15 inSection:++section];
     
     _photoCell = [[YPBTableViewCell alloc] init];
     _photoCell.selectionStyle = UITableViewCellSelectionStyleNone;
@@ -170,13 +179,72 @@ DefineLazyPropertyInitialization(YPBUserPhotoAddModel, photoAddModel)
                                      withPhotos:[YPBUser currentUser].userPhotos
                               currentPhotoIndex:index];
     };
+    _photoBar.holdAction = ^(NSUInteger index) {
+        @strongify(self);
+        UIActionSheet *actionSheet = [UIActionSheet bk_actionSheetWithTitle:@"我的相册"];
+        [actionSheet bk_addButtonWithTitle:@"删除照片" handler:^{
+            [self deletePhotoWithIndex:index];
+        }];
+        [actionSheet bk_setDestructiveButtonWithTitle:@"取消" handler:nil];
+        [actionSheet showInView:self.view];
+    };
     [_photoCell addSubview:_photoBar];
     {
         [_photoBar mas_makeConstraints:^(MASConstraintMaker *make) {
             make.edges.equalTo(_photoCell);
         }];
     }
-    [self setLayoutCell:_photoCell cellHeight:kScreenHeight*0.15 inRow:0 andSection:2];
+    [self setLayoutCell:_photoCell cellHeight:kScreenHeight*0.15 inRow:0 andSection:section];
+    
+    [self setHeaderHeight:15 inSection:++section];
+    
+    _vipCell = [[YPBTableViewCell alloc] initWithImage:[UIImage imageNamed:@"vip_icon"] title:@"开通VIP"];
+    _vipCell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
+    _vipCell.iconImageView.contentMode = UIViewContentModeCenter;
+    [self setLayoutCell:_vipCell inRow:0 andSection:section];
+    
+    _likeCell = [[YPBTableViewCell alloc] initWithImage:[UIImage imageNamed:@"like_icon"] title:@"？人喜欢了你"];
+    _likeCell.selectionStyle = UITableViewCellSelectionStyleNone;
+    [self setLayoutCell:_likeCell inRow:1 andSection:section];
+    
+    [self setHeaderHeight:15 inSection:++section];
+    
+    NSUInteger row = 0;
+    _genderCell = [[YPBTableViewCell alloc] initWithImage:[UIImage imageNamed:@"female_icon"] title:@"性别：??"];
+    _genderCell.selectionStyle = UITableViewCellSelectionStyleNone;
+    [self setLayoutCell:_genderCell inRow:row++ andSection:section];
+    
+    _figureCell = [[YPBTableViewCell alloc] initWithImage:[UIImage imageNamed:@"figure_icon"] title:@"身材：?? ?? ??"];
+    _figureCell.selectionStyle = UITableViewCellSelectionStyleNone;
+    [self setLayoutCell:_figureCell inRow:row++ andSection:section];
+    
+    _heightCell = [[YPBTableViewCell alloc] initWithImage:[UIImage imageNamed:@"height_icon"] title:@"身高：???cm"];
+    _heightCell.selectionStyle = UITableViewCellSelectionStyleNone;
+    [self setLayoutCell:_heightCell inRow:row++ andSection:section];
+    
+    _professionCell = [[YPBTableViewCell alloc] initWithImage:[UIImage imageNamed:@"profession_icon"] title:@"职业：？？？"];
+    _professionCell.selectionStyle = UITableViewCellSelectionStyleNone;
+    [self setLayoutCell:_professionCell inRow:row++ andSection:section];
+    
+    _interestCell = [[YPBTableViewCell alloc] initWithImage:[UIImage imageNamed:@"interest_icon"] title:@"兴趣：？？？"];
+    _interestCell.selectionStyle = UITableViewCellSelectionStyleNone;
+    [self setLayoutCell:_interestCell inRow:row++ andSection:section];
+    
+    _wechatCell = [[YPBTableViewCell alloc] initWithImage:[UIImage imageNamed:@"wechat_icon"] title:@"微信：********"];
+    _wechatCell.selectionStyle = UITableViewCellSelectionStyleNone;
+    [self setLayoutCell:_wechatCell inRow:row++ andSection:section];
+    
+    _incomeCell = [[YPBTableViewCell alloc] initWithImage:[UIImage imageNamed:@"income_icon"] title:@"月收入：？？？"];
+    _incomeCell.selectionStyle = UITableViewCellSelectionStyleNone;
+    [self setLayoutCell:_incomeCell inRow:row++ andSection:section];
+    
+    _assetsCell = [[YPBTableViewCell alloc] initWithImage:[UIImage imageNamed:@"assets_icon"] title:@"资产情况：？？？"];
+    _assetsCell.selectionStyle = UITableViewCellSelectionStyleNone;
+    [self setLayoutCell:_assetsCell inRow:row++ andSection:section];
+    
+    _ageCell = [[YPBTableViewCell alloc] initWithImage:[UIImage imageNamed:@"age_icon"] title:@"年龄：？"];
+    _ageCell.selectionStyle = UITableViewCellSelectionStyleNone;
+    [self setLayoutCell:_ageCell inRow:row++ andSection:section];
 }
 
 - (YPBMineProfileCell *)profileCell {
@@ -272,6 +340,7 @@ DefineLazyPropertyInitialization(YPBUserPhotoAddModel, photoAddModel)
                  if (result) {
                      [[YPBMessageCenter defaultCenter] showSuccessWithTitle:@"头像更新成功" inViewController:self];
                      self.sideMenuAvatarView.image = pickedImage;
+                     self.profileCell.avatarImage = pickedImage;
                      
                      [YPBUser currentUser].logoUrl = obj;
                      [[YPBUser currentUser] saveAsCurrentUser];
@@ -361,11 +430,9 @@ DefineLazyPropertyInitialization(YPBUserPhotoAddModel, photoAddModel)
 - (void)reloadUI {
     self.sideMenuAvatarView.imageURL = [NSURL URLWithString:[YPBUser currentUser].logoUrl];
     self.sideMenuAvatarView.name = [YPBUser currentUser].nickName;
-    self.sideMenuAvatarView.isVIP = [YPBUser currentUser].isVip;
     
     self.profileCell.name = [YPBUser currentUser].nickName;
     self.profileCell.avatarURL = [NSURL URLWithString:[YPBUser currentUser].logoUrl];
-    self.profileCell.isVIP = [YPBUser currentUser].isVip;
     self.profileCell.followedNumber = [YPBUser currentUser].receiveGreetCount.unsignedIntegerValue;
     self.profileCell.followingNumber = [YPBUser currentUser].greetCount.unsignedIntegerValue;
     self.profileCell.accessedNumber = [YPBUser currentUser].accessCount.unsignedIntegerValue;
@@ -378,7 +445,21 @@ DefineLazyPropertyInitialization(YPBUserPhotoAddModel, photoAddModel)
         _likeCell.titleLabel.attributedText = likeString;
     }
     
+    [self reloadVIP];
     [self reloadPhotoBarImages];
+    [self reloadDetailInfos];
+}
+
+- (void)reloadVIP {
+    self.sideMenuAvatarView.isVIP = [YPBUtil isVIP];
+    self.profileCell.isVIP = [YPBUtil isVIP];
+    
+    if ([YPBUtil isVIP]) {
+        _vipCell.titleLabel.text = @"VIP续费";
+        _vipCell.subtitleLabel.text = [YPBUtil shortVIPExpireDate];
+    } else {
+        _vipCell.titleLabel.text = @"开通VIP";
+    }
 }
 
 - (void)reloadPhotoBarImages {
@@ -391,6 +472,46 @@ DefineLazyPropertyInitialization(YPBUserPhotoAddModel, photoAddModel)
         }];
         _photoBar.imageURLStrings = thumbPhotos;
     }
+}
+
+- (void)reloadDetailInfos {
+    _genderCell.imageView.image = [YPBUser currentUser].gender==YPBUserGenderFemale?[UIImage imageNamed:@"female_icon"]:[UIImage imageNamed:@"male_icon"];
+    _genderCell.titleLabel.text = [YPBUser currentUser].gender==YPBUserGenderFemale?@"性别：女":@"性别：男";
+    
+    _heightCell.titleLabel.text = [NSString stringWithFormat:@"身高：%@", [YPBUser currentUser].heightDescription ?: @""];
+    _figureCell.titleLabel.text = [YPBUser currentUser].figureDescription;
+    _professionCell.titleLabel.text = [NSString stringWithFormat:@"职业：%@", [YPBUser currentUser].profession ?: @""];
+    _interestCell.titleLabel.text = [NSString stringWithFormat:@"兴趣：%@", [YPBUser currentUser].note ?: @""];
+    _wechatCell.titleLabel.text = [NSString stringWithFormat:@"微信：%@", [YPBUser currentUser].weixinNum ?: @""];
+    _incomeCell.titleLabel.text = [NSString stringWithFormat:@"月收入：%@", [YPBUser currentUser].monthIncome ?: @""];
+    _assetsCell.titleLabel.text = [NSString stringWithFormat:@"资产情况：%@", [YPBUser currentUser].assets ?: @""];
+    _ageCell.titleLabel.text = [NSString stringWithFormat:@"年龄：%@", [YPBUser currentUser].ageDescription ?: @""];
+}
+
+- (void)onVIPUpgradeSuccessNotification {
+    [self reloadVIP];
+}
+
+- (void)deletePhotoWithIndex:(NSUInteger)index {
+    if (index >= [YPBUser currentUser].userPhotos.count) {
+        return ;
+    }
+    
+    @weakify(self);
+    YPBUserPhoto *deletePhoto = [YPBUser currentUser].userPhotos[index];
+    [self.photoDeleteModel deleteUserPhotoWithId:deletePhoto.id completionHandler:^(BOOL success, id obj) {
+        @strongify(self);
+        if (success) {
+            [[YPBMessageCenter defaultCenter] showSuccessWithTitle:@"成功删除照片" inViewController:self];
+            
+            [[YPBUser currentUser] deleteUserPhoto:deletePhoto];
+            [[YPBUser currentUser] saveAsCurrentUser];
+            
+            [self reloadPhotoBarImages];
+        } else {
+            [[YPBMessageCenter defaultCenter] showErrorWithTitle:@"删除照片失败" inViewController:self];
+        }
+    }];
 }
 
 - (void)didReceiveMemoryWarning {
@@ -411,7 +532,7 @@ DefineLazyPropertyInitialization(YPBUserPhotoAddModel, photoAddModel)
     
     self.sideMenuAvatarView.imageURL = [NSURL URLWithString:[YPBUser currentUser].logoUrl];
     self.sideMenuAvatarView.name = [YPBUser currentUser].nickName;
-    self.sideMenuAvatarView.isVIP = [YPBUser currentUser].isVip;
+    self.sideMenuAvatarView.isVIP = [YPBUtil isVIP];
     
     if (![cell.subviews containsObject:self.sideMenuAvatarView]) {
         [cell addSubview:self.sideMenuAvatarView];

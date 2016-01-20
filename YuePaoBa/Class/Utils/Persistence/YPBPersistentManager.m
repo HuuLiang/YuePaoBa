@@ -10,12 +10,12 @@
 #import <Realm/Realm.h>
 
 @interface YPBPersistentManager ()
-@property (nonatomic,retain) NSMutableDictionary<NSString *, RLMRealm *> *realms;
+//@property (nonatomic,retain) NSMutableDictionary<NSString *, RLMRealm *> *realms;
 @end
 
 @implementation YPBPersistentManager
 
-DefineLazyPropertyInitialization(NSMutableDictionary, realms)
+//DefineLazyPropertyInitialization(NSMutableDictionary, realms)
 
 + (instancetype)sharedManager {
     static YPBPersistentManager *_sharedManager;
@@ -36,14 +36,18 @@ DefineLazyPropertyInitialization(NSMutableDictionary, realms)
 }
 
 - (RLMRealm *)realmWithNamespace:(NSString *)namespace {
-    RLMRealm *realm = self.realms[namespace];
-    if (!realm) {
-        NSString *folder = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES).firstObject;
-        NSString *realmPath = [NSString stringWithFormat:@"%@/%@.realm", folder, namespace];
-        realm = [RLMRealm realmWithPath:realmPath];
-        [self.realms setObject:realm forKey:namespace];
-    }
+    NSString *folder = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES).firstObject;
+    NSString *realmPath = [NSString stringWithFormat:@"%@/%@.realm", folder, namespace];
+    RLMRealm *realm = [RLMRealm realmWithPath:realmPath];
     return realm;
+//    RLMRealm *realm = self.realms[namespace];
+//    if (!realm) {
+//        NSString *folder = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES).firstObject;
+//        NSString *realmPath = [NSString stringWithFormat:@"%@/%@.realm", folder, namespace];
+//        realm = [RLMRealm realmWithPath:realmPath];
+//        [self.realms setObject:realm forKey:namespace];
+//    }
+//    return realm;
 }
 
 - (void)persistentObjects:(YPBPersistentObjectArray *)objects {

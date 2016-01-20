@@ -9,23 +9,13 @@
 #import "YPBUserVIPUpgradeModel.h"
 #import "YPBVipUpgradeInfo.h"
 
-static const NSTimeInterval kRetryingTimeInterval = 5;
+static const NSTimeInterval kRetryingTimeInterval = 180;
 
 @interface YPBUserVIPUpgradeModel ()
 @property (nonatomic,retain) NSTimer *retryingTimer;
-@property (nonatomic,retain) dispatch_queue_t persistenceQueue;
 @end
 
 @implementation YPBUserVIPUpgradeModel
-
-- (dispatch_queue_t)persistenceQueue {
-    if (_persistenceQueue) {
-        return _persistenceQueue;
-    }
-    
-    _persistenceQueue = dispatch_queue_create("yuepaoba_vipupgrade_persistence_queue", nil);
-    return _persistenceQueue;
-}
 
 + (instancetype)sharedModel {
     static YPBUserVIPUpgradeModel *_sharedModel;
@@ -36,50 +26,40 @@ static const NSTimeInterval kRetryingTimeInterval = 5;
     return _sharedModel;
 }
 
-- (BOOL)upgradeToVIPWithMonths:(NSNumber *)months
-                   upgradeTime:(NSString *)upgradeTime
-             completionHandler:(YPBCompletionHandler)handler {
-    if (![YPBUser currentUser].isRegistered || months == nil || upgradeTime.length == 0) {
+- (BOOL)upgradeToVIPWithExpireTime:(NSString *)expireTime
+                 completionHandler:(YPBCompletionHandler)handler {
+    if (![YPBUser currentUser].isRegistered || expireTime.length == 0) {
         SafelyCallBlock2(handler, NO, nil);
         return NO;
     }
     
-    YPBVipUpgradeInfo *info = [[YPBVipUpgradeInfo alloc] init];
-    info.upgradeMonths = months;
-    info.upgradeTime = upgradeTime;
-    info.userId = [YPBUser currentUser].userId;
-    return [self upgradeToVIPWithInfo:info completionHandler:handler];
-}
-
-- (BOOL)upgradeToVIPWithInfo:(YPBVipUpgradeInfo *)info completionHandler:(YPBCompletionHandler)handler {
-    NSDictionary *params = @{@"userId":info.userId, @"months":info.upgradeMonths, @"buyTime":info.upgradeTime};
-    @weakify(self);
+    NSDictionary *params = @{@"userId":[YPBUser currentUser].userId, @"vipEndTime":expireTime};
     BOOL ret = [self requestURLPath:YPB_USER_VIP_UPGRADE_URL
                          withParams:params
                     responseHandler:^(YPBURLResponseStatus respStatus, NSString *errorMessage)
                 {
-//                    @strongify(self);
-//                    dispatch_async(self.persistenceQueue, ^{
-//                        info.upgradeStatus = respStatus == YPBURLResponseSuccess ? @(YPBVipUpgradeStatusCommited) : @(YPBVipUpgradeStatusUncommited);
-//                        [info persist];
-//                    });
+                    if (respStatus == YPBURLResponseSuccess) {
+                        [YPBUser currentUser].isVip = YES;
+                        [YPBUser currentUser].vipEndTime = expireTime;
+                        [[YPBUser currentUser] saveAsCurrentUser];
+                    }
                     SafelyCallBlock2(handler, respStatus==YPBURLResponseSuccess, errorMessage);
                 }];
     return ret;
 }
 
-- (void)startRetryingToCommitUnprocessedVIPInfos {
-//    if (!self.retryingTimer) {
-//        @weakify(self);
-//        self.retryingTimer = [NSTimer bk_scheduledTimerWithTimeInterval:kRetryingTimeInterval block:^(NSTimer *timer) {
-//            @strongify(self);
-//            DLog(@"VIP: on retrying to commit unprocessed vip infos!");
-//            dispatch_async(self.persistenceQueue, ^{
-//                [self commitUnprocessedVIPInfos];
-//            });
-//        } repeats:YES];
-//        [self.retryingTimer fire];
-//    }
+- (void)startRetryingToSynchronizeVIPInfos {
+    if (!self.retryingTimer) {
+        @weakify(self);
+        self.retryingTimer = [NSTimer bk_scheduledTimerWithTimeInterval:kRetryingTimeInterval block:^(NSTimer *timer) {
+            @strongify(self);
+            DLog(@"VIP: on retrying to commit unprocessed vip infos!");
+            dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_BACKGROUND, 0), ^{
+                [self synchronizeVIPInfos];
+            });
+        } repeats:YES];
+        [self.retryingTimer fire];
+    }
 }
 
 - (void)stopRetryingToCommitUnprocessedOrders {
@@ -87,10 +67,15 @@ static const NSTimeInterval kRetryingTimeInterval = 5;
     self.retryingTimer = nil;
 }
 
-- (void)commitUnprocessedVIPInfos {
-    NSArray<YPBVipUpgradeInfo *> *upgradeInfos = [YPBVipUpgradeInfo allUncomittedInfos];
-    [upgradeInfos enumerateObjectsUsingBlock:^(YPBVipUpgradeInfo * _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
-        [self upgradeToVIPWithInfo:obj completionHandler:nil];
-    }];
+- (void)synchronizeVIPInfos {
+    if (![[YPBUser currentUser].vipEndTime isEqualToString:[YPBUtil vipExpireDate]]) {
+        NSDate *localVipExpTime = [YPBUtil dateFromString:[YPBUtil vipExpireDate]];
+        NSDate *remoteVipExpTime = [YPBUtil dateFromString:[YPBUser currentUser].vipEndTime];
+        if (remoteVipExpTime == nil || [remoteVipExpTime isEarlierThanDate:localVipExpTime]) {
+            [self upgradeToVIPWithExpireTime:[YPBUtil vipExpireDate] completionHandler:nil];
+        } else if (remoteVipExpTime != nil && [localVipExpTime isEarlierThanDate:remoteVipExpTime]) {
+            [YPBUtil setVIPExpireDate:[YPBUser currentUser].vipEndTime];
+        }
+    }
 }
 @end
