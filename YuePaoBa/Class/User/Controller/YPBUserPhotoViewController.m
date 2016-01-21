@@ -69,7 +69,7 @@ DefineLazyPropertyInitialization(NSMutableArray, barrageLabels)
         
         @strongify(self);
         if (thisButton.selected) {
-            [self loadBarragesAtIndex:self.currentPhotoIndex];
+            [self loadBarragesAtIndex:self.currentPhotoIndex isByUser:YES];
         } else {
             [self stopBarrages];
         }
@@ -96,7 +96,7 @@ DefineLazyPropertyInitialization(NSMutableArray, barrageLabels)
     self.displayAction = ^(NSUInteger index) {
         @strongify(self);
         if (self.barrageButton.selected) {
-            [self loadBarragesAtIndex:index];
+            [self loadBarragesAtIndex:index isByUser:NO];
         }
     };
     
@@ -261,7 +261,7 @@ DefineLazyPropertyInitialization(NSMutableArray, barrageLabels)
     }
 }
 
-- (void)loadBarragesAtIndex:(NSUInteger)index {
+- (void)loadBarragesAtIndex:(NSUInteger)index isByUser:(BOOL)isByUser {
     [self.barrageLabels enumerateObjectsUsingBlock:^(UILabel * _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
         [obj removeFromSuperview];
     }];
@@ -276,8 +276,15 @@ DefineLazyPropertyInitialization(NSMutableArray, barrageLabels)
     [self.queryBarrageModel fetchBarrageWithPhotoId:photo.id completionHandler:^(BOOL success, id obj) {
         @strongify(self);
         
-        if (self && success) {
+        if (success) {
             [self fireBarrages:obj];
+            
+            if (isByUser) {
+                [self.view.window showMessageWithTitle:@"已开启弹幕"];
+            }
+        } else {
+            [self.view.window showMessageWithTitle:@"弹幕加载失败"];
+            self.barrageButton.selected = NO;
         }
     }];
 }
@@ -325,6 +332,8 @@ DefineLazyPropertyInitialization(NSMutableArray, barrageLabels)
     }];
     
     [self.barrageLabels removeAllObjects];
+    
+    [self.view.window showMessageWithTitle:@"已关闭弹幕"];
 }
 
 - (void)sendBarrage:(NSString *)barrage {
@@ -350,6 +359,10 @@ DefineLazyPropertyInitialization(NSMutableArray, barrageLabels)
             self->_inputTextField.text = nil;
             [self->_inputTextField resignFirstResponder];
             [self fireBarrage:barrage withDelay:0];
+            
+            [self.view.window showMessageWithTitle:@"成功发射弹幕"];
+        } else {
+            [self.view.window showMessageWithTitle:@"发射弹幕失败"];
         }
     }];
 }

@@ -11,6 +11,7 @@
 
 static const void *kUILoadingViewAssociatedKey = &kUILoadingViewAssociatedKey;
 static const void *kUIProgressingViewAssociatedKey = &kUIProgressingViewAssociatedKey;
+static const void *kUIMessageViewAssociatedKey = &kUIMessageViewAssociatedKey;
 
 @implementation UIView (Loading)
 
@@ -50,6 +51,21 @@ static const void *kUIProgressingViewAssociatedKey = &kUIProgressingViewAssociat
     return progressHud;
 }
 
+- (UIView *)ypb_messageView {
+    UIView *messageView = objc_getAssociatedObject(self, kUIMessageViewAssociatedKey);
+    if (messageView) {
+        return messageView;
+    }
+    
+    MBProgressHUD *messageHud = [[MBProgressHUD alloc] initWithView:self];
+    messageHud.userInteractionEnabled = NO;
+    messageHud.mode = MBProgressHUDModeText;
+    messageHud.minShowTime = 2;
+    messageHud.detailsLabelFont = [UIFont systemFontOfSize:16.];
+    messageHud.labelFont = [UIFont systemFontOfSize:20.];
+    return messageHud;
+}
+
 - (void)beginLoading {
     if ([self.subviews containsObject:self.ypb_loadingView]) {
         return ;
@@ -83,6 +99,39 @@ static const void *kUIProgressingViewAssociatedKey = &kUIProgressingViewAssociat
 
 - (void)endProgressing {
     MBProgressHUD *progressHud = (MBProgressHUD *)self.ypb_progressingView;
+    [progressHud hide:YES];
+}
+
+- (void)showMessageWithTitle:(NSString *)title {
+    MBProgressHUD *progressHud = (MBProgressHUD *)self.ypb_messageView;
+    if (![self.subviews containsObject:progressHud]) {
+        [self addSubview:progressHud];
+    }
+    
+    if (title.length > 0) {
+        if (title.length < 10) {
+            progressHud.labelText = title;
+            progressHud.detailsLabelText = nil;
+        } else {
+            progressHud.labelText = nil;
+            progressHud.detailsLabelText = title;
+        }
+        
+        [progressHud show:YES];
+        [progressHud hide:YES];
+    }
+}
+
+- (void)showMessageWithTitle:(NSString *)title subtitle:(NSString *)subtitle {
+    MBProgressHUD *progressHud = (MBProgressHUD *)self.ypb_messageView;
+    if (![self.subviews containsObject:progressHud]) {
+        [self addSubview:progressHud];
+    }
+    
+    progressHud.labelText = title;
+    progressHud.detailsLabelText = subtitle;
+    
+    [progressHud show:YES];
     [progressHud hide:YES];
 }
 @end

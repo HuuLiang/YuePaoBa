@@ -10,6 +10,10 @@
 
 @implementation YPBSendBarrageModel
 
+- (BOOL)shouldPostErrorNotification {
+    return NO;
+}
+
 - (BOOL)sendBarrage:(NSString *)barrage forPhoto:(NSNumber *)photoId withCompletionHandler:(YPBCompletionHandler)handler {
     if (barrage.length == 0 || photoId == nil || ![YPBUser currentUser].isRegistered) {
         SafelyCallBlock2(handler, NO, nil);
