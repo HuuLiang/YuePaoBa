@@ -172,6 +172,26 @@ static YPBUser *_currentUser;
     return values;
 }
 
++ (NSArray<NSNumber *> *)allWaistValues {
+    YPBFloatRange waistRange = self.availableWaistRange;
+    
+    NSMutableArray *values = [[NSMutableArray alloc] initWithObjects:@(0), nil];
+    for (CGFloat i = waistRange.min; i < waistRange.max+0.5; i+=0.5) {
+        [values addObject:@(i)];
+    }
+    return values;
+}
+
++ (NSArray<NSNumber *> *)allHipValues {
+    YPBFloatRange hipRange = self.availableHipRange;
+    
+    NSMutableArray *values = [[NSMutableArray alloc] initWithObjects:@(0), nil];
+    for (CGFloat i = hipRange.min; i < hipRange.max+0.5; i+=0.5) {
+        [values addObject:@(i)];
+    }
+    return values;
+}
+
 + (NSArray<NSString *> *)allHeightRangeDescription {
     NSMutableArray *heightStrings = [NSMutableArray array];
     
@@ -224,8 +244,18 @@ static YPBUser *_currentUser;
 }
 
 + (YPBFloatRange)availableBustRange {
-    YPBFloatRange bustRange = {60,120};
+    YPBFloatRange bustRange = {70,120};
     return bustRange;
+}
+
++ (YPBFloatRange)availableWaistRange {
+    YPBFloatRange waistRange = {55,100};
+    return waistRange;
+}
+
++ (YPBFloatRange)availableHipRange {
+    YPBFloatRange hipRange = {70,120};
+    return hipRange;
 }
 
 + (YPBUserGender)genderFromString:(NSString *)genderString {
@@ -411,6 +441,13 @@ static YPBUser *_currentUser;
     return value;
 }
 
+- (NSString *)cupDescription {
+    if (self.cup < [[self class] allCupsDescription].count) {
+        return [[self class] allCupsDescription][self.cup];
+    }
+    return @"";
+}
+
 - (NSString *)figureDescription {
     if (self.gender == YPBUserGenderUnknown) {
         return @"身材：？？？";
@@ -431,6 +468,30 @@ static YPBUser *_currentUser;
 
 - (NSString *)weightDescription {
     return self.weight > 0 ? [NSString stringWithFormat:@"%.1f kg", self.weight] : nil;
+}
+
+- (NSString *)bustDescription {
+    if (self.bust == 0) {
+        return nil;
+    }
+    
+    return [NSString stringWithFormat:@"%.1f", self.bust];
+}
+
+- (NSString *)waistDescription {
+    if (self.waist == 0) {
+        return nil;
+    }
+    
+    return [NSString stringWithFormat:@"%.1f", self.waist];
+}
+
+- (NSString *)hipDescription {
+    if (self.hip == 0) {
+        return nil;
+    }
+    
+    return [NSString stringWithFormat:@"%.1f", self.hip];
 }
 
 - (NSString *)targetHeightDescription {
@@ -479,6 +540,10 @@ static YPBUser *_currentUser;
     return 0;
 }
 
+- (void)setBust:(CGFloat)bust {
+    self.bwh = [NSString stringWithFormat:@"%.1f %.1f %.1f %@", bust, self.waist, self.hip, self.cupDescription];
+}
+
 - (CGFloat)waist {
     NSArray<NSString *> *bwh = [self.bwh componentsSeparatedByCharactersInSet:[NSCharacterSet whitespaceCharacterSet]];
     if (bwh.count > 1) {
@@ -487,12 +552,20 @@ static YPBUser *_currentUser;
     return 0;
 }
 
+- (void)setWaist:(CGFloat)waist {
+    self.bwh = [NSString stringWithFormat:@"%.1f %.1f %.1f %@", self.bust, waist, self.hip, self.cupDescription];
+}
+
 - (CGFloat)hip {
     NSArray<NSString *> *bwh = [self.bwh componentsSeparatedByCharactersInSet:[NSCharacterSet whitespaceCharacterSet]];
     if (bwh.count > 2) {
         return bwh[2].floatValue;
     }
     return 0;
+}
+
+- (void)setHip:(CGFloat)hip {
+    self.bwh = [NSString stringWithFormat:@"%.1f %.1f %.1f %@", self.bust, self.waist, hip, self.cupDescription];
 }
 
 - (YPBUserCup)cup {
@@ -504,6 +577,14 @@ static YPBUser *_currentUser;
         }
     }
     return YPBUserCupUnspecified;
+}
+
+- (void)setCup:(YPBUserCup)cup {
+    NSString *cupDescription;
+    if (cup < [[self class] allCupsDescription].count) {
+        cupDescription = [[self class] allCupsDescription][cup];
+    }
+    self.bwh = [NSString stringWithFormat:@"%.1f %.1f %.1f %@", self.bust, self.waist, self.hip, cupDescription ?: @""];
 }
 
 - (YPBUserGender)oppositeGender {

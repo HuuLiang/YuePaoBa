@@ -258,7 +258,13 @@ DefineLazyPropertyInitialization(YPBUserDetailUpdateModel, updateModel)
 
 - (void)onFigureCell {
     if (self.user.gender == YPBUserGenderFemale) {
+        @weakify(self);
         YPBMineFigureViewController *figureVC = [[YPBMineFigureViewController alloc] initWithUser:self.user];
+        figureVC.saveAction = ^(id obj) {
+            @strongify(self);
+            self.user.bwh = obj;
+            self->_figureCell.subtitleLabel.text = obj;
+        };
         [self.navigationController pushViewController:figureVC animated:YES];
     } else {
         

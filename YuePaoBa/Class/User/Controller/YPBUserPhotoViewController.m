@@ -69,6 +69,7 @@ DefineLazyPropertyInitialization(NSMutableArray, barrageLabels)
         
         @strongify(self);
         if (thisButton.selected) {
+            [thisButton beginLoading];
             [self loadBarragesAtIndex:self.currentPhotoIndex isByUser:YES];
         } else {
             [self stopBarrages];
@@ -268,6 +269,7 @@ DefineLazyPropertyInitialization(NSMutableArray, barrageLabels)
     [self.barrageLabels removeAllObjects];
     
     if (self.photos.count == 0 || index >= self.photos.count) {
+        [self.barrageButton endLoading];
         return ;
     }
     
@@ -275,6 +277,8 @@ DefineLazyPropertyInitialization(NSMutableArray, barrageLabels)
     YPBUserPhoto *photo = self.photos[index];
     [self.queryBarrageModel fetchBarrageWithPhotoId:photo.id completionHandler:^(BOOL success, id obj) {
         @strongify(self);
+        
+        [self.barrageButton endLoading];
         
         if (success) {
             [self fireBarrages:obj];

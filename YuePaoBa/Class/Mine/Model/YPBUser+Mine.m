@@ -43,6 +43,42 @@ static const NSUInteger kDefaultHeight = 160;
     return weightStrings;
 }
 
++ (NSArray<NSString *> *)allBustStrings {
+    NSMutableArray *bustStrings = [NSMutableArray array];
+    [[self allBustValues] enumerateObjectsUsingBlock:^(NSNumber * _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
+        if ([obj isEqualToNumber:@0]) {
+            [bustStrings addObject:@""];
+        } else {
+            [bustStrings addObject:[NSString stringWithFormat:@"%.1f", obj.floatValue]];
+        }
+    }];
+    return bustStrings.count > 0 ? bustStrings : nil;
+}
+
++ (NSArray<NSString *> *)allWaistStrings {
+    NSMutableArray *waistStrings = [NSMutableArray array];
+    [[self allWaistValues] enumerateObjectsUsingBlock:^(NSNumber * _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
+        if ([obj isEqualToNumber:@0]) {
+            [waistStrings addObject:@""];
+        } else {
+            [waistStrings addObject:[NSString stringWithFormat:@"%.1f", obj.floatValue]];
+        }
+    }];
+    return waistStrings.count > 0 ? waistStrings : nil;
+}
+
++ (NSArray<NSString *> *)allHipStrings {
+    NSMutableArray *hipStrings = [NSMutableArray array];
+    [[self allHipValues] enumerateObjectsUsingBlock:^(NSNumber * _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
+        if ([obj isEqualToNumber:@0]) {
+            [hipStrings addObject:@""];
+        } else {
+            [hipStrings addObject:[NSString stringWithFormat:@"%.1f", obj.floatValue]];
+        }
+    }];
+    return hipStrings.count > 0 ? hipStrings : nil;
+}
+
 - (NSUInteger)assetsIndex {
     NSArray *assetsStrings = [[self class] allAssetsStrings];
     NSUInteger index = [assetsStrings indexOfObject:self.assets];

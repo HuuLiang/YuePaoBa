@@ -15,6 +15,9 @@
 + (NSArray<NSString *> *)allIncomeStrings;
 + (NSArray<NSString *> *)allAssetsStrings;
 + (NSArray<NSString *> *)allWeightStrings;
++ (NSArray<NSString *> *)allBustStrings;
++ (NSArray<NSString *> *)allWaistStrings;
++ (NSArray<NSString *> *)allHipStrings;
 
 - (NSUInteger)ageIndex;
 - (NSUInteger)heightIndex;

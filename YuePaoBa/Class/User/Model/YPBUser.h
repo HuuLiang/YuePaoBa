@@ -61,6 +61,10 @@ typedef NS_ENUM(NSUInteger, YPBUserCup) {
 @property (nonatomic) YPBIntRange targetAge;
 @property (nonatomic) YPBUserCup targetCup;
 @property (nonatomic) CGFloat weight;
+@property (nonatomic) CGFloat bust;  //胸围
+@property (nonatomic) CGFloat waist; //腰围
+@property (nonatomic) CGFloat hip;   //臀围
+@property (nonatomic) YPBUserCup cup;
 
 @property (nonatomic,readonly) YPBUserGender oppositeGender;
 
@@ -74,6 +78,8 @@ typedef NS_ENUM(NSUInteger, YPBUserCup) {
 + (NSArray<NSNumber *> *)allWeightRangeValues;
 + (NSArray<NSNumber *> *)allAgeValues;
 + (NSArray<NSNumber *> *)allBustValues;
++ (NSArray<NSNumber *> *)allWaistValues;
++ (NSArray<NSNumber *> *)allHipValues;
 
 + (YPBUserGender)genderFromString:(NSString *)genderString;
 + (NSString *)stringOfGender:(YPBUserGender)gender;
@@ -81,6 +87,8 @@ typedef NS_ENUM(NSUInteger, YPBUserCup) {
 + (YPBIntRange)availableAgeRange;
 + (YPBFloatRange)availableWeightRange;
 + (YPBFloatRange)availableBustRange;
++ (YPBFloatRange)availableWaistRange;
++ (YPBFloatRange)availableHipRange;
 
 - (BOOL)isRegistered;
 - (void)saveAsCurrentUser;
@@ -88,15 +96,14 @@ typedef NS_ENUM(NSUInteger, YPBUserCup) {
 - (void)addOriginalPhotoUrls:(NSArray<NSString *> *)originalPhotoUrls
               thumbPhotoUrls:(NSArray<NSString *> *)thumbPhotoUrls;
 
-- (CGFloat)bust;  // 胸围
-- (CGFloat)waist; // 腰围
-- (CGFloat)hip;   // 臀围
-- (YPBUserCup)cup;
-- (NSString *)figureDescription;
-
 - (NSString *)heightDescription;
 - (NSString *)ageDescription;
 - (NSString *)weightDescription;
+- (NSString *)figureDescription;
+- (NSString *)bustDescription;
+- (NSString *)waistDescription;
+- (NSString *)hipDescription;
+- (NSString *)cupDescription;
 
 - (NSString *)targetHeightDescription;
 - (NSString *)targetAgeDescription;

@@ -8,7 +8,7 @@
 
 #import "YPBMineFigureViewController.h"
 #import "YPBTableViewCell.h"
-#import "YPBUser.h"
+#import "YPBUser+Mine.h"
 #import <ActionSheetStringPicker.h>
 
 @interface YPBMineFigureViewController ()
@@ -25,7 +25,7 @@
 - (instancetype)initWithUser:(YPBUser *)user {
     self = [super init];
     if (self) {
-        _user = user;
+        _user = user.copy;
     }
     return self;
 }
@@ -67,16 +67,16 @@
 
 - (void)initCellLayouts {
     NSUInteger row = 0;
-    _bustCell = [self cellWithCommonStylesAndTitle:@"胸围" subtitle:nil];
+    _bustCell = [self cellWithCommonStylesAndTitle:@"胸围" subtitle:self.user.bustDescription];
     [self setLayoutCell:_bustCell inRow:row++ andSection:0];
     
-    _waistCell = [self cellWithCommonStylesAndTitle:@"腰围" subtitle:nil];
+    _waistCell = [self cellWithCommonStylesAndTitle:@"腰围" subtitle:self.user.waistDescription];
     [self setLayoutCell:_waistCell inRow:row++ andSection:0];
     
-    _hipCell = [self cellWithCommonStylesAndTitle:@"臀围" subtitle:nil];
+    _hipCell = [self cellWithCommonStylesAndTitle:@"臀围" subtitle:self.user.hipDescription];
     [self setLayoutCell:_hipCell inRow:row++ andSection:0];
     
-    _cupCell = [self cellWithCommonStylesAndTitle:@"罩杯" subtitle:nil];
+    _cupCell = [self cellWithCommonStylesAndTitle:@"罩杯" subtitle:self.user.cupDescription];
     [self setLayoutCell:_cupCell inRow:row++ andSection:0];
 }
 
@@ -91,49 +91,79 @@
 }
 
 - (void)onSave {
-    
+    SafelyCallBlock1(self.saveAction, [self.user.bwh stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]]);
     [self.navigationController popViewControllerAnimated:YES];
 }
 
 - (void)onBust {
+    NSArray *allBusts = [YPBUser allBustStrings];
+    NSUInteger bustIndex = [[YPBUser allBustValues] indexOfObject:@(self.user.bust)];
+    if (bustIndex == NSNotFound) {
+        bustIndex = 0;
+    }
+    
+    @weakify(self);
     [ActionSheetStringPicker showPickerWithTitle:@"选择胸围"
-                                            rows:nil
-                                initialSelection:0
+                                            rows:allBusts
+                                initialSelection:bustIndex
                                        doneBlock:^(ActionSheetStringPicker *picker, NSInteger selectedIndex, id selectedValue)
     {
-        
+        @strongify(self);
+        self.user.bust = ((NSString *)selectedValue).floatValue;
+        self->_bustCell.subtitleLabel.text = selectedValue;
     } cancelBlock:nil origin:self.view];
 }
 
 - (void)onWaist {
+    NSArray *allWaists = [YPBUser allWaistStrings];
+    NSUInteger waistIndex = [[YPBUser allWaistValues] indexOfObject:@(self.user.waist)];
+    if (waistIndex == NSNotFound) {
+        waistIndex = 0;
+    }
+    
+    @weakify(self);
     [ActionSheetStringPicker showPickerWithTitle:@"选择腰围"
-                                            rows:nil
-                                initialSelection:0
+                                            rows:allWaists
+                                initialSelection:waistIndex
                                        doneBlock:^(ActionSheetStringPicker *picker, NSInteger selectedIndex, id selectedValue)
     {
-        
+        @strongify(self);
+        self.user.waist = ((NSString *)selectedValue).floatValue;
+        self->_waistCell.subtitleLabel.text = selectedValue;
     } cancelBlock:nil origin:self.view];
 }
 
 - (void)onHip {
+    NSArray *allHips = [YPBUser allHipStrings];
+    NSUInteger hipIndex = [[YPBUser allHipValues] indexOfObject:@(self.user.hip)];
+    if (hipIndex == NSNotFound) {
+        hipIndex = 0;
+    }
+    
+    @weakify(self);
     [ActionSheetStringPicker showPickerWithTitle:@"选择臀围"
-                                            rows:nil
-                                initialSelection:0
+                                            rows:allHips
+                                initialSelection:hipIndex
                                        doneBlock:^(ActionSheetStringPicker *picker, NSInteger selectedIndex, id selectedValue)
     {
-        
+        @strongify(self);
+        self.user.hip = ((NSString *)selectedValue).floatValue;
+        self->_hipCell.subtitleLabel.text = selectedValue;
     } cancelBlock:nil origin:self.view];
 }
 
 - (void)onCup {
     NSArray *cups = [YPBUser allCupsDescription];
-    NSUInteger index = [cups indexOfObject:_cupCell.subtitleLabel.text];
+    
+    @weakify(self);
     [ActionSheetStringPicker showPickerWithTitle:@"选择罩杯"
                                             rows:cups
-                                initialSelection:index==NSNotFound?0:index
+                                initialSelection:self.user.cup
                                        doneBlock:^(ActionSheetStringPicker *picker, NSInteger selectedIndex, id selectedValue)
      {
-         _cupCell.subtitleLabel.text = selectedValue;
+         @strongify(self);
+         self.user.cup = selectedIndex;
+         self->_cupCell.subtitleLabel.text = selectedValue;
      } cancelBlock:nil origin:self.view];
 }
 
