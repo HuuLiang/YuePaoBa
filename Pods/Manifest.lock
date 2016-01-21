@@ -52,9 +52,9 @@ PODS:
     - Realm/Headers (= 0.97.0)
   - Realm/Headers (0.97.0)
   - RESideMenu (4.0.7)
-  - SDWebImage (3.7.4):
-    - SDWebImage/Core (= 3.7.4)
-  - SDWebImage/Core (3.7.4)
+  - SDWebImage (3.7.3):
+    - SDWebImage/Core (= 3.7.3)
+  - SDWebImage/Core (3.7.3)
   - SFHFKeychainUtils (0.0.1)
   - TPKeyboardAvoiding (1.2.11)
   - TSMessages (0.9.12):
@@ -97,7 +97,7 @@ SPEC CHECKSUMS:
   OpenSSL: 7f853fcada78e5162c2183b4d90ebbd0aa02f5ac
   Realm: b498a6fb9d288b171ff98d0e2d4384c295be8990
   RESideMenu: f24c508404b49c667344c54aba7e590883533958
-  SDWebImage: 247edd7dd80dd6124197b0d6a17846fe9d1df968
+  SDWebImage: 1d2b1a1efda1ade1b00b6f8498865f8ddedc8a84
   SFHFKeychainUtils: 9576b411a79a058f4d5381ace6f3242b9a62e664
   TPKeyboardAvoiding: e5ce146b313de063957bfa75a13f1e9b0ff18ab7
   TSMessages: c8cc7b80f2a833af533872cd02010cac061532cc
