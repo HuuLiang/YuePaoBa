@@ -73,8 +73,8 @@ DefineLazyPropertyInitialization(YPBUserAccessModel, userAccessModel)
     }];
     [self.layoutTableView YPB_triggerPullToRefresh];
     
-//    self.layoutTableViewAction = ^(NSIndexPath *indexPath, UITableViewCell *cell) {
-//        @strongify(self);
+    self.layoutTableViewAction = ^(NSIndexPath *indexPath, UITableViewCell *cell) {
+        @strongify(self);
 //        if (cell == self->_morePhotoCell) {
 //            if (self->_photoBar.imageURLStrings.count == 0) {
 //                [[YPBMessageCenter defaultCenter] showWarningWithTitle:@"TA的相册空空如也~~~" inViewController:self];
@@ -84,7 +84,13 @@ DefineLazyPropertyInitialization(YPBUserAccessModel, userAccessModel)
 //            }
 //
 //        }
-//    };
+        if (self.user.isRegistered && !self.user.isVip && cell == self->_wechatCell) {
+            [YPBVIPEntranceView showVIPEntranceInView:self.view canClose:YES withEnterAction:^(id obj) {
+                YPBVIPPriviledgeViewController *vipVC = [[YPBVIPPriviledgeViewController alloc] init];
+                [self.navigationController pushViewController:vipVC animated:YES];
+            }];
+        }
+    };
 }
 
 - (void)loadUserDetail {
@@ -120,7 +126,15 @@ DefineLazyPropertyInitialization(YPBUserAccessModel, userAccessModel)
     _figureCell.titleLabel.text = user.figureDescription;
     _professionCell.titleLabel.text = [NSString stringWithFormat:@"职业：%@", user.profession ?: @""];
     _interestCell.titleLabel.text = [NSString stringWithFormat:@"兴趣：%@", user.note ?: @""];
-    _wechatCell.titleLabel.text = [NSString stringWithFormat:@"微信：%@", user.weixinNum ?: @""];
+    if ([YPBUser currentUser].isVip) {
+        _wechatCell.titleLabel.text = [NSString stringWithFormat:@"微信：%@", user.weixinNum ?: @""];
+    } else {
+        NSString *wechatTitle = @"微信：*******>>查看全部资料";
+        NSMutableAttributedString *attrStr = [[NSMutableAttributedString alloc] initWithString:wechatTitle];
+        [attrStr addAttributes:@{NSForegroundColorAttributeName:[UIColor blueColor], NSUnderlineStyleAttributeName:@(1)} range:NSMakeRange(wechatTitle.length-6, 6)];
+        _wechatCell.titleLabel.attributedText = attrStr;
+    }
+    
     _incomeCell.titleLabel.text = [NSString stringWithFormat:@"月收入：%@", user.monthIncome ?: @""];
     _assetsCell.titleLabel.text = [NSString stringWithFormat:@"资产情况：%@", user.assets ?: @""];
     _ageCell.titleLabel.text = [NSString stringWithFormat:@"年龄：%@", user.ageDescription ?: @""];
