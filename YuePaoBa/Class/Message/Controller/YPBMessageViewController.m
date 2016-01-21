@@ -10,6 +10,8 @@
 #import "YPBContact.h"
 #import "YPBChatMessage.h"
 #import "YPBUserDetailViewController.h"
+#import "YPBVIPEntranceView.h"
+#import "YPBVIPPriviledgeViewController.h"
 
 @interface YPBMessageViewController ()
 {
@@ -117,6 +119,10 @@ DefineLazyPropertyInitialization(NSMutableArray, chatMessages)
     contact.unreadMessages = @(0);
     [contact endUpdate];
     
+    if ([YPBVIPEntranceView VIPEntranceInView:self.view]) {
+        return ;
+    }
+    
     YPBChatMessage *lastMessage = self.chatMessages.lastObject;
     if (lastMessage.msgType.unsignedIntegerValue == YPBChatMessageTypeOption) {
         @weakify(self);
@@ -133,8 +139,6 @@ DefineLazyPropertyInitialization(NSMutableArray, chatMessages)
     } else {
         [self.messageInputView.inputTextView becomeFirstResponder];
     }
-    
-    
 }
 
 - (void)viewWillDisappear:(BOOL)animated {
@@ -229,7 +233,12 @@ DefineLazyPropertyInitialization(NSMutableArray, chatMessages)
         [self addTextMessage:text withSender:sender receiver:self.userId dateTime:[YPBUtil stringFromDate:date]];
         [self finishSendMessageWithBubbleMessageType:XHBubbleMessageMediaTypeText];
     } else {
-        [[YPBMessageCenter defaultCenter] showErrorWithTitle:@"您还未开通VIP" inViewController:self];
+        [YPBVIPEntranceView showVIPEntranceInView:self.view canClose:YES withEnterAction:^(id obj) {
+            YPBVIPPriviledgeViewController *vipVC = [[YPBVIPPriviledgeViewController alloc] init];
+            [self.navigationController pushViewController:vipVC animated:YES];
+        }];
+        
+        [self.messageInputView.inputTextView resignFirstResponder];
     }
 }
 

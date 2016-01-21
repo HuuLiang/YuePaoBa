@@ -202,10 +202,10 @@ DefineLazyPropertyInitialization(YPBWeChatPayQueryOrderRequest, wechatPayOrderQu
                 [[NSNotificationCenter defaultCenter] postNotificationName:kVIPUpgradingNotification object:paymentInfo];
             }];
         } else {
-            paymentInfo.paymentResult = @(PAYRESULT_FAIL);
-            paymentInfo.paymentStatus = @(YPBPaymentStatusNotProcessed);
-            [paymentInfo save];
-            [[NSNotificationCenter defaultCenter] postNotificationName:kVIPUpgradingNotification object:paymentInfo];
+//            paymentInfo.paymentResult = @(PAYRESULT_FAIL);
+//            paymentInfo.paymentStatus = @(YPBPaymentStatusNotProcessed);
+//            [paymentInfo save];
+//            [[NSNotificationCenter defaultCenter] postNotificationName:kVIPUpgradingNotification object:paymentInfo];
         }
     }];
 }
