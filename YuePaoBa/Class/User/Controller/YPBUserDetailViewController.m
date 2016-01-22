@@ -84,11 +84,24 @@ DefineLazyPropertyInitialization(YPBUserAccessModel, userAccessModel)
 //            }
 //
 //        }
-        if (self.user.isRegistered && !self.user.isVip && cell == self->_wechatCell) {
-            [YPBVIPEntranceView showVIPEntranceInView:self.view canClose:YES withEnterAction:^(id obj) {
-                YPBVIPPriviledgeViewController *vipVC = [[YPBVIPPriviledgeViewController alloc] init];
-                [self.navigationController pushViewController:vipVC animated:YES];
-            }];
+        if (cell == self->_wechatCell) {
+            if ([YPBUser currentUser].isVip) {
+                if (self.user.isRegistered) {
+                    YPBMessageViewController *messageVC = [YPBMessageViewController showMessageWithUser:self.user inViewController:self];
+                    if (self.user.weixinNum.length > 0) {
+                        [messageVC sendMessage:[NSString stringWithFormat:@"我的微信号是%@，快联系我吧~~~", self.user.weixinNum] withSender:self.user.userId];
+                    } else {
+                        [messageVC sendMessage:@"亲，我俩很投缘，能要一下你的微信号吗？" withSender:[YPBUser currentUser].userId];
+                    }
+                } else {
+                    [[YPBMessageCenter defaultCenter] showErrorWithTitle:@"无法获取用户信息" inViewController:self];
+                }
+            } else {
+                [YPBVIPEntranceView showVIPEntranceInView:self.view canClose:YES withEnterAction:^(id obj) {
+                    YPBVIPPriviledgeViewController *vipVC = [[YPBVIPPriviledgeViewController alloc] init];
+                    [self.navigationController pushViewController:vipVC animated:YES];
+                }];
+            }
         }
     };
 }
@@ -126,14 +139,6 @@ DefineLazyPropertyInitialization(YPBUserAccessModel, userAccessModel)
     _figureCell.titleLabel.text = user.figureDescription;
     _professionCell.titleLabel.text = [NSString stringWithFormat:@"职业：%@", user.profession ?: @""];
     _interestCell.titleLabel.text = [NSString stringWithFormat:@"兴趣：%@", user.note ?: @""];
-    if ([YPBUser currentUser].isVip) {
-        _wechatCell.titleLabel.text = [NSString stringWithFormat:@"微信：%@", user.weixinNum ?: @""];
-    } else {
-        NSString *wechatTitle = @"微信：*******>>查看全部资料";
-        NSMutableAttributedString *attrStr = [[NSMutableAttributedString alloc] initWithString:wechatTitle];
-        [attrStr addAttributes:@{NSForegroundColorAttributeName:[UIColor blueColor], NSUnderlineStyleAttributeName:@(1)} range:NSMakeRange(wechatTitle.length-6, 6)];
-        _wechatCell.titleLabel.attributedText = attrStr;
-    }
     
     _incomeCell.titleLabel.text = [NSString stringWithFormat:@"月收入：%@", user.monthIncome ?: @""];
     _assetsCell.titleLabel.text = [NSString stringWithFormat:@"资产情况：%@", user.assets ?: @""];
@@ -262,8 +267,13 @@ DefineLazyPropertyInitialization(YPBUserAccessModel, userAccessModel)
     _interestCell.selectionStyle = UITableViewCellSelectionStyleNone;
     [self setLayoutCell:_interestCell inRow:row++ andSection:detailInfoSection];
     
-    _wechatCell = [[YPBTableViewCell alloc] initWithImage:[UIImage imageNamed:@"wechat_icon"] title:@"微信：********"];
+    NSString *wechatTitle = @"微信：*******>>查看微信号";
+    NSMutableAttributedString *attrStr = [[NSMutableAttributedString alloc] initWithString:wechatTitle];
+    [attrStr addAttributes:@{NSForegroundColorAttributeName:[UIColor blueColor], NSUnderlineStyleAttributeName:@(1)} range:NSMakeRange(wechatTitle.length-6, 6)];
+    
+    _wechatCell = [[YPBTableViewCell alloc] initWithImage:[UIImage imageNamed:@"wechat_icon"] title:nil];
     _wechatCell.selectionStyle = UITableViewCellSelectionStyleNone;
+    _wechatCell.titleLabel.attributedText = attrStr;
     [self setLayoutCell:_wechatCell inRow:row++ andSection:detailInfoSection];
     
     _incomeCell = [[YPBTableViewCell alloc] initWithImage:[UIImage imageNamed:@"income_icon"] title:@"月收入：？？？"];

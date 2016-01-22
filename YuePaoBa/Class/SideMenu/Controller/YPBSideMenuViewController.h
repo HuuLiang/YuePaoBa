@@ -10,9 +10,11 @@
 
 @interface YPBSideMenuViewController : YPBLayoutViewController <RESideMenuDelegate>
 
-@property (nonatomic,retain,readonly) NSArray<UIViewController *> *viewControllers;
-@property (nonatomic) NSUInteger selectedIndex;
+@property (nonatomic,retain,readonly) NSArray<YPBSideMenuItem *> *sideMenuItems;
+//@property (nonatomic,retain,readonly) NSArray<UIViewController *> *viewControllers;
+//@property (nonatomic) NSUInteger selectedIndex;
 
-- (instancetype)initWithViewControllers:(NSArray<UIViewController *> *)viewControllers;
+//- (instancetype)initWithViewControllers:(NSArray<UIViewController *> *)viewControllers;
+- (instancetype)initWithSideMenuItems:(NSArray<YPBSideMenuItem *> *)sideMenuItems;
 
 @end

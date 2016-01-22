@@ -26,29 +26,32 @@
 @property (nonatomic) UIImage *image;
 @property (nonatomic) CGFloat height; // menu cell height
 @property (nonatomic,assign) id<YPBSideMenuItemDelegate> delegate;
-@property (nonatomic,weak) UIViewController *viewController;
-
-+ (instancetype)itemWithTitle:(NSString *)title
-                        image:(UIImage *)image;
+@property (nonatomic,retain) UIViewController *rootViewController;
 
 + (instancetype)itemWithTitle:(NSString *)title
                         image:(UIImage *)image
-                       height:(CGFloat)height;
-
+           rootViewController:(UIViewController *)rootViewController;
+//
+//+ (instancetype)itemWithTitle:(NSString *)title
+//                        image:(UIImage *)image
+//                       height:(CGFloat)height;
+//
 + (instancetype)itemWithTitle:(NSString *)title
                         image:(UIImage *)image
+           rootViewController:(UIViewController *)rootViewController
                      delegate:(id<YPBSideMenuItemDelegate>)delegate;
 
 + (instancetype)itemWithTitle:(NSString *)title
                         image:(UIImage *)image
                        height:(CGFloat)height
+           rootViewController:(UIViewController *)rootViewController
                      delegate:(id<YPBSideMenuItemDelegate>)delegate;
 
 @end
 
 @interface UIViewController (YPBSideMenu)
 
-@property (nonatomic,retain) YPBSideMenuItem *sideMenuItem;
+//@property (nonatomic,retain) YPBSideMenuItem *sideMenuItem;
 @property (nonatomic,weak) YPBSideMenuViewController *sideMenuVC;
 
 @end

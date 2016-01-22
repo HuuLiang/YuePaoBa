@@ -92,6 +92,7 @@
 		BC53B9C81C3BBEEA004252B1 /* QBImagePickerThumbnailView.m in Sources */ = {isa = PBXBuildFile; fileRef = BC53B9BD1C3BBEEA004252B1 /* QBImagePickerThumbnailView.m */; };
 		BC53B9CB1C3BF0F3004252B1 /* YPBSystemConfigModel.m in Sources */ = {isa = PBXBuildFile; fileRef = BC53B9CA1C3BF0F3004252B1 /* YPBSystemConfigModel.m */; };
 		BC53B9CE1C3BF435004252B1 /* YPBSystemConfig.m in Sources */ = {isa = PBXBuildFile; fileRef = BC53B9CD1C3BF435004252B1 /* YPBSystemConfig.m */; };
+		BC5555071C50DCD300412F7F /* YPBMessageOptionPanel.m in Sources */ = {isa = PBXBuildFile; fileRef = BC5555061C50DCD300412F7F /* YPBMessageOptionPanel.m */; };
 		BC5704DC1C45F74800DEFAB6 /* AlipayManager.m in Sources */ = {isa = PBXBuildFile; fileRef = BC5704C41C45F74800DEFAB6 /* AlipayManager.m */; };
 		BC5704DD1C45F74800DEFAB6 /* AlipaySDK.bundle in Resources */ = {isa = PBXBuildFile; fileRef = BC5704C51C45F74800DEFAB6 /* AlipaySDK.bundle */; };
 		BC5704DE1C45F74800DEFAB6 /* AlipaySDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BC5704C61C45F74800DEFAB6 /* AlipaySDK.framework */; };
@@ -337,6 +338,8 @@
 		BC53B9CA1C3BF0F3004252B1 /* YPBSystemConfigModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YPBSystemConfigModel.m; sourceTree = "<group>"; };
 		BC53B9CC1C3BF435004252B1 /* YPBSystemConfig.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YPBSystemConfig.h; sourceTree = "<group>"; };
 		BC53B9CD1C3BF435004252B1 /* YPBSystemConfig.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YPBSystemConfig.m; sourceTree = "<group>"; };
+		BC5555051C50DCD300412F7F /* YPBMessageOptionPanel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YPBMessageOptionPanel.h; sourceTree = "<group>"; };
+		BC5555061C50DCD300412F7F /* YPBMessageOptionPanel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YPBMessageOptionPanel.m; sourceTree = "<group>"; };
 		BC5704C31C45F74800DEFAB6 /* AlipayManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AlipayManager.h; sourceTree = "<group>"; };
 		BC5704C41C45F74800DEFAB6 /* AlipayManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AlipayManager.m; sourceTree = "<group>"; };
 		BC5704C51C45F74800DEFAB6 /* AlipaySDK.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = AlipaySDK.bundle; sourceTree = "<group>"; };
@@ -772,6 +775,8 @@
 			children = (
 				BC22DE2B1C3D417500305F58 /* YPBContactCell.h */,
 				BC22DE2C1C3D417500305F58 /* YPBContactCell.m */,
+				BC5555051C50DCD300412F7F /* YPBMessageOptionPanel.h */,
+				BC5555061C50DCD300412F7F /* YPBMessageOptionPanel.m */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -1405,6 +1410,7 @@
 				BC5A6E6C1C32561F006AD77A /* YPBMineFigureViewController.m in Sources */,
 				BC53B9C41C3BBEEA004252B1 /* QBAssetsCollectionViewLayout.m in Sources */,
 				BC22DE261C3D2ECF00305F58 /* YPBContactViewController.m in Sources */,
+				BC5555071C50DCD300412F7F /* YPBMessageOptionPanel.m in Sources */,
 				BC27422E1C3A65C700C98E6F /* YPBPersistentObject.m in Sources */,
 				BC31B7651C1BD8560043E7EB /* YPBRadioButton.m in Sources */,
 				BC5704E21C45F74800DEFAB6 /* DataVerifier.m in Sources */,

@@ -46,28 +46,30 @@ DefineLazyPropertyInitialization(YPBWeChatPayQueryOrderRequest, wechatPayOrderQu
 }
 
 - (UIViewController *)setupRootViewController {
+    
     YPBMineViewController *mineVC = [[YPBMineViewController alloc] initWithTitle:@"个人资料"];
     UINavigationController *mineNav = [[UINavigationController alloc] initWithRootViewController:mineVC];
-    mineNav.sideMenuItem = [YPBSideMenuItem itemWithTitle:nil image:nil delegate:mineVC];
+    YPBSideMenuItem *avatarSideMenuItem = [YPBSideMenuItem itemWithTitle:nil image:nil rootViewController:mineNav delegate:mineVC];
     
     YPBHomeViewController *homeVC = [[YPBHomeViewController alloc] initWithTitle:@"今日推荐"];
     UINavigationController *homeNav = [[UINavigationController alloc] initWithRootViewController:homeVC];
-    homeNav.sideMenuItem = [YPBSideMenuItem itemWithTitle:homeVC.title image:[UIImage imageNamed:@"side_menu_hot_icon"]];
+    YPBSideMenuItem *homeSideMenuItem = [YPBSideMenuItem itemWithTitle:homeVC.title image:[UIImage imageNamed:@"side_menu_hot_icon"] rootViewController:homeNav];
     
     YPBVIPCenterViewController *vipCenterVC = [[YPBVIPCenterViewController alloc] initWithTitle:@"VIP服务区"];
     UINavigationController *vipCenterNav = [[UINavigationController alloc] initWithRootViewController:vipCenterVC];
-    vipCenterNav.sideMenuItem = [YPBSideMenuItem itemWithTitle:vipCenterVC.title image:[UIImage imageNamed:@"side_menu_vip_icon"]];
+    YPBSideMenuItem *vipSideMenuItem = [YPBSideMenuItem itemWithTitle:vipCenterVC.title image:[UIImage imageNamed:@"side_menu_vip_icon"] rootViewController:vipCenterNav];
     
     YPBContactViewController *contactVC = [[YPBContactViewController alloc] initWithTitle:@"私密聊"];
     UINavigationController *contactNav = [[UINavigationController alloc] initWithRootViewController:contactVC];
-    contactNav.sideMenuItem = [YPBSideMenuItem itemWithTitle:contactVC.title image:[UIImage imageNamed:@"side_menu_message_icon"] delegate:contactVC];
+    YPBSideMenuItem *contactSideMenuItem = [YPBSideMenuItem itemWithTitle:contactVC.title image:[UIImage imageNamed:@"side_menu_message_icon"] rootViewController:contactNav delegate:contactVC];
+    
+    YPBSideMenuItem *mineSideMenuItem = [YPBSideMenuItem itemWithTitle:@"个人资料" image:[UIImage imageNamed:@"side_menu_mine_icon"] rootViewController:mineNav];
     
     YPBSettingViewController *settingVC = [[YPBSettingViewController alloc] initWithTitle:@"设置"];
     UINavigationController *settingNav = [[UINavigationController alloc] initWithRootViewController:settingVC];
-    settingNav.sideMenuItem = [YPBSideMenuItem itemWithTitle:settingVC.title image:[UIImage imageNamed:@"side_menu_setting_icon"]];
+    YPBSideMenuItem *settingSideMenuItem = [YPBSideMenuItem itemWithTitle:settingVC.title image:[UIImage imageNamed:@"side_menu_setting_icon"] rootViewController:settingNav];
     
-    
-    YPBSideMenuViewController *sideMenuVC = [[YPBSideMenuViewController alloc] initWithViewControllers:@[mineNav,homeNav,vipCenterNav,contactNav,settingNav]];
+    YPBSideMenuViewController *sideMenuVC = [[YPBSideMenuViewController alloc] initWithSideMenuItems:@[avatarSideMenuItem, homeSideMenuItem, vipSideMenuItem, contactSideMenuItem, mineSideMenuItem, settingSideMenuItem]];
     
     RESideMenu *sideMenu = [[RESideMenu alloc] initWithContentViewController:homeNav
                                                       leftMenuViewController:sideMenuVC

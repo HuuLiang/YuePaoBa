@@ -73,6 +73,15 @@ DefineLazyPropertyInitialization(NSMutableArray, chatMessages)
     return self;
 }
 
+- (void)sendMessage:(NSString *)message withSender:(NSString *)sender {
+    if (self.userId.length == 0 || ![YPBUser currentUser].isRegistered) {
+        return ;
+    }
+    
+    NSString *receiver = [sender isEqualToString:self.userId] ? [YPBUser currentUser].userId : self.userId;
+    [self addTextMessage:message withSender:sender receiver:receiver dateTime:[YPBUtil currentDateString]];
+}
+
 - (NSString *)userId {
     return _user ? _user.userId : _contact.userId;
 }
@@ -214,10 +223,12 @@ DefineLazyPropertyInitialization(NSMutableArray, chatMessages)
     [chatMessage persist];
     [self.chatMessages addObject:chatMessage];
     
-    XHMessage *xhMsg = [[XHMessage alloc] initWithText:chatMessage.msg
-                                                sender:chatMessage.sendUserId
-                                             timestamp:[YPBUtil dateFromString:chatMessage.msgTime]];
-    [self addMessage:xhMsg];
+    if (self.isViewLoaded) {
+        XHMessage *xhMsg = [[XHMessage alloc] initWithText:chatMessage.msg
+                                                    sender:chatMessage.sendUserId
+                                                 timestamp:[YPBUtil dateFromString:chatMessage.msgTime]];
+        [self addMessage:xhMsg];
+    }
 }
 
 - (void)didReceiveMemoryWarning {

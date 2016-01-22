@@ -20,13 +20,25 @@
 
 //DefineLazyPropertyInitialization(NSMutableDictionary, cells)
 
-- (instancetype)initWithViewControllers:(NSArray<UIViewController *> *)viewControllers {
-    self = [super init];
+//- (instancetype)initWithViewControllers:(NSArray<UIViewController *> *)viewControllers {
+//    self = [super init];
+//    if (self) {
+//        _viewControllers = viewControllers;
+//        
+//        [viewControllers enumerateObjectsUsingBlock:^(UIViewController * _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
+//            obj.sideMenuVC = self;
+//        }];
+//    }
+//    return self;
+//}
+
+- (instancetype)initWithSideMenuItems:(NSArray<YPBSideMenuItem *> *)sideMenuItems {
+    self = [self init];
     if (self) {
-        _viewControllers = viewControllers;
+        _sideMenuItems = sideMenuItems;
         
-        [viewControllers enumerateObjectsUsingBlock:^(UIViewController * _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
-            obj.sideMenuVC = self;
+        [sideMenuItems enumerateObjectsUsingBlock:^(YPBSideMenuItem * _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
+            obj.rootViewController.sideMenuVC = self;
         }];
     }
     return self;
@@ -51,42 +63,42 @@
 
 - (void)initLayoutCells {
     
-    [self.viewControllers enumerateObjectsUsingBlock:^(UIViewController * _Nonnull viewController, NSUInteger idx, BOOL * _Nonnull stop) {
+    [self.sideMenuItems enumerateObjectsUsingBlock:^(YPBSideMenuItem * _Nonnull sideMenuItem, NSUInteger idx, BOOL * _Nonnull stop) {
         YPBSideMenuCell *cell;
-        if (viewController.sideMenuItem.title || viewController.sideMenuItem.image) {
-            cell = [[YPBSideMenuCell alloc] initWithTitle:viewController.sideMenuItem.title iconImage:viewController.sideMenuItem.image];
+        if (sideMenuItem.title || sideMenuItem.image) {
+            cell = [[YPBSideMenuCell alloc] initWithTitle:sideMenuItem.title iconImage:sideMenuItem.image];
         } else {
             cell = [[YPBSideMenuCell alloc] init];
         }
         
-        if (viewController.sideMenuItem.delegate
-            && [viewController.sideMenuItem.delegate respondsToSelector:@selector(sideMenuController:willAddToSideMenuCell:)]) {
-            [viewController.sideMenuItem.delegate sideMenuController:self willAddToSideMenuCell:cell];
+        if (sideMenuItem.delegate
+            && [sideMenuItem.delegate respondsToSelector:@selector(sideMenuController:willAddToSideMenuCell:)]) {
+            [sideMenuItem.delegate sideMenuController:self willAddToSideMenuCell:cell];
         }
         
-        CGFloat cellHeight = self.sideMenuItem.height;
+        CGFloat cellHeight = sideMenuItem.height;
         if (cellHeight == 0) {
             cellHeight = kScreenHeight * 0.1;
         }
         
-        if (viewController.sideMenuItem.delegate
-            && [viewController.sideMenuItem.delegate respondsToSelector:@selector(sideMenuItemHeight)]) {
-            cellHeight = [viewController.sideMenuItem.delegate sideMenuItemHeight];
+        if (sideMenuItem.delegate
+            && [sideMenuItem.delegate respondsToSelector:@selector(sideMenuItemHeight)]) {
+            cellHeight = [sideMenuItem.delegate sideMenuItemHeight];
         }
         [self setLayoutCell:cell cellHeight:cellHeight inRow:idx andSection:0];
     }];
     
 }
 
-- (NSUInteger)selectedIndex {
-    return [self.viewControllers indexOfObject:self.sideMenuViewController.contentViewController];
-}
-
-- (void)setSelectedIndex:(NSUInteger)selectedIndex {
-    if (selectedIndex < self.viewControllers.count) {
-        [self.sideMenuViewController setContentViewController:self.viewControllers[selectedIndex] animated:YES];
-    }
-}
+//- (NSUInteger)selectedIndex {
+//    return [self.viewControllers indexOfObject:self.sideMenuViewController.contentViewController];
+//}
+//
+//- (void)setSelectedIndex:(NSUInteger)selectedIndex {
+//    if (selectedIndex < self.viewControllers.count) {
+//        [self.sideMenuViewController setContentViewController:self.viewControllers[selectedIndex] animated:YES];
+//    }
+//}
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
@@ -132,28 +144,30 @@
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
     
-    UIViewController *viewController = self.viewControllers[indexPath.row];
-    if (viewController.sideMenuItem.delegate
-        && [viewController.sideMenuItem.delegate respondsToSelector:@selector(sideMenuController:shouldPresentContentViewController:)]) {
-        if (![viewController.sideMenuItem.delegate sideMenuController:self shouldPresentContentViewController:viewController]) {
+    YPBSideMenuItem *sideMenuItem = self.sideMenuItems[indexPath.row];
+    
+    if (sideMenuItem.delegate
+        && [sideMenuItem.delegate respondsToSelector:@selector(sideMenuController:shouldPresentContentViewController:)]) {
+        if (![sideMenuItem.delegate sideMenuController:self shouldPresentContentViewController:sideMenuItem.rootViewController]) {
             return ;
         }
     }
     
     [self.sideMenuViewController hideMenuViewController];
-    [self.sideMenuViewController setContentViewController:viewController animated:YES];
+    [self.sideMenuViewController setContentViewController:sideMenuItem.rootViewController animated:YES];
 }
 
 #pragma mark - RESideMenuDelegate
 
 - (void)sideMenu:(RESideMenu *)sideMenu willShowMenuViewController:(UIViewController *)menuViewController {
     [self.allCells enumerateKeysAndObjectsUsingBlock:^(NSIndexPath * _Nonnull key, UITableViewCell * _Nonnull obj, BOOL * _Nonnull stop) {
-        UIViewController *viewController = self.viewControllers[key.row];
-        if (viewController.sideMenuItem.delegate
-            && [viewController.sideMenuItem.delegate respondsToSelector:@selector(badgeValueOfSideMenuItem:)]) {
+        YPBSideMenuItem *sideMenuItem = self.sideMenuItems[key.row];
+        if (sideMenuItem.delegate
+            && [sideMenuItem.delegate respondsToSelector:@selector(badgeValueOfSideMenuItem:)]) {
             YPBSideMenuCell *cell = (YPBSideMenuCell *)obj;
-            cell.badgeValue = [viewController.sideMenuItem.delegate badgeValueOfSideMenuItem:viewController.sideMenuItem];
+            cell.badgeValue = [sideMenuItem.delegate badgeValueOfSideMenuItem:sideMenuItem];
         }
+        
     }];
 }
 @end

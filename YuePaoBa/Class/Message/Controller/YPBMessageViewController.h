@@ -18,4 +18,6 @@
 + (instancetype)showMessageWithUser:(YPBUser *)user inViewController:(UIViewController *)viewController;
 + (instancetype)showMessageWithContact:(YPBContact *)contact inViewController:(UIViewController *)viewController;
 
+- (void)sendMessage:(NSString *)message withSender:(NSString *)sender;
+
 @end
