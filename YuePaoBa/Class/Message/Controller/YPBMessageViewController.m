@@ -13,12 +13,16 @@
 #import "YPBVIPEntranceView.h"
 #import "YPBVIPPriviledgeViewController.h"
 
+static const void *kMessageCellBottomLabelAssociatedKey = &kMessageCellBottomLabelAssociatedKey;
+
 @interface YPBMessageViewController ()
 {
 
 }
 @property (nonatomic,readonly) NSString *userId;
 @property (nonatomic,readonly) NSString *logoUrl;
+@property (nonatomic,readonly) NSString *nickName;
+
 @property (nonatomic,retain) NSMutableArray<YPBChatMessage *> *chatMessages;
 @end
 
@@ -88,6 +92,10 @@ DefineLazyPropertyInitialization(NSMutableArray, chatMessages)
 
 - (NSString *)logoUrl {
     return _user ? _user.logoUrl : _contact.logoUrl;
+}
+
+- (NSString *)nickName {
+    return _user ? _user.nickName : _contact.nickName;
 }
 
 - (void)viewDidLoad {
@@ -228,6 +236,11 @@ DefineLazyPropertyInitialization(NSMutableArray, chatMessages)
                                                     sender:chatMessage.sendUserId
                                                  timestamp:[YPBUtil dateFromString:chatMessage.msgTime]];
         [self addMessage:xhMsg];
+        
+        if (self.chatMessages.count > 1) {
+            [self.messageTableView reloadRowsAtIndexPaths:@[[NSIndexPath indexPathForRow:self.chatMessages.count-2 inSection:0]]
+                                         withRowAnimation:UITableViewRowAnimationNone];
+        }
     }
 }
 
@@ -255,11 +268,13 @@ DefineLazyPropertyInitialization(NSMutableArray, chatMessages)
 
 - (void)configureCell:(XHMessageTableViewCell *)cell atIndexPath:(NSIndexPath *)indexPath {
     XHMessage *message = self.messages[indexPath.row];
-    if ([message.sender isEqualToString:[YPBUser currentUser].userId]) {
+    BOOL isCurrentUser = [message.sender isEqualToString:[YPBUser currentUser].userId];
+    if (isCurrentUser) {
         [cell.avatarButton sd_setImageWithURL:[NSURL URLWithString:[YPBUser currentUser].logoUrl]
                                      forState:UIControlStateNormal
                              placeholderImage:[UIImage imageNamed:@"avatar_placeholder"]];
         [cell.avatarButton bk_removeEventHandlersForControlEvents:UIControlEventTouchUpInside];
+        cell.userNameLabel.text = [YPBUser currentUser].nickName;
     } else {
         [cell.avatarButton sd_setImageWithURL:[NSURL URLWithString:self.logoUrl]
                                      forState:UIControlStateNormal
@@ -270,10 +285,42 @@ DefineLazyPropertyInitialization(NSMutableArray, chatMessages)
             YPBUserDetailViewController *detailVC = [[YPBUserDetailViewController alloc] initWithUserId:self.userId];
             [self.navigationController pushViewController:detailVC animated:YES];
         } forControlEvents:UIControlEventTouchUpInside];
+        cell.userNameLabel.text = self.nickName;
     }
     
     cell.avatarButton.layer.cornerRadius = CGRectGetWidth(cell.avatarButton.frame) / 2;
     cell.avatarButton.layer.masksToBounds = YES;
+    
+    UILabel *bottomLabel = objc_getAssociatedObject(cell, kMessageCellBottomLabelAssociatedKey);
+    if (indexPath.row == self.chatMessages.count - 1 && isCurrentUser) {
+        if (!bottomLabel) {
+            bottomLabel = [[UILabel alloc] init];
+            objc_setAssociatedObject(cell, kMessageCellBottomLabelAssociatedKey, bottomLabel, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
+            
+            bottomLabel.font = [UIFont systemFontOfSize:12.];
+            [cell addSubview:bottomLabel];
+            {
+                [bottomLabel mas_makeConstraints:^(MASConstraintMaker *make) {
+                    make.right.equalTo(cell.messageBubbleView.bubbleImageView);
+                    make.top.equalTo(cell.messageBubbleView.bubbleImageView.mas_bottom);
+                }];
+            }
+        }
+        bottomLabel.text = @"请等待ta的回复...";
+    } else {
+        bottomLabel.text = nil;
+    }
+}
+
+- (BOOL)shouldDisplayTimestampForRowAtIndexPath:(NSIndexPath *)indexPath {
+    XHMessage *previousMessage = indexPath.row > 0 ? self.messages[indexPath.row-1] : nil;
+    if (previousMessage) {
+        XHMessage *currentMessage = self.messages[indexPath.row];
+        if ([currentMessage.timestamp isEqualToDateIgnoringSecond:previousMessage.timestamp]) {
+            return NO;
+        }
+    }
+    return YES;
 }
 //- (BOOL)shouldLoadMoreMessagesScrollToTop {
 //    return YES;

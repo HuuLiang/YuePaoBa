@@ -308,7 +308,7 @@ DefineLazyPropertyInitialization(NSMutableArray, barrageLabels)
     label.text = barrage;
     label.textColor = [UIColor whiteColor];
     label.font = [UIFont systemFontOfSize:16.];
-    [self.view addSubview:label];
+    [self.view insertSubview:label belowSubview:_footerView];
     {
         
         [label mas_makeConstraints:^(MASConstraintMaker *make) {
