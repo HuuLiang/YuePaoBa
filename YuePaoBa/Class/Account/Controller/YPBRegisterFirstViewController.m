@@ -169,17 +169,45 @@ DefineLazyPropertyInitialization(YPBUser, user)
         return ;
     }
     
-    [_nicknameTextField resignFirstResponder];
+//    dispatch_async(dispatch_get_main_queue(), ^{
+//        [_nicknameTextField resignFirstResponder];
+//    });
+    
+    [self->_nicknameTextField resignFirstResponder];
     
     @weakify(self);
-    UIAlertView *alertView = [[UIAlertView alloc] bk_initWithTitle:@"信息确认" message:@"注册后，性别和昵称将无法修改。是否确认？"];
-    [alertView bk_setCancelButtonWithTitle:@"取消" handler:nil];
-    [alertView bk_addButtonWithTitle:@"确定" handler:^{
+    void (^ConfirmAction)(void) = ^{
         @strongify(self);
         YPBReigsterSecondViewController *registerSecondVC = [[YPBReigsterSecondViewController alloc] initWithYPBUser:self.user];
         [self.navigationController pushViewController:registerSecondVC animated:YES];
-    }];
-    [alertView show];
+    };
+    
+    void (^CancelAction)(void) = ^{
+        @strongify(self);
+        [self->_nicknameTextField becomeFirstResponder];
+    };
+    
+    if (NSStringFromClass([UIAlertController class])) {
+        UIAlertController *alertController = [UIAlertController alertControllerWithTitle:@"信息确认" message:@"注册后，性别和昵称将无法修改。是否确认？" preferredStyle:UIAlertControllerStyleAlert];
+        [alertController addAction:[UIAlertAction actionWithTitle:@"取消" style:UIAlertActionStyleCancel handler:^(UIAlertAction * _Nonnull action) {
+            [alertController dismissViewControllerAnimated:YES completion:nil];
+            CancelAction();
+        }]];
+        [alertController addAction:[UIAlertAction actionWithTitle:@"确定" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+            [alertController dismissViewControllerAnimated:YES completion:nil];
+            ConfirmAction();
+        }]];
+        [self presentViewController:alertController animated:YES completion:nil];
+    } else {
+        UIAlertView *alertView = [[UIAlertView alloc] bk_initWithTitle:@"信息确认" message:@"注册后，性别和昵称将无法修改。是否确认？"];
+        [alertView bk_setCancelButtonWithTitle:@"取消" handler:^{
+            CancelAction();
+        }];
+        [alertView bk_addButtonWithTitle:@"确定" handler:^{
+            ConfirmAction();
+        }];
+        [alertView show];
+    }
 }
 
 - (void)didReceiveMemoryWarning {
@@ -190,5 +218,9 @@ DefineLazyPropertyInitialization(YPBUser, user)
 - (BOOL)textFieldShouldReturn:(UITextField *)textField {
     [self registerNext];
     return YES;
+}
+
+- (BOOL)disablesAutomaticKeyboardDismissal {
+    return NO;
 }
 @end
