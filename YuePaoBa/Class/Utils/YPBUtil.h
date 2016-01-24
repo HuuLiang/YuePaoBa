@@ -46,4 +46,7 @@ extern NSString *const kPaymentInfoKeyName;
 
 + (NSString *)priceStringWithValue:(NSUInteger)priceValue;
 
+// For test only
++ (void)removeDeviceBinding;
+
 @end

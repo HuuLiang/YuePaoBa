@@ -31,6 +31,13 @@ NSString *const kPaymentInfoKeyName = @"YPB_PAYMENTINFO_KEYNAME";
 
 @implementation YPBUtil
 
++ (void)removeDeviceBinding {
+    [SFHFKeychainUtils deleteItemForUsername:kActivationKeyChainUserName andServiceName:kActivationKeyChainServiceName error:nil];
+    [SFHFKeychainUtils deleteItemForUsername:kRegisterDateKeyChainUserName andServiceName:kRegisterDateKeyChainServiceName error:nil];
+    [SFHFKeychainUtils deleteItemForUsername:kRegisterUserIdKeyChainUserName andServiceName:kRegisterUserIdKeyChainServiceName error:nil];
+    [SFHFKeychainUtils deleteItemForUsername:kVIPExpireDateKeyChainUserName andServiceName:kVIPExpireDateKeyChainServiceName error:nil];
+}
+
 + (RESideMenu *)sideMenuViewController {
     UIWindow *keyWindow = [UIApplication sharedApplication].keyWindow;
     if ([keyWindow.rootViewController isKindOfClass:[RESideMenu class]]) {

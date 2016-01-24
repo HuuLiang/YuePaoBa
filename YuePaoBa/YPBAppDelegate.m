@@ -25,6 +25,8 @@
 #import "WeChatPayManager.h"
 #import "AlipayManager.h"
 #import <AlipaySDK/AlipaySDK.h>
+#import "MobClick.h"
+#import <KSCrash/KSCrashInstallationStandard.h>
 
 @interface YPBAppDelegate () <WXApiDelegate>
 @property (nonatomic,retain) YPBWeChatPayQueryOrderRequest *wechatPayOrderQueryRequest;
@@ -124,10 +126,23 @@ DefineLazyPropertyInitialization(YPBWeChatPayQueryOrderRequest, wechatPayOrderQu
                                } error:nil];
 }
 
+- (void)setupMobStatistics {
+#ifdef DEBUG
+    [MobClick setLogEnabled:YES];
+#endif
+    NSString *bundleVersion = [NSBundle mainBundle].infoDictionary[@"CFBundleShortVersionString"];
+    if (bundleVersion) {
+        [MobClick setAppVersion:bundleVersion];
+    }
+    [MobClick startWithAppkey:YPB_UMENG_APP_ID reportPolicy:BATCH channelId:YPB_CHANNEL_NO];
+    
+}
+
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     // Override point for customization after application launch.
     [[YPBErrorHandler sharedHandler] initialize];
     [self setupCommonStyles];
+    [self setupMobStatistics];
     [YPBUploadManager registerWithSecretKey:YPB_UPLOAD_SECRET_KEY accessKey:YPB_UPLOAD_ACCESS_KEY scope:YPB_UPLOAD_SCOPE];
     
     if ([YPBUtil deviceRegisteredUserId]) {
@@ -155,6 +170,11 @@ DefineLazyPropertyInitialization(YPBWeChatPayQueryOrderRequest, wechatPayOrderQu
     
     [[YPBPaymentModel sharedModel] startRetryingToCommitUnprocessedOrders];
     [[YPBUserVIPUpgradeModel sharedModel] startRetryingToSynchronizeVIPInfos];
+    
+    KSCrashInstallationStandard* installation = [KSCrashInstallationStandard sharedInstance];
+    installation.url = [NSURL URLWithString:[NSString stringWithFormat:@"https://collector.bughd.com/kscrash?key=%@", YPB_KSCRASH_APP_ID]];
+    [installation install];
+    [installation sendAllReportsWithCompletion:nil];
     return YES;
 }
 
