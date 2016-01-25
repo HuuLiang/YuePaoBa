@@ -150,7 +150,7 @@ NSString *const kPaymentInfoKeyName = @"YPB_PAYMENTINFO_KEYNAME";
 }
 
 + (BOOL)isVIP {
-    return [YPBUser currentUser].isVip || [self vipExpireDate].length != 0;
+    return [YPBUser currentUser].isVip || [self vipExpireDate].length != 0 || [YPBSystemConfig sharedConfig].vipPointInfo.length == 0;
 }
 
 + (NSString *)deviceName {

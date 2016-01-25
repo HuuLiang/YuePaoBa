@@ -198,18 +198,21 @@ DefineLazyPropertyInitialization(YPBUserPhotoDeleteModel, photoDeleteModel)
     
     [self setHeaderHeight:15 inSection:++section];
     
-    _vipCell = [[YPBTableViewCell alloc] initWithImage:[UIImage imageNamed:@"vip_icon"] title:@"开通VIP"];
-    _vipCell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
-    _vipCell.iconImageView.contentMode = UIViewContentModeCenter;
-    [self setLayoutCell:_vipCell inRow:0 andSection:section];
+    NSUInteger row = 0;
+    if ([YPBSystemConfig sharedConfig].vipPointInfo.length > 0) {
+        _vipCell = [[YPBTableViewCell alloc] initWithImage:[UIImage imageNamed:@"vip_icon"] title:@"开通VIP"];
+        _vipCell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
+        _vipCell.iconImageView.contentMode = UIViewContentModeCenter;
+        [self setLayoutCell:_vipCell inRow:row++ andSection:section];
+    }
     
     _likeCell = [[YPBTableViewCell alloc] initWithImage:[UIImage imageNamed:@"like_icon"] title:@"？人喜欢了你"];
     _likeCell.selectionStyle = UITableViewCellSelectionStyleNone;
-    [self setLayoutCell:_likeCell inRow:1 andSection:section];
+    [self setLayoutCell:_likeCell inRow:row++ andSection:section];
     
     [self setHeaderHeight:15 inSection:++section];
     
-    NSUInteger row = 0;
+    row = 0;
     _genderCell = [[YPBTableViewCell alloc] initWithImage:[UIImage imageNamed:@"female_icon"] title:@"性别：??"];
     _genderCell.selectionStyle = UITableViewCellSelectionStyleNone;
     [self setLayoutCell:_genderCell inRow:row++ andSection:section];

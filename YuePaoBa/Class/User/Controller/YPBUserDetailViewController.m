@@ -85,7 +85,7 @@ DefineLazyPropertyInitialization(YPBUserAccessModel, userAccessModel)
 //
 //        }
         if (cell == self->_wechatCell) {
-            if ([YPBUser currentUser].isVip) {
+            if ([YPBUtil isVIP]) {
                 if (self.user.isRegistered) {
                     YPBMessageViewController *messageVC = [YPBMessageViewController showMessageWithUser:self.user inViewController:self];
                     if (self.user.weixinNum.length > 0) {
