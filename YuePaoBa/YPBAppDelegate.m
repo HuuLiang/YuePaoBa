@@ -145,6 +145,11 @@ DefineLazyPropertyInitialization(YPBWeChatPayQueryOrderRequest, wechatPayOrderQu
     [self setupMobStatistics];
     [YPBUploadManager registerWithSecretKey:YPB_UPLOAD_SECRET_KEY accessKey:YPB_UPLOAD_ACCESS_KEY scope:YPB_UPLOAD_SCOPE];
     
+    KSCrashInstallationStandard* installation = [KSCrashInstallationStandard sharedInstance];
+    installation.url = [NSURL URLWithString:[NSString stringWithFormat:@"https://collector.bughd.com/kscrash?key=%@", YPB_KSCRASH_APP_ID]];
+    [installation install];
+    [installation sendAllReportsWithCompletion:nil];
+    
     if ([YPBUtil deviceRegisteredUserId]) {
         [self notifyUserLogin];
     } else {
@@ -170,11 +175,6 @@ DefineLazyPropertyInitialization(YPBWeChatPayQueryOrderRequest, wechatPayOrderQu
     
     [[YPBPaymentModel sharedModel] startRetryingToCommitUnprocessedOrders];
     [[YPBUserVIPUpgradeModel sharedModel] startRetryingToSynchronizeVIPInfos];
-    
-    KSCrashInstallationStandard* installation = [KSCrashInstallationStandard sharedInstance];
-    installation.url = [NSURL URLWithString:[NSString stringWithFormat:@"https://collector.bughd.com/kscrash?key=%@", YPB_KSCRASH_APP_ID]];
-    [installation install];
-    [installation sendAllReportsWithCompletion:nil];
     return YES;
 }
 
