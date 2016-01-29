@@ -2,93 +2,98 @@
 //  YPBLoginViewController.m
 //  YuePaoBa
 //
-//  Created by Sean Yue on 15/12/12.
-//  Copyright © 2015年 iqu8. All rights reserved.
+//  Created by Sean Yue on 16/1/28.
+//  Copyright © 2016年 iqu8. All rights reserved.
 //
 
 #import "YPBLoginViewController.h"
 #import "YPBRegisterFirstViewController.h"
-#import "YPBActionButton.h"
+#import "YPBImageIndicatorView.h"
 
-static NSString *const kLayoutCellReusableIdentifier = @"LayoutCellReusableIdentifier";
-static const CGFloat kSpacing = 1;
-
-@interface YPBLoginViewController () <UICollectionViewDataSource,UICollectionViewDelegateFlowLayout>
+@interface YPBLoginViewController () <UIScrollViewDelegate>
 {
-    UICollectionView *_layoutCollectionView;
+    UIScrollView *_imageScrollView;
+    YPBImageIndicatorView *_indicatorView;
 }
-@property (nonatomic,retain) NSMutableArray<UIView *> *maskViews;
-@property (nonatomic,retain) NSTimer *timer;
+@property (nonatomic,retain,readonly) NSArray<NSString *> *imageNames;
+@property (nonatomic,retain) NSMutableArray<UIImageView *> *imageViews;
 @end
 
 @implementation YPBLoginViewController
+@synthesize imageNames = _imageNames;
 
-DefineLazyPropertyInitialization(NSMutableArray, maskViews)
+DefineLazyPropertyInitialization(NSMutableArray, imageViews)
 
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
-    self.navigationController.navigationBarHidden = YES;
-    self.automaticallyAdjustsScrollViewInsets = NO;
+    _imageScrollView = [[UIScrollView alloc] initWithFrame:self.view.bounds];
+    _imageScrollView.pagingEnabled = YES;
+    _imageScrollView.showsHorizontalScrollIndicator = NO;
+    _imageScrollView.delegate = self;
+    [self.view addSubview:_imageScrollView];
     
-    UICollectionViewFlowLayout *layout = [[UICollectionViewFlowLayout alloc] init];
-    layout.minimumInteritemSpacing = kSpacing;
-    layout.minimumLineSpacing = kSpacing;
-    
-    _layoutCollectionView = [[UICollectionView alloc] initWithFrame:CGRectZero collectionViewLayout:layout];
-    _layoutCollectionView.backgroundColor = [UIColor whiteColor];
-    _layoutCollectionView.delegate = self;
-    _layoutCollectionView.dataSource = self;
-    [_layoutCollectionView registerClass:[UICollectionViewCell class] forCellWithReuseIdentifier:kLayoutCellReusableIdentifier];
-    [self.view addSubview:_layoutCollectionView];
-    {
-        [_layoutCollectionView mas_makeConstraints:^(MASConstraintMaker *make) {
-            make.edges.equalTo(self.view).insets(UIEdgeInsetsMake(0, 0, kScreenHeight*0.1, 0));
-        }];
-    }
-    
-    @weakify(self);
-    YPBActionButton *loginButton = [[YPBActionButton alloc] initWithTitle:@"进   入" action:^(id sender) {
-        @strongify(self);
+    CGRect imageFrame = _imageScrollView.bounds;
+    [self.imageNames enumerateObjectsUsingBlock:^(NSString * _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
+        NSString *imagePath = [[NSBundle mainBundle] pathForResource:obj ofType:@"png"];
+        UIImage *image = [UIImage imageWithContentsOfFile:imagePath];
+        UIImageView *imageView = [[UIImageView alloc] initWithImage:image];
+        imageView.frame = CGRectOffset(imageFrame, CGRectGetWidth(imageFrame)*idx, 0);
+        imageView.contentMode = UIViewContentModeScaleAspectFill;
+        [_imageScrollView addSubview:imageView];
+        [self.imageViews addObject:imageView];
         
-        YPBRegisterFirstViewController *registerFirstVC = [[YPBRegisterFirstViewController alloc] init];
-        registerFirstVC.rootVCHasSideMenu = NO;
-        
-        UINavigationController *navVC = [[UINavigationController alloc] initWithRootViewController:registerFirstVC];
-        [self presentViewController:navVC animated:YES completion:nil];
+        if (idx == self.imageNames.count - 1) {
+            UIButton *enterButton = [[UIButton alloc] init];
+            [enterButton setTitle:@"点击进入" forState:UIControlStateNormal];
+            [enterButton setBackgroundImage:[UIImage imageWithColor:[UIColor colorWithHexString:@"#3eb8b4"]] forState:UIControlStateNormal];
+            enterButton.layer.cornerRadius = 22;
+            enterButton.layer.masksToBounds = YES;
+            [imageView addSubview:enterButton];
+            {
+                [enterButton mas_makeConstraints:^(MASConstraintMaker *make) {
+                    make.centerX.equalTo(imageView);
+                    make.width.mas_equalTo(150);
+                    make.height.mas_equalTo(enterButton.layer.cornerRadius*2);
+                    make.centerY.equalTo(imageView).multipliedBy(1.5);
+                }];
+            }
+            
+            imageView.userInteractionEnabled = YES;
+            @weakify(self);
+            [enterButton bk_addEventHandler:^(id sender) {
+                @strongify(self);
+                YPBRegisterFirstViewController *registerFirstVC = [[YPBRegisterFirstViewController alloc] init];
+                UINavigationController *registerFirstNav = [[UINavigationController alloc] initWithRootViewController:registerFirstVC];
+                registerFirstVC.rootVCHasSideMenu = NO;
+                [self presentViewController:registerFirstNav animated:YES completion:nil];
+            } forControlEvents:UIControlEventTouchUpInside];
+        }
     }];
-    [self.view addSubview:loginButton];
+    _imageScrollView.contentSize = CGSizeMake(imageFrame.size.width*self.imageViews.count, imageFrame.size.height);
+    
+    _indicatorView = [[YPBImageIndicatorView alloc] initWithNumberOfIndicators:self.imageNames.count];
+    [self.view addSubview:_indicatorView];
     {
-        [loginButton mas_makeConstraints:^(MASConstraintMaker *make) {
-            make.left.right.bottom.equalTo(self.view);
-            make.height.mas_equalTo(kScreenHeight*0.1);
+        [_indicatorView mas_makeConstraints:^(MASConstraintMaker *make) {
+            make.centerY.equalTo(self.view).multipliedBy(1.8);
+            make.centerX.equalTo(self.view);
         }];
     }
 }
 
-- (void)viewDidAppear:(BOOL)animated {
-    [super viewDidAppear:animated];
+- (NSArray<NSString *> *)imageNames {
+    if (_imageNames) {
+        return _imageNames;
+    }
+    
+    _imageNames = @[@"login1", @"login2", @"login3"];
+    return _imageNames;
+}
 
-    @weakify(self);
-    self.timer = [NSTimer bk_scheduledTimerWithTimeInterval:1 block:^(NSTimer *timer) {
-        @strongify(self);
-        static NSUInteger currentIndex = 0;
-        
-        const NSUInteger indices[] = {4,5,8,7};
-        const NSUInteger showIndex = indices[currentIndex];
-        [self.maskViews enumerateObjectsUsingBlock:^(UIView * _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
-            if (idx == showIndex) {
-                obj.hidden = YES;
-            } else {
-                obj.hidden = NO;
-            }
-        }];
-        ++currentIndex;
-        if (currentIndex == sizeof(indices) / sizeof(indices[0])) {
-            currentIndex = 0;
-        }
-    } repeats:YES];
-    [self.timer fire];
+- (void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView {
+    NSUInteger page = scrollView.contentOffset.x / CGRectGetWidth(scrollView.bounds);
+    _indicatorView.selectedIndicator = page;
 }
 
 - (void)didReceiveMemoryWarning {
@@ -96,49 +101,4 @@ DefineLazyPropertyInitialization(NSMutableArray, maskViews)
     // Dispose of any resources that can be recreated.
 }
 
-#pragma mark - UICollectionViewDataSource,UICollectionViewDelegateFlowLayout
-
-- (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath {
-    UICollectionViewCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:kLayoutCellReusableIdentifier forIndexPath:indexPath];
-    
-    if (!cell.backgroundView) {
-        NSString *imageName = [NSString stringWithFormat:@"login_background%ld", indexPath.row+1];
-        UIImageView *backgroundImageView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:imageName]];
-        backgroundImageView.contentMode = UIViewContentModeScaleAspectFill;
-        backgroundImageView.clipsToBounds = YES;
-        cell.backgroundView = backgroundImageView;
-        
-        if (indexPath.row == 4) {
-            UIImageView *foreground = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"login_foreground"]];
-            [cell addSubview:foreground];
-            {
-                [foreground mas_makeConstraints:^(MASConstraintMaker *make) {
-                    make.center.equalTo(cell);
-                    make.size.mas_equalTo(CGSizeMake(77.5, 77.5));
-                }];
-            }
-        }
-        
-        UIView *maskView = [[UIView alloc] init];
-        [self.maskViews addObject:maskView];
-        maskView.backgroundColor = [UIColor colorWithWhite:0 alpha:0.5];
-        [cell addSubview:maskView];
-        {
-            [maskView mas_makeConstraints:^(MASConstraintMaker *make) {
-                make.edges.equalTo(cell);
-            }];
-        }
-    }
-    return cell;
-}
-
-- (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section {
-    return 12;
-}
-
-- (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout sizeForItemAtIndexPath:(NSIndexPath *)indexPath {
-    const CGFloat itemWidth = (collectionView.bounds.size.width - kSpacing * 2) / 3;
-    const CGFloat itemHeight = (collectionView.bounds.size.height - kSpacing * 3) / 4;
-    return CGSizeMake(itemWidth, itemHeight);
-}
 @end
