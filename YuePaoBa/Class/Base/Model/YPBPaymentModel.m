@@ -111,7 +111,8 @@ typedef void (^YPBPaymentCompletionHandler)(BOOL success);
                              @"versionNo":@(YPB_REST_APP_VERSION.integerValue),
                              @"status":statusDic[paymentInfo.paymentResult],
                              @"pV":YPB_REST_PV,
-                             @"payTime":paymentInfo.paymentTime};
+                             @"payTime":paymentInfo.paymentTime,
+                             @"notePayTimes":@([YPBUtil loginFrequency])};
     
     BOOL success = [super requestURLPath:YPB_PAYMENT_COMMIT_URL
                               withParams:params

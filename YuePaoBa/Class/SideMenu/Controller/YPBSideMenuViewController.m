@@ -8,6 +8,7 @@
 
 #import "YPBSideMenuViewController.h"
 #import "YPBSideMenuCell.h"
+#import "MobClick.h"
 
 @interface YPBSideMenuViewController ()
 {
@@ -170,4 +171,10 @@
         
     }];
 }
+
+- (void)sideMenu:(RESideMenu *)sideMenu didShowMenuViewController:(UIViewController *)menuViewController {
+    [MobClick event:@"YPB_VIEW_SIDE_MENU" attributes:@{@"userId":[YPBUser currentUser].userId ?: @"",
+                                                       @"loginTimes":@([YPBUtil loginFrequency]).stringValue}];
+}
+
 @end
