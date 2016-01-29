@@ -64,7 +64,6 @@
 		BC303D8E1C1FE8F70091093B /* YPBMessageCenter.m in Sources */ = {isa = PBXBuildFile; fileRef = BC303D8D1C1FE8F70091093B /* YPBMessageCenter.m */; };
 		BC31B75B1C1B2F540043E7EB /* YPBRegisterFirstViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BC31B7581C1B2F540043E7EB /* YPBRegisterFirstViewController.m */; };
 		BC31B75C1C1B2F540043E7EB /* YPBReigsterSecondViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BC31B75A1C1B2F540043E7EB /* YPBReigsterSecondViewController.m */; };
-		BC31B75F1C1B3A350043E7EB /* YPBLoginViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BC31B75E1C1B3A350043E7EB /* YPBLoginViewController.m */; };
 		BC31B7621C1BC2C20043E7EB /* YPBActionButton.m in Sources */ = {isa = PBXBuildFile; fileRef = BC31B7611C1BC2C20043E7EB /* YPBActionButton.m */; };
 		BC31B7651C1BD8560043E7EB /* YPBRadioButton.m in Sources */ = {isa = PBXBuildFile; fileRef = BC31B7641C1BD8560043E7EB /* YPBRadioButton.m */; };
 		BC31B7681C1BEC630043E7EB /* YPBRadioButtonGroup.m in Sources */ = {isa = PBXBuildFile; fileRef = BC31B7671C1BEC630043E7EB /* YPBRadioButtonGroup.m */; };
@@ -138,8 +137,13 @@
 		BC7114A51C1AC3CA00C5001A /* YPBBaseViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BC7114A41C1AC3CA00C5001A /* YPBBaseViewController.m */; };
 		BC7114AE1C1AD3DB00C5001A /* NSMutableDictionary+Safety.m in Sources */ = {isa = PBXBuildFile; fileRef = BC7114AD1C1AD3DB00C5001A /* NSMutableDictionary+Safety.m */; };
 		BC7114BC1C1AE87100C5001A /* YPBLayoutViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BC7114BB1C1AE87100C5001A /* YPBLayoutViewController.m */; };
+		BC9B3F5D1C5A1F060097EFBA /* YPBImageIndicatorView.m in Sources */ = {isa = PBXBuildFile; fileRef = BC9B3F5C1C5A1F060097EFBA /* YPBImageIndicatorView.m */; };
 		BCCD69221C40DC9A005EA26B /* YPBWebViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BCCD69211C40DC9A005EA26B /* YPBWebViewController.m */; };
 		BCCD69261C40DEA7005EA26B /* YPBFeedbackModel.m in Sources */ = {isa = PBXBuildFile; fileRef = BCCD69251C40DEA7005EA26B /* YPBFeedbackModel.m */; };
+		BCCE6C601C5A0F5D00095461 /* login1.png in Resources */ = {isa = PBXBuildFile; fileRef = BCCE6C5D1C5A0F5D00095461 /* login1.png */; };
+		BCCE6C611C5A0F5D00095461 /* login2.png in Resources */ = {isa = PBXBuildFile; fileRef = BCCE6C5E1C5A0F5D00095461 /* login2.png */; };
+		BCCE6C621C5A0F5D00095461 /* login3.png in Resources */ = {isa = PBXBuildFile; fileRef = BCCE6C5F1C5A0F5D00095461 /* login3.png */; };
+		BCCE6CBE1C5A109000095461 /* YPBLoginViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BCCE6CBD1C5A109000095461 /* YPBLoginViewController.m */; };
 		BCD15F0F1C1032C3002B6C5C /* UIViewController+YPBSideMenu.m in Sources */ = {isa = PBXBuildFile; fileRef = BCD15F0E1C1032C3002B6C5C /* UIViewController+YPBSideMenu.m */; };
 		BCD15F141C103AB7002B6C5C /* YPBMineViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BCD15F131C103AB6002B6C5C /* YPBMineViewController.m */; };
 		BCD15F1B1C104B31002B6C5C /* RACEXTRuntimeExtensions.m in Sources */ = {isa = PBXBuildFile; fileRef = BCD15F181C104B31002B6C5C /* RACEXTRuntimeExtensions.m */; };
@@ -285,8 +289,6 @@
 		BC31B7581C1B2F540043E7EB /* YPBRegisterFirstViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YPBRegisterFirstViewController.m; sourceTree = "<group>"; };
 		BC31B7591C1B2F540043E7EB /* YPBReigsterSecondViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YPBReigsterSecondViewController.h; sourceTree = "<group>"; };
 		BC31B75A1C1B2F540043E7EB /* YPBReigsterSecondViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YPBReigsterSecondViewController.m; sourceTree = "<group>"; };
-		BC31B75D1C1B3A350043E7EB /* YPBLoginViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YPBLoginViewController.h; sourceTree = "<group>"; };
-		BC31B75E1C1B3A350043E7EB /* YPBLoginViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YPBLoginViewController.m; sourceTree = "<group>"; };
 		BC31B7601C1BC2C20043E7EB /* YPBActionButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YPBActionButton.h; sourceTree = "<group>"; };
 		BC31B7611C1BC2C20043E7EB /* YPBActionButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YPBActionButton.m; sourceTree = "<group>"; };
 		BC31B7631C1BD8560043E7EB /* YPBRadioButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YPBRadioButton.h; sourceTree = "<group>"; };
@@ -433,10 +435,17 @@
 		BC7114AD1C1AD3DB00C5001A /* NSMutableDictionary+Safety.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSMutableDictionary+Safety.m"; sourceTree = "<group>"; };
 		BC7114BA1C1AE87100C5001A /* YPBLayoutViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YPBLayoutViewController.h; sourceTree = "<group>"; };
 		BC7114BB1C1AE87100C5001A /* YPBLayoutViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YPBLayoutViewController.m; sourceTree = "<group>"; };
+		BC9B3F5B1C5A1F060097EFBA /* YPBImageIndicatorView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YPBImageIndicatorView.h; sourceTree = "<group>"; };
+		BC9B3F5C1C5A1F060097EFBA /* YPBImageIndicatorView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YPBImageIndicatorView.m; sourceTree = "<group>"; };
 		BCCD69201C40DC9A005EA26B /* YPBWebViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YPBWebViewController.h; sourceTree = "<group>"; };
 		BCCD69211C40DC9A005EA26B /* YPBWebViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YPBWebViewController.m; sourceTree = "<group>"; };
 		BCCD69241C40DEA7005EA26B /* YPBFeedbackModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YPBFeedbackModel.h; sourceTree = "<group>"; };
 		BCCD69251C40DEA7005EA26B /* YPBFeedbackModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YPBFeedbackModel.m; sourceTree = "<group>"; };
+		BCCE6C5D1C5A0F5D00095461 /* login1.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = login1.png; sourceTree = "<group>"; };
+		BCCE6C5E1C5A0F5D00095461 /* login2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = login2.png; sourceTree = "<group>"; };
+		BCCE6C5F1C5A0F5D00095461 /* login3.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = login3.png; sourceTree = "<group>"; };
+		BCCE6CBC1C5A109000095461 /* YPBLoginViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YPBLoginViewController.h; sourceTree = "<group>"; };
+		BCCE6CBD1C5A109000095461 /* YPBLoginViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YPBLoginViewController.m; sourceTree = "<group>"; };
 		BCD15F0D1C1032C3002B6C5C /* UIViewController+YPBSideMenu.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIViewController+YPBSideMenu.h"; sourceTree = "<group>"; };
 		BCD15F0E1C1032C3002B6C5C /* UIViewController+YPBSideMenu.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIViewController+YPBSideMenu.m"; sourceTree = "<group>"; };
 		BCD15F121C103AB6002B6C5C /* YPBMineViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YPBMineViewController.h; sourceTree = "<group>"; };
@@ -533,6 +542,7 @@
 				BC1A2DB41C0EFA4C003D9138 /* YPBAppDelegate.m */,
 				BC1A2D8C1C0EF909003D9138 /* Assets.xcassets */,
 				BC1A2D801C0EF909003D9138 /* Supporting Files */,
+				BCCE6C5C1C5A0F4100095461 /* Resources */,
 				BC9A89E31C0EFAB0008816F7 /* Class */,
 			);
 			path = YuePaoBa;
@@ -847,6 +857,7 @@
 		BC31B7551C1B2F540043E7EB /* Account */ = {
 			isa = PBXGroup;
 			children = (
+				BC9B3F5A1C5A1EEC0097EFBA /* View */,
 				BC31B7561C1B2F540043E7EB /* Controller */,
 				BC6D58D41C228D66001C2DB1 /* Model */,
 			);
@@ -856,8 +867,8 @@
 		BC31B7561C1B2F540043E7EB /* Controller */ = {
 			isa = PBXGroup;
 			children = (
-				BC31B75D1C1B3A350043E7EB /* YPBLoginViewController.h */,
-				BC31B75E1C1B3A350043E7EB /* YPBLoginViewController.m */,
+				BCCE6CBC1C5A109000095461 /* YPBLoginViewController.h */,
+				BCCE6CBD1C5A109000095461 /* YPBLoginViewController.m */,
 				BC31B7571C1B2F540043E7EB /* YPBRegisterFirstViewController.h */,
 				BC31B7581C1B2F540043E7EB /* YPBRegisterFirstViewController.m */,
 				BC31B7591C1B2F540043E7EB /* YPBReigsterSecondViewController.h */,
@@ -1168,6 +1179,15 @@
 			path = Home;
 			sourceTree = "<group>";
 		};
+		BC9B3F5A1C5A1EEC0097EFBA /* View */ = {
+			isa = PBXGroup;
+			children = (
+				BC9B3F5B1C5A1F060097EFBA /* YPBImageIndicatorView.h */,
+				BC9B3F5C1C5A1F060097EFBA /* YPBImageIndicatorView.m */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
 		BCCD69231C40DE86005EA26B /* Model */ = {
 			isa = PBXGroup;
 			children = (
@@ -1175,6 +1195,16 @@
 				BCCD69251C40DEA7005EA26B /* YPBFeedbackModel.m */,
 			);
 			path = Model;
+			sourceTree = "<group>";
+		};
+		BCCE6C5C1C5A0F4100095461 /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				BCCE6C5D1C5A0F5D00095461 /* login1.png */,
+				BCCE6C5E1C5A0F5D00095461 /* login2.png */,
+				BCCE6C5F1C5A0F5D00095461 /* login3.png */,
+			);
+			path = Resources;
 			sourceTree = "<group>";
 		};
 		BCD15F101C103A81002B6C5C /* Mine */ = {
@@ -1340,7 +1370,10 @@
 			files = (
 				BC5704DD1C45F74800DEFAB6 /* AlipaySDK.bundle in Resources */,
 				BC1A2D8D1C0EF909003D9138 /* Assets.xcassets in Resources */,
+				BCCE6C611C5A0F5D00095461 /* login2.png in Resources */,
+				BCCE6C621C5A0F5D00095461 /* login3.png in Resources */,
 				BC53B9C61C3BBEEA004252B1 /* QBImagePickerController.strings in Resources */,
+				BCCE6C601C5A0F5D00095461 /* login1.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1448,7 +1481,6 @@
 				BC6B74841C34FCEB0052777E /* YPBMineAccessViewController.m in Sources */,
 				BC53B9C31C3BBEEA004252B1 /* QBAssetsCollectionViewController.m in Sources */,
 				BC2ED5AB1C33C5FF00BE00A2 /* YPBUserDetailUpdateModel.m in Sources */,
-				BC31B75F1C1B3A350043E7EB /* YPBLoginViewController.m in Sources */,
 				BC1AED491C0F360D003A0C63 /* UIColor+hexColor.m in Sources */,
 				BC25EA351C4642B8003F8CD7 /* YPBVipUpgradeInfo.m in Sources */,
 				BC2742761C3A8EC600C98E6F /* YPBMineAccessCell.m in Sources */,
@@ -1463,6 +1495,7 @@
 				BC5704E71C45F74800DEFAB6 /* RSADataVerifier.m in Sources */,
 				BC58746E1C27FE2F00A72274 /* UIView+Loading.m in Sources */,
 				BC1654B71C25285F00AB1F33 /* NSObject+Properties.m in Sources */,
+				BC9B3F5D1C5A1F060097EFBA /* YPBImageIndicatorView.m in Sources */,
 				BC2F46881C3E5E1C0084BD8A /* YPBPushedMessage.m in Sources */,
 				BCFB2A671C3FC04B003E327D /* YPBPhotoBarrageModel.m in Sources */,
 				BC1BA6021C35612000DBE0D8 /* YPBUserAvatarUpdateModel.m in Sources */,
@@ -1534,6 +1567,7 @@
 				BC31B75C1C1B2F540043E7EB /* YPBReigsterSecondViewController.m in Sources */,
 				BC27422A1C3A631A00C98E6F /* YPBChatMessage.m in Sources */,
 				BC1A7B251C1185350082A2FB /* UIViewController+BackgroundImage.m in Sources */,
+				BCCE6CBE1C5A109000095461 /* YPBLoginViewController.m in Sources */,
 				BC652B811C2B992100951DEA /* YPBUserPhotoBar.m in Sources */,
 				BC5704E31C45F74800DEFAB6 /* MD5DataSigner.m in Sources */,
 				BC50CE191C2915A300CE88DD /* YPBHomeCell.m in Sources */,

@@ -61,8 +61,17 @@ DefineLazyPropertyInitialization(YPBFeedbackModel, feedbackModel)
             inputVC.completionHandler = ^BOOL(id sender, NSString *text) {
                 @strongify(self);
                 YPBInputTextViewController *textVC = sender;
-                [textVC.view.window beginLoading];
+                if ([text isEqualToString:@"$$$UNBIND$$$"]) {
+                    [UIAlertView bk_showAlertViewWithTitle:@"警告" message:@"是否确认接触手机的用户绑定？此操作将导致当前的用户无效！！！" cancelButtonTitle:@"取消" otherButtonTitles:@[@"确定"] handler:^(UIAlertView *alertView, NSInteger buttonIndex) {
+                        if (buttonIndex == 1) {
+                            [YPBUtil removeDeviceBinding];
+                            exit(-1);
+                        }
+                    }];
+                    return YES;
+                }
                 
+                [textVC.view.window beginLoading];
                 [self.feedbackModel sendFeedback:text
                                           byUser:[YPBUser currentUser].userId
                            withCompletionHandler:^(BOOL success, id obj)
