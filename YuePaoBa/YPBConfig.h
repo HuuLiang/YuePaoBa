@@ -48,5 +48,5 @@
 #define YPB_DEFAULT_PHOTOSERVER_URL     @"http://7xpobi.com2.z0.glb.qiniucdn.com"
 
 #define YPB_UMENG_APP_ID                @"569f30e6e0f55a0373002331"
-#define YPB_KSCRASH_APP_ID              @"5261ad83f35a0ba21f4bec18e6ef6b31"
+#define YPB_KSCRASH_APP_ID              @"6f10027627cbed6fd17c676e88c4989b"
 #endif /* YPBConfig_h */
