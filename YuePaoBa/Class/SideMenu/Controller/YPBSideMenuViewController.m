@@ -173,8 +173,9 @@
 }
 
 - (void)sideMenu:(RESideMenu *)sideMenu didShowMenuViewController:(UIViewController *)menuViewController {
-    [MobClick event:@"YPB_VIEW_SIDE_MENU" attributes:@{@"userId":[YPBUser currentUser].userId ?: @"",
-                                                       @"loginTimes":@([YPBUtil loginFrequency]).stringValue}];
+    [MobClick event:@"YPB_VIEW_SIDE_MENU" attributes:@{@"用户ID":[YPBUser currentUser].userId ?: @"",
+                                                       @"渠道号": YPB_CHANNEL_NO,
+                                                       @"登陆次数":@([YPBUtil loginFrequency]).stringValue}];
 }
 
 @end
