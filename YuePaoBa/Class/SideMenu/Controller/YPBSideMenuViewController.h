@@ -11,6 +11,7 @@
 @interface YPBSideMenuViewController : YPBLayoutViewController <RESideMenuDelegate>
 
 @property (nonatomic,retain,readonly) NSArray<YPBSideMenuItem *> *sideMenuItems;
+@property (nonatomic,readonly) NSString *badgeValue;
 //@property (nonatomic,retain,readonly) NSArray<UIViewController *> *viewControllers;
 //@property (nonatomic) NSUInteger selectedIndex;
 

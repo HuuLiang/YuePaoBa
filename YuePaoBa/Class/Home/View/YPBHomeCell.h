@@ -11,5 +11,6 @@
 @interface YPBHomeCell : UICollectionViewCell
 
 @property (nonatomic,retain) YPBUser *user;
+@property (nonatomic,copy) YPBAction likeAction;
 
 @end

@@ -18,6 +18,8 @@
 + (instancetype)sharedModel;
 
 - (void)notifyLoginPush;
+- (void)fetchMessageByUserInteraction;
+
 - (BOOL)fetchMessageWithUserId:(NSString *)userId
                  loginDuration:(NSUInteger)duration
              completionHandler:(YPBCompletionHandler)handler;

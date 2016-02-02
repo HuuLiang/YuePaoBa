@@ -14,7 +14,8 @@ typedef NS_ENUM(NSUInteger, YPBChatMessageType) {
     YPBChatMessageTypeWord,
     YPBChatMessageTypePhoto,
     YPBChatMessageTypeVoice,
-    YPBChatMessageTypeOption
+    YPBChatMessageTypeOption,
+    YPBChatMessageTypeAutoReply
 };
 
 @class YPBPushedMessage;
@@ -33,7 +34,7 @@ typedef NS_ENUM(NSUInteger, YPBChatMessageType) {
 
 + (instancetype)chatMessage;
 + (NSArray<YPBChatMessage *> *)allMessagesForUser:(NSString *)userId;
-+ (instancetype)lastMessageForUser:(NSString *)userId;
+//+ (instancetype)lastMessageForUser:(NSString *)userId;
 
 + (instancetype)chatMessageFromPushedMessage:(YPBPushedMessage *)message;
 @end

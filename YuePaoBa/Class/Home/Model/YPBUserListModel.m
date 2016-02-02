@@ -45,7 +45,8 @@
     _requestedGender = gender;
     _requestedSpace = space;
     
-    NSDictionary *params = @{@"sex":[YPBUser stringOfGender:gender],
+    NSDictionary *params = @{@"userId":[YPBUser currentUser].userId,
+                             @"sex":[YPBUser stringOfGender:gender],
                              @"uPosition":space == YPBUserSpaceHome ? @1 : @2,
                              @"pageNum":@(page),
                              @"pageSize":space == YPBUserSpaceHome?@18:@10

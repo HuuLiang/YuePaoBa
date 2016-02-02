@@ -56,4 +56,33 @@ static NSString *kDefaultPersistentNamespace = @"yuepaoba_default_persistent_nam
     }
     
 }
+
+- (void)deleteFromPersistence {
+    [self.realm beginWriteTransaction];
+    [self.realm deleteObject:self];
+    [self.realm commitWriteTransaction];
+}
+
++ (void)deleteObjects:(NSArray<YPBPersistentObject *> *)objects {
+    if (objects.count == 0) {
+        return ;
+    }
+    
+    BOOL hasObjectOfOtherNamespace = [objects bk_any:^BOOL(YPBPersistentObject *obj) {
+        return ![[[obj class] namespace] isEqualToString:[[self class] namespace]];
+    }];
+    
+    if (hasObjectOfOtherNamespace) {
+        return ;
+    }
+    
+    RLMRealm * realm = [self classRealm];
+    if (!realm) {
+        return ;
+    }
+    
+    [realm beginWriteTransaction];
+    [realm deleteObjects:objects];
+    [realm commitWriteTransaction];
+}
 @end

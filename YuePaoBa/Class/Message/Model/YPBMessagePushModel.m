@@ -21,6 +21,7 @@
 @interface YPBMessagePushModel ()
 @property (nonatomic,retain) NSTimer *pollingTimer;
 @property (nonatomic) NSUInteger pollingSeconds;
+@property (nonatomic) BOOL hasUserInteractionFetched;
 @end
 
 @implementation YPBMessagePushModel
@@ -53,7 +54,7 @@
 }
 
 - (void)onUserRestoreSuccessNotification {
-    [[NSNotificationCenter defaultCenter] removeObserver:self];
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:kUserRestoreSuccessNotification object:nil];
     [self notifyLoginPush];
 }
 
@@ -71,37 +72,50 @@
         const NSUInteger timeInterval = 30;
         self.pollingTimer = [NSTimer bk_scheduledTimerWithTimeInterval:timeInterval block:^(NSTimer *timer) {
             @strongify(self);
-            [self fetchMessageWithUserId:[YPBUser currentUser].userId
-                           loginDuration:self.pollingSeconds
-                       completionHandler:^(BOOL success, id obj)
-             {
-                 if (success && obj) {
-                     [[NSNotificationCenter defaultCenter] postNotificationName:kMessagePushNotification object:obj];
-                 }
-             }];
+            [self fetchMessageWithSeconds:self.pollingSeconds];
             self.pollingSeconds += timeInterval;
             
-            if (self.pollingSeconds > 60) {
+            if (self.pollingSeconds >= 60) {
                 [self stopMessagePushPolling];
             }
         } repeats:YES];
-        [self.pollingTimer fire];
+        //[self.pollingTimer fire];
     } else {
         NSUInteger seconds = [YPBUtil secondsSinceRegister];
-        [self fetchMessageWithUserId:[YPBUser currentUser].userId
-                       loginDuration:seconds
-                   completionHandler:^(BOOL success, id obj)
-        {
-            if (success && obj) {
-                [[NSNotificationCenter defaultCenter] postNotificationName:kMessagePushNotification object:obj];
-            }
-        }];
+        [self fetchMessageWithSeconds:seconds];
     }
 }
 
 - (void)stopMessagePushPolling {
     [self.pollingTimer invalidate];
     self.pollingTimer = nil;
+}
+
+- (void)fetchMessageByUserInteraction {
+    if (!self.hasUserInteractionFetched) {
+        self.hasUserInteractionFetched = [YPBUtil loginFrequency] > 1;
+    }
+    
+    if (!self.hasUserInteractionFetched) {
+        self.hasUserInteractionFetched = YES;
+        [self fetchMessageWithSeconds:0];
+    }
+}
+
+- (void)fetchMessageWithSeconds:(NSUInteger)seconds {
+    [self fetchMessageWithUserId:[YPBUser currentUser].userId
+                   loginDuration:seconds
+               completionHandler:^(BOOL success, id obj)
+     {
+         if (success && obj) {
+             NSArray *messages = obj;
+             if (messages.count > 0) {
+                 [[YPBMessageCenter defaultCenter] showSuccessWithTitle:[NSString stringWithFormat:@"您有%ld条新消息！", messages.count] inViewController:nil];
+             }
+             [[NSNotificationCenter defaultCenter] postNotificationName:kBadgeValueChangeNotification object:nil];
+             [[NSNotificationCenter defaultCenter] postNotificationName:kMessagePushNotification object:obj];
+         }
+     }];
 }
 
 - (BOOL)fetchMessageWithUserId:(NSString *)userId

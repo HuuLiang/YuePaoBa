@@ -42,7 +42,12 @@
         _detailLabel.textAlignment = NSTextAlignmentRight;
         [_footerView addSubview:_detailLabel];
         
-        _likeButton = [[YPBLikeButton alloc] initWithUserInteractionEnabled:NO];
+        _likeButton = [[YPBLikeButton alloc] initWithUserInteractionEnabled:YES];
+        @weakify(self);
+        [_likeButton bk_addEventHandler:^(id sender) {
+            @strongify(self);
+            SafelyCallBlock1(self.likeAction, sender);
+        } forControlEvents:UIControlEventTouchUpInside];
         [self addSubview:_likeButton];
     }
     return self;
@@ -81,5 +86,6 @@
     _nicknameLabel.text = user.nickName;
     _detailLabel.text = [NSString stringWithFormat:@"%@cm/%@岁", user.height, user.age];
     _likeButton.numberOfLikes = user.receiveGreetCount.unsignedIntegerValue;
+    _likeButton.selected = user.isGreet;
 }
 @end

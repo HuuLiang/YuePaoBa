@@ -7,7 +7,7 @@
 //
 
 #import "YPBPhotoBrowser.h"
-#import <MWPhotoBrowser.h>
+#import "MWPhotoBrowser.h"
 
 static const CGFloat kViewFadeAnimationDuration = 0.3;
 
@@ -45,11 +45,22 @@ static YPBPhotoBrowser *_sharedPhotoBrowser;
         
         NSMutableArray *photos = [NSMutableArray array];
         [userPhotos enumerateObjectsUsingBlock:^(YPBUserPhoto * _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
-            [photos addObject:[MWPhoto photoWithURL:[NSURL URLWithString:obj.bigPhoto]]];
+            MWPhoto *photo = [MWPhoto photoWithURL:[NSURL URLWithString:obj.bigPhoto]];
+            if (self.shouldLockAction && self.shouldLockAction(idx)) {
+                photo.isLocked = YES;
+                
+                @weakify(self);
+                photo.tapLockAction = ^(id sender) {
+                    @strongify(self);
+                    SafelyCallBlock1(self.tapLockAction, sender);
+                };
+            }
+            [photos addObject:photo];
+            
         }];
         _photoBrowser = [[MWPhotoBrowser alloc] initWithPhotos:photos];
         _photoBrowser.delegate = self;
-        _photoBrowser.displayActionButton = NO;
+//        _photoBrowser.displayActionButton = NO;
     }
     return self;
     
@@ -121,6 +132,12 @@ static YPBPhotoBrowser *_sharedPhotoBrowser;
 
 - (void)photoBrowser:(MWPhotoBrowser *)photoBrowser didDisplayPhotoAtIndex:(NSUInteger)index {
     SafelyCallBlock1(self.displayAction, index);
+}
+
+- (void)photoBrowser:(MWPhotoBrowser *)photoBrowser willDisplayPhoto:(id<MWPhoto>)photo atIndex:(NSUInteger)index inUnderlyingScrollView:(UIScrollView *)scrollView {
+//    if (self.shouldLockAction && self.shouldLockAction(index)) {
+//        photo.underlyingImage = [photo.underlyingImage blurredImageWithRadius:kDefaultPhotoBlurRadius];
+//    }
 }
 
 - (void)didReceiveMemoryWarning {

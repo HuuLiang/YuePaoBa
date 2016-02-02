@@ -13,6 +13,8 @@
 #import "YPBUserDetailViewController.h"
 #import "YPBVIPEntranceView.h"
 #import "YPBVIPPriviledgeViewController.h"
+#import "YPBUserAccessModel.h"
+#import "YPBMessagePushModel.h"
 
 static NSString *const kHomeCellReusableIdentifier = @"HomeCellReusableIdentifier";
 
@@ -22,12 +24,14 @@ static NSString *const kHomeCellReusableIdentifier = @"HomeCellReusableIdentifie
 }
 @property (nonatomic,retain) YPBUserListModel *userListModel;
 @property (nonatomic,retain) NSMutableArray<YPBUser *> *users;
+@property (nonatomic,retain) YPBUserAccessModel *userAccessModel;
 @end
 
 @implementation YPBHomeViewController
 
 DefineLazyPropertyInitialization(YPBUserListModel, userListModel)
 DefineLazyPropertyInitialization(NSMutableArray, users)
+DefineLazyPropertyInitialization(YPBUserAccessModel, userAccessModel);
 
 - (void)didRestoreUser:(YPBUser *)user {
     [_layoutCollectionView YPB_triggerPullToRefresh];
@@ -70,20 +74,16 @@ DefineLazyPropertyInitialization(NSMutableArray, users)
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(onVIPUpgradeSuccessNotification:) name:kVIPUpgradeSuccessNotification object:nil];
 }
 
-- (void)dealloc {
-    [[NSNotificationCenter defaultCenter] removeObserver:self];
-}
-
 - (void)loadOrRefreshData:(BOOL)isRefresh {
     if (!isRefresh && ![YPBUtil isVIP] && [self.userListModel.paginator.page isEqualToNumber:[YPBSystemConfig sharedConfig].firstPayPages]) {
         [_layoutCollectionView YPB_endPullToRefresh];
         
-        @weakify(self);
-        [YPBVIPEntranceView showVIPEntranceInView:self.view canClose:YES withEnterAction:^(id obj) {
-            @strongify(self);
+//        @weakify(self);
+//        [YPBVIPEntranceView showVIPEntranceInView:self.view canClose:YES withEnterAction:^(id obj) {
+//            @strongify(self);
             YPBVIPPriviledgeViewController *vipVC = [[YPBVIPPriviledgeViewController alloc] init];
             [self.navigationController pushViewController:vipVC animated:YES];
-        }];
+//        }];
         return ;
     }
     
@@ -107,6 +107,10 @@ DefineLazyPropertyInitialization(NSMutableArray, users)
             if (self.userListModel.hasNoMoreData) {
                 [self->_layoutCollectionView YPB_pagingRefreshNoMoreData];
             }
+            
+            if (!isRefresh) {
+                [[YPBMessagePushModel sharedModel] fetchMessageByUserInteraction];
+            }
         } else if ([obj isKindOfClass:[NSString class]]) {
             [[YPBMessageCenter defaultCenter] showErrorWithTitle:obj inViewController:self];
         }
@@ -120,7 +124,7 @@ DefineLazyPropertyInitialization(NSMutableArray, users)
 }
 
 - (void)onVIPUpgradeSuccessNotification:(NSNotification *)notification {
-    [[YPBVIPEntranceView VIPEntranceInView:self.view] hide];
+    //[[YPBVIPEntranceView VIPEntranceInView:self.view] hide];
 }
 
 - (void)didReceiveMemoryWarning {
@@ -132,7 +136,40 @@ DefineLazyPropertyInitialization(NSMutableArray, users)
 
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath {
     YPBHomeCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:kHomeCellReusableIdentifier forIndexPath:indexPath];
-    cell.user = self.users[indexPath.item];
+    
+    if (indexPath.item < self.users.count) {
+        YPBUser *user = self.users[indexPath.item];
+        cell.user = user;
+        
+        @weakify(self,cell);
+        cell.likeAction = ^(id sender) {
+            @strongify(self,cell);
+            if (user.isGreet) {
+                [[YPBMessageCenter defaultCenter] showErrorWithTitle:@"您已经和TA打过招呼了！" inViewController:self];
+                return ;
+            }
+            
+            if (![YPBUtil isVIP] && [YPBUser currentUser].greetCount.unsignedIntegerValue >= 5) {
+                YPBVIPPriviledgeViewController *vipVC = [[YPBVIPPriviledgeViewController alloc] init];
+                [self.navigationController pushViewController:vipVC animated:YES];
+                return;
+            }
+            
+            [cell beginLoading];
+            [self.userAccessModel accessUserWithUserId:user.userId accessType:YPBUserAccessTypeGreet completionHandler:^(BOOL success, id obj) {
+                [cell endLoading];
+                
+                if (success) {
+                    [[YPBMessageCenter defaultCenter] showSuccessWithTitle:@"打招呼成功" inViewController:self];
+                    
+                    user.receiveGreetCount = @(user.receiveGreetCount.unsignedIntegerValue+1);
+                    user.isGreet = YES;
+                    cell.user = user;
+                }
+            }];
+        };
+    }
+    
     return cell;
 }
 

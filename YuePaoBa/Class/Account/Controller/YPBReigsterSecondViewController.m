@@ -12,6 +12,7 @@
 #import <ActionSheetMultipleStringPicker.h>
 #import "YPBUser+Account.h"
 #import "YPBRegisterModel.h"
+#import "YPBActivateModel.h"
 
 @interface YPBReigsterSecondViewController ()
 {
@@ -22,11 +23,13 @@
 //@property (nonatomic,retain) UIView *titleView;
 @property (nonatomic,retain) YPBUser *user;
 @property (nonatomic,retain) YPBRegisterModel *registerModel;
+@property (nonatomic,retain) YPBActivateModel *activateModel;
 @end
 
 @implementation YPBReigsterSecondViewController
 
 DefineLazyPropertyInitialization(YPBRegisterModel, registerModel)
+DefineLazyPropertyInitialization(YPBActivateModel, activateModel)
 
 - (instancetype)initWithYPBUser:(YPBUser *)user {
     self = [super init];
@@ -79,21 +82,34 @@ DefineLazyPropertyInitialization(YPBRegisterModel, registerModel)
         }
         
         @weakify(self);
-        [self.view beginLoading];
-        [self.registerModel requestRegisterUser:self.user withCompletionHandler:^(BOOL success, id obj) {
+        void (^RegisterBlock)(void) = ^{
             @strongify(self);
-            if (!self) {
-                return ;
-            }
-            
-            if (success) {
-                [self onRegisterSuccessfullyWithUserId:obj];
-            } else {
-                [self.view endLoading];
-            }
-            
-        }];
+            [self.registerModel requestRegisterUser:self.user withCompletionHandler:^(BOOL success, id obj) {
+                @strongify(self);
+                if (!self) {
+                    return ;
+                }
+                
+                if (success) {
+                    [self onRegisterSuccessfullyWithUserId:obj];
+                } else {
+                    [self.view endLoading];
+                }
+            }];
+        };
         
+        [self.view beginLoading];
+        if ([YPBUtil activationId].length == 0) {
+            [self.activateModel requestActivationWithCompletionHandler:^(BOOL success, id obj) {
+                if (success) {
+                    RegisterBlock();
+                } else {
+                    [self.view endLoading];
+                }
+            }];
+        } else {
+            RegisterBlock();
+        }
     }];
     
     [self.view addSubview:nextButton];

@@ -9,7 +9,53 @@
 #import "YPBUserPhotoBar.h"
 
 static const CGFloat kInterItemSpacing = 10;
+static const void *kLockImageAssociatedKey = &kLockImageAssociatedKey;
 
+@interface UIImageView (Lock)
+@property (nonatomic) BOOL isLocked;
+//@property (nonatomic,retain) UIImageView *lockView;
+@end
+
+@implementation UIImageView (Lock)
+
+//- (UIImageView *)lockView {
+//    return objc_getAssociatedObject(self, kLockImageViewAssociatedKey);
+//}
+//
+//- (void)setLockView:(UIImageView *)lockView {
+//    objc_setAssociatedObject(self, kLockImageViewAssociatedKey, lockView, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
+//}
+
+- (BOOL)isLocked {
+    NSNumber *value = objc_getAssociatedObject(self, kLockImageAssociatedKey);
+    return value.boolValue;
+    //return [self.subviews containsObject:self.lockView];
+}
+
+- (void)setIsLocked:(BOOL)isLocked {
+    objc_setAssociatedObject(self, kLockImageAssociatedKey, @(isLocked), OBJC_ASSOCIATION_COPY_NONATOMIC);
+//    if (isLocked) {
+//        if (!self.lockView) {
+//            self.lockView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"photo_lock"]];
+//            [self addSubview:self.lockView];
+//            {
+//                [self.lockView mas_makeConstraints:^(MASConstraintMaker *make) {
+//                    make.center.equalTo(self);
+//                    make.height.equalTo(self).multipliedBy(0.5);
+//                    make.width.equalTo(self.lockView.mas_height);
+//                }];
+//            }
+//        }
+//    } else {
+//        if (self.lockView) {
+//            [self.lockView removeFromSuperview];
+//            self.lockView = nil;
+//        }
+//    }
+//    
+}
+
+@end
 @interface YPBUserPhotoBar ()
 @property (nonatomic,retain) NSMutableArray<UIImageView *> *imageViews;
 @property (nonatomic,retain) UILabel *emptyLabel;
@@ -66,9 +112,29 @@ DefineLazyPropertyInitialization(NSMutableArray, imageViews)
     
     BOOL needsLayout = [self arrangeImageViewsWithCount:imageURLStrings.count];
     NSParameterAssert(self.imageViews.count == imageURLStrings.count);
-
+    
+    @weakify(self);
     [imageURLStrings enumerateObjectsUsingBlock:^(NSString * _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
-        [self.imageViews[idx] sd_setImageWithURL:[NSURL URLWithString:obj]];
+        UIImageView *imageView = self.imageViews[idx];
+        @weakify(imageView);
+        [imageView sd_setImageWithURL:[NSURL URLWithString:obj]
+                     placeholderImage:nil
+                              options:SDWebImageAvoidAutoSetImage
+                            completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType, NSURL *imageURL)
+        {
+            @strongify(self,imageView);
+            if (!self) {
+                return ;
+            }
+            
+            if (self.shouldLockAction && self.shouldLockAction(idx)) {
+                imageView.image = [image blurredImageWithRadius:kDefaultPhotoBlurRadius];
+                imageView.isLocked = YES;
+            } else {
+                imageView.image = image;
+                imageView.isLocked = NO;
+            }
+        }];
     }];
     
     if (self.usePhotoAddItem) {
@@ -144,13 +210,13 @@ DefineLazyPropertyInitialization(NSMutableArray, imageViews)
         
         [imageView bk_whenTapped:^{
             @strongify(self);
-            SafelyCallBlock1(self.selectAction, idx);
+            SafelyCallBlock2(self.selectAction, idx, self);
         }];
         
         [imageView addGestureRecognizer:[[UILongPressGestureRecognizer alloc] bk_initWithHandler:^(UIGestureRecognizer *sender, UIGestureRecognizerState state, CGPoint location) {
             if (state == UIGestureRecognizerStateBegan) {
                 @strongify(self);
-                SafelyCallBlock1(self.holdAction, idx);
+                SafelyCallBlock2(self.holdAction, idx, self);
             }
         }]];
     }];
@@ -173,5 +239,12 @@ DefineLazyPropertyInitialization(NSMutableArray, imageViews)
         SafelyCallBlock1(self.photoAddAction, self);
     }];
     return _photoAddImageView;
+}
+
+- (BOOL)photoIsLocked:(NSUInteger)index {
+    if (index < self.imageViews.count) {
+        return self.imageViews[index].isLocked;
+    }
+    return NO;
 }
 @end

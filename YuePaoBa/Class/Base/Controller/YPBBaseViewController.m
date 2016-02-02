@@ -7,6 +7,7 @@
 //
 
 #import "YPBBaseViewController.h"
+#import "YPBSideMenuViewController.h"
 
 @interface YPBBaseViewController ()
 
@@ -18,7 +19,7 @@
     self = [super init];
     if (self) {
         _rootVCHasSideMenu = YES;
-        
+
         if (![YPBUser currentUser].isRegistered) {
             [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(baseOnUserRestoreNotification:) name:kUserRestoreSuccessNotification object:nil];
         }
@@ -34,6 +35,11 @@
     return self;
 }
 
+- (void)dealloc {
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
+    DLog(@"%@ dealloc\n", [self class]);
+}
+
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
@@ -44,6 +50,10 @@
             self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] bk_initWithImage:[UIImage imageNamed:@"side_menu_button"] style:UIBarButtonItemStylePlain handler:^(id sender) {
                 [self.sideMenuViewController presentLeftMenuViewController];
             }];
+            self.navigationItem.leftBarButtonItem.badgeValue = self.navigationController.sideMenuVC.badgeValue;
+            self.navigationItem.leftBarButtonItem.badgeBGColor = [UIColor whiteColor];
+            self.navigationItem.leftBarButtonItem.badgeTextColor = [UIColor redColor];
+            [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(onBadgeValueChangeNotification) name:kBadgeValueChangeNotification object:nil];
         }
     }
 }
@@ -66,13 +76,13 @@
     if ([self isVisibleViewController]) {
         [self didRestoreUser:notification.object];
     }
-    [[NSNotificationCenter defaultCenter] removeObserver:self];
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:kUserRestoreSuccessNotification object:nil];
 }
 
 - (void)didRestoreUser:(YPBUser *)user {};
 
-- (void)dealloc {
-    DLog(@"%@ dealloc\n", [self class]);
+- (void)onBadgeValueChangeNotification {
+    self.navigationItem.leftBarButtonItem.badgeValue = self.navigationController.sideMenuVC.badgeValue;
 }
 
 - (void)didReceiveMemoryWarning {

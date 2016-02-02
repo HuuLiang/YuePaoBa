@@ -58,6 +58,11 @@ install_resource()
   esac
 }
 if [[ "$CONFIGURATION" == "Debug" ]]; then
+  install_resource "GPUImage/framework/Resources/lookup.png"
+  install_resource "GPUImage/framework/Resources/lookup_amatorka.png"
+  install_resource "GPUImage/framework/Resources/lookup_miss_etikate.png"
+  install_resource "GPUImage/framework/Resources/lookup_soft_elegance_1.png"
+  install_resource "GPUImage/framework/Resources/lookup_soft_elegance_2.png"
   install_resource "MJRefresh/MJRefresh/MJRefresh.bundle"
   install_resource "MessageDisplayKit/MessageDisplayKit/Resources/avator@2x.png"
   install_resource "MessageDisplayKit/MessageDisplayKit/Resources/face@2x.png"
@@ -119,9 +124,13 @@ if [[ "$CONFIGURATION" == "Debug" ]]; then
   install_resource "TSMessages/Pod/Assets/NotificationButtonBackground.png"
   install_resource "TSMessages/Pod/Assets/NotificationButtonBackground@2x.png"
   install_resource "TSMessages/Pod/Assets/TSMessagesDefaultDesign.json"
-  install_resource "${BUILT_PRODUCTS_DIR}/MWPhotoBrowser.bundle"
 fi
 if [[ "$CONFIGURATION" == "Release" ]]; then
+  install_resource "GPUImage/framework/Resources/lookup.png"
+  install_resource "GPUImage/framework/Resources/lookup_amatorka.png"
+  install_resource "GPUImage/framework/Resources/lookup_miss_etikate.png"
+  install_resource "GPUImage/framework/Resources/lookup_soft_elegance_1.png"
+  install_resource "GPUImage/framework/Resources/lookup_soft_elegance_2.png"
   install_resource "MJRefresh/MJRefresh/MJRefresh.bundle"
   install_resource "MessageDisplayKit/MessageDisplayKit/Resources/avator@2x.png"
   install_resource "MessageDisplayKit/MessageDisplayKit/Resources/face@2x.png"
@@ -183,7 +192,6 @@ if [[ "$CONFIGURATION" == "Release" ]]; then
   install_resource "TSMessages/Pod/Assets/NotificationButtonBackground.png"
   install_resource "TSMessages/Pod/Assets/NotificationButtonBackground@2x.png"
   install_resource "TSMessages/Pod/Assets/TSMessagesDefaultDesign.json"
-  install_resource "${BUILT_PRODUCTS_DIR}/MWPhotoBrowser.bundle"
 fi
 
 mkdir -p "${CONFIGURATION_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}"

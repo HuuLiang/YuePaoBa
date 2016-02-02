@@ -31,5 +31,6 @@
 #import "YPBUser.h"
 #import "YPBUploadManager.h"
 #import "YPBSystemConfigModel.h"
+#import "YPBAutoReplyWords.h"
 
 #endif /* YPBPrefixHeader_pch */

@@ -36,10 +36,6 @@ static NSString *const kContactCellReusableIdentifier = @"ContactCellReusableIde
     return self;
 }
 
-- (void)dealloc {
-    [[NSNotificationCenter defaultCenter] removeObserver:self];
-}
-
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
@@ -77,7 +73,7 @@ static NSString *const kContactCellReusableIdentifier = @"ContactCellReusableIde
 }
 
 - (void)onVIPUpgradeSuccessNotification:(NSNotification *)notification {
-    [[YPBVIPEntranceView VIPEntranceInView:self.view] hide];
+    //[[YPBVIPEntranceView VIPEntranceInView:self.view] hide];
 }
 
 - (void)didReceiveMemoryWarning {
@@ -124,10 +120,10 @@ static NSString *const kContactCellReusableIdentifier = @"ContactCellReusableIde
         YPBContact *contact = self.contacts[indexPath.row];
         [YPBMessageViewController showMessageWithContact:contact inViewController:self];
     } else {
-        [YPBVIPEntranceView showVIPEntranceInView:self.view canClose:YES withEnterAction:^(id obj) {
+//        [YPBVIPEntranceView showVIPEntranceInView:self.view canClose:YES withEnterAction:^(id obj) {
             YPBVIPPriviledgeViewController *vipVC = [[YPBVIPPriviledgeViewController alloc] init];
             [self.navigationController pushViewController:vipVC animated:YES];
-        }];
+//        }];
     }
     
 }

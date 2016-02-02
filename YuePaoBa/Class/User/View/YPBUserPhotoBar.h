@@ -8,7 +8,8 @@
 
 #import <UIKit/UIKit.h>
 
-typedef void (^YPBPhotoBarAction)(NSUInteger index);
+typedef void (^YPBPhotoBarAction)(NSUInteger index, id sender);
+typedef BOOL (^YPBLockAction)(NSUInteger index);
 
 @interface YPBUserPhotoBar : UIScrollView
 
@@ -17,7 +18,9 @@ typedef void (^YPBPhotoBarAction)(NSUInteger index);
 @property (nonatomic,copy) YPBPhotoBarAction selectAction;
 @property (nonatomic,copy) YPBPhotoBarAction holdAction;
 @property (nonatomic,copy) YPBAction photoAddAction;
+@property (nonatomic,copy) YPBLockAction shouldLockAction;
 
 - (instancetype)initWithUsePhotoAddItem:(BOOL)usePhotoAddItem;
+- (BOOL)photoIsLocked:(NSUInteger)index;
 
 @end

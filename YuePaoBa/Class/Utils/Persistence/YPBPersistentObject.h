@@ -22,8 +22,11 @@
 
 + (RLMRealm *)classRealm;
 
++ (void)deleteObjects:(NSArray<YPBPersistentObject *> *)objects;
+
 - (void)beginUpdate;
 - (NSError *)endUpdate;
+- (void)deleteFromPersistence;
 
 @end
 

@@ -36,6 +36,7 @@ return _##propertyName; \
 #define kDefaultBackgroundColor [UIColor colorWithWhite:0.97 alpha:1]
 #define kDefaultCellHeight   (kScreenHeight * 0.08)
 #define kDefaultDateFormat   @"yyyyMMddHHmmss"
+#define kDefaultPhotoBlurRadius (5)
 
 #define CONTENT_VIEW_OFFSET_CENTERX (kScreenWidth/4)
 
@@ -70,6 +71,7 @@ return _##propertyName; \
 
 #define kUserContactPersistenceNamespace @"user_contact_persistence"
 #define kUserMessagePersistenceNamespace @"user_message_persistence"
+#define kAutoReplyMessagePersistentNamespace @"auto_reply_message_persistence"
 #define kVIPUpgradePersistenceNamespace  @"vip_upgrade_persistence"
 
 //#define kCurrentUserChangeNotification @"yuepaoba_current_user_change_notification"
@@ -79,6 +81,7 @@ return _##propertyName; \
 #define kUserRestoreSuccessNotification   @"yuepaoba_user_restore_success_notification"
 #define kVIPUpgradingNotification         @"yuepaoba_vip_upgrading_notification"
 #define kVIPUpgradeSuccessNotification    @"yuepaoba_vip_upgrade_success_notification"
+#define kBadgeValueChangeNotification     @"yuepaoba_badge_value_change_notification"
 
 typedef struct _YPBIntRange {
     NSInteger min;

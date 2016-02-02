@@ -16,6 +16,7 @@
 #import "YPBLoginViewController.h"
 #import "YPBActivateModel.h"
 #import "YPBMessagePushModel.h"
+#import "YPBAutoReplyMessagePool.h"
 
 #import "WXApi.h"
 #import "YPBPaymentInfo.h"
@@ -130,6 +131,7 @@ DefineLazyPropertyInitialization(YPBWeChatPayQueryOrderRequest, wechatPayOrderQu
 #ifdef DEBUG
     [MobClick setLogEnabled:YES];
 #endif
+    [MobClick setCrashReportEnabled:NO];
     NSString *bundleVersion = [NSBundle mainBundle].infoDictionary[@"CFBundleShortVersionString"];
     if (bundleVersion) {
         [MobClick setAppVersion:bundleVersion];
@@ -138,25 +140,28 @@ DefineLazyPropertyInitialization(YPBWeChatPayQueryOrderRequest, wechatPayOrderQu
     
 }
 
+- (void)setupCrashReporter {
+    KSCrashInstallationStandard* installation = [KSCrashInstallationStandard sharedInstance];
+    installation.url = [NSURL URLWithString:[NSString stringWithFormat:@"https://collector.bughd.com/kscrash?key=%@", YPB_KSCRASH_APP_ID]];
+    [installation install];
+    [installation sendAllReportsWithCompletion:nil];
+}
+
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     // Override point for customization after application launch.
     [[YPBErrorHandler sharedHandler] initialize];
     [self setupCommonStyles];
     [self setupMobStatistics];
+    [self setupCrashReporter];
     [YPBUploadManager registerWithSecretKey:YPB_UPLOAD_SECRET_KEY accessKey:YPB_UPLOAD_ACCESS_KEY scope:YPB_UPLOAD_SCOPE];
-    
-    KSCrashInstallationStandard* installation = [KSCrashInstallationStandard sharedInstance];
-    installation.url = [NSURL URLWithString:[NSString stringWithFormat:@"https://collector.bughd.com/kscrash?key=%@", YPB_KSCRASH_APP_ID]];
-    [installation install];
-    [installation sendAllReportsWithCompletion:nil];
     
     if ([YPBUtil deviceRegisteredUserId]) {
         [self notifyUserLogin];
     } else {
         YPBLoginViewController *loginVC = [[YPBLoginViewController alloc] init];
         self.window.rootViewController = loginVC;
+        [self.window makeKeyAndVisible];
     }
-    [self.window makeKeyAndVisible];
     
     if (![YPBUtil activationId]) {
         [[YPBActivateModel sharedModel] requestActivationWithCompletionHandler:^(BOOL success, id obj) {
@@ -175,6 +180,7 @@ DefineLazyPropertyInitialization(YPBWeChatPayQueryOrderRequest, wechatPayOrderQu
     
     [[YPBPaymentModel sharedModel] startRetryingToCommitUnprocessedOrders];
     [[YPBUserVIPUpgradeModel sharedModel] startRetryingToSynchronizeVIPInfos];
+    [[YPBAutoReplyMessagePool sharedPool] startRollingMessagesToAutoReply];
     return YES;
 }
 
@@ -234,6 +240,7 @@ DefineLazyPropertyInitialization(YPBWeChatPayQueryOrderRequest, wechatPayOrderQu
 
 - (void)notifyUserLogin {
     self.window.rootViewController = [self setupRootViewController];
+    [self.window makeKeyAndVisible];
     
     [[YPBMessagePushModel sharedModel] notifyLoginPush];
     [[NSNotificationCenter defaultCenter] postNotificationName:kUserInRestoreNotification object:nil];

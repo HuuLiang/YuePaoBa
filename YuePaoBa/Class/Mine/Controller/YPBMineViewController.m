@@ -65,10 +65,6 @@ DefineLazyPropertyInitialization(YPBUserPhotoDeleteModel, photoDeleteModel)
     return self;
 }
 
-- (void)dealloc {
-    [[NSNotificationCenter defaultCenter] removeObserver:self];
-}
-
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
@@ -173,13 +169,13 @@ DefineLazyPropertyInitialization(YPBUserPhotoDeleteModel, photoDeleteModel)
             [[YPBMessageCenter defaultCenter] showErrorWithTitle:kNoUserInfoErrorMessage inViewController:self];
         }
     };
-    _photoBar.selectAction = ^(NSUInteger index) {
+    _photoBar.selectAction = ^(NSUInteger index, id sender) {
         @strongify(self);
         [YPBPhotoBrowser showPhotoBrowserInView:self.view.window
                                      withPhotos:[YPBUser currentUser].userPhotos
                               currentPhotoIndex:index];
     };
-    _photoBar.holdAction = ^(NSUInteger index) {
+    _photoBar.holdAction = ^(NSUInteger index, id sender) {
         @strongify(self);
         UIActionSheet *actionSheet = [UIActionSheet bk_actionSheetWithTitle:@"我的相册"];
         [actionSheet bk_addButtonWithTitle:@"删除照片" handler:^{

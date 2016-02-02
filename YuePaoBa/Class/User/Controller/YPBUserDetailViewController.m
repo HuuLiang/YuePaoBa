@@ -16,7 +16,6 @@
 #import "YPBUserPhotoViewController.h"
 #import "YPBMessageViewController.h"
 #import "YPBContact.h"
-#import "YPBVIPEntranceView.h"
 #import "YPBVIPPriviledgeViewController.h"
 
 @interface YPBUserDetailViewController ()
@@ -97,10 +96,8 @@ DefineLazyPropertyInitialization(YPBUserAccessModel, userAccessModel)
                     [[YPBMessageCenter defaultCenter] showErrorWithTitle:@"无法获取用户信息" inViewController:self];
                 }
             } else {
-                [YPBVIPEntranceView showVIPEntranceInView:self.view canClose:YES withEnterAction:^(id obj) {
-                    YPBVIPPriviledgeViewController *vipVC = [[YPBVIPPriviledgeViewController alloc] init];
-                    [self.navigationController pushViewController:vipVC animated:YES];
-                }];
+                YPBVIPPriviledgeViewController *vipVC = [[YPBVIPPriviledgeViewController alloc] init];
+                [self.navigationController pushViewController:vipVC animated:YES];
             }
         }
     };
@@ -165,10 +162,8 @@ DefineLazyPropertyInitialization(YPBUserAccessModel, userAccessModel)
     }
     
     if (![YPBUtil isVIP] && [YPBUser currentUser].greetCount.unsignedIntegerValue >= 5) {
-        [YPBVIPEntranceView showVIPEntranceInView:self.view canClose:YES withEnterAction:^(id obj) {
-            YPBVIPPriviledgeViewController *vipVC = [[YPBVIPPriviledgeViewController alloc] init];
-            [self.navigationController pushViewController:vipVC animated:YES];
-        }];
+        YPBVIPPriviledgeViewController *vipVC = [[YPBVIPPriviledgeViewController alloc] init];
+        [self.navigationController pushViewController:vipVC animated:YES];
         return;
     }
     
@@ -224,11 +219,32 @@ DefineLazyPropertyInitialization(YPBUserAccessModel, userAccessModel)
     YPBTableViewCell *photoCell = [[YPBTableViewCell alloc] init];
     photoCell.selectionStyle = UITableViewCellSelectionStyleNone;
     _photoBar = [[YPBUserPhotoBar alloc] init];
-    _photoBar.selectAction = ^(NSUInteger index) {
+    _photoBar.selectAction = ^(NSUInteger index, id sender) {
         @strongify(self);
-        [YPBUserPhotoViewController showPhotoBrowserInView:self.view.window
-                                                withPhotos:self.user.userPhotos
-                                         currentPhotoIndex:index];
+        YPBUserPhotoBar *photoBar = sender;
+        if ([photoBar photoIsLocked:index]) {
+            YPBVIPPriviledgeViewController *vipVC = [[YPBVIPPriviledgeViewController alloc] init];
+            [self.navigationController pushViewController:vipVC animated:YES];
+        } else {
+            YPBUserPhotoViewController *photoVC = [YPBUserPhotoViewController showPhotoBrowserInView:self.view.window
+                                                                                          withPhotos:self.user.userPhotos
+                                                                                   currentPhotoIndex:index];
+            @weakify(self,photoVC);
+            photoVC.tapLockAction = ^(id sender) {
+                @strongify(self,photoVC);
+                [photoVC hide];
+                
+                YPBVIPPriviledgeViewController *vipVC = [[YPBVIPPriviledgeViewController alloc] init];
+                [self.navigationController pushViewController:vipVC animated:YES];
+            };
+        }
+    };
+    _photoBar.shouldLockAction = ^BOOL(NSUInteger index) {
+        if ([YPBUtil isVIP]) {
+            return NO;
+        } else {
+            return index > 2;
+        }
     };
     [photoCell addSubview:_photoBar];
     {

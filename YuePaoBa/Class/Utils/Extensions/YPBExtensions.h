@@ -14,6 +14,7 @@
 #import "UIViewController+YPBSideMenu.h"
 #import "UIViewController+BackgroundImage.h"
 #import "UIImage+Utilities.h"
+#import "UIImage+Blur.h"
 #import "NSMutableDictionary+Safety.h"
 #import "NSObject+Properties.h"
 #import "NSDictionary+YPBSign.h"
@@ -23,5 +24,6 @@
 #import "UIScrollView+Refresh.h"
 #import "UITableView+Separator.h"
 #import "NSDate+Utilities.h"
+#import "UIBarButtonItem+Badge.h"
 
 #endif /* YPBExtensions_h */

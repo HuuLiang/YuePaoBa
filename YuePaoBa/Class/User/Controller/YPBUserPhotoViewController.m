@@ -82,12 +82,16 @@ DefineLazyPropertyInitialization(NSMutableArray, barrageLabels)
     self = [super init];
     if (self) {
         self.hideOnTap = NO;
+        
+        self.shouldLockAction = ^BOOL(NSUInteger index) {
+            if ([YPBUtil isVIP]) {
+                return NO;
+            }
+            
+            return index > 2;
+        };
     }
     return self;
-}
-
-- (void)dealloc {
-    [[NSNotificationCenter defaultCenter] removeObserver:self];
 }
 
 - (void)viewDidLoad {
@@ -96,6 +100,10 @@ DefineLazyPropertyInitialization(NSMutableArray, barrageLabels)
     @weakify(self);
     self.displayAction = ^(NSUInteger index) {
         @strongify(self);
+        if (!self) {
+            return ;
+        }
+        
         if (self.barrageButton.selected) {
             [self loadBarragesAtIndex:index isByUser:NO];
         }

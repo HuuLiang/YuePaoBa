@@ -58,7 +58,7 @@
              @"nickName":user.nickName,
              @"uuid":[YPBUtil activationId],
              @"income":[NSNull null],
-             @"bust":bust,
+             @"bust":bust ?: @"",
              @"heightArea":heightArea,
              @"ageArea":ageArea};
 }
