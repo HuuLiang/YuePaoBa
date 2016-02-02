@@ -93,6 +93,9 @@
 		BC53B9C81C3BBEEA004252B1 /* QBImagePickerThumbnailView.m in Sources */ = {isa = PBXBuildFile; fileRef = BC53B9BD1C3BBEEA004252B1 /* QBImagePickerThumbnailView.m */; };
 		BC53B9CB1C3BF0F3004252B1 /* YPBSystemConfigModel.m in Sources */ = {isa = PBXBuildFile; fileRef = BC53B9CA1C3BF0F3004252B1 /* YPBSystemConfigModel.m */; };
 		BC53B9CE1C3BF435004252B1 /* YPBSystemConfig.m in Sources */ = {isa = PBXBuildFile; fileRef = BC53B9CD1C3BF435004252B1 /* YPBSystemConfig.m */; };
+		BC5501FE1C60AC6100A20B3A /* login1.jpg in Resources */ = {isa = PBXBuildFile; fileRef = BC5501FB1C60AC6100A20B3A /* login1.jpg */; };
+		BC5501FF1C60AC6100A20B3A /* login2.jpg in Resources */ = {isa = PBXBuildFile; fileRef = BC5501FC1C60AC6100A20B3A /* login2.jpg */; };
+		BC5502001C60AC6100A20B3A /* login3.jpg in Resources */ = {isa = PBXBuildFile; fileRef = BC5501FD1C60AC6100A20B3A /* login3.jpg */; };
 		BC5555071C50DCD300412F7F /* YPBMessageOptionPanel.m in Sources */ = {isa = PBXBuildFile; fileRef = BC5555061C50DCD300412F7F /* YPBMessageOptionPanel.m */; };
 		BC5704DC1C45F74800DEFAB6 /* AlipayManager.m in Sources */ = {isa = PBXBuildFile; fileRef = BC5704C41C45F74800DEFAB6 /* AlipayManager.m */; };
 		BC5704DD1C45F74800DEFAB6 /* AlipaySDK.bundle in Resources */ = {isa = PBXBuildFile; fileRef = BC5704C51C45F74800DEFAB6 /* AlipaySDK.bundle */; };
@@ -186,9 +189,6 @@
 		BCC5A3081C5F8289005672D6 /* YPBAutoReplyMessage.m in Sources */ = {isa = PBXBuildFile; fileRef = BCC5A3071C5F8289005672D6 /* YPBAutoReplyMessage.m */; };
 		BCCD69221C40DC9A005EA26B /* YPBWebViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BCCD69211C40DC9A005EA26B /* YPBWebViewController.m */; };
 		BCCD69261C40DEA7005EA26B /* YPBFeedbackModel.m in Sources */ = {isa = PBXBuildFile; fileRef = BCCD69251C40DEA7005EA26B /* YPBFeedbackModel.m */; };
-		BCCE6C601C5A0F5D00095461 /* login1.png in Resources */ = {isa = PBXBuildFile; fileRef = BCCE6C5D1C5A0F5D00095461 /* login1.png */; };
-		BCCE6C611C5A0F5D00095461 /* login2.png in Resources */ = {isa = PBXBuildFile; fileRef = BCCE6C5E1C5A0F5D00095461 /* login2.png */; };
-		BCCE6C621C5A0F5D00095461 /* login3.png in Resources */ = {isa = PBXBuildFile; fileRef = BCCE6C5F1C5A0F5D00095461 /* login3.png */; };
 		BCCE6CBE1C5A109000095461 /* YPBLoginViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BCCE6CBD1C5A109000095461 /* YPBLoginViewController.m */; };
 		BCD15F0F1C1032C3002B6C5C /* UIViewController+YPBSideMenu.m in Sources */ = {isa = PBXBuildFile; fileRef = BCD15F0E1C1032C3002B6C5C /* UIViewController+YPBSideMenu.m */; };
 		BCD15F141C103AB7002B6C5C /* YPBMineViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BCD15F131C103AB6002B6C5C /* YPBMineViewController.m */; };
@@ -393,6 +393,9 @@
 		BC53B9CA1C3BF0F3004252B1 /* YPBSystemConfigModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YPBSystemConfigModel.m; sourceTree = "<group>"; };
 		BC53B9CC1C3BF435004252B1 /* YPBSystemConfig.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YPBSystemConfig.h; sourceTree = "<group>"; };
 		BC53B9CD1C3BF435004252B1 /* YPBSystemConfig.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YPBSystemConfig.m; sourceTree = "<group>"; };
+		BC5501FB1C60AC6100A20B3A /* login1.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = login1.jpg; sourceTree = "<group>"; };
+		BC5501FC1C60AC6100A20B3A /* login2.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = login2.jpg; sourceTree = "<group>"; };
+		BC5501FD1C60AC6100A20B3A /* login3.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = login3.jpg; sourceTree = "<group>"; };
 		BC5555051C50DCD300412F7F /* YPBMessageOptionPanel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YPBMessageOptionPanel.h; sourceTree = "<group>"; };
 		BC5555061C50DCD300412F7F /* YPBMessageOptionPanel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YPBMessageOptionPanel.m; sourceTree = "<group>"; };
 		BC5704C31C45F74800DEFAB6 /* AlipayManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AlipayManager.h; sourceTree = "<group>"; };
@@ -548,9 +551,6 @@
 		BCCD69211C40DC9A005EA26B /* YPBWebViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YPBWebViewController.m; sourceTree = "<group>"; };
 		BCCD69241C40DEA7005EA26B /* YPBFeedbackModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YPBFeedbackModel.h; sourceTree = "<group>"; };
 		BCCD69251C40DEA7005EA26B /* YPBFeedbackModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YPBFeedbackModel.m; sourceTree = "<group>"; };
-		BCCE6C5D1C5A0F5D00095461 /* login1.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = login1.png; sourceTree = "<group>"; };
-		BCCE6C5E1C5A0F5D00095461 /* login2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = login2.png; sourceTree = "<group>"; };
-		BCCE6C5F1C5A0F5D00095461 /* login3.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = login3.png; sourceTree = "<group>"; };
 		BCCE6CBC1C5A109000095461 /* YPBLoginViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YPBLoginViewController.h; sourceTree = "<group>"; };
 		BCCE6CBD1C5A109000095461 /* YPBLoginViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YPBLoginViewController.m; sourceTree = "<group>"; };
 		BCD15F0D1C1032C3002B6C5C /* UIViewController+YPBSideMenu.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIViewController+YPBSideMenu.h"; sourceTree = "<group>"; };
@@ -1392,9 +1392,9 @@
 		BCCE6C5C1C5A0F4100095461 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
-				BCCE6C5D1C5A0F5D00095461 /* login1.png */,
-				BCCE6C5E1C5A0F5D00095461 /* login2.png */,
-				BCCE6C5F1C5A0F5D00095461 /* login3.png */,
+				BC5501FB1C60AC6100A20B3A /* login1.jpg */,
+				BC5501FC1C60AC6100A20B3A /* login2.jpg */,
+				BC5501FD1C60AC6100A20B3A /* login3.jpg */,
 			);
 			path = Resources;
 			sourceTree = "<group>";
@@ -1565,24 +1565,23 @@
 				BC85EC4A1C5CC72A00BA74B1 /* VideoOverlay.png in Resources */,
 				BC85EC431C5CC72A00BA74B1 /* UIBarButtonItemArrowLeft@3x.png in Resources */,
 				BC85EC361C5CC72A00BA74B1 /* ImageSelectedSmallOff@2x.png in Resources */,
+				BC5501FE1C60AC6100A20B3A /* login1.jpg in Resources */,
 				BC85EC391C5CC72A00BA74B1 /* ImageSelectedSmallOn@2x.png in Resources */,
 				BC1A2D8D1C0EF909003D9138 /* Assets.xcassets in Resources */,
-				BCCE6C611C5A0F5D00095461 /* login2.png in Resources */,
 				BC85EC481C5CC72A00BA74B1 /* UIBarButtonItemGrid@2x.png in Resources */,
 				BC85EC301C5CC72A00BA74B1 /* ImageSelectedOff@2x.png in Resources */,
 				BC85EC3E1C5CC72A00BA74B1 /* PlayButtonOverlayLargeTap.png in Resources */,
 				BC85EC4B1C5CC72A00BA74B1 /* VideoOverlay@2x.png in Resources */,
 				BC85EC381C5CC72A00BA74B1 /* ImageSelectedSmallOn.png in Resources */,
-				BCCE6C621C5A0F5D00095461 /* login3.png in Resources */,
 				BC85EC351C5CC72A00BA74B1 /* ImageSelectedSmallOff.png in Resources */,
 				BC85EC3C1C5CC72A00BA74B1 /* PlayButtonOverlayLarge@2x.png in Resources */,
 				BC53B9C61C3BBEEA004252B1 /* QBImagePickerController.strings in Resources */,
 				BC85EC3F1C5CC72A00BA74B1 /* PlayButtonOverlayLargeTap@2x.png in Resources */,
 				BC85EC331C5CC72A00BA74B1 /* ImageSelectedOn@2x.png in Resources */,
-				BCCE6C601C5A0F5D00095461 /* login1.png in Resources */,
 				BC85EC3B1C5CC72A00BA74B1 /* PlayButtonOverlayLarge.png in Resources */,
 				BC85EC371C5CC72A00BA74B1 /* ImageSelectedSmallOff@3x.png in Resources */,
 				BC85EC491C5CC72A00BA74B1 /* UIBarButtonItemGrid@3x.png in Resources */,
+				BC5501FF1C60AC6100A20B3A /* login2.jpg in Resources */,
 				BC85EC451C5CC72A00BA74B1 /* UIBarButtonItemArrowRight@2x.png in Resources */,
 				BC85EC2D1C5CC72A00BA74B1 /* ImageError@2x.png in Resources */,
 				BC85EC2C1C5CC72A00BA74B1 /* ImageError.png in Resources */,
@@ -1598,6 +1597,7 @@
 				BC85EC3D1C5CC72A00BA74B1 /* PlayButtonOverlayLarge@3x.png in Resources */,
 				BC85EC311C5CC72A00BA74B1 /* ImageSelectedOff@3x.png in Resources */,
 				BC85EC341C5CC72A00BA74B1 /* ImageSelectedOn@3x.png in Resources */,
+				BC5502001C60AC6100A20B3A /* login3.jpg in Resources */,
 				BC85EC321C5CC72A00BA74B1 /* ImageSelectedOn.png in Resources */,
 				BC85EC411C5CC72A00BA74B1 /* UIBarButtonItemArrowLeft.png in Resources */,
 			);

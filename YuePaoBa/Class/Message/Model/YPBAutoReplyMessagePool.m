@@ -122,7 +122,7 @@ static const NSUInteger kReplyingTimeInterval = 60 * 5;
         
         YPBAutoReplyMessage *replyMessage = [YPBAutoReplyMessage replyMessage];
         replyMessage.userId = userId;
-        replyMessage.replyTime = [YPBUtil stringFromDate:[NSDate dateWithTimeIntervalSinceNow:arc4random_uniform(kReplyingTimeInterval)]];
+        replyMessage.replyTime = [YPBUtil stringFromDate:[NSDate dateWithTimeIntervalSinceNow:10+arc4random_uniform(kReplyingTimeInterval)]];
         replyMessage.replyMessage = replyWord;
         replyMessage.status = @(YPBAutoReplyStatusUnreplied);
         [replyMessage persist];

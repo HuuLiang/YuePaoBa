@@ -35,7 +35,7 @@ DefineLazyPropertyInitialization(NSMutableArray, imageViews)
     
     CGRect imageFrame = _imageScrollView.bounds;
     [self.imageNames enumerateObjectsUsingBlock:^(NSString * _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
-        NSString *imagePath = [[NSBundle mainBundle] pathForResource:obj ofType:@"png"];
+        NSString *imagePath = [[NSBundle mainBundle] pathForResource:obj ofType:@"jpg"];
         UIImage *image = [UIImage imageWithContentsOfFile:imagePath];
         UIImageView *imageView = [[UIImageView alloc] initWithImage:image];
         imageView.frame = CGRectOffset(imageFrame, CGRectGetWidth(imageFrame)*idx, 0);

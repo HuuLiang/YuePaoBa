@@ -125,11 +125,12 @@
     
     if (CGRectContainsPoint(CGRectMake(0, 0, CGRectGetMaxX(_thumbImageView.frame), self.bounds.size.height), point)) {
         return _thumbImageView;
-    } else if (CGRectContainsPoint(CGRectMake(CGRectGetMinX(_notiLabel.frame)-15, 0, _notiLabel.frame.size.width+30, self.bounds.size.height), point)) {
-        if (!_notiLabel.hidden) {
-            return _notiLabel;
-        }
     }
+//    else if (CGRectContainsPoint(CGRectMake(CGRectGetMinX(_notiLabel.frame)-15, 0, _notiLabel.frame.size.width+30, self.bounds.size.height), point)) {
+//        if (!_notiLabel.hidden) {
+//            return _notiLabel;
+//        }
+//    }
     return self;
 }
 @end

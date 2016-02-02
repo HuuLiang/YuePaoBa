@@ -116,15 +116,15 @@ static NSString *const kContactCellReusableIdentifier = @"ContactCellReusableIde
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
     
-    if ([YPBUtil isVIP]) {
+//    if ([YPBUtil isVIP]) {
         YPBContact *contact = self.contacts[indexPath.row];
         [YPBMessageViewController showMessageWithContact:contact inViewController:self];
-    } else {
-//        [YPBVIPEntranceView showVIPEntranceInView:self.view canClose:YES withEnterAction:^(id obj) {
-            YPBVIPPriviledgeViewController *vipVC = [[YPBVIPPriviledgeViewController alloc] init];
-            [self.navigationController pushViewController:vipVC animated:YES];
-//        }];
-    }
+//    } else {
+////        [YPBVIPEntranceView showVIPEntranceInView:self.view canClose:YES withEnterAction:^(id obj) {
+//            YPBVIPPriviledgeViewController *vipVC = [[YPBVIPPriviledgeViewController alloc] init];
+//            [self.navigationController pushViewController:vipVC animated:YES];
+////        }];
+//    }
     
 }
 
