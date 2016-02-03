@@ -152,7 +152,6 @@ DefineLazyPropertyInitialization(YPBWeChatPayQueryOrderRequest, wechatPayOrderQu
     [[YPBErrorHandler sharedHandler] initialize];
     [self setupCommonStyles];
     [self setupMobStatistics];
-    [self setupCrashReporter];
     [YPBUploadManager registerWithSecretKey:YPB_UPLOAD_SECRET_KEY accessKey:YPB_UPLOAD_ACCESS_KEY scope:YPB_UPLOAD_SCOPE];
     
     if ([YPBUtil deviceRegisteredUserId]) {
@@ -181,6 +180,8 @@ DefineLazyPropertyInitialization(YPBWeChatPayQueryOrderRequest, wechatPayOrderQu
     [[YPBPaymentModel sharedModel] startRetryingToCommitUnprocessedOrders];
     [[YPBUserVIPUpgradeModel sharedModel] startRetryingToSynchronizeVIPInfos];
     [[YPBAutoReplyMessagePool sharedPool] startRollingMessagesToAutoReply];
+    
+    [self setupCrashReporter];
     return YES;
 }
 

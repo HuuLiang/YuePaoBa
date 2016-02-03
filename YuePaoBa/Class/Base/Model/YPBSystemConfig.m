@@ -135,7 +135,7 @@ static YPBSystemConfig *_sharedConfig;
         _defaultConfig.weixinInfo = [YPBWeChatPayConfig defaultConfig];
         _defaultConfig.imgUrl = YPB_DEFAULT_PHOTOSERVER_URL;
         _defaultConfig.firstPayPages = @2;
-        _defaultConfig.vipPointInfo = @"48:1|98:3";
+        _defaultConfig.vipPointInfo = @"4800:1|9800:3";
     });
     return _defaultConfig;
 }
