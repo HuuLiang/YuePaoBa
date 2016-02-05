@@ -96,7 +96,7 @@
     [self.sideMenuItems enumerateObjectsUsingBlock:^(YPBSideMenuItem * _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
         if (obj.delegate && [obj.delegate respondsToSelector:@selector(badgeValueOfSideMenuItem:)]) {
             NSString *badgeValue = [obj.delegate badgeValueOfSideMenuItem:obj];
-            if ([badgeValue containsString:@"+"]) {
+            if ([badgeValue hasSuffix:@"+"]) {
                 ret = badgeValue;
                 *stop = YES;
             } else {
