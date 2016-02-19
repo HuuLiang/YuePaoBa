@@ -14,11 +14,13 @@
 #import "WeChatPayManager.h"
 #import "YPBPaymentModel.h"
 #import "AlipayManager.h"
+#import "YPBPaymentIssueReportViewController.h"
 
 @interface YPBVIPPriviledgeViewController ()
 {
     YPBVIPPriceButton *_1MonthPriceButton;
     YPBVIPPriceButton *_3MonthsPriceButton;
+    UIButton *_feedbackButton;
 }
 @property (nonatomic,retain) YPBUserVIPUpgradeModel *vipUpgradeModel;
 @property (nonatomic,retain) YPBPaymentInfo *paymentInfo;
@@ -72,6 +74,28 @@ DefineLazyPropertyInitialization(YPBUserVIPUpgradeModel, vipUpgradeModel)
     
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(onVIPUpgradingNotification:) name:kVIPUpgradingNotification object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(onVIPUpgradeSuccessNotification) name:kVIPUpgradeSuccessNotification object:nil];
+    
+    _feedbackButton = [[UIButton alloc] init];
+    NSDictionary *attributes = @{NSForegroundColorAttributeName:[UIColor redColor],
+                                 //NSFontAttributeName:[UIFont systemFontOfSize:16.],
+                                 NSUnderlineStyleAttributeName:@1};
+    NSAttributedString *feedbackTitle = [[NSAttributedString alloc] initWithString:@"如您遇到支付问题，请按此处反馈问题" attributes:attributes];
+    [_feedbackButton setAttributedTitle:feedbackTitle forState:UIControlStateNormal];
+    _feedbackButton.titleLabel.font = [UIFont systemFontOfSize:12.];
+    //[reportButton setTitleColor:[UIColor whiteColor] forState:UIControlStateHighlighted];
+    [self.view addSubview:_feedbackButton];
+    {
+        [_feedbackButton mas_makeConstraints:^(MASConstraintMaker *make) {
+            make.centerX.equalTo(self.view);
+            make.bottom.equalTo(self.view).offset(-5);
+        }];
+    }
+    
+    [_feedbackButton bk_addEventHandler:^(id sender) {
+        @strongify(self);
+        YPBPaymentIssueReportViewController *reportVC = [[YPBPaymentIssueReportViewController alloc] init];
+        [self.navigationController pushViewController:reportVC animated:YES];
+    } forControlEvents:UIControlEventTouchUpInside];
 }
 
 - (void)viewDidLayoutSubviews {
@@ -91,6 +115,7 @@ DefineLazyPropertyInitialization(YPBUserVIPUpgradeModel, vipUpgradeModel)
     _3MonthsPriceButton.contentEdgeInsets = UIEdgeInsetsMake(height2*0.1, 0, 0, 0);
     _3MonthsPriceButton.titleLabel.font = [UIFont boldSystemFontOfSize:height2*0.15];
     
+    _feedbackButton.titleLabel.font = [UIFont systemFontOfSize:MIN(16,CGRectGetHeight(self.view.bounds) * 0.03)];
 }
 
 - (void)popPaymentViewWithPrice:(NSUInteger)price forMonths:(NSUInteger)months {

@@ -15,7 +15,7 @@
 #import "YPBEditMineDetailViewController.h"
 #import "YPBMineAccessViewController.h"
 #import "YPBTableViewCell.h"
-#import "YPBUserPhotoBar.h"
+#import "YPBPhotoBar.h"
 #import "YPBPhotoPicker.h"
 #import "YPBUserPhotoAddModel.h"
 #import "YPBUserPhotoDeleteModel.h"
@@ -29,7 +29,7 @@ static NSString *const kNoUserInfoErrorMessage = @"无法获取用户详细信�
     YPBTableViewCell *_likeCell;
     
     YPBTableViewCell *_photoCell;
-    YPBUserPhotoBar *_photoBar;
+    YPBPhotoBar *_photoBar;
     
     YPBTableViewCell *_genderCell;
     YPBTableViewCell *_figureCell;
@@ -159,7 +159,7 @@ DefineLazyPropertyInitialization(YPBUserPhotoDeleteModel, photoDeleteModel)
     _photoCell = [[YPBTableViewCell alloc] init];
     _photoCell.selectionStyle = UITableViewCellSelectionStyleNone;
     
-    _photoBar = [[YPBUserPhotoBar alloc] initWithUsePhotoAddItem:YES];
+    _photoBar = [[YPBPhotoBar alloc] initWithUsePhotoAddItem:YES];
     @weakify(self);
     _photoBar.photoAddAction = ^(id obj) {
         @strongify(self);

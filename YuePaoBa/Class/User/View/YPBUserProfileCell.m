@@ -15,6 +15,7 @@
     YPBAvatarView *_avatarView;
     UIImageView *_backgroundImageView;
     UIButton *_dateButton;
+    UIButton *_sendGiftButton;
     YPBLikeButton *_likeButton;
 }
 @end
@@ -58,7 +59,7 @@
         [self addSubview:_dateButton];
         {
             [_dateButton mas_makeConstraints:^(MASConstraintMaker *make) {
-                make.centerX.equalTo(self);
+                make.centerX.equalTo(self).multipliedBy(0.5);
                 make.bottom.equalTo(self).offset(-2);
                 make.width.equalTo(self).dividedBy(3);
                 make.height.equalTo(_dateButton.mas_width).multipliedBy(115./253.);
@@ -69,6 +70,23 @@
         [_dateButton bk_addEventHandler:^(id sender) {
             @strongify(self);
             SafelyCallBlock1(self.dateAction, sender);
+        } forControlEvents:UIControlEventTouchUpInside];
+        
+        _sendGiftButton = [[UIButton alloc] init];
+        [_sendGiftButton setImage:image forState:UIControlStateNormal];
+        [self addSubview:_sendGiftButton];
+        {
+            [_sendGiftButton mas_makeConstraints:^(MASConstraintMaker *make) {
+                make.centerX.equalTo(self).multipliedBy(1.5);
+                make.bottom.equalTo(self).offset(-2);
+                make.width.equalTo(self).dividedBy(3);
+                make.height.equalTo(_sendGiftButton.mas_width).multipliedBy(115./253.);
+            }];
+        }
+        
+        [_sendGiftButton bk_addEventHandler:^(id sender) {
+            @strongify(self);
+            SafelyCallBlock1(self.sendGiftAction, sender);
         } forControlEvents:UIControlEventTouchUpInside];
         
         _likeButton = [[YPBLikeButton alloc] initWithUserInteractionEnabled:YES];

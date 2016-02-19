@@ -10,7 +10,7 @@
 
 @interface YPBFeedbackModel : YPBEncryptedURLRequest
 
-- (BOOL)sendFeedback:(NSString *)content
+- (BOOL)sendFeedback:(NSString *)feedBack
               byUser:(NSString *)userId
 withCompletionHandler:(YPBCompletionHandler)handler;
 

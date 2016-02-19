@@ -15,6 +15,7 @@
 @property (nonatomic) NSUInteger numberOfLikes;
 
 @property (nonatomic,copy) YPBAction dateAction;
+@property (nonatomic,copy) YPBAction sendGiftAction;
 @property (nonatomic,copy) YPBAction likeAction;
 
 @end

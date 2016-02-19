@@ -1,12 +1,12 @@
 //
-//  YPBUserPhotoBar.m
+//  YPBPhotoBar.m
 //  YuePaoBa
 //
 //  Created by Sean Yue on 15/12/24.
 //  Copyright © 2015年 iqu8. All rights reserved.
 //
 
-#import "YPBUserPhotoBar.h"
+#import "YPBPhotoBar.h"
 
 static const CGFloat kInterItemSpacing = 10;
 static const void *kLockImageAssociatedKey = &kLockImageAssociatedKey;
@@ -56,13 +56,13 @@ static const void *kLockImageAssociatedKey = &kLockImageAssociatedKey;
 }
 
 @end
-@interface YPBUserPhotoBar ()
+@interface YPBPhotoBar ()
 @property (nonatomic,retain) NSMutableArray<UIImageView *> *imageViews;
 @property (nonatomic,retain) UILabel *emptyLabel;
 @property (nonatomic,retain) UIImageView *photoAddImageView;
 @end
 
-@implementation YPBUserPhotoBar
+@implementation YPBPhotoBar
 
 DefineLazyPropertyInitialization(NSMutableArray, imageViews)
 
@@ -73,9 +73,10 @@ DefineLazyPropertyInitialization(NSMutableArray, imageViews)
         _emptyLabel.autoresizingMask = UIViewAutoresizingFlexibleHeight|UIViewAutoresizingFlexibleWidth;
         _emptyLabel.font = [UIFont systemFontOfSize:16.];
         _emptyLabel.textColor = kDefaultTextColor;
-        _emptyLabel.text = @"TA的相册空空如也~~~";
         _emptyLabel.textAlignment = NSTextAlignmentCenter;
         [self addSubview:_emptyLabel];
+        
+        self.placeholder = @"TA的相册空空如也~~~";
     }
     return self;
 }
@@ -246,5 +247,10 @@ DefineLazyPropertyInitialization(NSMutableArray, imageViews)
         return self.imageViews[index].isLocked;
     }
     return NO;
+}
+
+- (void)setPlaceholder:(NSString *)placeholder {
+    _placeholder = placeholder;
+    _emptyLabel.text = placeholder;
 }
 @end

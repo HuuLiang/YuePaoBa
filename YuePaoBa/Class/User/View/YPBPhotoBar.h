@@ -1,5 +1,5 @@
 //
-//  YPBUserPhotoBar.h
+//  YPBPhotoBar.h
 //  YuePaoBa
 //
 //  Created by Sean Yue on 15/12/24.
@@ -11,10 +11,12 @@
 typedef void (^YPBPhotoBarAction)(NSUInteger index, id sender);
 typedef BOOL (^YPBLockAction)(NSUInteger index);
 
-@interface YPBUserPhotoBar : UIScrollView
+@interface YPBPhotoBar : UIScrollView
 
 @property (nonatomic) BOOL usePhotoAddItem;
+@property (nonatomic) NSString *placeholder;
 @property (nonatomic,retain) NSArray<NSString *> *imageURLStrings;
+@property (nonatomic,retain) NSArray<NSString *> *titleStrings;
 @property (nonatomic,copy) YPBPhotoBarAction selectAction;
 @property (nonatomic,copy) YPBPhotoBarAction holdAction;
 @property (nonatomic,copy) YPBAction photoAddAction;

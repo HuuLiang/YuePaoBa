@@ -11,7 +11,7 @@
 #import "YPBUserDetailModel.h"
 #import "YPBUserAccessModel.h"
 #import "YPBTableViewCell.h"
-#import "YPBUserPhotoBar.h"
+#import "YPBPhotoBar.h"
 #import "YPBPhotoGridViewController.h"
 #import "YPBUserPhotoViewController.h"
 #import "YPBMessageViewController.h"
@@ -32,7 +32,9 @@
     YPBTableViewCell *_ageCell;
     
 //    YPBTableViewCell *_morePhotoCell;
-    YPBUserPhotoBar *_photoBar;
+    YPBPhotoBar *_photoBar;
+    YPBTableViewCell *_liveShowCell;
+    YPBPhotoBar *_giftBar;
 }
 @property (nonatomic) NSString *userId;
 @property (nonatomic,retain) YPBUserDetailModel *userDetailModel;
@@ -190,6 +192,15 @@ DefineLazyPropertyInitialization(YPBUserAccessModel, userAccessModel)
 }
 
 - (void)initLayoutCells {
+    NSUInteger section = 0;
+    [self initUserProfileCellLayoutsInSection:section++];
+    [self initUserPhotoCellLayoutsInSection:section++];
+    [self initUserLiveShowCellLayoutsInSection:section++];
+    [self initUserGiftCellLayoutsInSection:section++];
+    [self initUserDetailCellLayoutsInSection:section++];
+}
+
+- (void)initUserProfileCellLayoutsInSection:(NSUInteger)section {
     YPBUserProfileCell *profileCell = [[YPBUserProfileCell alloc] init];
     @weakify(self);
     profileCell.dateAction = ^(id sender) {
@@ -211,17 +222,20 @@ DefineLazyPropertyInitialization(YPBUserAccessModel, userAccessModel)
             [self greetUser];
         }
     };
-    [self setLayoutCell:profileCell cellHeight:MIN(kScreenHeight*0.4, 200) inRow:0 andSection:0];
+    [self setLayoutCell:profileCell cellHeight:MIN(kScreenHeight*0.4, 200) inRow:0 andSection:section];
     _profileCell = profileCell;
-    
-    [self setHeaderHeight:15 inSection:1];
+}
+
+- (void)initUserPhotoCellLayoutsInSection:(NSUInteger)section {
+    [self setHeaderTitle:@"个人相册" height:20 inSection:section];
     
     YPBTableViewCell *photoCell = [[YPBTableViewCell alloc] init];
     photoCell.selectionStyle = UITableViewCellSelectionStyleNone;
-    _photoBar = [[YPBUserPhotoBar alloc] init];
+    _photoBar = [[YPBPhotoBar alloc] init];
+    @weakify(self);
     _photoBar.selectAction = ^(NSUInteger index, id sender) {
         @strongify(self);
-        YPBUserPhotoBar *photoBar = sender;
+        YPBPhotoBar *photoBar = sender;
         if ([photoBar photoIsLocked:index]) {
             YPBVIPPriviledgeViewController *vipVC = [[YPBVIPPriviledgeViewController alloc] init];
             [self.navigationController pushViewController:vipVC animated:YES];
@@ -252,15 +266,38 @@ DefineLazyPropertyInitialization(YPBUserAccessModel, userAccessModel)
             make.edges.equalTo(photoCell);//.insets(UIEdgeInsetsMake(10, 10, 10, 10));
         }];
     }
-    [self setLayoutCell:photoCell cellHeight:kScreenHeight*0.15 inRow:0 andSection:1];
+    [self setLayoutCell:photoCell cellHeight:kScreenHeight*0.15 inRow:0 andSection:section];
     
-//    _morePhotoCell = [[YPBTableViewCell alloc] init];
-//    _morePhotoCell.titleLabel.text = @"查看所有照片";
-//    _morePhotoCell.titleLabel.textAlignment = NSTextAlignmentCenter;
-//    [self setLayoutCell:_morePhotoCell inRow:1 andSection:1];
+    //    _morePhotoCell = [[YPBTableViewCell alloc] init];
+    //    _morePhotoCell.titleLabel.text = @"查看所有照片";
+    //    _morePhotoCell.titleLabel.textAlignment = NSTextAlignmentCenter;
+    //    [self setLayoutCell:_morePhotoCell inRow:1 andSection:1];
+}
+
+- (void)initUserLiveShowCellLayoutsInSection:(NSUInteger)section {
+    [self setHeaderTitle:@"TA的直播秀" height:20 inSection:section];
     
-    const NSUInteger detailInfoSection = 2;
-    [self setHeaderHeight:15 inSection:detailInfoSection];
+    _liveShowCell = [[YPBTableViewCell alloc] init];
+    _liveShowCell.selectionStyle = UITableViewCellSelectionStyleNone;
+    [self setLayoutCell:_liveShowCell cellHeight:kScreenWidth*0.5 inRow:0 andSection:section];
+    
+    
+}
+
+- (void)initUserGiftCellLayoutsInSection:(NSUInteger)section {
+    [self setHeaderTitle:@"TA收到的礼物" height:20 inSection:section];
+    YPBTableViewCell *giftCell = [[YPBTableViewCell alloc] init];
+    giftCell.selectionStyle = UITableViewCellSelectionStyleNone;
+    [self setLayoutCell:giftCell cellHeight:kScreenHeight*0.15 inRow:0 andSection:section];
+    
+    _giftBar = [[YPBPhotoBar alloc] init];
+    _giftBar.placeholder = @"TA还未收到过礼物~~~";
+    giftCell.backgroundView = _giftBar;
+}
+
+- (void)initUserDetailCellLayoutsInSection:(NSUInteger)section {
+    const NSUInteger detailInfoSection = section;
+    [self setHeaderTitle:@"详细资料" height:20 inSection:detailInfoSection];
     
     NSUInteger row = 0;
     _genderCell = [[YPBTableViewCell alloc] initWithImage:[UIImage imageNamed:@"female_icon"] title:@"性别：??"];

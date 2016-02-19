@@ -10,13 +10,15 @@
 
 @implementation YPBFeedbackModel
 
-- (BOOL)sendFeedback:(NSString *)content
+- (BOOL)sendFeedback:(NSString *)feedBack
               byUser:(NSString *)userId
 withCompletionHandler:(YPBCompletionHandler)handler {
-    if (userId.length == 0 || content.length == 0) {
+    if (userId.length == 0 || feedBack.length == 0) {
         SafelyCallBlock2(handler, NO, nil);
         return NO;
     }
+    
+    NSString *content = [NSString stringWithFormat:@"Device:%@\nSystemVersion:%@\nContent:\n%@", [YPBUtil deviceName], [UIDevice currentDevice].systemVersion, feedBack];
     return [self requestURLPath:YPB_FEEDBACK_URL
                      withParams:NSDictionaryOfVariableBindings(userId,content)
                 responseHandler:^(YPBURLResponseStatus respStatus, NSString *errorMessage)

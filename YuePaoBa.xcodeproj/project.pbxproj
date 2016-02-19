@@ -66,6 +66,9 @@
 		BC31B7621C1BC2C20043E7EB /* YPBActionButton.m in Sources */ = {isa = PBXBuildFile; fileRef = BC31B7611C1BC2C20043E7EB /* YPBActionButton.m */; };
 		BC31B7651C1BD8560043E7EB /* YPBRadioButton.m in Sources */ = {isa = PBXBuildFile; fileRef = BC31B7641C1BD8560043E7EB /* YPBRadioButton.m */; };
 		BC31B7681C1BEC630043E7EB /* YPBRadioButtonGroup.m in Sources */ = {isa = PBXBuildFile; fileRef = BC31B7671C1BEC630043E7EB /* YPBRadioButtonGroup.m */; };
+		BC3BC5061C76E83900DE2FBF /* YPBPhotoBar.m in Sources */ = {isa = PBXBuildFile; fileRef = BC3BC5051C76E83900DE2FBF /* YPBPhotoBar.m */; };
+		BC3BC5091C76F78C00DE2FBF /* YPBPaymentIssueReportViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BC3BC5081C76F78C00DE2FBF /* YPBPaymentIssueReportViewController.m */; };
+		BC3BC50C1C770FE000DE2FBF /* YPBTickCell.m in Sources */ = {isa = PBXBuildFile; fileRef = BC3BC50B1C770FE000DE2FBF /* YPBTickCell.m */; };
 		BC50CE121C28EE0F00CE88DD /* YPBHomeCollectionViewLayout.m in Sources */ = {isa = PBXBuildFile; fileRef = BC50CE111C28EE0F00CE88DD /* YPBHomeCollectionViewLayout.m */; };
 		BC50CE151C28F88C00CE88DD /* UIScrollView+Refresh.m in Sources */ = {isa = PBXBuildFile; fileRef = BC50CE141C28F88C00CE88DD /* UIScrollView+Refresh.m */; };
 		BC50CE191C2915A300CE88DD /* YPBHomeCell.m in Sources */ = {isa = PBXBuildFile; fileRef = BC50CE181C2915A300CE88DD /* YPBHomeCell.m */; };
@@ -121,7 +124,6 @@
 		BC5CF57D1C4FB6F300A6CE41 /* YPBSendBarrageModel.m in Sources */ = {isa = PBXBuildFile; fileRef = BC5CF57C1C4FB6F300A6CE41 /* YPBSendBarrageModel.m */; };
 		BC5F1AB61C2CF3DB0047BCF4 /* YPBUser+Account.m in Sources */ = {isa = PBXBuildFile; fileRef = BC5F1AB51C2CF3DB0047BCF4 /* YPBUser+Account.m */; };
 		BC5F1AB91C2CF42D0047BCF4 /* YPBUser+Mine.m in Sources */ = {isa = PBXBuildFile; fileRef = BC5F1AB81C2CF42D0047BCF4 /* YPBUser+Mine.m */; };
-		BC652B811C2B992100951DEA /* YPBUserPhotoBar.m in Sources */ = {isa = PBXBuildFile; fileRef = BC652B801C2B992100951DEA /* YPBUserPhotoBar.m */; };
 		BC652B841C2BB9BA00951DEA /* YPBEditMineDetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BC652B831C2BB9BA00951DEA /* YPBEditMineDetailViewController.m */; };
 		BC652B871C2BD5D800951DEA /* UITableView+Separator.m in Sources */ = {isa = PBXBuildFile; fileRef = BC652B861C2BD5D800951DEA /* UITableView+Separator.m */; };
 		BC652B8A1C2BD9B300951DEA /* YPBInputTextViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BC652B891C2BD9B300951DEA /* YPBInputTextViewController.m */; };
@@ -340,6 +342,12 @@
 		BC31B7641C1BD8560043E7EB /* YPBRadioButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YPBRadioButton.m; sourceTree = "<group>"; };
 		BC31B7661C1BEC630043E7EB /* YPBRadioButtonGroup.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YPBRadioButtonGroup.h; sourceTree = "<group>"; };
 		BC31B7671C1BEC630043E7EB /* YPBRadioButtonGroup.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YPBRadioButtonGroup.m; sourceTree = "<group>"; };
+		BC3BC5041C76E83900DE2FBF /* YPBPhotoBar.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YPBPhotoBar.h; sourceTree = "<group>"; };
+		BC3BC5051C76E83900DE2FBF /* YPBPhotoBar.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YPBPhotoBar.m; sourceTree = "<group>"; };
+		BC3BC5071C76F78C00DE2FBF /* YPBPaymentIssueReportViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YPBPaymentIssueReportViewController.h; sourceTree = "<group>"; };
+		BC3BC5081C76F78C00DE2FBF /* YPBPaymentIssueReportViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YPBPaymentIssueReportViewController.m; sourceTree = "<group>"; };
+		BC3BC50A1C770FE000DE2FBF /* YPBTickCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YPBTickCell.h; sourceTree = "<group>"; };
+		BC3BC50B1C770FE000DE2FBF /* YPBTickCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YPBTickCell.m; sourceTree = "<group>"; };
 		BC50CE101C28EE0F00CE88DD /* YPBHomeCollectionViewLayout.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YPBHomeCollectionViewLayout.h; sourceTree = "<group>"; };
 		BC50CE111C28EE0F00CE88DD /* YPBHomeCollectionViewLayout.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YPBHomeCollectionViewLayout.m; sourceTree = "<group>"; };
 		BC50CE131C28F88C00CE88DD /* UIScrollView+Refresh.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIScrollView+Refresh.h"; sourceTree = "<group>"; };
@@ -445,8 +453,6 @@
 		BC5F1AB51C2CF3DB0047BCF4 /* YPBUser+Account.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "YPBUser+Account.m"; sourceTree = "<group>"; };
 		BC5F1AB71C2CF42D0047BCF4 /* YPBUser+Mine.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "YPBUser+Mine.h"; sourceTree = "<group>"; };
 		BC5F1AB81C2CF42D0047BCF4 /* YPBUser+Mine.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "YPBUser+Mine.m"; sourceTree = "<group>"; };
-		BC652B7F1C2B992100951DEA /* YPBUserPhotoBar.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YPBUserPhotoBar.h; sourceTree = "<group>"; };
-		BC652B801C2B992100951DEA /* YPBUserPhotoBar.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YPBUserPhotoBar.m; sourceTree = "<group>"; };
 		BC652B821C2BB9BA00951DEA /* YPBEditMineDetailViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YPBEditMineDetailViewController.h; sourceTree = "<group>"; };
 		BC652B831C2BB9BA00951DEA /* YPBEditMineDetailViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YPBEditMineDetailViewController.m; sourceTree = "<group>"; };
 		BC652B851C2BD5D800951DEA /* UITableView+Separator.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UITableView+Separator.h"; sourceTree = "<group>"; };
@@ -1050,8 +1056,8 @@
 			children = (
 				BC50CE421C29565400CE88DD /* YPBUserProfileCell.h */,
 				BC50CE431C29565400CE88DD /* YPBUserProfileCell.m */,
-				BC652B7F1C2B992100951DEA /* YPBUserPhotoBar.h */,
-				BC652B801C2B992100951DEA /* YPBUserPhotoBar.m */,
+				BC3BC5041C76E83900DE2FBF /* YPBPhotoBar.h */,
+				BC3BC5051C76E83900DE2FBF /* YPBPhotoBar.m */,
 				BC53B9A21C3B6ED7004252B1 /* YPBLikeButton.h */,
 				BC53B9A31C3B6ED7004252B1 /* YPBLikeButton.m */,
 			);
@@ -1232,6 +1238,8 @@
 				BC1F28201C2A404B00C2B476 /* YPBTableViewCell.m */,
 				BC652B8B1C2BF8DE00951DEA /* YPBTextField.h */,
 				BC652B8C1C2BF8DE00951DEA /* YPBTextField.m */,
+				BC3BC50A1C770FE000DE2FBF /* YPBTickCell.h */,
+				BC3BC50B1C770FE000DE2FBF /* YPBTickCell.m */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -1424,6 +1432,8 @@
 				BC652B891C2BD9B300951DEA /* YPBInputTextViewController.m */,
 				BC5A6E6A1C32561F006AD77A /* YPBMineFigureViewController.h */,
 				BC5A6E6B1C32561F006AD77A /* YPBMineFigureViewController.m */,
+				BC3BC5071C76F78C00DE2FBF /* YPBPaymentIssueReportViewController.h */,
+				BC3BC5081C76F78C00DE2FBF /* YPBPaymentIssueReportViewController.m */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -1691,6 +1701,7 @@
 				BC50CE151C28F88C00CE88DD /* UIScrollView+Refresh.m in Sources */,
 				BCFB2A6D1C3FDD16003E327D /* YPBPhotoGridViewController.m in Sources */,
 				BC264AE91C3C252E009FBCB8 /* YPBUserPhotoAddModel.m in Sources */,
+				BC3BC50C1C770FE000DE2FBF /* YPBTickCell.m in Sources */,
 				BC1B497F1C44AFD300ECB0BA /* YPBVIPEntranceView.m in Sources */,
 				BC53B9C51C3BBEEA004252B1 /* QBImagePickerController.m in Sources */,
 				BC1B49B11C44FB2100ECB0BA /* YPBWeChatPayQueryOrderRequest.m in Sources */,
@@ -1781,6 +1792,7 @@
 				BCD15F1B1C104B31002B6C5C /* RACEXTRuntimeExtensions.m in Sources */,
 				BC5CF57A1C4F69C400A6CE41 /* YPBUserPhotoDeleteModel.m in Sources */,
 				BC5704E61C45F74800DEFAB6 /* RSADataSigner.m in Sources */,
+				BC3BC5091C76F78C00DE2FBF /* YPBPaymentIssueReportViewController.m in Sources */,
 				BC5980A91C313D5E0037D98C /* YPBPhotoBrowser.m in Sources */,
 				BC1AED5B1C0F5A43003A0C63 /* YPBMessageViewController.m in Sources */,
 				BC50CE321C2954FF00CE88DD /* YPBUser.m in Sources */,
@@ -1804,8 +1816,8 @@
 				BC85EC561C5CC72A00BA74B1 /* UIImage+MWPhotoBrowser.m in Sources */,
 				BC27422A1C3A631A00C98E6F /* YPBChatMessage.m in Sources */,
 				BC1A7B251C1185350082A2FB /* UIViewController+BackgroundImage.m in Sources */,
+				BC3BC5061C76E83900DE2FBF /* YPBPhotoBar.m in Sources */,
 				BCCE6CBE1C5A109000095461 /* YPBLoginViewController.m in Sources */,
-				BC652B811C2B992100951DEA /* YPBUserPhotoBar.m in Sources */,
 				BC5704E31C45F74800DEFAB6 /* MD5DataSigner.m in Sources */,
 				BC50CE191C2915A300CE88DD /* YPBHomeCell.m in Sources */,
 				BC50CE3B1C29552100CE88DD /* YPBURLRequest.m in Sources */,
