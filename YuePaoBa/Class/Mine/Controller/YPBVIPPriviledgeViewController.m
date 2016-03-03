@@ -31,10 +31,19 @@
 
 DefineLazyPropertyInitialization(YPBUserVIPUpgradeModel, vipUpgradeModel)
 
+- (instancetype)initWithContentType:(YPBPaymentContentType)contentType {
+    self = [super init];
+    if (self) {
+        _contentType = contentType;
+    }
+    return self;
+}
+
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
     self.title = @"VIP特权";
+    self.edgesForExtendedLayout = UIRectEdgeNone;
     
     UIImageView *backgroundImageView = [[UIImageView alloc] init];
     [backgroundImageView sd_setImageWithURL:[NSURL URLWithString:[YPBSystemConfig sharedConfig].payImgUrl]
@@ -72,7 +81,6 @@ DefineLazyPropertyInitialization(YPBUserVIPUpgradeModel, vipUpgradeModel)
         [self popPaymentViewWithPrice:price3Month forMonths:3];
     } forControlEvents:UIControlEventTouchUpInside];
     
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(onVIPUpgradingNotification:) name:kVIPUpgradingNotification object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(onVIPUpgradeSuccessNotification) name:kVIPUpgradeSuccessNotification object:nil];
     
     _feedbackButton = [[UIButton alloc] init];
@@ -139,81 +147,41 @@ DefineLazyPropertyInitialization(YPBUserVIPUpgradeModel, vipUpgradeModel)
 - (void)payWithPrice:(NSUInteger)price paymentType:(YPBPaymentType)paymentType forMonths:(NSUInteger)months {
     NSParameterAssert(paymentType==YPBPaymentTypeAlipay||paymentType==YPBPaymentTypeWeChatPay);
     
-    @weakify(self);
-    NSString *channelNo = YPB_CHANNEL_NO;
-    channelNo = [channelNo substringFromIndex:channelNo.length-14];
-    NSString *uuid = [[NSUUID UUID].UUIDString.md5 substringWithRange:NSMakeRange(8, 16)];
-    NSString *orderNo = [NSString stringWithFormat:@"%@_%@", channelNo, uuid];
-    
     YPBPaymentInfo *paymentInfo = [[YPBPaymentInfo alloc] init];
-    paymentInfo.orderId = orderNo;
     paymentInfo.orderPrice = @(price);
-    paymentInfo.contentId = [YPBUser currentUser].userId;
     paymentInfo.paymentType = @(paymentType);
     paymentInfo.paymentResult = @(PAYRESULT_UNKNOWN);
     paymentInfo.paymentStatus = @(YPBPaymentStatusPaying);
     paymentInfo.monthsPaid = @(months);
-    paymentInfo.paymentTime = [YPBUtil currentDateString];
-    [paymentInfo save];
-    self.paymentInfo = paymentInfo;
+    paymentInfo.payPointType = @(YPBPayPointTypeVIP);
+    paymentInfo.contentType = @(self.contentType).stringValue;
     
+    @weakify(self);
     [self.view.window beginLoading];
-    if (paymentType==YPBPaymentTypeWeChatPay) {
-        [[WeChatPayManager sharedInstance] startWeChatPayWithOrderNo:orderNo price:price completionHandler:^(PAYRESULT payResult) {
-            @strongify(self);
-            [self notifyPaymentResult:payResult withPaymentInfo:self.paymentInfo];
-        }];
-    } else if (paymentType==YPBPaymentTypeAlipay) {
-        [[AlipayManager shareInstance] startAlipay:orderNo price:price withResult:^(PAYRESULT result, Order *order) {
-            @strongify(self);
-            [self notifyPaymentResult:result withPaymentInfo:self.paymentInfo];
-        }];
-    }
-}
-
-- (void)onVIPUpgradingNotification:(NSNotification *)notification {
-    [self.view.window endLoading];
-    
-    YPBPaymentInfo *paymentInfo = notification.object;
-    if (![paymentInfo.orderId isEqualToString:self.paymentInfo.orderId]) {
-        return;
-    } else {
-        self.paymentInfo = nil;
-    }
-    
-    PAYRESULT result = paymentInfo.paymentResult.unsignedIntegerValue;
-    if (result == PAYRESULT_SUCCESS) {
-        [self.paymentPopView hide];
+    [[YPBPaymentManager sharedManager] payWithPaymentInfo:paymentInfo completionHandler:^(BOOL success, id obj) {
+        @strongify(self);
+        [self.view.window endLoading];
         
-        if ([YPBUtil isVIP]) {
-            [[YPBMessageCenter defaultCenter] showSuccessWithTitle:@"VIP续费成功" inViewController:self];
+        YPBPaymentInfo *paymentInfo = obj;
+        PAYRESULT result = paymentInfo.paymentResult.unsignedIntegerValue;
+        if (result == PAYRESULT_SUCCESS) {
+            [self.paymentPopView hide];
+            
+            if (paymentInfo.contentType.integerValue == YPBPaymentContentTypeRenewVIP) {
+                [[YPBMessageCenter defaultCenter] showSuccessWithTitle:@"VIP续费成功" inViewController:self];
+            } else {
+                [[YPBMessageCenter defaultCenter] showSuccessWithTitle:@"VIP开通成功" inViewController:self];
+            }
+        } else if (result == PAYRESULT_ABANDON) {
+            [[YPBMessageCenter defaultCenter] showWarningWithTitle:@"已取消支付" inViewController:self];
         } else {
-            [[YPBMessageCenter defaultCenter] showSuccessWithTitle:@"VIP开通成功" inViewController:self];
+            [[YPBMessageCenter defaultCenter] showErrorWithTitle:@"支付失败" inViewController:self];
         }
-        
-        
-        NSString *vipExpireTime = [YPBUtil renewVIPByMonths:paymentInfo.monthsPaid.unsignedIntegerValue];
-        [self.vipUpgradeModel upgradeToVIPWithExpireTime:vipExpireTime completionHandler:nil];
-        [[NSNotificationCenter defaultCenter] postNotificationName:kVIPUpgradeSuccessNotification object:nil];
-    } else if (result == PAYRESULT_ABANDON) {
-        [[YPBMessageCenter defaultCenter] showWarningWithTitle:@"已取消支付" inViewController:self];
-    } else {
-        [[YPBMessageCenter defaultCenter] showErrorWithTitle:@"支付失败" inViewController:self];
-    }
-    
-    [[YPBPaymentModel sharedModel] commitPaymentInfo:paymentInfo];
+    }];
 }
 
 - (void)onVIPUpgradeSuccessNotification {
     [self.navigationController popToRootViewControllerAnimated:YES];
-}
-
-- (void)notifyPaymentResult:(PAYRESULT)result withPaymentInfo:(YPBPaymentInfo *)paymentInfo {
-    paymentInfo.paymentResult = @(result);
-    paymentInfo.paymentStatus = @(YPBPaymentStatusNotProcessed);
-    [paymentInfo save];
-    
-    [[NSNotificationCenter defaultCenter] postNotificationName:kVIPUpgradingNotification object:paymentInfo];
 }
 
 - (void)didReceiveMemoryWarning {

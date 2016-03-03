@@ -40,7 +40,7 @@ DefineLazyPropertyInitialization(NSMutableDictionary, headerTitles)
         return _layoutTableView;
     }
     
-    _layoutTableView = [[TPKeyboardAvoidingTableView alloc] initWithFrame:CGRectZero style:UITableViewStyleGrouped];
+    _layoutTableView = [[UITableView alloc] initWithFrame:CGRectZero style:UITableViewStyleGrouped];
     _layoutTableView.backgroundColor = kDefaultBackgroundColor;
     _layoutTableView.delegate = self;
     _layoutTableView.dataSource = self;
@@ -59,8 +59,19 @@ DefineLazyPropertyInitialization(NSMutableDictionary, headerTitles)
                 inRow:(NSUInteger)row
            andSection:(NSUInteger)section {
     NSIndexPath *indexPath = [NSIndexPath indexPathForRow:row inSection:section];
+    [self setLayoutCell:cell cellHeight:height atIndexPath:indexPath];
+}
+
+- (void)setLayoutCell:(UITableViewCell *)cell cellHeight:(CGFloat)height atIndexPath:(NSIndexPath *)indexPath {
     [self.cells setObject:cell forKey:indexPath];
     [self.cellHeights setObject:@(height) forKey:indexPath];
+}
+
+- (void)removeAllLayoutCells {
+    [self.cells removeAllObjects];
+    [self.cellHeights removeAllObjects];
+    [self.headerTitles removeAllObjects];
+    [self.headerHeights removeAllObjects];
 }
 
 - (void)setHeaderHeight:(CGFloat)height inSection:(NSUInteger)section {
@@ -73,6 +84,10 @@ DefineLazyPropertyInitialization(NSMutableDictionary, headerTitles)
 }
 
 - (UITableViewCell *)cellAtIndexPath:(NSIndexPath *)indexPath {
+    if (indexPath == nil) {
+        return nil;
+    }
+    
     NSIndexPath *cellIndexPath = indexPath;
     if ([indexPath class] != [NSIndexPath class]) {
         cellIndexPath = [NSIndexPath indexPathForRow:indexPath.row inSection:indexPath.section];
@@ -81,6 +96,10 @@ DefineLazyPropertyInitialization(NSMutableDictionary, headerTitles)
 }
 
 - (CGFloat)cellHeightAtIndexPath:(NSIndexPath *)indexPath {
+    if (indexPath == nil) {
+        return 0;
+    }
+    
     NSIndexPath *cellIndexPath = indexPath;
     if ([indexPath class] != [NSIndexPath class]) {
         cellIndexPath = [NSIndexPath indexPathForRow:indexPath.row inSection:indexPath.section];

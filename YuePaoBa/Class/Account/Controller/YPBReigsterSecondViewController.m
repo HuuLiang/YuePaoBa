@@ -43,6 +43,7 @@ DefineLazyPropertyInitialization(YPBActivateModel, activateModel)
     [super viewDidLoad];
     // Do any additional setup after loading the view.
     self.title = @"设置交友对象";
+    self.edgesForExtendedLayout = UIRectEdgeNone;
     
     UIImageView *backgroundImageView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"register_background"]];
     backgroundImageView.contentMode = UIViewContentModeScaleAspectFill;

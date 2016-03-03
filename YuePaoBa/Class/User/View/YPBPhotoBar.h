@@ -15,8 +15,8 @@ typedef BOOL (^YPBLockAction)(NSUInteger index);
 
 @property (nonatomic) BOOL usePhotoAddItem;
 @property (nonatomic) NSString *placeholder;
-@property (nonatomic,retain) NSArray<NSString *> *imageURLStrings;
-@property (nonatomic,retain) NSArray<NSString *> *titleStrings;
+@property (nonatomic,retain,readonly) NSArray<NSString *> *imageURLStrings;
+@property (nonatomic,retain,readonly) NSArray<NSString *> *titleStrings;
 @property (nonatomic,copy) YPBPhotoBarAction selectAction;
 @property (nonatomic,copy) YPBPhotoBarAction holdAction;
 @property (nonatomic,copy) YPBAction photoAddAction;
@@ -24,5 +24,6 @@ typedef BOOL (^YPBLockAction)(NSUInteger index);
 
 - (instancetype)initWithUsePhotoAddItem:(BOOL)usePhotoAddItem;
 - (BOOL)photoIsLocked:(NSUInteger)index;
+- (void)setImageURLStrings:(NSArray<NSString *> *)imageURLStrings titleStrings:(NSArray<NSString *> *)titleStrings;
 
 @end

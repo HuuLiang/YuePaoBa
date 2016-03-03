@@ -65,7 +65,7 @@ static const NSUInteger kReplyingTimeInterval = 60 * 5;
                     replyMessage.msgTime = msgTime;
                     [replyMessage persist];
                     
-                    [[NSNotificationCenter defaultCenter] postNotificationName:kBadgeValueChangeNotification object:nil];
+                    [[NSNotificationCenter defaultCenter] postNotificationName:kUnreadMessageChangeNotification object:nil];
                     [[NSNotificationCenter defaultCenter] postNotificationName:kMessagePushNotification object:@[replyMessage]];
                 });
                 

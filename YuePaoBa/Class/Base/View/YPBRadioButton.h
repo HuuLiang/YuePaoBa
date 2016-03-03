@@ -10,9 +10,13 @@
 
 @class YPBRadioButtonGroup;
 
+typedef CGRect (^YPBButtonLayoutBlock)(CGRect contentRect);
+
 @interface YPBRadioButton : UIButton
 
 @property (nonatomic) NSString *title;
 @property (nonatomic,weak) YPBRadioButtonGroup *group;
+@property (nonatomic,copy) YPBButtonLayoutBlock imageRectBlock;
+@property (nonatomic,copy) YPBButtonLayoutBlock titleRectBlock;
 
 @end

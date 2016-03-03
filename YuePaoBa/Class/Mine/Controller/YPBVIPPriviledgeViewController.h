@@ -10,4 +10,9 @@
 
 @interface YPBVIPPriviledgeViewController : YPBBaseViewController
 
+@property (nonatomic) YPBPaymentContentType contentType;
+
+- (instancetype)init __attribute__((unavailable("Must use initWithContentType: instead.")));
+- (instancetype)initWithContentType:(YPBPaymentContentType)contentType;
+
 @end

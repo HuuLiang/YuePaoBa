@@ -123,8 +123,28 @@ DefineLazyPropertyInitialization(NSMutableArray, userGreets)
             if ([self.accessQueryModel.userAccess nextPage] == NSNotFound) {
                 [self->_layoutTableView YPB_pagingRefreshNoMoreData];
             }
+            
+            [self processUnreadAccesses];
         }
     }];
+}
+
+- (void)processUnreadAccesses {
+    switch (_accessType) {
+        case YPBMineAccessTypeAccessViewed:
+            [YPBUser currentUser].readAccessCount = [YPBUser currentUser].accessCount;
+            break;
+        case YPBMineAccessTypeGreetingReceived:
+            [YPBUser currentUser].readReceiveGreetCount = [YPBUser currentUser].receiveGreetCount;
+            break;
+        case YPBMineAccessTypeGreetingSent:
+            [YPBUser currentUser].readGreetCount = [YPBUser currentUser].greetCount;
+            break;
+        default:
+            break;
+    }
+    
+    [[YPBUser currentUser] saveAsCurrentUser];
 }
 
 - (NSDateFormatter *)dateFormatter {

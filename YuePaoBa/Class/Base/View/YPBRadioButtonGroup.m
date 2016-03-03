@@ -49,5 +49,9 @@
     
     self.selectedButton.selected = NO;
     buttonToSelect.selected = YES;
+    
+    if (self.selectionChangeAction) {
+        self.selectionChangeAction(sender);
+    }
 }
 @end

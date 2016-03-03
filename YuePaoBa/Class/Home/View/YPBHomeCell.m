@@ -43,6 +43,8 @@
         [_footerView addSubview:_detailLabel];
         
         _likeButton = [[YPBLikeButton alloc] initWithUserInteractionEnabled:YES];
+        _likeButton.layer.cornerRadius = 5;
+        _likeButton.layer.masksToBounds = YES;
         @weakify(self);
         [_likeButton bk_addEventHandler:^(id sender) {
             @strongify(self);

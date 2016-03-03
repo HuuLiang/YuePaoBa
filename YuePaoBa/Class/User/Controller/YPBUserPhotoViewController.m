@@ -7,7 +7,7 @@
 //
 
 #import "YPBUserPhotoViewController.h"
-#import "YPBPhotoBarrageModel.h"
+#import "YPBFetchBarrageModel.h"
 #import "YPBSendBarrageModel.h"
 
 static const CGFloat kHeaderViewHeight = 60;
@@ -22,7 +22,7 @@ static const CGFloat kFooterViewHeight = 50;
     UIButton *_sendButton;
 }
 @property (nonatomic,retain) UIButton *barrageButton;
-@property (nonatomic,retain) YPBPhotoBarrageModel *queryBarrageModel;
+@property (nonatomic,retain) YPBFetchBarrageModel *fetchBarrageModel;
 @property (nonatomic,retain) YPBSendBarrageModel *sendBarrageModel;
 
 @property (nonatomic,retain) NSMutableArray<UILabel *> *barrageLabels;
@@ -30,7 +30,7 @@ static const CGFloat kFooterViewHeight = 50;
 
 @implementation YPBUserPhotoViewController
 
-DefineLazyPropertyInitialization(YPBPhotoBarrageModel, queryBarrageModel)
+DefineLazyPropertyInitialization(YPBFetchBarrageModel, fetchBarrageModel)
 DefineLazyPropertyInitialization(YPBSendBarrageModel, sendBarrageModel)
 DefineLazyPropertyInitialization(NSMutableArray, barrageLabels)
 
@@ -46,7 +46,7 @@ DefineLazyPropertyInitialization(NSMutableArray, barrageLabels)
      {
          UIButton *thisButton = [aspectInfo instance];
          if (selected) {
-             thisButton.layer.borderColor = [UIColor redColor].CGColor;
+             thisButton.layer.borderColor = kThemeColor.CGColor;
              [thisButton setTitleColor:[UIColor redColor] forState:UIControlStateNormal];
          } else {
              thisButton.layer.borderColor = [UIColor whiteColor].CGColor;
@@ -172,7 +172,7 @@ DefineLazyPropertyInitialization(NSMutableArray, barrageLabels)
     }
     
     _sendButton = [[UIButton alloc] init];
-    [_sendButton setBackgroundImage:[UIImage imageWithColor:[UIColor colorWithHexString:@"#bd0010"]] forState:UIControlStateNormal];
+    [_sendButton setBackgroundImage:[UIImage imageWithColor:kThemeColor] forState:UIControlStateNormal];
     [_sendButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
     [_sendButton setTitle:@"发射弹幕" forState:UIControlStateNormal];
     _sendButton.layer.cornerRadius = 4;
@@ -283,13 +283,18 @@ DefineLazyPropertyInitialization(NSMutableArray, barrageLabels)
     
     @weakify(self);
     YPBUserPhoto *photo = self.photos[index];
-    [self.queryBarrageModel fetchBarrageWithPhotoId:photo.id completionHandler:^(BOOL success, id obj) {
+    [self.fetchBarrageModel fetchBarragesById:photo.id barrageType:YPBBarrageTypePhoto completionHandler:^(BOOL success, id obj) {
         @strongify(self);
         
         [self.barrageButton endLoading];
         
         if (success) {
-            [self fireBarrages:obj];
+            NSArray<YPBBarrage *> *barrages = obj;
+            NSMutableArray *barrageMessages = [NSMutableArray array];
+            [barrages enumerateObjectsUsingBlock:^(YPBBarrage * _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
+                [barrageMessages addObject:obj.msg];
+            }];
+            [self fireBarrages:barrageMessages];
             
             if (isByUser) {
                 [self.view.window showMessageWithTitle:@"已开启弹幕"];
@@ -353,11 +358,18 @@ DefineLazyPropertyInitialization(NSMutableArray, barrageLabels)
         return ;
     }
     
+    if ([barrage stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]].length == 0) {
+        [self.view.window showMessageWithTitle:@"请输入弹幕信息"];
+        return ;
+    }
+    
     [_footerView beginLoading];
     @weakify(self);
     YPBUserPhoto *currentPhoto = self.photos[self.currentPhotoIndex];
     [self.sendBarrageModel sendBarrage:barrage
-                              forPhoto:currentPhoto.id
+                           forObjectId:currentPhoto.id
+                           barrageType:YPBBarrageTypePhoto
+                      barrageTimestamp:nil
                  withCompletionHandler:^(BOOL success, id obj)
     {
         @strongify(self);

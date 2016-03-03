@@ -11,8 +11,6 @@
 
 #import "RACEXTScope.h"
 #import "UIColor+hexColor.h"
-#import "UIViewController+YPBSideMenu.h"
-#import "UIViewController+BackgroundImage.h"
 #import "UIImage+Utilities.h"
 #import "UIImage+Blur.h"
 #import "NSMutableDictionary+Safety.h"

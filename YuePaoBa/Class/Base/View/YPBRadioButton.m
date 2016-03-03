@@ -13,8 +13,6 @@
 - (instancetype)init {
     self = [super init];
     if (self) {
-        [self setImage:[UIImage imageNamed:@"gender_normal"] forState:UIControlStateNormal];
-        [self setImage:[UIImage imageNamed:@"gender_selected"] forState:UIControlStateSelected];
         [self setTitleColor:[UIColor lightGrayColor] forState:UIControlStateNormal];
         [self setTitleColor:[UIColor redColor] forState:UIControlStateSelected];
         self.titleLabel.font = [UIFont systemFontOfSize:14.];
@@ -28,13 +26,27 @@
 }
 
 - (CGRect)imageRectForContentRect:(CGRect)contentRect {
+    if ([self imageForState:self.state] == nil) {
+        return CGRectZero;
+    }
+    
+    if (self.imageRectBlock) {
+        return self.imageRectBlock(contentRect);
+    }
     return CGRectMake(0, 0, CGRectGetHeight(contentRect), CGRectGetHeight(contentRect));
 }
 
 - (CGRect)titleRectForContentRect:(CGRect)contentRect {
+    if ([self titleForState:self.state] == nil) {
+        return CGRectZero;
+    }
+    
+    if (self.titleRectBlock) {
+        return self.titleRectBlock(contentRect);
+    }
+    
     CGRect titleRect = [self imageRectForContentRect:contentRect];
     const CGFloat x = CGRectGetMaxX(titleRect)+5;
-    return CGRectMake(x, 0,
-                      CGRectGetMaxX(contentRect)-x, CGRectGetHeight(contentRect));
+    return CGRectMake(x, 0, CGRectGetMaxX(contentRect)-x, CGRectGetHeight(contentRect));
 }
 @end

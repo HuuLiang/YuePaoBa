@@ -48,6 +48,7 @@ DefineLazyPropertyInitialization(YPBUserAccessModel, userAccessModel);
     _layoutCollectionView.backgroundColor = self.view.backgroundColor;
     _layoutCollectionView.delegate = self;
     _layoutCollectionView.dataSource = self;
+    _layoutCollectionView.showsVerticalScrollIndicator = NO;
     [_layoutCollectionView registerClass:[YPBHomeCell class] forCellWithReuseIdentifier:kHomeCellReusableIdentifier];
     [self.view addSubview:_layoutCollectionView];
     {
@@ -81,7 +82,7 @@ DefineLazyPropertyInitialization(YPBUserAccessModel, userAccessModel);
 //        @weakify(self);
 //        [YPBVIPEntranceView showVIPEntranceInView:self.view canClose:YES withEnterAction:^(id obj) {
 //            @strongify(self);
-            YPBVIPPriviledgeViewController *vipVC = [[YPBVIPPriviledgeViewController alloc] init];
+            YPBVIPPriviledgeViewController *vipVC = [[YPBVIPPriviledgeViewController alloc] initWithContentType:YPBPaymentContentTypeHomePageForMoreUsers];
             [self.navigationController pushViewController:vipVC animated:YES];
 //        }];
         return ;
@@ -150,17 +151,17 @@ DefineLazyPropertyInitialization(YPBUserAccessModel, userAccessModel);
             }
             
             if (![YPBUtil isVIP] && [YPBUser currentUser].greetCount.unsignedIntegerValue >= 5) {
-                YPBVIPPriviledgeViewController *vipVC = [[YPBVIPPriviledgeViewController alloc] init];
+                YPBVIPPriviledgeViewController *vipVC = [[YPBVIPPriviledgeViewController alloc] initWithContentType:YPBPaymentContentTypeGreetMore];
                 [self.navigationController pushViewController:vipVC animated:YES];
                 return;
             }
             
-            [cell beginLoading];
+            [sender beginLoading];
             [self.userAccessModel accessUserWithUserId:user.userId accessType:YPBUserAccessTypeGreet completionHandler:^(BOOL success, id obj) {
-                [cell endLoading];
+                [sender endLoading];
                 
                 if (success) {
-                    [[YPBMessageCenter defaultCenter] showSuccessWithTitle:@"打招呼成功" inViewController:self];
+                    //[[YPBMessageCenter defaultCenter] showSuccessWithTitle:@"打招呼成功" inViewController:self];
                     
                     user.receiveGreetCount = @(user.receiveGreetCount.unsignedIntegerValue+1);
                     user.isGreet = YES;

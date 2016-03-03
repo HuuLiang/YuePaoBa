@@ -26,10 +26,13 @@
 #define YPB_USER_ACCESS_QUERY_URL       @"/mfwcenter/queryAccess.json"
 #define YPB_USER_AVATAR_UPDATE_URL      @"/mfwcenter/updateUserlogo.json"
 #define YPB_USER_PHOTO_ADD_URL          @"/mfwcenter/photoCreate.json"
-#define YPB_PHOTO_BARRAGE_QUERY_URL     @"/mfwcenter/queryBarrages.json"
 #define YPB_USER_VIP_UPGRADE_URL        @"/mfwcenter/updateUserVip.json"
 #define YPB_USER_PHOTO_DELETE_URL       @"/mfwcenter/updatePhotoStatus.json"
 #define YPB_SEND_BARRAGE_URL            @"/mfwcenter/createBarrage.json"
+#define YPB_GIFT_LIST_URL               @"/mfwcenter/queryGifts.json"
+#define YPB_USER_RECEIVED_GIFTS_URL     @"/mfwcenter/userReceiveGifts.json"
+#define YPB_USER_SENT_GIFTS_URL         @"/mfwcenter/userSendGifts.json"
+#define YPB_FETCH_BARRAGES_URL          @"/mfwcenter/barrages.json"
 
 #define YPB_PAYMENT_COMMIT_URL          @"http://pay.iqu8.net/paycenter/qubaPr.json" //@"http://120.24.252.114:8084/paycenter/qubaPr.json" //
 #define YPB_ALIPAY_SCHEME               @"comyuepaobaappalipayschemeurl"

@@ -34,6 +34,7 @@
     [super viewDidLoad];
     // Do any additional setup after loading the view.
     self.view.backgroundColor = kDefaultBackgroundColor;
+    self.edgesForExtendedLayout = UIRectEdgeNone;
     
     if (self.isTextBlock) {
         _inputTextView = [[UITextView alloc] init];

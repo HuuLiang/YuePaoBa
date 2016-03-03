@@ -17,21 +17,14 @@
 #import "YPBMessageViewController.h"
 #import "YPBContact.h"
 #import "YPBVIPPriviledgeViewController.h"
+#import "YPBSendGiftViewController.h"
+#import "YPBLiveShowViewController.h"
 
 @interface YPBUserDetailViewController ()
 {
     YPBUserProfileCell *_profileCell;
-    YPBTableViewCell *_genderCell;
-    YPBTableViewCell *_figureCell;
-    YPBTableViewCell *_heightCell;
-    YPBTableViewCell *_professionCell;
-    YPBTableViewCell *_interestCell;
     YPBTableViewCell *_wechatCell;
-    YPBTableViewCell *_incomeCell;
-    YPBTableViewCell *_assetsCell;
-    YPBTableViewCell *_ageCell;
-    
-//    YPBTableViewCell *_morePhotoCell;
+
     YPBPhotoBar *_photoBar;
     YPBTableViewCell *_liveShowCell;
     YPBPhotoBar *_giftBar;
@@ -64,9 +57,7 @@ DefineLazyPropertyInitialization(YPBUserAccessModel, userAccessModel)
     [self.layoutTableView mas_makeConstraints:^(MASConstraintMaker *make) {
         make.edges.equalTo(self.view);
     }];
-    
-    [self initLayoutCells];
-    
+
     @weakify(self);
     [self.layoutTableView YPB_addPullToRefreshWithHandler:^{
         @strongify(self);
@@ -76,15 +67,6 @@ DefineLazyPropertyInitialization(YPBUserAccessModel, userAccessModel)
     
     self.layoutTableViewAction = ^(NSIndexPath *indexPath, UITableViewCell *cell) {
         @strongify(self);
-//        if (cell == self->_morePhotoCell) {
-//            if (self->_photoBar.imageURLStrings.count == 0) {
-//                [[YPBMessageCenter defaultCenter] showWarningWithTitle:@"TA的相册空空如也~~~" inViewController:self];
-//            } else {
-//                YPBPhotoGridViewController *photoVC = [[YPBPhotoGridViewController alloc] initWithPhotos:self.user.userPhotos];
-//                [self.navigationController pushViewController:photoVC animated:YES];
-//            }
-//
-//        }
         if (cell == self->_wechatCell) {
             if ([YPBUtil isVIP]) {
                 if (self.user.isRegistered) {
@@ -98,9 +80,11 @@ DefineLazyPropertyInitialization(YPBUserAccessModel, userAccessModel)
                     [[YPBMessageCenter defaultCenter] showErrorWithTitle:@"无法获取用户信息" inViewController:self];
                 }
             } else {
-                YPBVIPPriviledgeViewController *vipVC = [[YPBVIPPriviledgeViewController alloc] init];
+                YPBVIPPriviledgeViewController *vipVC = [[YPBVIPPriviledgeViewController alloc] initWithContentType:YPBPaymentContentTypeWeChatId];
                 [self.navigationController pushViewController:vipVC animated:YES];
             }
+        } else if (cell == self->_liveShowCell) {
+            [self onLiveShow];
         }
     };
 }
@@ -125,36 +109,10 @@ DefineLazyPropertyInitialization(YPBUserAccessModel, userAccessModel)
     }];
 }
 
-- (void)onSuccessfullyAccessedUser:(YPBUser *)user {
+- (void)onSuccessfullyAccessedUser:(YPBUser *)user
+{
     self.user = user;
-    
-    _profileCell.user = user;
-    _profileCell.numberOfLikes = user.receiveGreetCount.unsignedIntegerValue;
-    
-    _genderCell.imageView.image = user.gender==YPBUserGenderFemale?[UIImage imageNamed:@"female_icon"]:[UIImage imageNamed:@"male_icon"];
-    _genderCell.titleLabel.text = user.gender==YPBUserGenderFemale?@"性别：女":@"性别：男";
-    
-    _heightCell.titleLabel.text = [NSString stringWithFormat:@"身高：%@", user.heightDescription ?: @""];
-    _figureCell.titleLabel.text = user.figureDescription;
-    _professionCell.titleLabel.text = [NSString stringWithFormat:@"职业：%@", user.profession ?: @""];
-    _interestCell.titleLabel.text = [NSString stringWithFormat:@"兴趣：%@", user.note ?: @""];
-    
-    _incomeCell.titleLabel.text = [NSString stringWithFormat:@"月收入：%@", user.monthIncome ?: @""];
-    _assetsCell.titleLabel.text = [NSString stringWithFormat:@"资产情况：%@", user.assets ?: @""];
-    _ageCell.titleLabel.text = [NSString stringWithFormat:@"年龄：%@", user.ageDescription ?: @""];
-//    _morePhotoCell.titleLabel.text = user.userPhotos.count > 0 ? [NSString stringWithFormat:@"查看所有照片(%ld张)", user.userPhotos.count] : @"查看所有照片";
-    
-    NSMutableArray *thumbPhotos = [NSMutableArray array];
-    [user.userPhotos enumerateObjectsUsingBlock:^(YPBUserPhoto * _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
-        if (obj.smallPhoto.length > 0) {
-            [thumbPhotos addObject:obj.smallPhoto];
-        }
-    }];
-    _photoBar.imageURLStrings = thumbPhotos;
-    
-//    [self.userAccessModel accessUserWithUserId:user.userId
-//                                    accessType:YPBUserAccessTypeViewDetail
-//                             completionHandler:nil];
+    [self updateLayoutCells];
 }
 
 - (void)greetUser {
@@ -164,7 +122,7 @@ DefineLazyPropertyInitialization(YPBUserAccessModel, userAccessModel)
     }
     
     if (![YPBUtil isVIP] && [YPBUser currentUser].greetCount.unsignedIntegerValue >= 5) {
-        YPBVIPPriviledgeViewController *vipVC = [[YPBVIPPriviledgeViewController alloc] init];
+        YPBVIPPriviledgeViewController *vipVC = [[YPBVIPPriviledgeViewController alloc] initWithContentType:YPBPaymentContentTypeGreetMore];
         [self.navigationController pushViewController:vipVC animated:YES];
         return;
     }
@@ -191,17 +149,34 @@ DefineLazyPropertyInitialization(YPBUserAccessModel, userAccessModel)
     }];
 }
 
-- (void)initLayoutCells {
+- (void)onLiveShow {
+    if ([YPBUtil isVIP]) {
+        YPBLiveShowViewController *liveShowVC = [[YPBLiveShowViewController alloc] initWithUser:self.user];
+        [self presentViewController:liveShowVC animated:YES completion:nil];
+    } else {
+        YPBVIPPriviledgeViewController *vipVC = [[YPBVIPPriviledgeViewController alloc] initWithContentType:YPBPaymentContentTypeVideo];
+        [self.navigationController pushViewController:vipVC animated:YES];
+    }
+}
+
+- (void)updateLayoutCells {
+    [self removeAllLayoutCells];
+    
     NSUInteger section = 0;
     [self initUserProfileCellLayoutsInSection:section++];
     [self initUserPhotoCellLayoutsInSection:section++];
-    [self initUserLiveShowCellLayoutsInSection:section++];
+    if (self.user.userVideo.videoUrl.length > 0) {
+        [self initUserLiveShowCellLayoutsInSection:section++];
+    }
     [self initUserGiftCellLayoutsInSection:section++];
     [self initUserDetailCellLayoutsInSection:section++];
+    [self.layoutTableView reloadData];
 }
 
 - (void)initUserProfileCellLayoutsInSection:(NSUInteger)section {
     YPBUserProfileCell *profileCell = [[YPBUserProfileCell alloc] init];
+    profileCell.user = self.user;
+    profileCell.numberOfLikes = self.user.receiveGreetCount.unsignedIntegerValue;
     @weakify(self);
     profileCell.dateAction = ^(id sender) {
         @strongify(self);
@@ -222,6 +197,16 @@ DefineLazyPropertyInitialization(YPBUserAccessModel, userAccessModel)
             [self greetUser];
         }
     };
+    profileCell.sendGiftAction = ^(id sender) {
+        @strongify(self);
+        if (!self.user.isRegistered) {
+            [[YPBMessageCenter defaultCenter] showErrorWithTitle:@"无法获取用户信息" inViewController:self];
+            return ;
+        }
+        
+        YPBSendGiftViewController *sendGiftVC = [[YPBSendGiftViewController alloc] initWithUser:self.user];
+        [self.navigationController pushViewController:sendGiftVC animated:YES];
+    };
     [self setLayoutCell:profileCell cellHeight:MIN(kScreenHeight*0.4, 200) inRow:0 andSection:section];
     _profileCell = profileCell;
 }
@@ -237,7 +222,7 @@ DefineLazyPropertyInitialization(YPBUserAccessModel, userAccessModel)
         @strongify(self);
         YPBPhotoBar *photoBar = sender;
         if ([photoBar photoIsLocked:index]) {
-            YPBVIPPriviledgeViewController *vipVC = [[YPBVIPPriviledgeViewController alloc] init];
+            YPBVIPPriviledgeViewController *vipVC = [[YPBVIPPriviledgeViewController alloc] initWithContentType:YPBPaymentContentTypePhoto];
             [self.navigationController pushViewController:vipVC animated:YES];
         } else {
             YPBUserPhotoViewController *photoVC = [YPBUserPhotoViewController showPhotoBrowserInView:self.view.window
@@ -248,7 +233,7 @@ DefineLazyPropertyInitialization(YPBUserAccessModel, userAccessModel)
                 @strongify(self,photoVC);
                 [photoVC hide];
                 
-                YPBVIPPriviledgeViewController *vipVC = [[YPBVIPPriviledgeViewController alloc] init];
+                YPBVIPPriviledgeViewController *vipVC = [[YPBVIPPriviledgeViewController alloc] initWithContentType:YPBPaymentContentTypePhoto];
                 [self.navigationController pushViewController:vipVC animated:YES];
             };
         }
@@ -260,18 +245,24 @@ DefineLazyPropertyInitialization(YPBUserAccessModel, userAccessModel)
             return index > 2;
         }
     };
+    
+    if (self.user.userPhotos.count > 0) {
+        NSMutableArray *thumbPhotos = [NSMutableArray array];
+        [self.user.userPhotos enumerateObjectsUsingBlock:^(YPBUserPhoto * _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
+            if (obj.smallPhoto.length > 0) {
+                [thumbPhotos addObject:obj.smallPhoto];
+            }
+        }];
+        [_photoBar setImageURLStrings:thumbPhotos titleStrings:nil];
+    }
+    
     [photoCell addSubview:_photoBar];
     {
         [_photoBar mas_makeConstraints:^(MASConstraintMaker *make) {
             make.edges.equalTo(photoCell);//.insets(UIEdgeInsetsMake(10, 10, 10, 10));
         }];
     }
-    [self setLayoutCell:photoCell cellHeight:kScreenHeight*0.15 inRow:0 andSection:section];
-    
-    //    _morePhotoCell = [[YPBTableViewCell alloc] init];
-    //    _morePhotoCell.titleLabel.text = @"查看所有照片";
-    //    _morePhotoCell.titleLabel.textAlignment = NSTextAlignmentCenter;
-    //    [self setLayoutCell:_morePhotoCell inRow:1 andSection:1];
+    [self setLayoutCell:photoCell cellHeight:MAX(kScreenHeight*0.15,96) inRow:0 andSection:section];
 }
 
 - (void)initUserLiveShowCellLayoutsInSection:(NSUInteger)section {
@@ -279,20 +270,56 @@ DefineLazyPropertyInitialization(YPBUserAccessModel, userAccessModel)
     
     _liveShowCell = [[YPBTableViewCell alloc] init];
     _liveShowCell.selectionStyle = UITableViewCellSelectionStyleNone;
+    [_liveShowCell.backgroundImageView sd_setImageWithURL:[NSURL URLWithString:self.user.userVideo.imgCover]];
+    
+    UIImage *playImage = [UIImage imageNamed:@"video_play_icon"];
+    UIImageView *playIconView = [[UIImageView alloc] initWithImage:playImage];
+    [_liveShowCell.backgroundImageView addSubview:playIconView];
+    {
+        [playIconView mas_makeConstraints:^(MASConstraintMaker *make) {
+            make.center.equalTo(_liveShowCell.backgroundImageView);
+        }];
+    }
     [self setLayoutCell:_liveShowCell cellHeight:kScreenWidth*0.5 inRow:0 andSection:section];
-    
-    
 }
 
 - (void)initUserGiftCellLayoutsInSection:(NSUInteger)section {
     [self setHeaderTitle:@"TA收到的礼物" height:20 inSection:section];
     YPBTableViewCell *giftCell = [[YPBTableViewCell alloc] init];
     giftCell.selectionStyle = UITableViewCellSelectionStyleNone;
-    [self setLayoutCell:giftCell cellHeight:kScreenHeight*0.15 inRow:0 andSection:section];
+    [self setLayoutCell:giftCell cellHeight:MAX(kScreenHeight*0.15,96) inRow:0 andSection:section];
     
+    @weakify(self);
     _giftBar = [[YPBPhotoBar alloc] init];
     _giftBar.placeholder = @"TA还未收到过礼物~~~";
-    giftCell.backgroundView = _giftBar;
+    _giftBar.selectAction = ^(NSUInteger index, id sender) {
+        @strongify(self);
+        if (!self) {
+            return ;
+        }
+        
+        self->_profileCell.sendGiftAction(nil);
+    };
+    [giftCell addSubview:_giftBar];
+    {
+        [_giftBar mas_makeConstraints:^(MASConstraintMaker *make) {
+            make.edges.equalTo(giftCell);
+        }];
+    }
+    
+    if (self.user.gifts.count > 0) {
+        NSMutableArray *giftPhotos = [NSMutableArray array];
+        NSMutableArray *giftTitles = [NSMutableArray array];
+        [self.user.gifts enumerateObjectsUsingBlock:^(YPBGift * _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
+            if (obj.imgUrl.length == 0) {
+                return ;
+            }
+            
+            [giftPhotos addObject:obj.imgUrl];
+            [giftTitles addObject:obj.userName ?: @"未知"];
+        }];
+        [_giftBar setImageURLStrings:giftPhotos titleStrings:giftTitles];
+    }
 }
 
 - (void)initUserDetailCellLayoutsInSection:(NSUInteger)section {
@@ -300,25 +327,27 @@ DefineLazyPropertyInitialization(YPBUserAccessModel, userAccessModel)
     [self setHeaderTitle:@"详细资料" height:20 inSection:detailInfoSection];
     
     NSUInteger row = 0;
-    _genderCell = [[YPBTableViewCell alloc] initWithImage:[UIImage imageNamed:@"female_icon"] title:@"性别：??"];
-    _genderCell.selectionStyle = UITableViewCellSelectionStyleNone;
-    [self setLayoutCell:_genderCell inRow:row++ andSection:detailInfoSection];
+    YPBTableViewCell *genderCell = [[YPBTableViewCell alloc] initWithImage:[UIImage imageNamed:@"female_icon"] title:@"性别：??"];
+    genderCell.selectionStyle = UITableViewCellSelectionStyleNone;
+    genderCell.imageView.image = self.user.gender==YPBUserGenderUnknown?nil:self.user.gender==YPBUserGenderFemale?[UIImage imageNamed:@"female_icon"]:[UIImage imageNamed:@"male_icon"];
+    genderCell.titleLabel.text = self.user.gender==YPBUserGenderUnknown?nil:self.user.gender==YPBUserGenderFemale?@"性别：女":@"性别：男";
+    [self setLayoutCell:genderCell inRow:row++ andSection:detailInfoSection];
     
-    _figureCell = [[YPBTableViewCell alloc] initWithImage:[UIImage imageNamed:@"figure_icon"] title:@"身材：?? ?? ??"];
-    _figureCell.selectionStyle = UITableViewCellSelectionStyleNone;
-    [self setLayoutCell:_figureCell inRow:row++ andSection:detailInfoSection];
+    YPBTableViewCell *figureCell = [[YPBTableViewCell alloc] initWithImage:[UIImage imageNamed:@"figure_icon"] title:self.user.figureDescription ?: @"身材：?? ?? ??"];
+    figureCell.selectionStyle = UITableViewCellSelectionStyleNone;
+    [self setLayoutCell:figureCell inRow:row++ andSection:detailInfoSection];
     
-    _heightCell = [[YPBTableViewCell alloc] initWithImage:[UIImage imageNamed:@"height_icon"] title:@"身高：???cm"];
-    _heightCell.selectionStyle = UITableViewCellSelectionStyleNone;
-    [self setLayoutCell:_heightCell inRow:row++ andSection:detailInfoSection];
+    YPBTableViewCell *heightCell = [[YPBTableViewCell alloc] initWithImage:[UIImage imageNamed:@"height_icon"] title:[NSString stringWithFormat:@"身高：%@", self.user.heightDescription ?: @"???cm"]];
+    heightCell.selectionStyle = UITableViewCellSelectionStyleNone;
+    [self setLayoutCell:heightCell inRow:row++ andSection:detailInfoSection];
     
-    _professionCell = [[YPBTableViewCell alloc] initWithImage:[UIImage imageNamed:@"profession_icon"] title:@"职业：？？？"];
-    _professionCell.selectionStyle = UITableViewCellSelectionStyleNone;
-    [self setLayoutCell:_professionCell inRow:row++ andSection:detailInfoSection];
+    YPBTableViewCell *professionCell = [[YPBTableViewCell alloc] initWithImage:[UIImage imageNamed:@"profession_icon"] title:[NSString stringWithFormat:@"职业：%@", self.user.profession ?: @"？？？"]];
+    professionCell.selectionStyle = UITableViewCellSelectionStyleNone;
+    [self setLayoutCell:professionCell inRow:row++ andSection:detailInfoSection];
     
-    _interestCell = [[YPBTableViewCell alloc] initWithImage:[UIImage imageNamed:@"interest_icon"] title:@"兴趣：？？？"];
-    _interestCell.selectionStyle = UITableViewCellSelectionStyleNone;
-    [self setLayoutCell:_interestCell inRow:row++ andSection:detailInfoSection];
+    YPBTableViewCell *interestCell = [[YPBTableViewCell alloc] initWithImage:[UIImage imageNamed:@"interest_icon"] title:[NSString stringWithFormat:@"兴趣：%@", self.user.note ?: @"？？？"]];
+    interestCell.selectionStyle = UITableViewCellSelectionStyleNone;
+    [self setLayoutCell:interestCell inRow:row++ andSection:detailInfoSection];
     
     NSString *wechatTitle = @"微信：*******>>查看微信号";
     NSMutableAttributedString *attrStr = [[NSMutableAttributedString alloc] initWithString:wechatTitle];
@@ -329,17 +358,17 @@ DefineLazyPropertyInitialization(YPBUserAccessModel, userAccessModel)
     _wechatCell.titleLabel.attributedText = attrStr;
     [self setLayoutCell:_wechatCell inRow:row++ andSection:detailInfoSection];
     
-    _incomeCell = [[YPBTableViewCell alloc] initWithImage:[UIImage imageNamed:@"income_icon"] title:@"月收入：？？？"];
-    _incomeCell.selectionStyle = UITableViewCellSelectionStyleNone;
-    [self setLayoutCell:_incomeCell inRow:row++ andSection:detailInfoSection];
+    YPBTableViewCell *incomeCell = [[YPBTableViewCell alloc] initWithImage:[UIImage imageNamed:@"income_icon"] title:[NSString stringWithFormat:@"月收入：%@", self.user.monthIncome ?: @"？？？"]];
+    incomeCell.selectionStyle = UITableViewCellSelectionStyleNone;
+    [self setLayoutCell:incomeCell inRow:row++ andSection:detailInfoSection];
     
-    _assetsCell = [[YPBTableViewCell alloc] initWithImage:[UIImage imageNamed:@"assets_icon"] title:@"资产情况：？？？"];
-    _assetsCell.selectionStyle = UITableViewCellSelectionStyleNone;
-    [self setLayoutCell:_assetsCell inRow:row++ andSection:detailInfoSection];
+    YPBTableViewCell *assetsCell = [[YPBTableViewCell alloc] initWithImage:[UIImage imageNamed:@"assets_icon"] title:[NSString stringWithFormat:@"资产情况：%@", self.user.assets ?: @"？？？"]];
+    assetsCell.selectionStyle = UITableViewCellSelectionStyleNone;
+    [self setLayoutCell:assetsCell inRow:row++ andSection:detailInfoSection];
     
-    _ageCell = [[YPBTableViewCell alloc] initWithImage:[UIImage imageNamed:@"age_icon"] title:@"年龄：？"];
-    _ageCell.selectionStyle = UITableViewCellSelectionStyleNone;
-    [self setLayoutCell:_ageCell inRow:row++ andSection:detailInfoSection];
+    YPBTableViewCell *ageCell = [[YPBTableViewCell alloc] initWithImage:[UIImage imageNamed:@"age_icon"] title:[NSString stringWithFormat:@"年龄：%@", self.user.ageDescription ?: @"？？"]];
+    ageCell.selectionStyle = UITableViewCellSelectionStyleNone;
+    [self setLayoutCell:ageCell inRow:row++ andSection:detailInfoSection];
 }
 
 - (void)didReceiveMemoryWarning {

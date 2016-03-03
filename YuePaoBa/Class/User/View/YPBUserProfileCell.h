@@ -18,4 +18,6 @@
 @property (nonatomic,copy) YPBAction sendGiftAction;
 @property (nonatomic,copy) YPBAction likeAction;
 
+- (void)setLiked:(BOOL)liked animated:(BOOL)animated;
+
 @end

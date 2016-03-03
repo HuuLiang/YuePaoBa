@@ -8,8 +8,6 @@
 
 #import "YPBProfileActionButton.h"
 
-static const CGFloat kBadgeLabelSize = 20.;
-
 @interface YPBProfileActionButton ()
 @property (nonatomic,retain) UILabel *badgeLabel;
 @end
@@ -57,22 +55,12 @@ static const CGFloat kBadgeLabelSize = 20.;
     }
     
     _badgeLabel = [[UILabel alloc] init];
-    _badgeLabel.layer.cornerRadius = kBadgeLabelSize / 2;
     _badgeLabel.layer.masksToBounds = YES;
     _badgeLabel.backgroundColor = [UIColor colorWithHexString:@"#f7163c"];
-    _badgeLabel.font = [UIFont systemFontOfSize:kBadgeLabelSize * 0.8];
     _badgeLabel.textColor = [UIColor whiteColor];
     _badgeLabel.textAlignment = NSTextAlignmentCenter;
-    _badgeLabel.adjustsFontSizeToFitWidth = YES;
     _badgeLabel.hidden = YES;
     [self addSubview:_badgeLabel];
-    {
-        [_badgeLabel mas_makeConstraints:^(MASConstraintMaker *make) {
-            make.top.equalTo(self);
-            make.right.equalTo(self.mas_centerX).multipliedBy(1.75);
-            make.size.mas_equalTo(CGSizeMake(kBadgeLabelSize, kBadgeLabelSize));
-        }];
-    }
     return _badgeLabel;
 }
 
@@ -81,5 +69,19 @@ static const CGFloat kBadgeLabelSize = 20.;
     
     self.badgeLabel.hidden = badgeValue.length == 0;
     self.badgeLabel.text = badgeValue;
+}
+
+- (void)layoutSubviews {
+    [super layoutSubviews];
+    
+    if (_badgeLabel) {
+        const CGFloat badgeHeight = CGRectGetHeight(self.bounds) * 0.2;
+        _badgeLabel.font = [UIFont systemFontOfSize:badgeHeight * 0.75];
+        _badgeLabel.layer.cornerRadius = badgeHeight / 2;
+        const CGSize badgeTextSize = [_badgeLabel.text sizeWithAttributes:@{NSFontAttributeName:_badgeLabel.font}];
+        const CGFloat badgeWidth = MAX(badgeHeight, badgeTextSize.width+5);
+        const CGFloat badgeX = lround(self.bounds.size.width * 0.65);
+        _badgeLabel.frame = CGRectMake(badgeX, 0, badgeWidth, badgeHeight);
+    }
 }
 @end

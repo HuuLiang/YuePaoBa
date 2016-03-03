@@ -44,7 +44,7 @@ DefineLazyPropertyInitialization(YPBUserAccessModel, userAccessModel)
     _layoutTableView = [[UITableView alloc] init];
     _layoutTableView.delegate = self;
     _layoutTableView.dataSource = self;
-    _layoutTableView.rowHeight = kScreenWidth * 0.6;
+    _layoutTableView.rowHeight = kScreenWidth * 0.5;
     _layoutTableView.separatorStyle = UITableViewCellSeparatorStyleNone;
     [_layoutTableView registerClass:[YPBVIPCell class] forCellReuseIdentifier:kVIPCellReusableIdentifier];
     [self.view addSubview:_layoutTableView];
@@ -72,17 +72,17 @@ DefineLazyPropertyInitialization(YPBUserAccessModel, userAccessModel)
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(onVIPUpgradeSuccessNotification) name:kVIPUpgradeSuccessNotification object:nil];
 }
 
-- (void)viewDidAppear:(BOOL)animated {
-    [super viewDidAppear:animated];
-    if (![YPBUtil isVIP]) {
-        @weakify(self);
-        [YPBVIPEntranceView showVIPEntranceInView:self.view canClose:NO withEnterAction:^(id obj) {
-            @strongify(self);
-            YPBVIPPriviledgeViewController *vipVC = [[YPBVIPPriviledgeViewController alloc] init];
-            [self.navigationController pushViewController:vipVC animated:YES];
-        }];
-    }
-}
+//- (void)viewDidAppear:(BOOL)animated {
+//    [super viewDidAppear:animated];
+//    if (![YPBUtil isVIP]) {
+//        @weakify(self);
+//        [YPBVIPEntranceView showVIPEntranceInView:self.view canClose:NO withEnterAction:^(id obj) {
+//            @strongify(self);
+//            YPBVIPPriviledgeViewController *vipVC = [[YPBVIPPriviledgeViewController alloc] init];
+//            [self.navigationController pushViewController:vipVC animated:YES];
+//        }];
+//    }
+//}
 
 - (void)loadDataWithRefresh:(BOOL)isRefresh {
     @weakify(self);
@@ -135,12 +135,38 @@ DefineLazyPropertyInitialization(YPBUserAccessModel, userAccessModel)
         cell.level = indexPath.row+1;
         cell.user = user;
         
-        @weakify(self);
+        @weakify(self,cell);
         cell.dateAction = ^(id sender) {
             @strongify(self);
             if ([YPBContact refreshContactRecentTimeWithUser:user]) {
                 [YPBMessageViewController showMessageWithUser:user inViewController:self];
             }
+        };
+        cell.likeAction = ^(id sender) {
+            @strongify(self,cell);
+            if (user.isGreet) {
+                [[YPBMessageCenter defaultCenter] showErrorWithTitle:@"您已经和TA打过招呼了！" inViewController:self];
+                return ;
+            }
+            
+            if (![YPBUtil isVIP] && [YPBUser currentUser].greetCount.unsignedIntegerValue >= 5) {
+                YPBVIPPriviledgeViewController *vipVC = [[YPBVIPPriviledgeViewController alloc] initWithContentType:YPBPaymentContentTypeGreetMore];
+                [self.navigationController pushViewController:vipVC animated:YES];
+                return;
+            }
+            
+            [sender beginLoading];
+            [self.userAccessModel accessUserWithUserId:user.userId accessType:YPBUserAccessTypeGreet completionHandler:^(BOOL success, id obj) {
+                [sender endLoading];
+                
+                if (success) {
+                    [[YPBMessageCenter defaultCenter] showSuccessWithTitle:@"打招呼成功" inViewController:self];
+                    
+                    user.receiveGreetCount = @(user.receiveGreetCount.unsignedIntegerValue+1);
+                    user.isGreet = YES;
+                    cell.user = user;
+                }
+            }];
         };
     }
     return cell;

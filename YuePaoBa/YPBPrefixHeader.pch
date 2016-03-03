@@ -24,12 +24,14 @@
 #import <MJRefresh.h>
 #import "YPBConfig.h"
 #import "YPBCommonDef.h"
+#import "YPBStringDef.h"
 #import "YPBErrorDef.h"
 #import "YPBExtensions.h"
 #import "YPBUtil.h"
 #import "YPBMessageCenter.h"
 #import "YPBUser.h"
 #import "YPBUploadManager.h"
+#import "YPBPaymentManager.h"
 #import "YPBSystemConfigModel.h"
 #import "YPBAutoReplyWords.h"
 

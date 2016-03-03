@@ -65,7 +65,6 @@ DefineLazyPropertyInitialization(NSMutableArray, imageViews)
                 @strongify(self);
                 YPBRegisterFirstViewController *registerFirstVC = [[YPBRegisterFirstViewController alloc] init];
                 UINavigationController *registerFirstNav = [[UINavigationController alloc] initWithRootViewController:registerFirstVC];
-                registerFirstVC.rootVCHasSideMenu = NO;
                 [self presentViewController:registerFirstNav animated:YES completion:nil];
             } forControlEvents:UIControlEventTouchUpInside];
         }

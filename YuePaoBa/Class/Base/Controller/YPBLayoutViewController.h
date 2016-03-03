@@ -25,6 +25,8 @@ typedef void (^YPBLayoutTableViewAction)(NSIndexPath *indexPath, UITableViewCell
                 inRow:(NSUInteger)row
            andSection:(NSUInteger)section;
 
+- (void)removeAllLayoutCells;
+
 - (UITableViewCell *)cellAtIndexPath:(NSIndexPath *)indexPath;
 - (CGFloat)cellHeightAtIndexPath:(NSIndexPath *)indexPath;
 - (NSDictionary<NSIndexPath *, UITableViewCell *> *)allCells;

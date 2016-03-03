@@ -13,6 +13,7 @@
 @interface YPBRadioButtonGroup : NSObject
 
 @property (nonatomic,retain,readonly) YPBRadioButton *selectedButton;
+@property (nonatomic,copy) YPBAction selectionChangeAction;
 
 + (instancetype)groupWithRadioButtons:(NSArray<YPBRadioButton *> *)radioButtons;
 - (instancetype)initWithRadioButtons:(NSArray<YPBRadioButton *> *)radioButtons;

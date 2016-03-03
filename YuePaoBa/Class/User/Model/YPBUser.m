@@ -65,6 +65,67 @@ static YPBUser *_currentUser;
 }
 @end
 
+@implementation YPBUserVideo
+
+- (id)copyWithZone:(NSZone *)zone {
+    YPBUserVideo *copiedVideo = [[self class] allocWithZone:zone];
+    copiedVideo.imgCover = [self.imgCover copyWithZone:zone];
+    copiedVideo.videoUrl = [self.videoUrl copyWithZone:zone];
+    return copiedVideo;
+}
+@end
+
+@implementation YPBGift
+
+- (id)copyWithZone:(NSZone *)zone {
+    YPBGift *gift = [[self class] allocWithZone:zone];
+    gift.id = [self.id copyWithZone:zone];
+    gift.name = [self.name copyWithZone:zone];
+    gift.imgUrl = [self.imgUrl copyWithZone:zone];
+    gift.fee = [self.fee copyWithZone:zone];
+    gift.userName = [self.userName copyWithZone:zone];
+    return gift;
+}
+
+- (NSDictionary *)dictionaryRepresentation {
+    NSMutableDictionary *dic = [NSMutableDictionary dictionary];
+    [dic safely_setObject:self.id forKey:@"id"];
+    [dic safely_setObject:self.name forKey:@"name"];
+    [dic safely_setObject:self.imgUrl forKey:@"imgUrl"];
+    [dic safely_setObject:self.fee forKey:@"fee"];
+    [dic safely_setObject:self.userName forKey:@"userName"];
+    return dic;
+}
+
+- (instancetype)initFromDictionary:(NSDictionary *)dic {
+    self = [super init];
+    if (self) {
+        self.id = dic[@"id"];
+        self.name = dic[@"name"];
+        self.imgUrl = dic[@"imgUrl"];
+        self.fee = dic[@"fee"];
+        self.userName = dic[@"userName"];
+    }
+    return self;
+}
+
++ (NSArray<NSDictionary *> *)dictionariesFromGifts:(NSArray<YPBGift *> *)gifts {
+    NSMutableArray<NSDictionary *> *arr = [NSMutableArray array];
+    [gifts enumerateObjectsUsingBlock:^(YPBGift * _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
+        [arr addObject:[obj dictionaryRepresentation]];
+    }];
+    return arr.count > 0 ? arr : nil;
+}
+
++ (NSArray<YPBGift *> *)giftsFromArray:(NSArray<NSDictionary *> *)arr {
+    NSMutableArray<YPBGift *> *gifts = [NSMutableArray array];
+    [arr enumerateObjectsUsingBlock:^(NSDictionary * _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
+        [gifts addObject:[[YPBGift alloc] initFromDictionary:obj]];
+    }];
+    return gifts.count > 0 ? gifts : nil;
+}
+@end
+
 @interface YPBUser ()
 @property (nonatomic) NSString *name;
 
@@ -75,35 +136,39 @@ static YPBUser *_currentUser;
 @implementation YPBUser
 
 - (id)copyWithZone:(NSZone *)zone {
-    YPBUser *copiedUser = [[self class] allocWithZone:zone];
-    copiedUser.name = [self.name copyWithZone:zone];
-    copiedUser.userId = [self.userId copyWithZone:zone];
-    copiedUser.uuid = [self.uuid copyWithZone:zone];
-    copiedUser.nickName = [self.nickName copyWithZone:zone];
-    copiedUser.logoUrl = [self.logoUrl copyWithZone:zone];
-    copiedUser.sex = [self.sex copyWithZone:zone];
-    
-    copiedUser.age = [self.age copyWithZone:zone];
-    copiedUser.height = [self.height copyWithZone:zone];
-    copiedUser.bwh = [self.bwh copyWithZone:zone];
-    copiedUser.monthIncome = [self.monthIncome copyWithZone:zone];
-    copiedUser.note = [self.note copyWithZone:zone];
-    copiedUser.profession = [self.profession copyWithZone:zone];
-    copiedUser.weixinNum = [self.weixinNum copyWithZone:zone];
-    copiedUser.assets = [self.assets copyWithZone:zone];
-    
-    copiedUser.isVip = self.isVip;
-    copiedUser.vipEndTime = [self.vipEndTime copyWithZone:zone];
-    
-    copiedUser.greetCount = [self.greetCount copyWithZone:zone];
-    copiedUser.accessCount = [self.accessCount copyWithZone:zone];
-    copiedUser.receiveGreetCount = [self.receiveGreetCount copyWithZone:zone];
-    copiedUser.userPhotos = [[NSArray alloc] initWithArray:self.userPhotos copyItems:YES];
-    
-    copiedUser.gender = self.gender;
-    copiedUser.targetHeight = self.targetHeight;
-    copiedUser.targetAge = self.targetAge;
-    copiedUser.targetCup = self.targetCup;
+    YPBUser *copiedUser              = [[self class] allocWithZone:zone];
+    copiedUser.name                  = [self.name copyWithZone:zone];
+    copiedUser.userId                = [self.userId copyWithZone:zone];
+    copiedUser.uuid                  = [self.uuid copyWithZone:zone];
+    copiedUser.nickName              = [self.nickName copyWithZone:zone];
+    copiedUser.logoUrl               = [self.logoUrl copyWithZone:zone];
+    copiedUser.sex                   = [self.sex copyWithZone:zone];
+
+    copiedUser.age                   = [self.age copyWithZone:zone];
+    copiedUser.height                = [self.height copyWithZone:zone];
+    copiedUser.bwh                   = [self.bwh copyWithZone:zone];
+    copiedUser.monthIncome           = [self.monthIncome copyWithZone:zone];
+    copiedUser.note                  = [self.note copyWithZone:zone];
+    copiedUser.profession            = [self.profession copyWithZone:zone];
+    copiedUser.weixinNum             = [self.weixinNum copyWithZone:zone];
+    copiedUser.assets                = [self.assets copyWithZone:zone];
+
+    copiedUser.isVip                 = self.isVip;
+    copiedUser.vipEndTime            = [self.vipEndTime copyWithZone:zone];
+
+    copiedUser.greetCount            = [self.greetCount copyWithZone:zone];
+    copiedUser.accessCount           = [self.accessCount copyWithZone:zone];
+    copiedUser.receiveGreetCount     = [self.receiveGreetCount copyWithZone:zone];
+    copiedUser.userPhotos            = [[NSArray alloc] initWithArray:self.userPhotos copyItems:YES];
+
+    copiedUser.readGreetCount        = [self.readGreetCount copyWithZone:zone];
+    copiedUser.readAccessCount       = [self.readAccessCount copyWithZone:zone];
+    copiedUser.readReceiveGreetCount = [self.readReceiveGreetCount copyWithZone:zone];
+
+    copiedUser.gender                = self.gender;
+    copiedUser.targetHeight          = self.targetHeight;
+    copiedUser.targetAge             = self.targetAge;
+    copiedUser.targetCup             = self.targetCup;
     
     return copiedUser;
 }
@@ -282,6 +347,14 @@ static YPBUser *_currentUser;
     return [YPBUserPhoto class];
 }
 
+- (Class)userVideoClass {
+    return [YPBUserVideo class];
+}
+
+- (Class)giftsElementClass {
+    return [YPBGift class];
+}
+
 - (instancetype)init {
     self = [super init];
     if (self) {
@@ -348,7 +421,13 @@ static YPBUser *_currentUser;
         _greetCount        = userInfo[kUserGreetCountKeyName];
         _receiveGreetCount = userInfo[kUserReceiveGreetCountKeyName];
         _accessCount       = userInfo[kUserAccessCountKeyName];
+        
+        _readGreetCount        = userInfo[kUserReadGreetCountKeyName];
+        _readAccessCount       = userInfo[kUserReadAccessCountKeyName];
+        _readReceiveGreetCount = userInfo[kUserReceiveGreetCountKeyName];
+        
         _userPhotos        = [YPBUserPhoto userPhotosFromArray:userInfo[kUserPhotosKeyName]];
+        _gifts             = [YPBGift giftsFromArray:userInfo[kUserGiftsKeyName]];
         
         // Target
         _targetCup = ((NSNumber *)userInfo[kUserTargetCupKeyName]).unsignedIntegerValue;
@@ -395,7 +474,13 @@ static YPBUser *_currentUser;
     [userInfo safely_setObject:self.greetCount forKey:kUserGreetCountKeyName];
     [userInfo safely_setObject:self.receiveGreetCount forKey:kUserReceiveGreetCountKeyName];
     [userInfo safely_setObject:self.accessCount forKey:kUserAccessCountKeyName];
+    
+    [userInfo safely_setObject:self.readGreetCount forKey:kUserReadGreetCountKeyName];
+    [userInfo safely_setObject:self.readReceiveGreetCount forKey:kUserReadReceiveGreetCountKeyName];
+    [userInfo safely_setObject:self.readAccessCount forKey:kUserReadAccessCountKeyName];
+    
     [userInfo safely_setObject:[YPBUserPhoto dictionariesFromUserPhotos:self.userPhotos] forKey:kUserPhotosKeyName];
+    [userInfo safely_setObject:[YPBGift dictionariesFromGifts:self.gifts] forKey:kUserGiftsKeyName];
     //Target
     [userInfo safely_setInteger:self.targetCup forKey:kUserTargetCupKeyName];
     [userInfo safely_setObject:@[@(self.targetHeight.min),@(self.targetHeight.max)] forKey:kUserTargetHeightRangeKeyName];
@@ -412,10 +497,31 @@ static YPBUser *_currentUser;
 //        return;
 //    }
     
-    _currentUser = self;
+    if (_currentUser != self) {
+        
+        NSNumber *readGreetCount;
+        if (_currentUser.readGreetCount != nil || self.readGreetCount != nil) {
+            readGreetCount = @(MAX(_currentUser.readGreetCount.unsignedIntegerValue, self.readGreetCount.unsignedIntegerValue));
+        }
+        
+        NSNumber *readAccessCount;
+        if (_currentUser.readAccessCount != nil || self.readAccessCount != nil) {
+            readAccessCount = @(MAX(_currentUser.readAccessCount.unsignedIntegerValue, self.readAccessCount.unsignedIntegerValue));
+        }
+        
+        NSNumber *readReceiveCount;
+        if (_currentUser.readReceiveGreetCount != nil || self.readReceiveGreetCount != nil) {
+            readReceiveCount = @(MAX(_currentUser.readReceiveGreetCount.unsignedIntegerValue, self.readReceiveGreetCount.unsignedIntegerValue));
+        }
+        
+        _currentUser = self;
+        _currentUser.readGreetCount = readGreetCount;
+        _currentUser.readAccessCount = readAccessCount;
+        _currentUser.readReceiveGreetCount = readReceiveCount;
+    }
     [[NSUserDefaults standardUserDefaults] setObject:self.userInfo forKey:kUserInfoKeyName];
     [[NSUserDefaults standardUserDefaults] synchronize];
-    //[[NSNotificationCenter defaultCenter] postNotificationName:kCurrentUserChangeNotification object:nil];
+    [[NSNotificationCenter defaultCenter] postNotificationName:kCurrentUserChangeNotification object:_currentUser];
 }
 
 - (NSError *)validate {
@@ -636,5 +742,21 @@ static YPBUser *_currentUser;
         _userPhotos = photoArr;
     }
     return deletePhoto != nil;
+}
+
+- (NSUInteger)unreadGreetCount {
+    return MAX(0, self.greetCount.integerValue - self.readGreetCount.integerValue);
+}
+
+- (NSUInteger)unreadAccessCount {
+    return MAX(0, self.accessCount.integerValue - self.readAccessCount.integerValue);
+}
+
+- (NSUInteger)unreadReceiveGreetCount {
+    return MAX(0, self.receiveGreetCount.integerValue - self.readReceiveGreetCount.integerValue);
+}
+
+- (NSUInteger)unreadTotalCount {
+    return self.unreadAccessCount + self.unreadGreetCount + self.unreadReceiveGreetCount;
 }
 @end

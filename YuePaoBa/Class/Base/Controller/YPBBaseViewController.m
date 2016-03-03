@@ -7,7 +7,6 @@
 //
 
 #import "YPBBaseViewController.h"
-#import "YPBSideMenuViewController.h"
 
 @interface YPBBaseViewController ()
 
@@ -18,8 +17,6 @@
 - (instancetype)init {
     self = [super init];
     if (self) {
-        _rootVCHasSideMenu = YES;
-
         if (![YPBUser currentUser].isRegistered) {
             [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(baseOnUserRestoreNotification:) name:kUserRestoreSuccessNotification object:nil];
         }
@@ -44,18 +41,6 @@
     [super viewDidLoad];
     // Do any additional setup after loading the view.
     self.view.backgroundColor = [UIColor whiteColor];
-    
-    if (self.rootVCHasSideMenu) {
-        if (self.navigationController.viewControllers[0] == self) {
-            self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] bk_initWithImage:[UIImage imageNamed:@"side_menu_button"] style:UIBarButtonItemStylePlain handler:^(id sender) {
-                [self.sideMenuViewController presentLeftMenuViewController];
-            }];
-            self.navigationItem.leftBarButtonItem.badgeValue = self.navigationController.sideMenuVC.badgeValue;
-            self.navigationItem.leftBarButtonItem.badgeBGColor = [UIColor whiteColor];
-            self.navigationItem.leftBarButtonItem.badgeTextColor = [UIColor redColor];
-            [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(onBadgeValueChangeNotification) name:kBadgeValueChangeNotification object:nil];
-        }
-    }
 }
 
 - (void)viewWillDisappear:(BOOL)animated {
@@ -80,10 +65,6 @@
 }
 
 - (void)didRestoreUser:(YPBUser *)user {};
-
-- (void)onBadgeValueChangeNotification {
-    self.navigationItem.leftBarButtonItem.badgeValue = self.navigationController.sideMenuVC.badgeValue;
-}
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];

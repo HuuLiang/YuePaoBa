@@ -171,7 +171,7 @@ DefineLazyPropertyInitialization(NSMutableArray, chatMessages)
     contact.unreadMessages = @(0);
     [contact endUpdate];
     
-    [[NSNotificationCenter defaultCenter] postNotificationName:kBadgeValueChangeNotification object:nil];
+    [[NSNotificationCenter defaultCenter] postNotificationName:kUnreadMessageChangeNotification object:nil];
 }
 
 - (void)showOptionsWithChatMessage:(YPBChatMessage *)chatMessage
@@ -263,7 +263,7 @@ DefineLazyPropertyInitialization(NSMutableArray, chatMessages)
         [self finishSendMessageWithBubbleMessageType:XHBubbleMessageMediaTypeText];
     } else {
 //        [YPBVIPEntranceView showVIPEntranceInView:self.view canClose:YES withEnterAction:^(id obj) {
-            YPBVIPPriviledgeViewController *vipVC = [[YPBVIPPriviledgeViewController alloc] init];
+            YPBVIPPriviledgeViewController *vipVC = [[YPBVIPPriviledgeViewController alloc] initWithContentType:YPBPaymentContentTypeMessage];
             [self.navigationController pushViewController:vipVC animated:YES];
 //        }];
         

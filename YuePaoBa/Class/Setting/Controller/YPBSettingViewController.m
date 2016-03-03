@@ -30,6 +30,8 @@ DefineLazyPropertyInitialization(YPBFeedbackModel, feedbackModel)
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
+    self.title = @"设置";
+    
     self.layoutTableView.rowHeight = kScreenHeight*0.08;
     [self.view addSubview:self.layoutTableView];
     {

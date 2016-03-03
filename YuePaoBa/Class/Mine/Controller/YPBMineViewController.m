@@ -20,6 +20,8 @@
 #import "YPBUserPhotoAddModel.h"
 #import "YPBUserPhotoDeleteModel.h"
 #import "YPBPhotoBrowser.h"
+#import "YPBMyGiftViewController.h"
+#import "YPBSettingViewController.h"
 
 static NSString *const kNoUserInfoErrorMessage = @"无法获取用户详细信息，请刷新后重试";
 
@@ -27,6 +29,7 @@ static NSString *const kNoUserInfoErrorMessage = @"无法获取用户详细信�
 {
     YPBTableViewCell *_vipCell;
     YPBTableViewCell *_likeCell;
+    YPBTableViewCell *_giftCell;
     
     YPBTableViewCell *_photoCell;
     YPBPhotoBar *_photoBar;
@@ -41,7 +44,6 @@ static NSString *const kNoUserInfoErrorMessage = @"无法获取用户详细信�
     YPBTableViewCell *_assetsCell;
     YPBTableViewCell *_ageCell;
 }
-@property (nonatomic,retain) YPBAvatarView *sideMenuAvatarView;
 @property (nonatomic,retain) YPBMineProfileCell *profileCell;
 @property (nonatomic,retain) YPBUserDetailModel *mineDetailModel;
 @property (nonatomic,retain) YPBUserAvatarUpdateModel *avatarUpdateModel;
@@ -61,6 +63,7 @@ DefineLazyPropertyInitialization(YPBUserPhotoDeleteModel, photoDeleteModel)
     if (self) {
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(onUserRestoreNotification) name:kUserInRestoreNotification object:nil];
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(onVIPUpgradeSuccessNotification) name:kVIPUpgradeSuccessNotification object:nil];
+        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(onCurrentUserChangeNotification:) name:kCurrentUserChangeNotification object:nil];
     }
     return self;
 }
@@ -68,11 +71,20 @@ DefineLazyPropertyInitialization(YPBUserPhotoDeleteModel, photoDeleteModel)
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
+    self.layoutTableView.rowHeight = MAX(kScreenHeight * 0.07,44);
     [self.layoutTableView mas_makeConstraints:^(MASConstraintMaker *make) {
         make.edges.equalTo(self.view);
     }];
     
     @weakify(self);
+    self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] bk_initWithImage:[UIImage imageNamed:@"setting_icon"]
+                                                                                style:UIBarButtonItemStylePlain
+                                                                              handler:^(id sender)
+    {
+        @strongify(self);
+        YPBSettingViewController *settingVC = [[YPBSettingViewController alloc] init];
+        [self.navigationController pushViewController:settingVC animated:YES];
+    }];
     self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] bk_initWithImage:[UIImage imageNamed:@"edit_icon"]
                                                                                  style:UIBarButtonItemStylePlain
                                                                                handler:^(id sender)
@@ -81,12 +93,12 @@ DefineLazyPropertyInitialization(YPBUserPhotoDeleteModel, photoDeleteModel)
         
         YPBUser *user = [YPBUser currentUser];
         if (user.isRegistered) {
-            @weakify(self);
+//            @weakify(self);
             YPBEditMineDetailViewController *editVC = [[YPBEditMineDetailViewController alloc] initWithUser:user.copy];
-            editVC.successHandler = ^(id obj) {
-                @strongify(self);
-                [self reloadDetailInfos];
-            };
+//            editVC.successHandler = ^(id obj) {
+//                @strongify(self);
+//                [self reloadDetailInfos];
+//            };
             [self.navigationController pushViewController:editVC animated:YES];
         } else {
             [[YPBMessageCenter defaultCenter] showErrorWithTitle:kNoUserInfoErrorMessage inViewController:self];
@@ -104,8 +116,11 @@ DefineLazyPropertyInitialization(YPBUserPhotoDeleteModel, photoDeleteModel)
     self.layoutTableViewAction = ^(NSIndexPath *indexPath, UITableViewCell *cell) {
         @strongify(self);
         if (cell == self->_vipCell) {
-            YPBVIPPriviledgeViewController *priviledgeVC = [[YPBVIPPriviledgeViewController alloc] init];
+            YPBVIPPriviledgeViewController *priviledgeVC = [[YPBVIPPriviledgeViewController alloc] initWithContentType:[YPBUtil isVIP]?YPBPaymentContentTypeRenewVIP:YPBPaymentContentTypeMineVIP];
             [self.navigationController pushViewController:priviledgeVC animated:YES];
+        } else if (cell == self->_giftCell) {
+            YPBMyGiftViewController *myGiftVC = [[YPBMyGiftViewController alloc] init];
+            [self.navigationController pushViewController:myGiftVC animated:YES];
         }
     };
 }
@@ -120,6 +135,11 @@ DefineLazyPropertyInitialization(YPBUserPhotoDeleteModel, photoDeleteModel)
 
 - (void)onUserRestoreNotification {
     [self refreshMineDetails];
+}
+
+- (void)onCurrentUserChangeNotification:(NSNotification *)notification {
+    [self reloadUI];
+    [self refreshBadgeValue];
 }
 
 - (void)refreshMineDetails {
@@ -141,7 +161,8 @@ DefineLazyPropertyInitialization(YPBUserPhotoDeleteModel, photoDeleteModel)
 
             YPBUser *user = obj;
             [user saveAsCurrentUser];
-            [self reloadUI];
+//            [self refreshBadgeValue];
+//            [self reloadUI];
             
             if (isRestore) {
                 [[NSNotificationCenter defaultCenter] postNotificationName:kUserRestoreSuccessNotification object:user];
@@ -195,6 +216,10 @@ DefineLazyPropertyInitialization(YPBUserPhotoDeleteModel, photoDeleteModel)
     [self setHeaderHeight:15 inSection:++section];
     
     NSUInteger row = 0;
+    _likeCell = [[YPBTableViewCell alloc] initWithImage:[UIImage imageNamed:@"like_icon"] title:@"？人喜欢了你"];
+    _likeCell.selectionStyle = UITableViewCellSelectionStyleNone;
+    [self setLayoutCell:_likeCell inRow:row++ andSection:section];
+    
     if ([YPBSystemConfig sharedConfig].vipPointInfo.length > 0) {
         _vipCell = [[YPBTableViewCell alloc] initWithImage:[UIImage imageNamed:@"vip_icon"] title:@"开通VIP"];
         _vipCell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
@@ -202,9 +227,9 @@ DefineLazyPropertyInitialization(YPBUserPhotoDeleteModel, photoDeleteModel)
         [self setLayoutCell:_vipCell inRow:row++ andSection:section];
     }
     
-    _likeCell = [[YPBTableViewCell alloc] initWithImage:[UIImage imageNamed:@"like_icon"] title:@"？人喜欢了你"];
-    _likeCell.selectionStyle = UITableViewCellSelectionStyleNone;
-    [self setLayoutCell:_likeCell inRow:row++ andSection:section];
+    _giftCell = [[YPBTableViewCell alloc] initWithImage:[UIImage imageNamed:@"gift_icon"] title:@"我的礼物"];
+    _giftCell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
+    [self setLayoutCell:_giftCell inRow:row++ andSection:section];
     
     [self setHeaderHeight:15 inSection:++section];
     
@@ -291,22 +316,6 @@ DefineLazyPropertyInitialization(YPBUserPhotoDeleteModel, photoDeleteModel)
     return _profileCell;
 }
 
-- (YPBAvatarView *)sideMenuAvatarView {
-    if (_sideMenuAvatarView) {
-        return _sideMenuAvatarView;
-    }
-    
-    _sideMenuAvatarView = [[YPBAvatarView alloc] init];
-    @weakify(self);
-    [_sideMenuAvatarView bk_whenTapped:^{
-        @strongify(self);
-        
-        [[YPBUtil sideMenuViewController] hideMenuViewController];
-        [[YPBUtil sideMenuViewController] setContentViewController:self.navigationController animated:YES];
-    }];
-    return _sideMenuAvatarView;
-}
-
 - (void)pickingAvatar {
     @weakify(self);
     YPBPhotoPicker *photoPicker = [[YPBPhotoPicker alloc] init];
@@ -338,8 +347,7 @@ DefineLazyPropertyInitialization(YPBUserPhotoDeleteModel, photoDeleteModel)
                  
                  if (result) {
                      [[YPBMessageCenter defaultCenter] showSuccessWithTitle:@"头像更新成功" inViewController:self];
-                     self.sideMenuAvatarView.image = pickedImage;
-                     self.profileCell.avatarImage = pickedImage;
+                     //self.profileCell.avatarImage = pickedImage;
                      
                      [YPBUser currentUser].logoUrl = obj;
                      [[YPBUser currentUser] saveAsCurrentUser];
@@ -417,7 +425,7 @@ DefineLazyPropertyInitialization(YPBUserPhotoDeleteModel, photoDeleteModel)
                     
                     [[YPBUser currentUser] addOriginalPhotoUrls:uploadedOriginalImages thumbPhotoUrls:uploadedThumbImages];
                     [[YPBUser currentUser] saveAsCurrentUser];
-                    [self reloadPhotoBarImages];
+                    //[self reloadPhotoBarImages];
                 } else {
                     [[YPBMessageCenter defaultCenter] showErrorWithTitle:@"照片添加失败" inViewController:self];
                 }
@@ -426,15 +434,28 @@ DefineLazyPropertyInitialization(YPBUserPhotoDeleteModel, photoDeleteModel)
     }];
 }
 
+- (void)refreshBadgeValue {
+    NSUInteger unreadCount = [YPBUser currentUser].unreadTotalCount;
+    if (unreadCount == 0) {
+        self.navigationController.tabBarItem.badgeValue = nil;
+    } else if (unreadCount < 100) {
+        self.navigationController.tabBarItem.badgeValue = [NSString stringWithFormat:@"%ld", (unsigned long)unreadCount];
+    } else {
+        self.navigationController.tabBarItem.badgeValue = @"99+";
+    }
+}
+
 - (void)reloadUI {
-    self.sideMenuAvatarView.imageURL = [NSURL URLWithString:[YPBUser currentUser].logoUrl];
-    self.sideMenuAvatarView.name = [YPBUser currentUser].nickName;
+    if (!self.isViewLoaded) {
+        return ;
+    }
     
     self.profileCell.name = [YPBUser currentUser].nickName;
     self.profileCell.avatarURL = [NSURL URLWithString:[YPBUser currentUser].logoUrl];
-    self.profileCell.followedNumber = [YPBUser currentUser].receiveGreetCount.unsignedIntegerValue;
-    self.profileCell.followingNumber = [YPBUser currentUser].greetCount.unsignedIntegerValue;
-    self.profileCell.accessedNumber = [YPBUser currentUser].accessCount.unsignedIntegerValue;
+    
+    self.profileCell.followedNumber = [YPBUser currentUser].unreadReceiveGreetCount;
+    self.profileCell.followingNumber = [YPBUser currentUser].unreadGreetCount;
+    self.profileCell.accessedNumber = [YPBUser currentUser].unreadAccessCount;
     
     if (_likeCell) {
         NSString *suffix = @" 人喜欢了你";
@@ -450,7 +471,6 @@ DefineLazyPropertyInitialization(YPBUserPhotoDeleteModel, photoDeleteModel)
 }
 
 - (void)reloadVIP {
-    self.sideMenuAvatarView.isVIP = [YPBUtil isVIP];
     self.profileCell.isVIP = [YPBUtil isVIP];
     
     if ([YPBUtil isVIP]) {
@@ -469,7 +489,7 @@ DefineLazyPropertyInitialization(YPBUserPhotoDeleteModel, photoDeleteModel)
                 [thumbPhotos addObject:obj.smallPhoto];
             }
         }];
-        _photoBar.imageURLStrings = thumbPhotos;
+        [_photoBar setImageURLStrings:thumbPhotos titleStrings:nil];
     }
 }
 
@@ -506,7 +526,7 @@ DefineLazyPropertyInitialization(YPBUserPhotoDeleteModel, photoDeleteModel)
             [[YPBUser currentUser] deleteUserPhoto:deletePhoto];
             [[YPBUser currentUser] saveAsCurrentUser];
             
-            [self reloadPhotoBarImages];
+            //[self reloadPhotoBarImages];
         } else {
             [[YPBMessageCenter defaultCenter] showErrorWithTitle:@"删除照片失败" inViewController:self];
         }
@@ -516,40 +536,5 @@ DefineLazyPropertyInitialization(YPBUserPhotoDeleteModel, photoDeleteModel)
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
-}
-
-#pragma mark - YPBSideMenuItemDelegate
-
-- (void)sideMenuController:(UIViewController *)viewController willAddToSideMenuCell:(UITableViewCell *)cell {
-    cell.selectionStyle = UITableViewCellSelectionStyleNone;
-    
-    @weakify(viewController);
-    self.sideMenuAvatarView.avatarImageLoadHandler = ^(UIImage *image) {
-        @strongify(viewController);
-        viewController.backgroundImageView.image = image;
-    };
-    
-    self.sideMenuAvatarView.imageURL = [NSURL URLWithString:[YPBUser currentUser].logoUrl];
-    self.sideMenuAvatarView.name = [YPBUser currentUser].nickName;
-    self.sideMenuAvatarView.isVIP = [YPBUtil isVIP];
-    
-    if (![cell.subviews containsObject:self.sideMenuAvatarView]) {
-        [cell addSubview:self.sideMenuAvatarView];
-        {
-            [self.sideMenuAvatarView mas_makeConstraints:^(MASConstraintMaker *make) {
-                make.center.equalTo(cell);
-                make.width.equalTo(cell).multipliedBy(0.35);
-                make.height.equalTo(cell).multipliedBy(0.8);
-            }];
-        }
-    }
-}
-
-- (BOOL)sideMenuController:(UIViewController *)sideMenuVC shouldPresentContentViewController:(UIViewController *)contentVC {
-    return NO;
-}
-
-- (CGFloat)sideMenuItemHeight {
-    return kScreenHeight * 0.3;
 }
 @end

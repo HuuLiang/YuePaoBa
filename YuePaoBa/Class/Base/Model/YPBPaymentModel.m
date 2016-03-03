@@ -106,7 +106,7 @@ typedef void (^YPBPaymentCompletionHandler)(BOOL success);
                              @"contentId":paymentInfo.contentId ?: [YPBUser currentUser].userId,
                              @"contentType":paymentInfo.contentType ?: @"0",
                              @"pluginType":paymentInfo.paymentType,
-                             @"payPointType":paymentInfo.payPointType ?: @1,
+                             @"payPointType":paymentInfo.payPointType ?: @(YPBPayPointTypeUnknown),
                              @"appId":YPB_REST_APPID,
                              @"versionNo":@(YPB_REST_APP_VERSION.integerValue),
                              @"status":statusDic[paymentInfo.paymentResult],

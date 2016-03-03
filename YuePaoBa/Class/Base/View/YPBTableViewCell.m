@@ -12,6 +12,7 @@
 @synthesize iconImageView = _iconImageView;
 @synthesize titleLabel = _titleLabel;
 @synthesize subtitleLabel = _subtitleLabel;
+@synthesize backgroundImageView = _backgroundImageView;
 
 - (instancetype)initWithImage:(UIImage *)image title:(NSString *)title {
     return [self initWithImage:image title:title subtitle:nil];
@@ -103,5 +104,15 @@
 - (void)setAccessoryType:(UITableViewCellAccessoryType)accessoryType {
     [super setAccessoryType:accessoryType];
     [self subtitleLabelRemakeConstraints];
+}
+
+- (UIImageView *)backgroundImageView {
+    if (_backgroundImageView) {
+        return _backgroundImageView;
+    }
+    
+    _backgroundImageView = [[UIImageView alloc] init];
+    self.backgroundView = _backgroundImageView;
+    return _backgroundImageView;
 }
 @end

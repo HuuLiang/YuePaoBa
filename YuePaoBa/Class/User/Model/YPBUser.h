@@ -30,6 +30,24 @@ typedef NS_ENUM(NSUInteger, YPBUserCup) {
 @property (nonatomic) NSNumber *sort;
 @end
 
+@interface YPBUserVideo : NSObject <NSCopying>
+
+@property (nonatomic) NSNumber *id;
+@property (nonatomic) NSString *imgCover;
+@property (nonatomic) NSString *videoUrl;
+
+@end
+
+@interface YPBGift : NSObject <NSCopying>
+
+@property (nonatomic) NSNumber *id;
+@property (nonatomic) NSString *name;
+@property (nonatomic) NSString *imgUrl;
+@property (nonatomic) NSNumber *fee;
+@property (nonatomic) NSString *userName;
+
+@end
+
 @interface YPBUser : NSObject <NSCopying>
 
 @property (nonatomic) NSString *userId;
@@ -46,6 +64,7 @@ typedef NS_ENUM(NSUInteger, YPBUserCup) {
 @property (nonatomic) NSString *profession;
 @property (nonatomic) NSString *weixinNum;
 @property (nonatomic) NSString *assets;
+@property (nonatomic) NSString *purpose;
 
 @property (nonatomic) BOOL isGreet;
 @property (nonatomic) BOOL isVip;
@@ -55,6 +74,16 @@ typedef NS_ENUM(NSUInteger, YPBUserCup) {
 @property (nonatomic) NSNumber *accessCount;
 @property (nonatomic) NSNumber *receiveGreetCount;
 @property (nonatomic) NSArray<YPBUserPhoto *> *userPhotos;
+
+@property (nonatomic) NSNumber *readGreetCount;
+@property (nonatomic) NSNumber *readAccessCount;
+@property (nonatomic) NSNumber *readReceiveGreetCount;
+
+// Helper properties for access/greet
+@property (nonatomic,readonly) NSUInteger unreadGreetCount;
+@property (nonatomic,readonly) NSUInteger unreadAccessCount;
+@property (nonatomic,readonly) NSUInteger unreadReceiveGreetCount;
+@property (nonatomic,readonly) NSUInteger unreadTotalCount;
 
 @property (nonatomic) YPBUserGender gender;
 @property (nonatomic) YPBIntRange targetHeight;
@@ -67,6 +96,9 @@ typedef NS_ENUM(NSUInteger, YPBUserCup) {
 @property (nonatomic) YPBUserCup cup;
 
 @property (nonatomic,readonly) YPBUserGender oppositeGender;
+
+@property (nonatomic) YPBUserVideo *userVideo;
+@property (nonatomic,retain) NSArray<YPBGift *> *gifts;
 
 + (instancetype)currentUser;
 //- (instancetype)init __attribute__((unavailable("cannot use init for this class, use +(instancetype)currentUser instead")));

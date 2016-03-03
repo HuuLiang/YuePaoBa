@@ -13,5 +13,6 @@
 @property (nonatomic) NSUInteger level;
 @property (nonatomic,retain) YPBUser *user;
 @property (nonatomic,copy) YPBAction dateAction;
+@property (nonatomic,copy) YPBAction likeAction;
 
 @end

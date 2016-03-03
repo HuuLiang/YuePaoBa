@@ -73,7 +73,9 @@
         } forControlEvents:UIControlEventTouchUpInside];
         
         _sendGiftButton = [[UIButton alloc] init];
-        [_sendGiftButton setImage:image forState:UIControlStateNormal];
+        UIImage *giftImage = [UIImage animatedImageWithImages:@[[UIImage imageNamed:@"gift_normal_button"],
+                                                                [UIImage imageNamed:@"gift_highlight_button"]] duration:0.5];
+        [_sendGiftButton setImage:giftImage forState:UIControlStateNormal];
         [self addSubview:_sendGiftButton];
         {
             [_sendGiftButton mas_makeConstraints:^(MASConstraintMaker *make) {
@@ -127,5 +129,14 @@
 - (void)setNumberOfLikes:(NSUInteger)numberOfLikes {
     _numberOfLikes = numberOfLikes;
     _likeButton.numberOfLikes = numberOfLikes;
+}
+
+
+- (void)setLiked:(BOOL)liked animated:(BOOL)animated {
+    [self setLiked:liked];
+    
+    if (animated) {
+        
+    }
 }
 @end

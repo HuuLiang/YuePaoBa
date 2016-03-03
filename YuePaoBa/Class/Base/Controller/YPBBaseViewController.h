@@ -8,9 +8,7 @@
 
 #import <UIKit/UIKit.h>
 
-@interface YPBBaseViewController : UIViewController <YPBSideMenuItemDelegate>
-
-@property (nonatomic) BOOL rootVCHasSideMenu;
+@interface YPBBaseViewController : UIViewController
 
 - (instancetype)initWithTitle:(NSString *)title;
 - (BOOL)isVisibleViewController;

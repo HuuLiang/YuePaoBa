@@ -108,11 +108,11 @@
                completionHandler:^(BOOL success, id obj)
      {
          if (success && obj) {
-             NSArray *messages = obj;
-             if (messages.count > 0) {
-                 [[YPBMessageCenter defaultCenter] showSuccessWithTitle:[NSString stringWithFormat:@"您有%ld条新消息！", messages.count] inViewController:nil];
-             }
-             [[NSNotificationCenter defaultCenter] postNotificationName:kBadgeValueChangeNotification object:nil];
+//             NSArray *messages = obj;
+//             if (messages.count > 0) {
+//                 [[YPBMessageCenter defaultCenter] showSuccessWithTitle:[NSString stringWithFormat:@"您有%ld条新消息！", messages.count] inViewController:nil];
+//             }
+             [[NSNotificationCenter defaultCenter] postNotificationName:kUnreadMessageChangeNotification object:nil];
              [[NSNotificationCenter defaultCenter] postNotificationName:kMessagePushNotification object:obj];
          }
      }];

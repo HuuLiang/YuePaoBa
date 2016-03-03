@@ -40,6 +40,7 @@ PODS:
   - DACircularProgress (2.3.1)
   - GPUImage (0.1.7)
   - HexColors (2.2.1)
+  - HMSegmentedControl (1.5.2)
   - Masonry (0.6.4)
   - MBProgressHUD (0.9.2)
   - MessageDisplayKit (5.4)
@@ -66,6 +67,7 @@ DEPENDENCIES:
   - BlocksKit (~> 2.2.5)
   - DACircularProgress (~> 2.3.1)
   - GPUImage (~> 0.1.7)
+  - HMSegmentedControl (~> 1.5.2)
   - Masonry (~> 0.6.3)
   - MBProgressHUD (~> 0.9.2)
   - MessageDisplayKit (~> 5.4)
@@ -88,6 +90,7 @@ SPEC CHECKSUMS:
   DACircularProgress: 4dd437c0fc3da5161cb289e07ac449493d41db71
   GPUImage: 733a5f0fab92df9de1c37ba9df520a833ccb406d
   HexColors: abfd172e329dab59888614ccba6f216cec59289d
+  HMSegmentedControl: 83b9686022d2176fb6457d2bdb61e5d6393fed7d
   Masonry: 281802d04d787ea2973179ee8bcb50500579ede2
   MBProgressHUD: 1569cf7ace17a8bac47aabfbb8580a49690386d1
   MessageDisplayKit: dfec1bb7cdd2881228459ede16b3a8a557c35f89

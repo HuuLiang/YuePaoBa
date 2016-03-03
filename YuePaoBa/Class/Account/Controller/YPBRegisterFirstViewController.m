@@ -28,6 +28,7 @@ DefineLazyPropertyInitialization(YPBUser, user)
     [super viewDidLoad];
     // Do any additional setup after loading the view.
     self.title = @"设置个人信息";
+    self.edgesForExtendedLayout = UIRectEdgeNone;
     
     UIImageView *backgroundImageView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"register_background"]];
     backgroundImageView.contentMode = UIViewContentModeScaleAspectFill;
@@ -102,6 +103,8 @@ DefineLazyPropertyInitialization(YPBUser, user)
     }
     
     YPBRadioButton *maleButton = [[YPBRadioButton alloc] init];
+    [maleButton setImage:[UIImage imageNamed:@"gender_normal"] forState:UIControlStateNormal];
+    [maleButton setImage:[UIImage imageNamed:@"gender_selected"] forState:UIControlStateSelected];
     maleButton.title = @"男";
     [genderCell addSubview:maleButton];
     {
@@ -113,6 +116,8 @@ DefineLazyPropertyInitialization(YPBUser, user)
     }
     
     YPBRadioButton *femaleButton = [[YPBRadioButton alloc] init];
+    [femaleButton setImage:[UIImage imageNamed:@"gender_normal"] forState:UIControlStateNormal];
+    [femaleButton setImage:[UIImage imageNamed:@"gender_selected"] forState:UIControlStateSelected];
     femaleButton.title = @"女";
     [genderCell addSubview:femaleButton];
     {

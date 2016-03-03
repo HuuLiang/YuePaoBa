@@ -37,8 +37,7 @@ return _##propertyName; \
 #define kDefaultCellHeight   (kScreenHeight * 0.08)
 #define kDefaultDateFormat   @"yyyyMMddHHmmss"
 #define kDefaultPhotoBlurRadius (5)
-
-#define CONTENT_VIEW_OFFSET_CENTERX (kScreenWidth/4)
+#define kThemeColor     [UIColor colorWithHexString:@"#ff6666"]
 
 #define kUserInfoKeyName                @"yuepaoba_userinfo_keyname"
 #define kUserIDKeyName                  @"yuepaoba_userid_keyname"
@@ -63,7 +62,13 @@ return _##propertyName; \
 #define kUserGreetCountKeyName          @"yuepaoba_usergreetcount_keyname"
 #define kUserReceiveGreetCountKeyName   @"yuepaoba_userreceivegreetcount_keyname"
 #define kUserAccessCountKeyName         @"yuepaoba_useraccesscount_keyname"
+
+#define kUserReadGreetCountKeyName          @"yuepaoba_userreadgreetcount_keyname"
+#define kUserReadReceiveGreetCountKeyName   @"yuepaoba_userreadreceivegreetcount_keyname"
+#define kUserReadAccessCountKeyName         @"yuepaoba_userreadaccesscount_keyname"
+
 #define kUserPhotosKeyName              @"yuepaoba_userphotos_keyname"
+#define kUserGiftsKeyName               @"yuepaoba_usergifts_keyname"
 
 #define kUserTargetHeightRangeKeyName   @"yuepaoba_usertargetheighrange_keyname"
 #define kUserTargetAgeRangeKeyName      @"yuepaoba_usertargetagerange_keyname"
@@ -73,15 +78,16 @@ return _##propertyName; \
 #define kUserMessagePersistenceNamespace @"user_message_persistence"
 #define kAutoReplyMessagePersistentNamespace @"auto_reply_message_persistence"
 #define kVIPUpgradePersistenceNamespace  @"vip_upgrade_persistence"
+#define kUserLiveShowRoomPersistenceNamespace @"user_live_show_room_persistence"
 
-//#define kCurrentUserChangeNotification @"yuepaoba_current_user_change_notification"
+#define kCurrentUserChangeNotification @"yuepaoba_current_user_change_notification"
 //#define kUserContactNotification @"yuepaoba_user_contact_notification"
-#define kMessagePushNotification          @"yuepaoba_message_push_notification"
-#define kUserInRestoreNotification        @"yuepaoba_user_in_restore_notification"
-#define kUserRestoreSuccessNotification   @"yuepaoba_user_restore_success_notification"
-#define kVIPUpgradingNotification         @"yuepaoba_vip_upgrading_notification"
-#define kVIPUpgradeSuccessNotification    @"yuepaoba_vip_upgrade_success_notification"
-#define kBadgeValueChangeNotification     @"yuepaoba_badge_value_change_notification"
+#define kMessagePushNotification            @"yuepaoba_message_push_notification"
+#define kUserInRestoreNotification          @"yuepaoba_user_in_restore_notification"
+#define kUserRestoreSuccessNotification     @"yuepaoba_user_restore_success_notification"
+//#define kVIPUpgradingNotification           @"yuepaoba_vip_upgrading_notification"
+#define kVIPUpgradeSuccessNotification      @"yuepaoba_vip_upgrade_success_notification"
+#define kUnreadMessageChangeNotification    @"yuepaoba_unread_message_change_notification"
 
 typedef struct _YPBIntRange {
     NSInteger min;

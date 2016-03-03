@@ -7,7 +7,6 @@
 //
 
 #import "YPBAppDelegate.h"
-#import "YPBSideMenuViewController.h"
 #import "YPBHomeViewController.h"
 #import "YPBVIPCenterViewController.h"
 #import "YPBContactViewController.h"
@@ -44,57 +43,42 @@ DefineLazyPropertyInitialization(YPBWeChatPayQueryOrderRequest, wechatPayOrderQu
     
     _window                              = [[UIWindow alloc] initWithFrame:[UIScreen mainScreen].bounds];
     _window.backgroundColor              = [UIColor whiteColor];
-//    _window.rootViewController           = [self setupRootViewController];
     return _window;
 }
 
 - (UIViewController *)setupRootViewController {
-    
-    YPBMineViewController *mineVC = [[YPBMineViewController alloc] initWithTitle:@"个人资料"];
-    UINavigationController *mineNav = [[UINavigationController alloc] initWithRootViewController:mineVC];
-    YPBSideMenuItem *avatarSideMenuItem = [YPBSideMenuItem itemWithTitle:nil image:nil rootViewController:mineNav delegate:mineVC];
-    
     YPBHomeViewController *homeVC = [[YPBHomeViewController alloc] initWithTitle:@"今日推荐"];
     UINavigationController *homeNav = [[UINavigationController alloc] initWithRootViewController:homeVC];
-    YPBSideMenuItem *homeSideMenuItem = [YPBSideMenuItem itemWithTitle:homeVC.title image:[UIImage imageNamed:@"side_menu_hot_icon"] rootViewController:homeNav];
-    
-    YPBVIPCenterViewController *vipCenterVC = [[YPBVIPCenterViewController alloc] initWithTitle:@"VIP服务区"];
+    homeNav.tabBarItem = [[UITabBarItem alloc] initWithTitle:homeVC.title
+                                                       image:[UIImage imageNamed:@"tabbar_home_normal_icon"]
+                                               selectedImage:[UIImage imageNamed:@"tabbar_home_selected_icon"]];
+
+    YPBVIPCenterViewController *vipCenterVC = [[YPBVIPCenterViewController alloc] initWithTitle:@"视频认证"];
     UINavigationController *vipCenterNav = [[UINavigationController alloc] initWithRootViewController:vipCenterVC];
-    YPBSideMenuItem *vipSideMenuItem = [YPBSideMenuItem itemWithTitle:vipCenterVC.title image:[UIImage imageNamed:@"side_menu_vip_icon"] rootViewController:vipCenterNav];
+    vipCenterNav.tabBarItem = [[UITabBarItem alloc] initWithTitle:vipCenterVC.title
+                                                            image:[UIImage imageNamed:@"tabbar_video_normal_icon"]
+                                                    selectedImage:[UIImage imageNamed:@"tabbar_video_selected_icon"]];
     
-    YPBContactViewController *contactVC = [[YPBContactViewController alloc] initWithTitle:@"私密聊"];
+    YPBContactViewController *contactVC = [[YPBContactViewController alloc] initWithTitle:@"消息"];
     UINavigationController *contactNav = [[UINavigationController alloc] initWithRootViewController:contactVC];
-    YPBSideMenuItem *contactSideMenuItem = [YPBSideMenuItem itemWithTitle:contactVC.title image:[UIImage imageNamed:@"side_menu_message_icon"] rootViewController:contactNav delegate:contactVC];
+    contactNav.tabBarItem = [[UITabBarItem alloc] initWithTitle:contactVC.title
+                                                          image:[UIImage imageNamed:@"tabbar_message_normal_icon"]
+                                                  selectedImage:[UIImage imageNamed:@"tabbar_message_selected_icon"]];
     
-    YPBSideMenuItem *mineSideMenuItem = [YPBSideMenuItem itemWithTitle:@"个人资料" image:[UIImage imageNamed:@"side_menu_mine_icon"] rootViewController:mineNav];
+    YPBMineViewController *mineVC = [[YPBMineViewController alloc] initWithTitle:@"我"];
+    UINavigationController *mineNav = [[UINavigationController alloc] initWithRootViewController:mineVC];
+    mineNav.tabBarItem = [[UITabBarItem alloc] initWithTitle:mineVC.title
+                                                       image:[UIImage imageNamed:@"tabbar_mine_normal_icon"]
+                                               selectedImage:[UIImage imageNamed:@"tabbar_mine_selected_icon"]];
     
-    YPBSettingViewController *settingVC = [[YPBSettingViewController alloc] initWithTitle:@"设置"];
-    UINavigationController *settingNav = [[UINavigationController alloc] initWithRootViewController:settingVC];
-    YPBSideMenuItem *settingSideMenuItem = [YPBSideMenuItem itemWithTitle:settingVC.title image:[UIImage imageNamed:@"side_menu_setting_icon"] rootViewController:settingNav];
-    
-    YPBSideMenuViewController *sideMenuVC = [[YPBSideMenuViewController alloc] initWithSideMenuItems:@[avatarSideMenuItem, homeSideMenuItem, vipSideMenuItem, contactSideMenuItem, mineSideMenuItem, settingSideMenuItem]];
-    
-    RESideMenu *sideMenu = [[RESideMenu alloc] initWithContentViewController:homeNav
-                                                      leftMenuViewController:sideMenuVC
-                                                     rightMenuViewController:nil];
-    sideMenu.delegate = sideMenuVC;
-    sideMenu.scaleContentView = NO;
-    sideMenu.scaleBackgroundImageView = NO;
-    sideMenu.scaleMenuView = NO;
-    sideMenu.fadeMenuView = NO;
-    sideMenu.parallaxEnabled = NO;
-    sideMenu.bouncesHorizontally = NO;
-    sideMenu.contentViewShadowEnabled = YES;
-    sideMenu.contentViewShadowOffset = CGSizeMake(2.0, 0.0f);
-    sideMenu.contentViewShadowOpacity = 0.8;
-    sideMenu.contentViewShadowColor = [UIColor whiteColor];
-    sideMenu.contentViewInPortraitOffsetCenterX = CONTENT_VIEW_OFFSET_CENTERX;
-    return sideMenu;
+    UITabBarController *tabBarController = [[UITabBarController alloc] init];
+    tabBarController.viewControllers = @[homeNav,vipCenterNav,contactNav,mineNav];
+    tabBarController.tabBar.tintColor = kThemeColor;
+    return tabBarController;
 }
 
 - (void)setupCommonStyles {
-    //[[UIBarButtonItem appearance] setTitleTextAttributes:@{NSForegroundColorAttributeName:[UIColor whiteColor]} forState:UIControlStateNormal];
-    [[UINavigationBar appearance] setBackgroundImage:[UIImage imageNamed:@"nav_background"] forBarMetrics:UIBarMetricsDefault];
+    [[UINavigationBar appearance] setBarTintColor:kThemeColor];
     [[UINavigationBar appearance] setTintColor:[UIColor whiteColor]];
     [[UINavigationBar appearance] setTitleTextAttributes:@{NSFontAttributeName:[UIFont boldSystemFontOfSize:20.],
                                                           NSForegroundColorAttributeName:[UIColor whiteColor]}];
@@ -103,14 +87,21 @@ DefineLazyPropertyInitialization(YPBWeChatPayQueryOrderRequest, wechatPayOrderQu
                               withOptions:AspectPositionAfter
                                usingBlock:^(id<AspectInfo> aspectInfo){
                                    UIViewController *thisVC = [aspectInfo instance];
-                                   thisVC.navigationController.navigationBar.translucent = NO;
-                                   thisVC.navigationController.navigationBar.barTintColor = [UIColor colorWithHexString:@"#ff6666"];
-//                                   thisVC.navigationController.navigationBar.titleTextAttributes = @{NSFontAttributeName:[UIFont boldSystemFontOfSize:20.],
-//                                                                                                   NSForegroundColorAttributeName:[UIColor whiteColor]};
-//                                   thisVC.navigationController.navigationBar.tintColor = [UIColor whiteColor];
                                    thisVC.navigationItem.backBarButtonItem = [[UIBarButtonItem alloc] bk_initWithTitle:@"返回" style:UIBarButtonItemStylePlain handler:nil];
                                    
                                } error:nil];
+    
+    [UIViewController aspect_hookSelector:@selector(hidesBottomBarWhenPushed)
+                              withOptions:AspectPositionInstead
+                               usingBlock:^(id<AspectInfo> aspectInfo)
+    {
+        UIViewController *thisVC = [aspectInfo instance];
+        BOOL hidesBottomBar = NO;
+        if (thisVC.navigationController.viewControllers.count > 1) {
+            hidesBottomBar = YES;
+        }
+        [[aspectInfo originalInvocation] setReturnValue:&hidesBottomBar];
+    } error:nil];
     
     [UINavigationController aspect_hookSelector:@selector(preferredStatusBarStyle)
                                     withOptions:AspectPositionInstead
@@ -125,6 +116,16 @@ DefineLazyPropertyInitialization(YPBWeChatPayQueryOrderRequest, wechatPayOrderQu
                                    UIStatusBarStyle statusBarStyle = UIStatusBarStyleLightContent;
                                    [[aspectInfo originalInvocation] setReturnValue:&statusBarStyle];
                                } error:nil];
+    
+    [UIScrollView aspect_hookSelector:@selector(showsVerticalScrollIndicator)
+                         withOptions:AspectPositionInstead
+                          usingBlock:^(id<AspectInfo> aspectInfo)
+    {
+        BOOL bShow = NO;
+        [[aspectInfo originalInvocation] setReturnValue:&bShow];
+    } error:nil];
+    
+    
 }
 
 - (void)setupMobStatistics {
@@ -223,12 +224,8 @@ DefineLazyPropertyInitialization(YPBWeChatPayQueryOrderRequest, wechatPayOrderQu
         if (paymentType == YPBPaymentTypeWeChatPay) {
             [self.wechatPayOrderQueryRequest queryOrderWithNo:paymentInfo.orderId completionHandler:^(BOOL success, NSString *trade_state, double total_fee) {
                 if ([trade_state isEqualToString:@"SUCCESS"]) {
-                    paymentInfo.paymentResult = @(PAYRESULT_SUCCESS);
-                    paymentInfo.paymentStatus = @(YPBPaymentStatusNotProcessed);
-                    [paymentInfo save];
+                    [[YPBPaymentManager sharedManager] notifyPaymentResult:PAYRESULT_SUCCESS withPaymentInfo:paymentInfo];
                 }
-                
-                [[NSNotificationCenter defaultCenter] postNotificationName:kVIPUpgradingNotification object:paymentInfo];
             }];
         } else {
 //            paymentInfo.paymentResult = @(PAYRESULT_FAIL);

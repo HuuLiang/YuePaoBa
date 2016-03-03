@@ -48,6 +48,7 @@ DefineLazyPropertyInitialization(YPBUserDetailUpdateModel, updateModel)
     [super viewDidLoad];
     // Do any additional setup after loading the view.
     self.title = @"编辑资料";
+    //self.edgesForExtendedLayout = UIRectEdgeNone;
     
     self.layoutTableView.rowHeight = kDefaultCellHeight;
     [self.layoutTableView mas_makeConstraints:^(MASConstraintMaker *make) {

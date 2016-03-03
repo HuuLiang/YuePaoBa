@@ -23,13 +23,34 @@ static NSString *const kPaymentInfoPaymentTimeKeyName = @"yuepaoba_paymentinfo_p
 
 @implementation YPBPaymentInfo
 
-- (NSString *)paymentId {
-    if (_paymentId) {
-        return _paymentId;
+- (instancetype)init {
+    self = [super init];
+    if (self) {
+        NSString *channelNo = YPB_CHANNEL_NO;
+        channelNo = [channelNo substringFromIndex:channelNo.length-14];
+        NSString *uuid = [[NSUUID UUID].UUIDString.md5 substringWithRange:NSMakeRange(8, 16)];
+        NSString *orderNo = [NSString stringWithFormat:@"%@_%@", channelNo, uuid];
+        self.paymentId = [NSUUID UUID].UUIDString.md5;
+        self.orderId = orderNo;
+        self.contentId = [YPBUser currentUser].userId;
+        self.paymentResult = @(PAYRESULT_UNKNOWN);
+        self.paymentStatus = @(YPBPaymentStatusPaying);
+        self.paymentType = @(YPBPaymentTypeNone);
+        self.paymentTime = [YPBUtil currentDateString];
     }
-    
-    _paymentId = [NSUUID UUID].UUIDString.md5;
-    return _paymentId;
+    return self;
+}
+
+- (BOOL)isValid {
+    return self.paymentId.length > 0
+    && self.orderId.length > 0
+    && self.orderPrice.unsignedIntegerValue > 0
+    && self.payPointType.unsignedIntegerValue > 0
+    && self.paymentType.unsignedIntegerValue != YPBPaymentTypeNone;
+}
+
++ (instancetype)paymentInfo {
+    return [[self alloc] init];
 }
 
 + (instancetype)paymentInfoFromDictionary:(NSDictionary *)payment {

@@ -32,6 +32,10 @@ static NSString *const kContactCellReusableIdentifier = @"ContactCellReusableIde
                                                  selector:@selector(onMessagePushNotification:)
                                                      name:kMessagePushNotification
                                                    object:nil];
+        [[NSNotificationCenter defaultCenter] addObserver:self
+                                                 selector:@selector(onUnreadMessageChangeNotification)
+                                                     name:kUnreadMessageChangeNotification
+                                                   object:nil];
     }
     return self;
 }
@@ -44,7 +48,7 @@ static NSString *const kContactCellReusableIdentifier = @"ContactCellReusableIde
     _layoutTableView.dataSource = self;
     _layoutTableView.hasSectionBorder = YES;
     _layoutTableView.hasRowSeparator = YES;
-    _layoutTableView.rowHeight = kScreenHeight * 0.12;
+    _layoutTableView.rowHeight = MAX(kScreenHeight * 0.12,60);
     [_layoutTableView registerClass:[YPBContactCell class] forCellReuseIdentifier:kContactCellReusableIdentifier];
     [self.view addSubview:_layoutTableView];
     {
@@ -53,23 +57,61 @@ static NSString *const kContactCellReusableIdentifier = @"ContactCellReusableIde
         }];
     }
     
+    if (!self.contacts) {
+        [self reloadContactsWithUIReload:YES];
+    }
+    
+    @weakify(self);
+    [_layoutTableView YPB_addPullToRefreshWithHandler:^{
+        @strongify(self);
+        if (!self) {
+            return ;
+        }
+        
+        [self reloadContactsWithUIReload:YES];
+        [self->_layoutTableView YPB_endPullToRefresh];
+    }];
+    
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(onVIPUpgradeSuccessNotification:) name:kVIPUpgradeSuccessNotification object:nil];
 }
 
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
-    [self reloadContacts];
+    
+    if (!self.isMovingToParentViewController) {
+        [self reloadContactsWithUIReload:YES];
+    }
 }
 
-- (void)reloadContacts {
+- (void)reloadContactsWithUIReload:(BOOL)reloadUI {
     self.contacts = [YPBContact allContacts];
-    [_layoutTableView reloadData];
+    
+    __block NSUInteger unreadMessages = 0;
+    [self.contacts enumerateObjectsUsingBlock:^(YPBContact * _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
+        unreadMessages += obj.unreadMessages.unsignedIntegerValue;
+    }];
+    
+    if (unreadMessages > 0) {
+        if (unreadMessages < 100) {
+            self.navigationController.tabBarItem.badgeValue = [NSString stringWithFormat:@"%ld", (unsigned long)unreadMessages];
+        } else {
+            self.navigationController.tabBarItem.badgeValue = @"99+";
+        }
+    } else {
+        self.navigationController.tabBarItem.badgeValue = nil;
+    }
+    
+    if (reloadUI) {
+        [_layoutTableView reloadData];
+    }
 }
 
 - (void)onMessagePushNotification:(NSNotification *)notification {
-    if ([self isVisibleViewController]) {
-        [self reloadContacts];
-    }
+    [self reloadContactsWithUIReload:NO];
+}
+
+- (void)onUnreadMessageChangeNotification {
+    
 }
 
 - (void)onVIPUpgradeSuccessNotification:(NSNotification *)notification {
@@ -126,22 +168,5 @@ static NSString *const kContactCellReusableIdentifier = @"ContactCellReusableIde
 ////        }];
 //    }
     
-}
-
-#pragma mark - YPBSideMenuItemDelegate
-
-- (NSString *)badgeValueOfSideMenuItem:(YPBSideMenuItem *)sideMenuItem {
-    __block NSUInteger unreadMessages = 0;
-    [[YPBContact allContacts] enumerateObjectsUsingBlock:^(YPBContact * _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
-        unreadMessages += obj.unreadMessages.unsignedIntegerValue;
-    }];
-    
-    NSString *badgeValue;
-    if (unreadMessages > 99) {
-         badgeValue = @"99+";
-    } else if (unreadMessages > 0) {
-        badgeValue = [NSString stringWithFormat:@"%ld", (unsigned long)unreadMessages];
-    }
-    return badgeValue;
 }
 @end
