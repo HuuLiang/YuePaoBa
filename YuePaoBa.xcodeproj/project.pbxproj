@@ -133,6 +133,7 @@
 		BC652B871C2BD5D800951DEA /* UITableView+Separator.m in Sources */ = {isa = PBXBuildFile; fileRef = BC652B861C2BD5D800951DEA /* UITableView+Separator.m */; };
 		BC652B8A1C2BD9B300951DEA /* YPBInputTextViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BC652B891C2BD9B300951DEA /* YPBInputTextViewController.m */; };
 		BC652B8D1C2BF8DE00951DEA /* YPBTextField.m in Sources */ = {isa = PBXBuildFile; fileRef = BC652B8C1C2BF8DE00951DEA /* YPBTextField.m */; };
+		BC67805B1C895C1E00CF6F5F /* YPBSendGiftModel.m in Sources */ = {isa = PBXBuildFile; fileRef = BC67805A1C895C1E00CF6F5F /* YPBSendGiftModel.m */; };
 		BC67C1981C87E9A300AAA33B /* RNGridMenu.m in Sources */ = {isa = PBXBuildFile; fileRef = BC67C1971C87E9A300AAA33B /* RNGridMenu.m */; };
 		BC6AEF8A1C7D606E0031A063 /* YPBMyGiftDetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BC6AEF891C7D606E0031A063 /* YPBMyGiftDetailViewController.m */; };
 		BC6B747B1C34F5A90052777E /* YPBUserAccessQueryModel.m in Sources */ = {isa = PBXBuildFile; fileRef = BC6B747A1C34F5A90052777E /* YPBUserAccessQueryModel.m */; };
@@ -485,6 +486,8 @@
 		BC652B891C2BD9B300951DEA /* YPBInputTextViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YPBInputTextViewController.m; sourceTree = "<group>"; };
 		BC652B8B1C2BF8DE00951DEA /* YPBTextField.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YPBTextField.h; sourceTree = "<group>"; };
 		BC652B8C1C2BF8DE00951DEA /* YPBTextField.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YPBTextField.m; sourceTree = "<group>"; };
+		BC6780591C895C1E00CF6F5F /* YPBSendGiftModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YPBSendGiftModel.h; sourceTree = "<group>"; };
+		BC67805A1C895C1E00CF6F5F /* YPBSendGiftModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YPBSendGiftModel.m; sourceTree = "<group>"; };
 		BC67C1961C87E9A300AAA33B /* RNGridMenu.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RNGridMenu.h; sourceTree = "<group>"; };
 		BC67C1971C87E9A300AAA33B /* RNGridMenu.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RNGridMenu.m; sourceTree = "<group>"; };
 		BC6AEF881C7D606E0031A063 /* YPBMyGiftDetailViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YPBMyGiftDetailViewController.h; sourceTree = "<group>"; };
@@ -1186,6 +1189,8 @@
 				BC739D031C7C92EA00D75AF0 /* YPBUserReceivedGiftsModel.m */,
 				BC739D051C7C92F900D75AF0 /* YPBUserSentGiftsModel.h */,
 				BC739D061C7C92F900D75AF0 /* YPBUserSentGiftsModel.m */,
+				BC6780591C895C1E00CF6F5F /* YPBSendGiftModel.h */,
+				BC67805A1C895C1E00CF6F5F /* YPBSendGiftModel.m */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -1921,6 +1926,7 @@
 				BC85EC561C5CC72A00BA74B1 /* UIImage+MWPhotoBrowser.m in Sources */,
 				BC27422A1C3A631A00C98E6F /* YPBChatMessage.m in Sources */,
 				BC3BC5061C76E83900DE2FBF /* YPBPhotoBar.m in Sources */,
+				BC67805B1C895C1E00CF6F5F /* YPBSendGiftModel.m in Sources */,
 				BCCE6CBE1C5A109000095461 /* YPBLoginViewController.m in Sources */,
 				BC5704E31C45F74800DEFAB6 /* MD5DataSigner.m in Sources */,
 				BC50CE191C2915A300CE88DD /* YPBHomeCell.m in Sources */,

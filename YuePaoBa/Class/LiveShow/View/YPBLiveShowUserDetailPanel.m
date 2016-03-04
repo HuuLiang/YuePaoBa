@@ -7,11 +7,13 @@
 //
 
 #import "YPBLiveShowUserDetailPanel.h"
+#import "YPBLikeButton.h"
 
 @interface YPBLiveShowUserDetailPanel ()
 {
     UIImageView *_avatarImageView;
     UILabel *_detailLabel;
+    YPBLikeButton *_likeButton;
 }
 @end
 
@@ -22,9 +24,15 @@
     if (self) {
         _user = user;
         
+        [_user addObserver:self forKeyPath:@"isGreet" options:NSKeyValueObservingOptionNew context:nil];
+        [_user addObserver:self forKeyPath:@"receiveGreetCount" options:NSKeyValueObservingOptionNew context:nil];
         self.backgroundColor = [UIColor colorWithWhite:1 alpha:0.9];
     }
     return self;
+}
+
+- (void)dealloc {
+    [_user removeObserver:self forKeyPath:@"isGreet"];
 }
 
 - (void)showInView:(UIView *)view {
@@ -59,7 +67,8 @@
             }];
         }
     }
-    [_avatarImageView sd_setImageWithURL:[NSURL URLWithString:self.user.logoUrl] placeholderImage:[UIImage imageNamed:@"avatar_placeholder"]];
+    [_avatarImageView sd_setImageWithURL:[NSURL URLWithString:self.user.logoUrl]
+                        placeholderImage:[UIImage imageNamed:@"avatar_placeholder"]];
     
     if (!_detailLabel) {
         _detailLabel = [[UILabel alloc] init];
@@ -84,8 +93,8 @@
     [detailsExceptNickName appendFormat:@"\n年龄：%d", 18];
     [detailsExceptNickName appendFormat:@"\n身高：%d", 155];
     [detailsExceptNickName appendFormat:@"\n罩杯：%@", @"CCC"];
-    [detailsExceptNickName appendFormat:@"\n交友目的：%@", @"你飞机娃儿金佛安静哦我覅哦啊if给偶加我发"];
-    numberOfLines = 5;
+    [detailsExceptNickName appendFormat:@"\n交友目的：%@", @"你飞机娃儿"];
+    numberOfLines = 6;
 //    if (self.user.ageDescription.length > 0) {
 //        ++numberOfLines;
 //        [detailsExceptNickName appendFormat:@"\n年龄：%@", self.user.ageDescription];
@@ -119,6 +128,35 @@
     
     _detailLabel.attributedText = details;
     _detailLabel.numberOfLines = numberOfLines;
+    
+    if (!_likeButton) {
+        @weakify(self);
+        _likeButton = [[YPBLikeButton alloc] initWithUserInteractionEnabled:YES];
+        _likeButton.layer.cornerRadius = 5;
+        _likeButton.layer.masksToBounds = YES;
+        [_likeButton setTitleColor:[UIColor grayColor] forState:UIControlStateNormal];
+        [_likeButton setTitleColor:[UIColor redColor] forState:UIControlStateSelected];
+        [_likeButton bk_addEventHandler:^(id sender) {
+            @strongify(self);
+            [sender beginLoading];
+            if (self.greetAction) {
+                self.greetAction(sender);
+            } else {
+                [sender endLoading];
+            }
+        } forControlEvents:UIControlEventTouchUpInside];
+        [self addSubview:_likeButton];
+        {
+            [_likeButton mas_makeConstraints:^(MASConstraintMaker *make) {
+                make.right.equalTo(self).offset(-15);
+                make.top.equalTo(self).offset(15);
+                make.width.equalTo(self).multipliedBy(0.1);
+                make.height.equalTo(_likeButton.mas_width).multipliedBy(1.2);
+            }];
+        }
+    }
+    _likeButton.selected = self.user.isGreet;
+    _likeButton.numberOfLikes = self.user.receiveGreetCount.unsignedIntegerValue;
 }
 
 - (void)layoutSubviews {
@@ -135,6 +173,16 @@
             [self removeFromSuperview];
             _isShown = NO;
         }];
+    }
+}
+
+- (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary<NSString *,id> *)change context:(void *)context {
+    if ([keyPath isEqualToString:@"isGreet"]) {
+        NSNumber *newValue = [change objectForKey:NSKeyValueChangeNewKey];
+        _likeButton.selected = newValue.boolValue;
+    } else if ([keyPath isEqualToString:@"receiveGreetCount"]) {
+        NSNumber *newValue = [change objectForKey:NSKeyValueChangeNewKey];
+        _likeButton.numberOfLikes = newValue.unsignedIntegerValue;
     }
 }
 @end

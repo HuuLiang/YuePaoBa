@@ -136,12 +136,6 @@ DefineLazyPropertyInitialization(YPBUserAccessModel, userAccessModel)
         cell.user = user;
         
         @weakify(self,cell);
-        cell.dateAction = ^(id sender) {
-            @strongify(self);
-            if ([YPBContact refreshContactRecentTimeWithUser:user]) {
-                [YPBMessageViewController showMessageWithUser:user inViewController:self];
-            }
-        };
         cell.likeAction = ^(id sender) {
             @strongify(self,cell);
             if (user.isGreet) {
@@ -178,7 +172,13 @@ DefineLazyPropertyInitialization(YPBUserAccessModel, userAccessModel)
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     YPBUser *user = self.users[indexPath.row];
+    YPBVIPCell *cell = [tableView cellForRowAtIndexPath:indexPath];
+    
     YPBUserDetailViewController *detailVC = [[YPBUserDetailViewController alloc] initWithUserId:user.userId];
+    detailVC.greetSuccessAction = ^(id obj) {
+        cell.user.isGreet = YES;
+        cell.user.receiveGreetCount = @(cell.user.receiveGreetCount.unsignedIntegerValue+1);
+    };
     [self.navigationController pushViewController:detailVC animated:YES];
 }
 @end

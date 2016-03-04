@@ -10,6 +10,8 @@
 
 @interface YPBUserDetailViewController : YPBLayoutViewController
 
+@property (nonatomic,copy) YPBAction greetSuccessAction;
+
 - (instancetype)initWithUserId:(NSString *)userId;
 
 @end

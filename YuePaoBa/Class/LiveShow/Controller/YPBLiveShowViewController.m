@@ -19,6 +19,7 @@
 #import "RNGridMenu.h"
 #import "YPBRadioButton.h"
 #import "YPBRadioButtonGroup.h"
+#import "YPBUserAccessModel.h"
 
 @interface YPBLiveShowViewController () <RNGridMenuDelegate>
 {
@@ -45,6 +46,7 @@
 @property (nonatomic,retain,readonly) RNGridMenu *giftsMenu;
 
 @property (nonatomic) YPBPaymentType paymentType;
+@property (nonatomic,retain) YPBUserAccessModel *greetModel;
 @end
 
 @implementation YPBLiveShowViewController
@@ -52,6 +54,7 @@
 DefineLazyPropertyInitialization(YPBFetchBarrageModel, fetchBarrageModel)
 DefineLazyPropertyInitialization(YPBSendBarrageModel, sendBarrageModel)
 DefineLazyPropertyInitialization(YPBGiftListModel, giftListModel)
+DefineLazyPropertyInitialization(YPBUserAccessModel, greetModel)
 
 - (instancetype)init {
     self = [super init];
@@ -469,7 +472,32 @@ DefineLazyPropertyInitialization(YPBGiftListModel, giftListModel)
         return _userDetailPanel;
     }
     
+    @weakify(self);
     _userDetailPanel = [[YPBLiveShowUserDetailPanel alloc] initWithUser:self.user];
+    _userDetailPanel.greetAction = ^(id sender) {
+        @strongify(self);
+        if (self.user.isGreet) {
+            [sender endLoading];
+            return ;
+        }
+        
+        [self.greetModel accessUserWithUserId:self.user.userId
+                                   accessType:YPBUserAccessTypeGreet
+                            completionHandler:^(BOOL success, id obj)
+        {
+            @strongify(self);
+            [sender endLoading];
+            
+            if (!self) {
+                return ;
+            }
+            
+            if (success) {
+                self.user.isGreet = YES;
+                self.user.receiveGreetCount = @(self.user.receiveGreetCount.unsignedIntegerValue+1);
+            }
+        }];
+    };
     return _userDetailPanel;
 }
 

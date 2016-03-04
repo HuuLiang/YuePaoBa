@@ -55,6 +55,11 @@
     return self;
 }
 
+- (void)dealloc {
+    [_user removeObserver:self forKeyPath:@"isGreet"];
+    [_user removeObserver:self forKeyPath:@"receiveGreetCount"];
+}
+
 - (void)layoutSubviews {
     [super layoutSubviews];
     
@@ -82,12 +87,26 @@
 }
 
 - (void)setUser:(YPBUser *)user {
+    [_user removeObserver:self forKeyPath:@"isGreet"];
+    [_user removeObserver:self forKeyPath:@"receiveGreetCount"];
     _user = user;
+    [_user addObserver:self forKeyPath:@"isGreet" options:NSKeyValueObservingOptionNew context:nil];
+    [_user addObserver:self forKeyPath:@"receiveGreetCount" options:NSKeyValueObservingOptionNew context:nil];
     
     [_thumbImageView sd_setImageWithURL:[NSURL URLWithString:user.logoUrl]];
     _nicknameLabel.text = user.nickName;
     _detailLabel.text = [NSString stringWithFormat:@"%@cm/%@岁", user.height, user.age];
     _likeButton.numberOfLikes = user.receiveGreetCount.unsignedIntegerValue;
     _likeButton.selected = user.isGreet;
+}
+
+- (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary<NSString *,id> *)change context:(void *)context {
+    if ([keyPath isEqualToString:@"isGreet"]) {
+        NSNumber *newValue = [change objectForKey:NSKeyValueChangeNewKey];
+        _likeButton.selected = newValue.boolValue;
+    } else if ([keyPath isEqualToString:@"receiveGreetCount"]) {
+        NSNumber *newValue = [change objectForKey:NSKeyValueChangeNewKey];
+        _likeButton.numberOfLikes = newValue.unsignedIntegerValue;
+    }
 }
 @end

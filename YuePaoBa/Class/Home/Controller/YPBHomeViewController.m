@@ -180,7 +180,13 @@ DefineLazyPropertyInitialization(YPBUserAccessModel, userAccessModel);
 
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath {
     YPBUser *user = self.users[indexPath.item];
+    YPBHomeCell *cell = (YPBHomeCell *)[collectionView cellForItemAtIndexPath:indexPath];
+    
     YPBUserDetailViewController *detailVC = [[YPBUserDetailViewController alloc] initWithUserId:user.userId];
+    detailVC.greetSuccessAction = ^(id obj) {
+        cell.user.isGreet = YES;
+        cell.user.receiveGreetCount = @(cell.user.receiveGreetCount.unsignedIntegerValue+1);
+    };
     [self.navigationController pushViewController:detailVC animated:YES];
 }
 @end

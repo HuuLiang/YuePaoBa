@@ -89,6 +89,11 @@ DefineLazyPropertyInitialization(YPBUserAccessModel, userAccessModel)
     };
 }
 
+- (void)dealloc {
+    [self.user removeObserver:self forKeyPath:@"isGreet"];
+    [self.user removeObserver:self forKeyPath:@"receiveGreetCount"];
+}
+
 - (void)loadUserDetail {
     @weakify(self);
     [self.userDetailModel fetchUserDetailWithUserId:self.userId
@@ -111,7 +116,11 @@ DefineLazyPropertyInitialization(YPBUserAccessModel, userAccessModel)
 
 - (void)onSuccessfullyAccessedUser:(YPBUser *)user
 {
+    [self.user removeObserver:self forKeyPath:@"isGreet"];
+    [self.user removeObserver:self forKeyPath:@"receiveGreetCount"];
     self.user = user;
+    [self.user addObserver:self forKeyPath:@"isGreet" options:NSKeyValueObservingOptionNew context:nil];
+    [self.user addObserver:self forKeyPath:@"receiveGreetCount" options:NSKeyValueObservingOptionNew context:nil];
     [self updateLayoutCells];
 }
 
@@ -141,9 +150,10 @@ DefineLazyPropertyInitialization(YPBUserAccessModel, userAccessModel)
         
         [self->_profileCell endLoading];
         if (success) {
-            self->_profileCell.liked = YES;
-            self->_profileCell.numberOfLikes = self->_profileCell.numberOfLikes+1;
+//            self->_profileCell.liked = YES;
+//            self->_profileCell.numberOfLikes = self->_profileCell.numberOfLikes+1;
             self.user.isGreet = YES;
+            self.user.receiveGreetCount = @(self.user.receiveGreetCount.unsignedIntegerValue+1);
             [[YPBMessageCenter defaultCenter] showSuccessWithTitle:@"打招呼成功" inViewController:self];
         }
     }];
@@ -376,4 +386,17 @@ DefineLazyPropertyInitialization(YPBUserAccessModel, userAccessModel)
     // Dispose of any resources that can be recreated.
 }
 
+- (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary<NSString *,id> *)change context:(void *)context {
+    if ([keyPath isEqualToString:@"isGreet"]) {
+        NSNumber *newValue = [change objectForKey:NSKeyValueChangeNewKey];
+        _profileCell.liked = newValue.boolValue;
+        
+        if (newValue.boolValue) {
+            SafelyCallBlock1(self.greetSuccessAction, nil);
+        }
+    } else if ([keyPath isEqualToString:@"receiveGreetCount"]) {
+        NSNumber *newValue = [change objectForKey:NSKeyValueChangeNewKey];
+        _profileCell.numberOfLikes = newValue.unsignedIntegerValue;
+    }
+}
 @end

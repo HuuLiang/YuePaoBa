@@ -12,6 +12,7 @@
 
 @property (nonatomic,retain,readonly,nonnull) YPBUser *user;
 @property (nonatomic,readonly) BOOL isShown;
+@property (nonatomic,copy,nullable) YPBAction greetAction;
 
 - (nonnull instancetype)init __attribute__((unavailable("Must use initWithUser: instead.")));
 - (nonnull instancetype)initWithUser:(nonnull YPBUser *)user;
