@@ -124,6 +124,14 @@ static YPBUser *_currentUser;
     }];
     return gifts.count > 0 ? gifts : nil;
 }
+
+- (NSNumber *)fee {
+#ifdef DEBUG
+    return @1;
+#else
+    return _fee;
+#endif
+}
 @end
 
 @interface YPBUser ()

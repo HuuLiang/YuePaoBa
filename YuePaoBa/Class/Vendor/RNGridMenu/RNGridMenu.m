@@ -729,12 +729,11 @@ static RNGridMenu *rn_visibleGridMenu;
         animationGroup.duration = self.animationDuration;
         animationGroup.timingFunction = [CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionEaseInEaseOut];
         [self.menuView.layer addAnimation:animationGroup forKey:nil];
-
+        
         self.blurView.layer.opacity = 0;
         self.menuView.layer.transform = transform;
         [self performSelector:@selector(cleanupGridMenu) withObject:nil afterDelay:self.animationDuration];
     } else {
-        self.view.hidden = YES;
         [self cleanupGridMenu];
     }
 
@@ -742,6 +741,7 @@ static RNGridMenu *rn_visibleGridMenu;
 }
 
 - (void)cleanupGridMenu {
+    self.view.hidden = YES;
     self.selectedItemView = nil;
     [self rn_removeFromParentViewControllerCallingAppearanceMethods:YES];
 }

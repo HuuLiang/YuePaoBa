@@ -12,6 +12,7 @@
 		BC1654BA1C25290200AB1F33 /* NSDictionary+YPBSign.m in Sources */ = {isa = PBXBuildFile; fileRef = BC1654B91C25290200AB1F33 /* NSDictionary+YPBSign.m */; };
 		BC1654BD1C25293B00AB1F33 /* NSString+crypt.m in Sources */ = {isa = PBXBuildFile; fileRef = BC1654BC1C25293B00AB1F33 /* NSString+crypt.m */; };
 		BC1654CD1C252E9E00AB1F33 /* YPBActivateModel.m in Sources */ = {isa = PBXBuildFile; fileRef = BC1654CC1C252E9E00AB1F33 /* YPBActivateModel.m */; };
+		BC185B531C89EE3400578D30 /* YPBVideoGiftPollingCell.m in Sources */ = {isa = PBXBuildFile; fileRef = BC185B521C89EE3400578D30 /* YPBVideoGiftPollingCell.m */; };
 		BC1A2D821C0EF909003D9138 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = BC1A2D811C0EF909003D9138 /* main.m */; };
 		BC1A2D8D1C0EF909003D9138 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = BC1A2D8C1C0EF909003D9138 /* Assets.xcassets */; };
 		BC1A2D9B1C0EF909003D9138 /* YuePaoBaTests.m in Sources */ = {isa = PBXBuildFile; fileRef = BC1A2D9A1C0EF909003D9138 /* YuePaoBaTests.m */; };
@@ -134,6 +135,7 @@
 		BC652B8A1C2BD9B300951DEA /* YPBInputTextViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BC652B891C2BD9B300951DEA /* YPBInputTextViewController.m */; };
 		BC652B8D1C2BF8DE00951DEA /* YPBTextField.m in Sources */ = {isa = PBXBuildFile; fileRef = BC652B8C1C2BF8DE00951DEA /* YPBTextField.m */; };
 		BC67805B1C895C1E00CF6F5F /* YPBSendGiftModel.m in Sources */ = {isa = PBXBuildFile; fileRef = BC67805A1C895C1E00CF6F5F /* YPBSendGiftModel.m */; };
+		BC67805E1C89B31500CF6F5F /* YPBVideoGiftPollingView.m in Sources */ = {isa = PBXBuildFile; fileRef = BC67805D1C89B31500CF6F5F /* YPBVideoGiftPollingView.m */; };
 		BC67C1981C87E9A300AAA33B /* RNGridMenu.m in Sources */ = {isa = PBXBuildFile; fileRef = BC67C1971C87E9A300AAA33B /* RNGridMenu.m */; };
 		BC6AEF8A1C7D606E0031A063 /* YPBMyGiftDetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BC6AEF891C7D606E0031A063 /* YPBMyGiftDetailViewController.m */; };
 		BC6B747B1C34F5A90052777E /* YPBUserAccessQueryModel.m in Sources */ = {isa = PBXBuildFile; fileRef = BC6B747A1C34F5A90052777E /* YPBUserAccessQueryModel.m */; };
@@ -244,6 +246,8 @@
 		BC1654CB1C252E9E00AB1F33 /* YPBActivateModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YPBActivateModel.h; sourceTree = "<group>"; };
 		BC1654CC1C252E9E00AB1F33 /* YPBActivateModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YPBActivateModel.m; sourceTree = "<group>"; };
 		BC1654CE1C252FC300AB1F33 /* YPBConfig.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = YPBConfig.h; sourceTree = "<group>"; };
+		BC185B511C89EE3400578D30 /* YPBVideoGiftPollingCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YPBVideoGiftPollingCell.h; sourceTree = "<group>"; };
+		BC185B521C89EE3400578D30 /* YPBVideoGiftPollingCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YPBVideoGiftPollingCell.m; sourceTree = "<group>"; };
 		BC1A2D7D1C0EF909003D9138 /* YuePaoBa.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = YuePaoBa.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		BC1A2D811C0EF909003D9138 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		BC1A2D8C1C0EF909003D9138 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -488,6 +492,8 @@
 		BC652B8C1C2BF8DE00951DEA /* YPBTextField.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YPBTextField.m; sourceTree = "<group>"; };
 		BC6780591C895C1E00CF6F5F /* YPBSendGiftModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YPBSendGiftModel.h; sourceTree = "<group>"; };
 		BC67805A1C895C1E00CF6F5F /* YPBSendGiftModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YPBSendGiftModel.m; sourceTree = "<group>"; };
+		BC67805C1C89B31500CF6F5F /* YPBVideoGiftPollingView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YPBVideoGiftPollingView.h; sourceTree = "<group>"; };
+		BC67805D1C89B31500CF6F5F /* YPBVideoGiftPollingView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YPBVideoGiftPollingView.m; sourceTree = "<group>"; };
 		BC67C1961C87E9A300AAA33B /* RNGridMenu.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RNGridMenu.h; sourceTree = "<group>"; };
 		BC67C1971C87E9A300AAA33B /* RNGridMenu.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RNGridMenu.m; sourceTree = "<group>"; };
 		BC6AEF881C7D606E0031A063 /* YPBMyGiftDetailViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YPBMyGiftDetailViewController.h; sourceTree = "<group>"; };
@@ -1230,12 +1236,16 @@
 				BC3006EC1C7F0F6C00F31216 /* YPBLiveVideoPlayer.m */,
 				BC60773C1C7EB1FE00ACE4DF /* YPBLiveShowUserDetailPanel.h */,
 				BC60773D1C7EB1FE00ACE4DF /* YPBLiveShowUserDetailPanel.m */,
-				BC60773F1C7EF29400ACE4DF /* YPBVideoMessagePollingView.h */,
-				BC6077401C7EF29400ACE4DF /* YPBVideoMessagePollingView.m */,
 				BC593B011C817459000290A8 /* YPBVideoTitleView.h */,
 				BC593B021C817459000290A8 /* YPBVideoTitleView.m */,
+				BC60773F1C7EF29400ACE4DF /* YPBVideoMessagePollingView.h */,
+				BC6077401C7EF29400ACE4DF /* YPBVideoMessagePollingView.m */,
 				BC593B041C817A2D000290A8 /* YPBVideoMessagePollingCell.h */,
 				BC593B051C817A2D000290A8 /* YPBVideoMessagePollingCell.m */,
+				BC67805C1C89B31500CF6F5F /* YPBVideoGiftPollingView.h */,
+				BC67805D1C89B31500CF6F5F /* YPBVideoGiftPollingView.m */,
+				BC185B511C89EE3400578D30 /* YPBVideoGiftPollingCell.h */,
+				BC185B521C89EE3400578D30 /* YPBVideoGiftPollingCell.m */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -1824,6 +1834,7 @@
 				BC25EA351C4642B8003F8CD7 /* YPBVipUpgradeInfo.m in Sources */,
 				BC2742761C3A8EC600C98E6F /* YPBMineAccessCell.m in Sources */,
 				BC739D041C7C92EA00D75AF0 /* YPBUserReceivedGiftsModel.m in Sources */,
+				BC67805E1C89B31500CF6F5F /* YPBVideoGiftPollingView.m in Sources */,
 				BC5704E01C45F74800DEFAB6 /* base64.m in Sources */,
 				BC53B9BF1C3BBEEA004252B1 /* QBAssetsCollectionFooterView.m in Sources */,
 				BC1B498F1C44F1F500ECB0BA /* WXUtil.mm in Sources */,
@@ -1917,6 +1928,7 @@
 				BC22DE291C3D337100305F58 /* YPBContact.m in Sources */,
 				BC53B9C81C3BBEEA004252B1 /* QBImagePickerThumbnailView.m in Sources */,
 				BCC5A3051C5F8252005672D6 /* YPBAutoReplyMessagePool.m in Sources */,
+				BC185B531C89EE3400578D30 /* YPBVideoGiftPollingCell.m in Sources */,
 				BC50CE401C29556300CE88DD /* YPBUserDetailViewController.m in Sources */,
 				BC1AED431C0F312F003A0C63 /* YPBHomeViewController.m in Sources */,
 				BC5704E41C45F74800DEFAB6 /* NSDataEx.m in Sources */,
@@ -2064,8 +2076,8 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
-				CODE_SIGN_IDENTITY = "iPhone Developer";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				CODE_SIGN_IDENTITY = "iPhone Distribution: Shandong Huali Motor Group Co., Ltd.";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: Shandong Huali Motor Group Co., Ltd.";
 				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
@@ -2082,7 +2094,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.yuepaoba.app;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "";
+				PROVISIONING_PROFILE = "5b13b4fe-b1cf-4ab6-9040-3a916cee25b9";
 			};
 			name = Debug;
 		};
@@ -2092,8 +2104,8 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
-				CODE_SIGN_IDENTITY = "iPhone Developer";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				CODE_SIGN_IDENTITY = "iPhone Distribution: Shandong Huali Motor Group Co., Ltd.";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: Shandong Huali Motor Group Co., Ltd.";
 				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
@@ -2110,7 +2122,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.yuepaoba.app;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "";
+				PROVISIONING_PROFILE = "5b13b4fe-b1cf-4ab6-9040-3a916cee25b9";
 			};
 			name = Release;
 		};

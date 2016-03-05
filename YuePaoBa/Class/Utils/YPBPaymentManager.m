@@ -70,7 +70,7 @@ DefineLazyPropertyInitialization(YPBUserVIPUpgradeModel, vipUpgradeModel)
     if (paymentInfo.payPointType.unsignedIntegerValue == YPBPayPointTypeVIP) {
         [self upgradeVIPWithPaymentInfo:paymentInfo];
     } else if (paymentInfo.payPointType.unsignedIntegerValue == YPBPayPointTypeGift) {
-        [self sendGiftWithPaymentInfo:paymentInfo];
+//        [self sendGiftWithPaymentInfo:paymentInfo];
     }
 }
 
@@ -83,7 +83,16 @@ DefineLazyPropertyInitialization(YPBUserVIPUpgradeModel, vipUpgradeModel)
     }
 }
 
-- (void)sendGiftWithPaymentInfo:(YPBPaymentInfo *)paymentInfo {
-    
-}
+//- (void)sendGiftWithPaymentInfo:(YPBPaymentInfo *)paymentInfo {
+//    PAYRESULT result = paymentInfo.paymentResult.unsignedIntegerValue;
+//    if (result == PAYRESULT_SUCCESS) {
+//        [self.sendGiftModel sendGift:gift.id
+//                              toUser:self.user.userId
+//                        withNickName:self.user.nickName
+//                   completionHandler:^(BOOL success, id obj)
+//         {
+//             
+//         }];
+//    }
+//}
 @end

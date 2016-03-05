@@ -24,15 +24,16 @@
     if (self) {
         _user = user;
         
-        [_user addObserver:self forKeyPath:@"isGreet" options:NSKeyValueObservingOptionNew context:nil];
-        [_user addObserver:self forKeyPath:@"receiveGreetCount" options:NSKeyValueObservingOptionNew context:nil];
-        self.backgroundColor = [UIColor colorWithWhite:1 alpha:0.9];
+        [_user addObserver:self forKeyPath:NSStringFromSelector(@selector(isGreet)) options:NSKeyValueObservingOptionNew context:nil];
+        [_user addObserver:self forKeyPath:NSStringFromSelector(@selector(receiveGreetCount)) options:NSKeyValueObservingOptionNew context:nil];
+        self.backgroundColor = [UIColor colorWithWhite:0.96 alpha:1];
     }
     return self;
 }
 
 - (void)dealloc {
-    [_user removeObserver:self forKeyPath:@"isGreet"];
+    [_user removeObserver:self forKeyPath:NSStringFromSelector(@selector(isGreet))];
+    [_user removeObserver:self forKeyPath:NSStringFromSelector(@selector(receiveGreetCount))];
 }
 
 - (void)showInView:(UIView *)view {
@@ -90,27 +91,22 @@
                                                                     attributes:@{NSFontAttributeName:[UIFont systemFontOfSize:16.]}]];
     
     NSMutableString *detailsExceptNickName = [NSMutableString string];
-    [detailsExceptNickName appendFormat:@"\n年龄：%d", 18];
-    [detailsExceptNickName appendFormat:@"\n身高：%d", 155];
-    [detailsExceptNickName appendFormat:@"\n罩杯：%@", @"CCC"];
-    [detailsExceptNickName appendFormat:@"\n交友目的：%@", @"你飞机娃儿"];
-    numberOfLines = 6;
-//    if (self.user.ageDescription.length > 0) {
-//        ++numberOfLines;
-//        [detailsExceptNickName appendFormat:@"\n年龄：%@", self.user.ageDescription];
-//    }
-//    if (self.user.heightDescription.length > 0) {
-//        ++numberOfLines;
-//        [detailsExceptNickName appendFormat:@"\n身高：%@", self.user.heightDescription];
-//    }
-//    if (self.user.cupDescription.length > 0) {
-//        ++numberOfLines;
-//        [detailsExceptNickName appendFormat:@"\n罩杯：%@", self.user.cupDescription];
-//    }
-//    if (self.user.purpose.length > 0) {
-//        ++numberOfLines;
-//        [detailsExceptNickName appendFormat:@"\n交友目的：%@", self.user.purpose];
-//    }
+    if (self.user.ageDescription.length > 0) {
+        ++numberOfLines;
+        [detailsExceptNickName appendFormat:@"\n年龄：%@", self.user.ageDescription];
+    }
+    if (self.user.heightDescription.length > 0) {
+        ++numberOfLines;
+        [detailsExceptNickName appendFormat:@"\n身高：%@", self.user.heightDescription];
+    }
+    if (self.user.cupDescription.length > 0) {
+        ++numberOfLines;
+        [detailsExceptNickName appendFormat:@"\n罩杯：%@", self.user.cupDescription];
+    }
+    if (self.user.purpose.length > 0) {
+        numberOfLines += 2;
+        [detailsExceptNickName appendFormat:@"\n交友目的：%@", self.user.purpose];
+    }
     
     if (detailsExceptNickName.length > 0) {
         [details appendAttributedString:[[NSAttributedString alloc] initWithString:detailsExceptNickName attributes:@{NSFontAttributeName:[UIFont systemFontOfSize:14.],
@@ -124,7 +120,6 @@
         infoParaStyle.paragraphSpacing = 2;
         [details addAttribute:NSParagraphStyleAttributeName value:infoParaStyle range:NSMakeRange(details.length-detailsExceptNickName.length, detailsExceptNickName.length)];
     }
-    
     
     _detailLabel.attributedText = details;
     _detailLabel.numberOfLines = numberOfLines;

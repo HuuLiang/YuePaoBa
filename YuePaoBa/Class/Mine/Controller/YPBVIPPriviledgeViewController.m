@@ -18,6 +18,7 @@
 
 @interface YPBVIPPriviledgeViewController ()
 {
+    UIImageView *_backgroundImageView;
     YPBVIPPriceButton *_1MonthPriceButton;
     YPBVIPPriceButton *_3MonthsPriceButton;
     UIButton *_feedbackButton;
@@ -45,16 +46,11 @@ DefineLazyPropertyInitialization(YPBUserVIPUpgradeModel, vipUpgradeModel)
     self.title = @"VIP特权";
     self.edgesForExtendedLayout = UIRectEdgeNone;
     
-    UIImageView *backgroundImageView = [[UIImageView alloc] init];
-    [backgroundImageView sd_setImageWithURL:[NSURL URLWithString:[YPBSystemConfig sharedConfig].payImgUrl]
-                           placeholderImage:[UIImage imageNamed:@"vip_page"]];
-    backgroundImageView.contentMode = UIViewContentModeScaleAspectFill;
-    [self.view addSubview:backgroundImageView];
-    {
-        [backgroundImageView mas_makeConstraints:^(MASConstraintMaker *make) {
-            make.edges.equalTo(self.view);
-        }];
-    }
+    _backgroundImageView = [[UIImageView alloc] init];
+    [_backgroundImageView sd_setImageWithURL:[NSURL URLWithString:[YPBSystemConfig sharedConfig].payImgUrl]
+                            placeholderImage:[UIImage imageNamed:@"vip_page"]];
+    _backgroundImageView.contentMode = UIViewContentModeScaleAspectFill;
+    [self.view addSubview:_backgroundImageView];
     
     YPBSystemConfig *systemConfig = [YPBSystemConfig sharedConfig];
     NSUInteger price1Month = ((NSString *)systemConfig.vipPointDictionary[@"1"]).integerValue;
@@ -90,7 +86,6 @@ DefineLazyPropertyInitialization(YPBUserVIPUpgradeModel, vipUpgradeModel)
     NSAttributedString *feedbackTitle = [[NSAttributedString alloc] initWithString:@"如您遇到支付问题，请按此处反馈问题" attributes:attributes];
     [_feedbackButton setAttributedTitle:feedbackTitle forState:UIControlStateNormal];
     _feedbackButton.titleLabel.font = [UIFont systemFontOfSize:12.];
-    //[reportButton setTitleColor:[UIColor whiteColor] forState:UIControlStateHighlighted];
     [self.view addSubview:_feedbackButton];
     {
         [_feedbackButton mas_makeConstraints:^(MASConstraintMaker *make) {
@@ -108,6 +103,8 @@ DefineLazyPropertyInitialization(YPBUserVIPUpgradeModel, vipUpgradeModel)
 
 - (void)viewDidLayoutSubviews {
     [super viewDidLayoutSubviews];
+    
+    _backgroundImageView.frame = self.view.bounds;
     
     const CGFloat width1 = self.view.bounds.size.width*0.5;
     const CGFloat height1 = width1 * _1MonthPriceButton.backgroundImage.size.height/_1MonthPriceButton.backgroundImage.size.width;

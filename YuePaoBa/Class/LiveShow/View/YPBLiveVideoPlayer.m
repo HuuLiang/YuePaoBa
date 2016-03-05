@@ -49,7 +49,7 @@
         
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(playerDidEndPlaying) name:AVPlayerItemDidPlayToEndTimeNotification object:nil];
         self.player = [AVPlayer playerWithURL:videoURL];
-        [self.player addObserver:self forKeyPath:@"status" options:0 context:nil];
+        [self.player addObserver:self forKeyPath:NSStringFromSelector(@selector(status)) options:0 context:nil];
     }
     return self;
 }
@@ -101,7 +101,7 @@
 }
 
 - (void)dealloc {
-    [self.player removeObserver:self forKeyPath:@"status"];
+    [self.player removeObserver:self forKeyPath:NSStringFromSelector(@selector(status))];
     [[NSNotificationCenter defaultCenter] removeObserver:self];
     DLog(@"YPBLiveVideoPlayer dealloc");
 }

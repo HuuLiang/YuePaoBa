@@ -90,8 +90,7 @@ DefineLazyPropertyInitialization(YPBUserAccessModel, userAccessModel)
 }
 
 - (void)dealloc {
-    [self.user removeObserver:self forKeyPath:@"isGreet"];
-    [self.user removeObserver:self forKeyPath:@"receiveGreetCount"];
+    self.user = nil;
 }
 
 - (void)loadUserDetail {
@@ -116,12 +115,24 @@ DefineLazyPropertyInitialization(YPBUserAccessModel, userAccessModel)
 
 - (void)onSuccessfullyAccessedUser:(YPBUser *)user
 {
-    [self.user removeObserver:self forKeyPath:@"isGreet"];
-    [self.user removeObserver:self forKeyPath:@"receiveGreetCount"];
     self.user = user;
-    [self.user addObserver:self forKeyPath:@"isGreet" options:NSKeyValueObservingOptionNew context:nil];
-    [self.user addObserver:self forKeyPath:@"receiveGreetCount" options:NSKeyValueObservingOptionNew context:nil];
     [self updateLayoutCells];
+}
+
+- (void)setUser:(YPBUser *)user {
+    if (_user) {
+        [_user removeObserver:self forKeyPath:NSStringFromSelector(@selector(isGreet))];
+        [_user removeObserver:self forKeyPath:NSStringFromSelector(@selector(receiveGreetCount))];
+        [_user removeObserver:self forKeyPath:NSStringFromSelector(@selector(gifts))];
+    }
+    
+    _user = user;
+    
+    if (_user) {
+        [_user addObserver:self forKeyPath:NSStringFromSelector(@selector(isGreet)) options:NSKeyValueObservingOptionNew context:nil];
+        [_user addObserver:self forKeyPath:NSStringFromSelector(@selector(receiveGreetCount)) options:NSKeyValueObservingOptionNew context:nil];
+        [_user addObserver:self forKeyPath:NSStringFromSelector(@selector(gifts)) options:NSKeyValueObservingOptionNew context:nil];
+    }
 }
 
 - (void)greetUser {
@@ -318,18 +329,22 @@ DefineLazyPropertyInitialization(YPBUserAccessModel, userAccessModel)
     }
     
     if (self.user.gifts.count > 0) {
-        NSMutableArray *giftPhotos = [NSMutableArray array];
-        NSMutableArray *giftTitles = [NSMutableArray array];
-        [self.user.gifts enumerateObjectsUsingBlock:^(YPBGift * _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
-            if (obj.imgUrl.length == 0) {
-                return ;
-            }
-            
-            [giftPhotos addObject:obj.imgUrl];
-            [giftTitles addObject:obj.userName ?: @"未知"];
-        }];
-        [_giftBar setImageURLStrings:giftPhotos titleStrings:giftTitles];
+        [self refreshGiftBar];
     }
+}
+
+- (void)refreshGiftBar {
+    NSMutableArray *giftPhotos = [NSMutableArray array];
+    NSMutableArray *giftTitles = [NSMutableArray array];
+    [self.user.gifts enumerateObjectsUsingBlock:^(YPBGift * _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
+        if (obj.imgUrl.length == 0) {
+            return ;
+        }
+        
+        [giftPhotos addObject:obj.imgUrl];
+        [giftTitles addObject:obj.userName ?: @"未知"];
+    }];
+    [_giftBar setImageURLStrings:giftPhotos titleStrings:giftTitles];
 }
 
 - (void)initUserDetailCellLayoutsInSection:(NSUInteger)section {
@@ -387,16 +402,18 @@ DefineLazyPropertyInitialization(YPBUserAccessModel, userAccessModel)
 }
 
 - (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary<NSString *,id> *)change context:(void *)context {
-    if ([keyPath isEqualToString:@"isGreet"]) {
+    if ([keyPath isEqualToString:NSStringFromSelector(@selector(isGreet))]) {
         NSNumber *newValue = [change objectForKey:NSKeyValueChangeNewKey];
         _profileCell.liked = newValue.boolValue;
         
         if (newValue.boolValue) {
             SafelyCallBlock1(self.greetSuccessAction, nil);
         }
-    } else if ([keyPath isEqualToString:@"receiveGreetCount"]) {
+    } else if ([keyPath isEqualToString:NSStringFromSelector(@selector(receiveGreetCount))]) {
         NSNumber *newValue = [change objectForKey:NSKeyValueChangeNewKey];
         _profileCell.numberOfLikes = newValue.unsignedIntegerValue;
+    } else if ([keyPath isEqualToString:NSStringFromSelector(@selector(gifts))]) {
+        [self refreshGiftBar];
     }
 }
 @end

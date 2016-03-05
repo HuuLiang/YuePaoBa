@@ -20,6 +20,8 @@
 #import "YPBRadioButton.h"
 #import "YPBRadioButtonGroup.h"
 #import "YPBUserAccessModel.h"
+#import "YPBVideoGiftPollingView.h"
+#import "YPBSendGiftModel.h"
 
 @interface YPBLiveShowViewController () <RNGridMenuDelegate>
 {
@@ -37,6 +39,7 @@
 
 @property (nonatomic,retain) YPBSendBarrageModel *sendBarrageModel;
 @property (nonatomic,retain) YPBVideoMessagePollingView *messagePollingView;
+@property (nonatomic,retain) YPBVideoGiftPollingView *giftPollingView;
 
 @property (nonatomic,retain,readonly) YPBLiveShowRoom *room;
 @property (nonatomic,retain) YPBGiftListModel *giftListModel;
@@ -47,6 +50,7 @@
 
 @property (nonatomic) YPBPaymentType paymentType;
 @property (nonatomic,retain) YPBUserAccessModel *greetModel;
+@property (nonatomic,retain) YPBSendGiftModel *sendGiftModel;
 @end
 
 @implementation YPBLiveShowViewController
@@ -55,6 +59,7 @@ DefineLazyPropertyInitialization(YPBFetchBarrageModel, fetchBarrageModel)
 DefineLazyPropertyInitialization(YPBSendBarrageModel, sendBarrageModel)
 DefineLazyPropertyInitialization(YPBGiftListModel, giftListModel)
 DefineLazyPropertyInitialization(YPBUserAccessModel, greetModel)
+DefineLazyPropertyInitialization(YPBSendGiftModel, sendGiftModel)
 
 - (instancetype)init {
     self = [super init];
@@ -275,14 +280,27 @@ DefineLazyPropertyInitialization(YPBUserAccessModel, greetModel)
             make.size.equalTo(_inputButton);
         }];
     }
+    
     _messagePollingView = [[YPBVideoMessagePollingView alloc] init];
-    [self.view addSubview:_messagePollingView];
+    _messagePollingView.contentInset = UIEdgeInsetsMake(_messagePollingView.messageRowHeight*8, 0, 0, 0);
+    [self.view insertSubview:_messagePollingView belowSubview:_titleView];
     {
         [_messagePollingView mas_makeConstraints:^(MASConstraintMaker *make) {
             make.left.equalTo(self.view);
             make.bottom.equalTo(_inputTextField.mas_top).offset(-5);
             make.right.equalTo(self.view.mas_centerX).multipliedBy(1.5);
-            make.height.mas_equalTo(_messagePollingView.messageRowHeight*8);
+            make.height.mas_equalTo(_messagePollingView.contentInset.top);
+        }];
+    }
+    
+    _giftPollingView = [[YPBVideoGiftPollingView alloc] init];
+    _giftPollingView.contentInset = UIEdgeInsetsMake(_giftPollingView.giftRowHeight*4, 0, 0, 0);
+    [self.view insertSubview:_giftPollingView belowSubview:_titleView];
+    {
+        [_giftPollingView mas_makeConstraints:^(MASConstraintMaker *make) {
+            make.left.right.equalTo(_messagePollingView);
+            make.bottom.equalTo(_messagePollingView.mas_top).offset(-5);
+            make.height.mas_equalTo(_giftPollingView.contentInset.top);
         }];
     }
     
@@ -521,6 +539,7 @@ DefineLazyPropertyInitialization(YPBUserAccessModel, greetModel)
     
     [UIView animateWithDuration:0.3 animations:^{
         [_messagePollingView layoutIfNeeded];
+        [_giftPollingView layoutIfNeeded];
         [_inputTextField layoutIfNeeded];
     }];
 }
@@ -541,6 +560,7 @@ DefineLazyPropertyInitialization(YPBUserAccessModel, greetModel)
     if (itemIndex < gifts.count) {
         YPBGift *gift = gifts[itemIndex];
         
+        @weakify(self);
         YPBPaymentInfo *paymentInfo = [YPBPaymentInfo paymentInfo];
         paymentInfo.orderPrice = gift.fee;
         paymentInfo.paymentType = @(self.paymentType);
@@ -548,13 +568,28 @@ DefineLazyPropertyInitialization(YPBUserAccessModel, greetModel)
         paymentInfo.paymentStatus = @(YPBPaymentStatusPaying);
         paymentInfo.payPointType = @(YPBPayPointTypeGift);
         paymentInfo.contentType = @(YPBPaymentContentTypeGift).stringValue;
-        
-        @weakify(self);
+
         [[YPBPaymentManager sharedManager] payWithPaymentInfo:paymentInfo completionHandler:^(BOOL success, id obj) {
             @strongify(self);
             PAYRESULT result = paymentInfo.paymentResult.unsignedIntegerValue;
             if (result == PAYRESULT_SUCCESS) {
+                [self.giftPollingView pollGiftWithImageUrl:[NSURL URLWithString:gift.imgUrl]
+                                                      name:gift.name
+                                                    sender:[YPBUser currentUser].nickName];
                 
+                NSMutableArray *gifts = self.user.gifts.mutableCopy;
+                if (!gifts) {
+                    gifts = [NSMutableArray array];
+                }
+                
+                gift.userName = [YPBUser currentUser].nickName;
+                [gifts insertObject:gift atIndex:0];
+                self.user.gifts = gifts;
+                
+                [self.sendGiftModel sendGift:gift.id
+                                      toUser:self.user.userId
+                                withNickName:self.user.nickName
+                           completionHandler:nil];
             } else if (result == PAYRESULT_ABANDON) {
                 [self.view.window showMessageWithTitle:@"支付取消"];
             } else {

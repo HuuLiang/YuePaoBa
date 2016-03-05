@@ -10,7 +10,7 @@
 
 @interface YPBVideoMessagePollingView : UITableView
 
-@property (nonatomic,readonly) NSUInteger maximumDisplayingMessages;
+//@property (nonatomic,readonly) NSUInteger maximumDisplayingMessages;
 @property (nonatomic) CGFloat messageRowHeight;
 
 //- (instancetype)initWithMaximumDisplayingMessages:(NSUInteger)maximumDisplayingMessages;

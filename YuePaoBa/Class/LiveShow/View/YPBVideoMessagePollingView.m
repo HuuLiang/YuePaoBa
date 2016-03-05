@@ -33,6 +33,7 @@ DefineLazyPropertyInitialization(NSMutableDictionary, nameColors)
         self.rowHeight = _messageRowHeight;
         self.separatorStyle = UITableViewCellSeparatorStyleNone;
         self.scrollEnabled = NO;
+        self.bounces = NO;
         [self registerClass:[YPBVideoMessagePollingCell class] forCellReuseIdentifier:self.cellIdentifier];
     }
     return self;
@@ -43,22 +44,15 @@ DefineLazyPropertyInitialization(NSMutableDictionary, nameColors)
     self.rowHeight = messageRowHeight;
 }
 
-- (void)layoutSubviews {
-    
-    [super layoutSubviews];
-}
-
 - (void)insertMessages:(NSArray *)messages forNames:(NSArray *)names {
     [self.fadingTimer invalidate];
     self.fadingTimer = nil;
     
     if (self.alpha == 0) {
-        [UIView animateWithDuration:1 animations:^{
-            [self.messages removeAllObjects];
-            [self reloadData];
-            self.alpha = 1;
-        }];
+        [self clearMessages];
+        self.alpha = 1;
     }
+    
     [messages enumerateObjectsUsingBlock:^(id  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
         NSString *message = obj;
         NSString *name = @"";
@@ -85,16 +79,18 @@ DefineLazyPropertyInitialization(NSMutableDictionary, nameColors)
     }
     if (indexPaths.count > 0) {
         [UIView animateWithDuration:1 animations:^{
-            [self insertRowsAtIndexPaths:indexPaths withRowAnimation:UITableViewRowAnimationFade];
+            [self insertRowsAtIndexPaths:indexPaths withRowAnimation:UITableViewRowAnimationAutomatic];
         }];
     }
     
     const CGFloat offsetY = self.messages.count * self.messageRowHeight - CGRectGetHeight(self.bounds);
-    if (offsetY > 0) {
-        [self setContentOffset:CGPointMake(0, offsetY) animated:YES];
-    }
-    
+    [self setContentOffset:CGPointMake(0, offsetY) animated:YES];
     [self countDownFading];
+}
+
+- (void)clearMessages {
+    [self.messages removeAllObjects];
+    [self reloadData];
 }
 
 - (void)countDownFading {
@@ -108,10 +104,8 @@ DefineLazyPropertyInitialization(NSMutableDictionary, nameColors)
         [UIView animateWithDuration:1 animations:^{
             self.alpha = 0;
         } completion:^(BOOL finished) {
-            if (finished) {
-                [self.messages removeAllObjects];
-                [self reloadData];
-                
+            if (finished && self.alpha == 0) {
+                [self clearMessages];
                 self.alpha = 1;
             }
         }];

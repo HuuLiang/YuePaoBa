@@ -18,7 +18,7 @@
           toUser:(NSString *)userId
     withNickName:(NSString *)nickName completionHandler:(YPBCompletionHandler)handler
 {
-    if (!giftId || userId.length == 0 || nickName.length == 0 || [YPBUser currentUser].isRegistered) {
+    if (!giftId || userId.length == 0 || nickName.length == 0 || ![YPBUser currentUser].isRegistered) {
         SafelyCallBlock2(handler, NO, nil);
         return NO;
     }

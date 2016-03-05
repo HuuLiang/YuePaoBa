@@ -91,8 +91,8 @@
 }
 
 - (void)dealloc {
-    [_user removeObserver:self forKeyPath:@"isGreet"];
-    [_user removeObserver:self forKeyPath:@"receiveGreetCount"];
+    [_user removeObserver:self forKeyPath:NSStringFromSelector(@selector(isGreet))];
+    [_user removeObserver:self forKeyPath:NSStringFromSelector(@selector(receiveGreetCount))];
 }
 
 - (void)layoutSubviews {
@@ -154,11 +154,11 @@
 }
 
 - (void)setUser:(YPBUser *)user {
-    [_user removeObserver:self forKeyPath:@"isGreet"];
-    [_user removeObserver:self forKeyPath:@"receiveGreetCount"];
+    [_user removeObserver:self forKeyPath:NSStringFromSelector(@selector(isGreet))];
+    [_user removeObserver:self forKeyPath:NSStringFromSelector(@selector(receiveGreetCount))];
     _user = user;
-    [_user addObserver:self forKeyPath:@"isGreet" options:NSKeyValueObservingOptionNew context:nil];
-    [_user addObserver:self forKeyPath:@"receiveGreetCount" options:NSKeyValueObservingOptionNew context:nil];
+    [_user addObserver:self forKeyPath:NSStringFromSelector(@selector(isGreet)) options:NSKeyValueObservingOptionNew context:nil];
+    [_user addObserver:self forKeyPath:NSStringFromSelector(@selector(receiveGreetCount)) options:NSKeyValueObservingOptionNew context:nil];
     
     [_thumbImageView sd_setImageWithURL:[NSURL URLWithString:user.logoUrl]];
     _nicknameLabel.text = user.nickName;
