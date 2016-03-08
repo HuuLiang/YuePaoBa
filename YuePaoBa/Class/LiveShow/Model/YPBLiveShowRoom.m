@@ -19,11 +19,13 @@
 }
 
 + (instancetype)roomWithId:(NSUInteger)roomId {
+    NSDate *date = [NSDate date];
+    
     YPBLiveShowRoom *room = [[self alloc] init];
     room.roomId = @(roomId);
-    room.accumulatedAudiences = @(arc4random_uniform(10000));
+    room.accumulatedAudiences = @(arc4random_uniform(date.hour>12?1000:100));
     room.currentAudiences = @(arc4random_uniform((u_int32_t)(room.accumulatedAudiences.unsignedIntegerValue)));
-    room.popularity = @(arc4random_uniform(10000));
+    room.popularity = @(arc4random_uniform(date.hour>12?1000:100));
     return room;
 }
 

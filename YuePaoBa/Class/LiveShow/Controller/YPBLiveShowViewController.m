@@ -76,7 +76,7 @@ DefineLazyPropertyInitialization(YPBSendGiftModel, sendGiftModel)
         
         if (user.userVideo.id) {
             _room = [YPBLiveShowRoom existingRoomWithId:user.userVideo.id.unsignedIntegerValue];
-            if (!_room || _room.accumulatedAudiences.unsignedIntegerValue > 10000) {
+            if (!_room || _room.accumulatedAudiences.unsignedIntegerValue > 5000) {
                 _room = [YPBLiveShowRoom roomWithId:user.userVideo.id.unsignedIntegerValue];
                 [_room persist];
             }
@@ -140,7 +140,7 @@ DefineLazyPropertyInitialization(YPBSendGiftModel, sendGiftModel)
             }
             
             [self.room beginUpdate];
-            u_int32_t accumulation = arc4random_uniform(20);
+            u_int32_t accumulation = arc4random_uniform(5);
             self.room.accumulatedAudiences = @(self.room.accumulatedAudiences.unsignedIntegerValue+accumulation);
             self.room.currentAudiences = @(self.room.currentAudiences.unsignedIntegerValue+arc4random_uniform(accumulation));
             [self.room endUpdate];

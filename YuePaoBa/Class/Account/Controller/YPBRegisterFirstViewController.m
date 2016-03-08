@@ -29,15 +29,22 @@ DefineLazyPropertyInitialization(YPBUser, user)
     // Do any additional setup after loading the view.
     self.title = @"设置个人信息";
     self.edgesForExtendedLayout = UIRectEdgeNone;
-    
+
     UIImageView *backgroundImageView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"register_background"]];
     backgroundImageView.contentMode = UIViewContentModeScaleAspectFill;
+    backgroundImageView.userInteractionEnabled = YES;
     [self.view insertSubview:backgroundImageView atIndex:0];
     {
         [backgroundImageView mas_makeConstraints:^(MASConstraintMaker *make) {
             make.edges.equalTo(self.view);
         }];
     }
+    
+    @weakify(self);
+    [backgroundImageView bk_whenTapped:^{
+        @strongify(self);
+        [self->_nicknameTextField resignFirstResponder];
+    }];
     
     self.layoutTableView.layer.cornerRadius = 5;
     self.layoutTableView.rowHeight = MAX(kScreenHeight * 0.08, 50);
@@ -62,7 +69,6 @@ DefineLazyPropertyInitialization(YPBUser, user)
         }];
     }
     
-    @weakify(self);
     YPBActionButton *nextButton = [[YPBActionButton alloc] initWithTitle:@"下一步" action:^(id sender) {
         @strongify(self);
         [self registerNext];
