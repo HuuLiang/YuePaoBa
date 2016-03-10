@@ -43,6 +43,7 @@ static NSString *const kNoUserInfoErrorMessage = @"无法获取用户详细信�
     YPBTableViewCell *_incomeCell;
     YPBTableViewCell *_assetsCell;
     YPBTableViewCell *_ageCell;
+    YPBTableViewCell *_purposeCell;
 }
 @property (nonatomic,retain) YPBMineProfileCell *profileCell;
 @property (nonatomic,retain) YPBUserDetailModel *mineDetailModel;
@@ -269,6 +270,10 @@ DefineLazyPropertyInitialization(YPBUserPhotoDeleteModel, photoDeleteModel)
     _ageCell = [[YPBTableViewCell alloc] initWithImage:[UIImage imageNamed:@"age_icon"] title:@"年龄：？"];
     _ageCell.selectionStyle = UITableViewCellSelectionStyleNone;
     [self setLayoutCell:_ageCell inRow:row++ andSection:section];
+    
+    _purposeCell = [[YPBTableViewCell alloc] initWithImage:[UIImage imageNamed:@"purpose_icon"] title:@"交友目的: ?"];
+    _purposeCell.selectionStyle = UITableViewCellSelectionStyleNone;
+    [self setLayoutCell:_purposeCell inRow:row++ andSection:section];
 }
 
 - (YPBMineProfileCell *)profileCell {
@@ -505,6 +510,7 @@ DefineLazyPropertyInitialization(YPBUserPhotoDeleteModel, photoDeleteModel)
     _incomeCell.titleLabel.text = [NSString stringWithFormat:@"月收入：%@", [YPBUser currentUser].monthIncome ?: @""];
     _assetsCell.titleLabel.text = [NSString stringWithFormat:@"资产情况：%@", [YPBUser currentUser].assets ?: @""];
     _ageCell.titleLabel.text = [NSString stringWithFormat:@"年龄：%@", [YPBUser currentUser].ageDescription ?: @""];
+    _purposeCell.titleLabel.text = [NSString stringWithFormat:@"交友目的：%@", [YPBUser currentUser].purpose];
 }
 
 - (void)onVIPUpgradeSuccessNotification {

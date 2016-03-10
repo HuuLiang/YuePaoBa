@@ -172,7 +172,7 @@
     _likeButton.numberOfLikes = user.receiveGreetCount.unsignedIntegerValue;
     _likeButton.selected = user.isGreet;
     
-    _detailLabel.text = [NSString stringWithFormat:@"交友目的：%@",user.purpose.length > 0 ?user.purpose: @"不明确"];
+    _detailLabel.text = [NSString stringWithFormat:@"交友目的：%@",user.purpose.length > 0 ?user.purpose: @"保密"];
 }
 
 - (void)setLevel:(NSUInteger)level {

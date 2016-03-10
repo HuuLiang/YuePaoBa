@@ -209,6 +209,8 @@ DefineLazyPropertyInitialization(YPBSendGiftModel, sendGiftModel)
         }];
     }
     [self loadGifts];
+    
+    [YPBStatistics logEvent:kLogUserGiftPageViewedEvent fromUser:[YPBUser currentUser].userId toUser:self.user.userId];
 }
 
 - (void)loadGifts {
@@ -288,5 +290,10 @@ DefineLazyPropertyInitialization(YPBSendGiftModel, sendGiftModel)
     self.sendingGift = gift;
     [self.paymentPopView showInView:self.view];
     
+    [YPBStatistics logEvent:kLogUserGiftButtonClickEvent
+                   fromUser:[YPBUser currentUser].userId
+                     toUser:self.user.userId
+             withAttributes:@{@"礼物ID":gift.id.stringValue ?: @"0",
+                              @"礼物名":gift.name?:@""}];
 }
 @end

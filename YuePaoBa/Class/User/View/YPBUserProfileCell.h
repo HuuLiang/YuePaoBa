@@ -11,13 +11,6 @@
 @interface YPBUserProfileCell : UITableViewCell
 
 @property (nonatomic,retain) YPBUser *user;
-@property (nonatomic) BOOL liked;
-@property (nonatomic) NSUInteger numberOfLikes;
-
-@property (nonatomic,copy) YPBAction dateAction;
-@property (nonatomic,copy) YPBAction sendGiftAction;
-@property (nonatomic,copy) YPBAction likeAction;
-
-- (void)setLiked:(BOOL)liked animated:(BOOL)animated;
+@property (nonatomic,copy) YPBAction wechatAction;
 
 @end

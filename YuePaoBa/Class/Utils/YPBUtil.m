@@ -38,14 +38,6 @@ NSString *const kPaymentInfoKeyName = @"YPB_PAYMENTINFO_KEYNAME";
     [SFHFKeychainUtils deleteItemForUsername:kVIPExpireDateKeyChainUserName andServiceName:kVIPExpireDateKeyChainServiceName error:nil];
 }
 
-+ (RESideMenu *)sideMenuViewController {
-    UIWindow *keyWindow = [UIApplication sharedApplication].keyWindow;
-    if ([keyWindow.rootViewController isKindOfClass:[RESideMenu class]]) {
-        return (RESideMenu *)keyWindow.rootViewController;
-    }
-    return nil;
-}
-
 + (void)notifyRegisterSuccessfully {
     [SFHFKeychainUtils storeUsername:kRegisterUserIdKeyChainUserName
                          andPassword:[YPBUser currentUser].userId

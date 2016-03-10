@@ -26,6 +26,7 @@
     
     YPBTableViewCell *_incomeCell;
     YPBTableViewCell *_assetsCell;
+    YPBTableViewCell *_purposeCell;
 }
 @property (nonatomic,retain) YPBUserDetailUpdateModel *updateModel;
 @property (nonatomic) BOOL canEditWeChat;
@@ -85,6 +86,8 @@ DefineLazyPropertyInitialization(YPBUserDetailUpdateModel, updateModel)
             [self onIncomeCell];
         } else if (cell == self->_assetsCell) {
             [self onAssetsCell];
+        } else if (cell == self->_purposeCell) {
+            [self onPurposeCell];
         }
     };
 }
@@ -126,6 +129,9 @@ DefineLazyPropertyInitialization(YPBUserDetailUpdateModel, updateModel)
     _assetsCell = [self newCellWithCommonStylesAndImage:[UIImage imageNamed:@"assets_icon"]
                                                   title:@"资产情况" subtitle:self.user.assets];
     [self setLayoutCell:_assetsCell inRow:1 andSection:2];
+    
+    _purposeCell = [self newCellWithCommonStylesAndImage:[UIImage imageNamed:@"purpose_icon"] title:@"交友目的" subtitle:self.user.purpose];
+    [self setLayoutCell:_purposeCell inRow:2 andSection:2];
     
 }
 
@@ -284,6 +290,22 @@ DefineLazyPropertyInitialization(YPBUserDetailUpdateModel, updateModel)
         } cancelBlock:nil origin:self.view];
     }
     
+}
+
+- (void)onPurposeCell {
+    NSArray *purposes = [YPBUser allPurposeStrings];
+    NSUInteger index = [purposes indexOfObject:self.user.purpose];
+    
+    @weakify(self);
+    [ActionSheetStringPicker showPickerWithTitle:@"选择交友目标"
+                                            rows:purposes
+                                initialSelection:index==NSNotFound?0:index
+                                       doneBlock:^(ActionSheetStringPicker *picker, NSInteger selectedIndex, id selectedValue)
+    {
+        @strongify(self);
+        self.user.purpose = selectedValue;
+        self->_purposeCell.subtitleLabel.text = selectedValue;
+    } cancelBlock:nil origin:self.view];
 }
 
 - (void)onSave {

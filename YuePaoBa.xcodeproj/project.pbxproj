@@ -157,6 +157,9 @@
 		BC739D041C7C92EA00D75AF0 /* YPBUserReceivedGiftsModel.m in Sources */ = {isa = PBXBuildFile; fileRef = BC739D031C7C92EA00D75AF0 /* YPBUserReceivedGiftsModel.m */; };
 		BC739D071C7C92F900D75AF0 /* YPBUserSentGiftsModel.m in Sources */ = {isa = PBXBuildFile; fileRef = BC739D061C7C92F900D75AF0 /* YPBUserSentGiftsModel.m */; };
 		BC75E9EF1C86C16C006CD459 /* YPBLiveShowRoom.m in Sources */ = {isa = PBXBuildFile; fileRef = BC75E9EE1C86C16C006CD459 /* YPBLiveShowRoom.m */; };
+		BC76779D1C916D99001AA508 /* YPBUserDetailFooterBar.m in Sources */ = {isa = PBXBuildFile; fileRef = BC76779C1C916D99001AA508 /* YPBUserDetailFooterBar.m */; };
+		BC7677A31C9181DB001AA508 /* YPBUserProfileViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BC7677A21C9181DB001AA508 /* YPBUserProfileViewController.m */; };
+		BC7677A61C91A3EE001AA508 /* YPBStatistics.m in Sources */ = {isa = PBXBuildFile; fileRef = BC7677A51C91A3EE001AA508 /* YPBStatistics.m */; };
 		BC7DF0C21C7817FC007EC7EC /* YPBSendGiftViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BC7DF0C11C7817FC007EC7EC /* YPBSendGiftViewController.m */; };
 		BC7DF0C51C78219D007EC7EC /* YPBGiftButton.m in Sources */ = {isa = PBXBuildFile; fileRef = BC7DF0C41C78219D007EC7EC /* YPBGiftButton.m */; };
 		BC7DF0C81C784A2A007EC7EC /* YPBGiftListModel.m in Sources */ = {isa = PBXBuildFile; fileRef = BC7DF0C71C784A2A007EC7EC /* YPBGiftListModel.m */; };
@@ -539,6 +542,12 @@
 		BC739D061C7C92F900D75AF0 /* YPBUserSentGiftsModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YPBUserSentGiftsModel.m; sourceTree = "<group>"; };
 		BC75E9ED1C86C16C006CD459 /* YPBLiveShowRoom.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YPBLiveShowRoom.h; sourceTree = "<group>"; };
 		BC75E9EE1C86C16C006CD459 /* YPBLiveShowRoom.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YPBLiveShowRoom.m; sourceTree = "<group>"; };
+		BC76779B1C916D99001AA508 /* YPBUserDetailFooterBar.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YPBUserDetailFooterBar.h; sourceTree = "<group>"; };
+		BC76779C1C916D99001AA508 /* YPBUserDetailFooterBar.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YPBUserDetailFooterBar.m; sourceTree = "<group>"; };
+		BC7677A11C9181DB001AA508 /* YPBUserProfileViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YPBUserProfileViewController.h; sourceTree = "<group>"; };
+		BC7677A21C9181DB001AA508 /* YPBUserProfileViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YPBUserProfileViewController.m; sourceTree = "<group>"; };
+		BC7677A41C91A3EE001AA508 /* YPBStatistics.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YPBStatistics.h; sourceTree = "<group>"; };
+		BC7677A51C91A3EE001AA508 /* YPBStatistics.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YPBStatistics.m; sourceTree = "<group>"; };
 		BC7DF0C01C7817FC007EC7EC /* YPBSendGiftViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YPBSendGiftViewController.h; sourceTree = "<group>"; };
 		BC7DF0C11C7817FC007EC7EC /* YPBSendGiftViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YPBSendGiftViewController.m; sourceTree = "<group>"; };
 		BC7DF0C31C78219D007EC7EC /* YPBGiftButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YPBGiftButton.h; sourceTree = "<group>"; };
@@ -804,6 +813,8 @@
 				BCC5A2FC1C5F5E33005672D6 /* YPBAutoReplyWords.m */,
 				BC739CF01C7C45F300D75AF0 /* YPBPaymentManager.h */,
 				BC739CF11C7C45F300D75AF0 /* YPBPaymentManager.m */,
+				BC7677A41C91A3EE001AA508 /* YPBStatistics.h */,
+				BC7677A51C91A3EE001AA508 /* YPBStatistics.m */,
 			);
 			path = Utils;
 			sourceTree = "<group>";
@@ -1066,6 +1077,8 @@
 			children = (
 				BC50CE3E1C29556300CE88DD /* YPBUserDetailViewController.h */,
 				BC50CE3F1C29556300CE88DD /* YPBUserDetailViewController.m */,
+				BC7677A11C9181DB001AA508 /* YPBUserProfileViewController.h */,
+				BC7677A21C9181DB001AA508 /* YPBUserProfileViewController.m */,
 				BCFB2A681C3FC441003E327D /* YPBUserPhotoViewController.h */,
 				BCFB2A691C3FC441003E327D /* YPBUserPhotoViewController.m */,
 				BCFB2A6B1C3FDD16003E327D /* YPBPhotoGridViewController.h */,
@@ -1089,6 +1102,8 @@
 				BC53B9A31C3B6ED7004252B1 /* YPBLikeButton.m */,
 				BC7DF0C31C78219D007EC7EC /* YPBGiftButton.h */,
 				BC7DF0C41C78219D007EC7EC /* YPBGiftButton.m */,
+				BC76779B1C916D99001AA508 /* YPBUserDetailFooterBar.h */,
+				BC76779C1C916D99001AA508 /* YPBUserDetailFooterBar.m */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -1806,6 +1821,7 @@
 				BC652B8D1C2BF8DE00951DEA /* YPBTextField.m in Sources */,
 				BC50CE151C28F88C00CE88DD /* UIScrollView+Refresh.m in Sources */,
 				BCFB2A6D1C3FDD16003E327D /* YPBPhotoGridViewController.m in Sources */,
+				BC7677A31C9181DB001AA508 /* YPBUserProfileViewController.m in Sources */,
 				BC264AE91C3C252E009FBCB8 /* YPBUserPhotoAddModel.m in Sources */,
 				BC3BC50C1C770FE000DE2FBF /* YPBTickCell.m in Sources */,
 				BC1B497F1C44AFD300ECB0BA /* YPBVIPEntranceView.m in Sources */,
@@ -1918,6 +1934,7 @@
 				BC1654BD1C25293B00AB1F33 /* NSString+crypt.m in Sources */,
 				BC6B74971C3539F10052777E /* GTMBase64.m in Sources */,
 				BC85EBC71C5C910A00BA74B1 /* UIImage+Blur.m in Sources */,
+				BC7677A61C91A3EE001AA508 /* YPBStatistics.m in Sources */,
 				BC1B49A71C44F4B300ECB0BA /* YPBPaymentModel.m in Sources */,
 				BC739D071C7C92F900D75AF0 /* YPBUserSentGiftsModel.m in Sources */,
 				BC31B75B1C1B2F540043E7EB /* YPBRegisterFirstViewController.m in Sources */,
@@ -1943,6 +1960,7 @@
 				BC5704E31C45F74800DEFAB6 /* MD5DataSigner.m in Sources */,
 				BC50CE191C2915A300CE88DD /* YPBHomeCell.m in Sources */,
 				BC50CE3B1C29552100CE88DD /* YPBURLRequest.m in Sources */,
+				BC76779D1C916D99001AA508 /* YPBUserDetailFooterBar.m in Sources */,
 				BC5704DC1C45F74800DEFAB6 /* AlipayManager.m in Sources */,
 				BC85EC521C5CC72A00BA74B1 /* MWPhotoBrowser.m in Sources */,
 			);
@@ -2076,8 +2094,8 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
-				CODE_SIGN_IDENTITY = "iPhone Distribution: Shandong Huali Motor Group Co., Ltd.";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: Shandong Huali Motor Group Co., Ltd.";
+				CODE_SIGN_IDENTITY = "iPhone Distribution: Tianjin Institute of Surveying and Mapping";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: Tianjin Institute of Surveying and Mapping";
 				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
@@ -2094,7 +2112,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.yuepaoba.app;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "5b13b4fe-b1cf-4ab6-9040-3a916cee25b9";
+				PROVISIONING_PROFILE = "5440a7bc-3ca0-40db-81da-139ccabb600b";
 			};
 			name = Debug;
 		};
@@ -2104,8 +2122,8 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
-				CODE_SIGN_IDENTITY = "iPhone Distribution: Shandong Huali Motor Group Co., Ltd.";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: Shandong Huali Motor Group Co., Ltd.";
+				CODE_SIGN_IDENTITY = "iPhone Distribution: Tianjin Institute of Surveying and Mapping";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: Tianjin Institute of Surveying and Mapping";
 				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
@@ -2122,7 +2140,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.yuepaoba.app;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "5b13b4fe-b1cf-4ab6-9040-3a916cee25b9";
+				PROVISIONING_PROFILE = "5440a7bc-3ca0-40db-81da-139ccabb600b";
 			};
 			name = Release;
 		};

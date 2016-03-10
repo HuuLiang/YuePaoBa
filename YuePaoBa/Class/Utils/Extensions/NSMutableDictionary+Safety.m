@@ -11,7 +11,7 @@
 @implementation NSMutableDictionary (Safety)
 
 - (void)safely_setObject:(id)anObject forKey:(id<NSCopying>)aKey {
-    if (anObject) {
+    if (anObject && aKey) {
         [self setObject:anObject forKey:aKey];
     }
 }

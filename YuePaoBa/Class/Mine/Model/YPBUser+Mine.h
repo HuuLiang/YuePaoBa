@@ -18,6 +18,7 @@
 + (NSArray<NSString *> *)allBustStrings;
 + (NSArray<NSString *> *)allWaistStrings;
 + (NSArray<NSString *> *)allHipStrings;
++ (NSArray<NSString *> *)allPurposeStrings;
 
 - (NSUInteger)ageIndex;
 - (NSUInteger)heightIndex;

@@ -49,11 +49,13 @@
 }
 
 - (BOOL)isVisibleViewController {
-    UIViewController *contentVC = self.sideMenuViewController.contentViewController;
-    if (contentVC == self.navigationController) {
-        return ((UINavigationController *)contentVC).visibleViewController == self;
+    
+    UITabBarController *tabBarController = self.navigationController.tabBarController;
+    if (tabBarController.selectedViewController == self.navigationController) {
+        return YES;
     }
-    return contentVC == self;
+    
+    return NO;
 }
 
 

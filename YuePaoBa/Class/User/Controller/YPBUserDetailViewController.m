@@ -19,15 +19,18 @@
 #import "YPBVIPPriviledgeViewController.h"
 #import "YPBSendGiftViewController.h"
 #import "YPBLiveShowViewController.h"
+#import "YPBUserDetailFooterBar.h"
+#import "YPBUserProfileViewController.h"
 
 @interface YPBUserDetailViewController ()
 {
     YPBUserProfileCell *_profileCell;
-    YPBTableViewCell *_wechatCell;
 
     YPBPhotoBar *_photoBar;
     YPBTableViewCell *_liveShowCell;
     YPBPhotoBar *_giftBar;
+    
+    YPBUserDetailFooterBar *_footerBar;
 }
 @property (nonatomic) NSString *userId;
 @property (nonatomic,retain) YPBUserDetailModel *userDetailModel;
@@ -67,26 +70,36 @@ DefineLazyPropertyInitialization(YPBUserAccessModel, userAccessModel)
     
     self.layoutTableViewAction = ^(NSIndexPath *indexPath, UITableViewCell *cell) {
         @strongify(self);
-        if (cell == self->_wechatCell) {
-            if ([YPBUtil isVIP]) {
-                if (self.user.isRegistered) {
-                    YPBMessageViewController *messageVC = [YPBMessageViewController showMessageWithUser:self.user inViewController:self];
-                    if (self.user.weixinNum.length > 0) {
-                        [messageVC sendMessage:[NSString stringWithFormat:@"我的微信号是%@，快联系我吧~~~", self.user.weixinNum] withSender:self.user.userId];
-                    } else {
-                        [messageVC sendMessage:@"亲，我俩很投缘，能要一下你的微信号吗？" withSender:[YPBUser currentUser].userId];
-                    }
-                } else {
-                    [[YPBMessageCenter defaultCenter] showErrorWithTitle:@"无法获取用户信息" inViewController:self];
-                }
-            } else {
-                YPBVIPPriviledgeViewController *vipVC = [[YPBVIPPriviledgeViewController alloc] initWithContentType:YPBPaymentContentTypeWeChatId];
-                [self.navigationController pushViewController:vipVC animated:YES];
-            }
+        if (cell == self->_profileCell) {
+            [self onProfile];
         } else if (cell == self->_liveShowCell) {
             [self onLiveShow];
         }
     };
+    
+    _footerBar = [[YPBUserDetailFooterBar alloc] init];
+    _footerBar.greetAction = ^(id sender) {
+        @strongify(self);
+        [self greetUser];
+    };
+    _footerBar.giftAction = ^(id sender) {
+        @strongify(self);
+        [self sendGift];
+    };
+    _footerBar.dateAction = ^(id sender) {
+        @strongify(self);
+        [self dateWithTheUser];
+    };
+    [self.view addSubview:_footerBar];
+    {
+        [_footerBar mas_makeConstraints:^(MASConstraintMaker *make) {
+            make.left.right.bottom.equalTo(self.view);
+            make.height.mas_equalTo(50);
+        }];
+    }
+    self.layoutTableView.contentInset = UIEdgeInsetsMake(0, 0, 50, 0);
+    
+    [YPBStatistics logEvent:kLogUserDetailViewedEvent fromUser:[YPBUser currentUser].userId toUser:self.userId];
 }
 
 - (void)dealloc {
@@ -117,6 +130,8 @@ DefineLazyPropertyInitialization(YPBUserAccessModel, userAccessModel)
 {
     self.user = user;
     [self updateLayoutCells];
+    _footerBar.isGreet = user.isGreet;
+    _footerBar.numberOfGreets = user.receiveGreetCount.unsignedIntegerValue;
 }
 
 - (void)setUser:(YPBUser *)user {
@@ -141,6 +156,11 @@ DefineLazyPropertyInitialization(YPBUserAccessModel, userAccessModel)
         return ;
     }
     
+    if (self.user.isGreet) {
+        [[YPBMessageCenter defaultCenter] showErrorWithTitle:@"您已经和TA打过招呼了！" inViewController:self];
+        return ;
+    }
+    
     if (![YPBUtil isVIP] && [YPBUser currentUser].greetCount.unsignedIntegerValue >= 5) {
         YPBVIPPriviledgeViewController *vipVC = [[YPBVIPPriviledgeViewController alloc] initWithContentType:YPBPaymentContentTypeGreetMore];
         [self.navigationController pushViewController:vipVC animated:YES];
@@ -161,13 +181,34 @@ DefineLazyPropertyInitialization(YPBUserAccessModel, userAccessModel)
         
         [self->_profileCell endLoading];
         if (success) {
-//            self->_profileCell.liked = YES;
-//            self->_profileCell.numberOfLikes = self->_profileCell.numberOfLikes+1;
             self.user.isGreet = YES;
             self.user.receiveGreetCount = @(self.user.receiveGreetCount.unsignedIntegerValue+1);
             [[YPBMessageCenter defaultCenter] showSuccessWithTitle:@"打招呼成功" inViewController:self];
         }
     }];
+}
+
+- (void)sendGift {
+    if (!self.user.isRegistered) {
+        [[YPBMessageCenter defaultCenter] showErrorWithTitle:@"无法获取用户信息" inViewController:self];
+        return ;
+    }
+
+    YPBSendGiftViewController *sendGiftVC = [[YPBSendGiftViewController alloc] initWithUser:self.user];
+    [self.navigationController pushViewController:sendGiftVC animated:YES];
+}
+
+- (void)dateWithTheUser {
+    if (!self.user.isRegistered) {
+        [[YPBMessageCenter defaultCenter] showErrorWithTitle:@"无法获取用户信息" inViewController:self];
+        return ;
+    }
+    
+    if ([YPBContact refreshContactRecentTimeWithUser:self.user]) {
+        [YPBMessageViewController showMessageWithUser:self.user inViewController:self];
+    }
+    
+    [YPBStatistics logEvent:kLogUserDateEvent fromUser:[YPBUser currentUser].userId toUser:self.userId];
 }
 
 - (void)onLiveShow {
@@ -180,6 +221,16 @@ DefineLazyPropertyInitialization(YPBUserAccessModel, userAccessModel)
     }
 }
 
+- (void)onProfile {
+    if (!self.user.isRegistered) {
+        [[YPBMessageCenter defaultCenter] showErrorWithTitle:@"无法获取用户信息" inViewController:self];
+        return ;
+    }
+    
+    YPBUserProfileViewController *profileVC = [[YPBUserProfileViewController alloc] initWithUser:self.user];
+    [self.navigationController pushViewController:profileVC animated:YES];
+}
+
 - (void)updateLayoutCells {
     [self removeAllLayoutCells];
     
@@ -190,45 +241,31 @@ DefineLazyPropertyInitialization(YPBUserAccessModel, userAccessModel)
         [self initUserLiveShowCellLayoutsInSection:section++];
     }
     [self initUserGiftCellLayoutsInSection:section++];
-    [self initUserDetailCellLayoutsInSection:section++];
     [self.layoutTableView reloadData];
 }
 
 - (void)initUserProfileCellLayoutsInSection:(NSUInteger)section {
     YPBUserProfileCell *profileCell = [[YPBUserProfileCell alloc] init];
+    profileCell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
     profileCell.user = self.user;
-    profileCell.numberOfLikes = self.user.receiveGreetCount.unsignedIntegerValue;
     @weakify(self);
-    profileCell.dateAction = ^(id sender) {
+    profileCell.wechatAction = ^(id sender) {
         @strongify(self);
-        if (!self.user.isRegistered) {
-            [[YPBMessageCenter defaultCenter] showErrorWithTitle:@"无法获取用户信息" inViewController:self];
-            return ;
-        }
-        
-        if ([YPBContact refreshContactRecentTimeWithUser:self.user]) {
-            [YPBMessageViewController showMessageWithUser:self.user inViewController:self];
-        }
-    };
-    profileCell.likeAction = ^(id sender) {
-        @strongify(self);
-        if (self.user.isGreet) {
-            [[YPBMessageCenter defaultCenter] showErrorWithTitle:@"您已经和TA打过招呼了！" inViewController:self];
+        if ([YPBUtil isVIP]) {
+            if (self.user.isRegistered) {
+                [YPBMessageViewController showMessageForWeChatWithUser:self.user inViewController:self];
+            } else {
+                [[YPBMessageCenter defaultCenter] showErrorWithTitle:@"无法获取用户信息" inViewController:self];
+            }
         } else {
-            [self greetUser];
+            YPBVIPPriviledgeViewController *vipVC = [[YPBVIPPriviledgeViewController alloc] initWithContentType:YPBPaymentContentTypeWeChatId];
+            [self.navigationController pushViewController:vipVC animated:YES];
+            
+            [YPBStatistics logEvent:kLogUserWeChatViewedForPaymentEvent fromUser:[YPBUser currentUser].userId toUser:self.userId];
         }
     };
-    profileCell.sendGiftAction = ^(id sender) {
-        @strongify(self);
-        if (!self.user.isRegistered) {
-            [[YPBMessageCenter defaultCenter] showErrorWithTitle:@"无法获取用户信息" inViewController:self];
-            return ;
-        }
-        
-        YPBSendGiftViewController *sendGiftVC = [[YPBSendGiftViewController alloc] initWithUser:self.user];
-        [self.navigationController pushViewController:sendGiftVC animated:YES];
-    };
-    [self setLayoutCell:profileCell cellHeight:MIN(kScreenHeight*0.4, 200) inRow:0 andSection:section];
+
+    [self setLayoutCell:profileCell cellHeight:MIN(kScreenHeight*0.4, 150) inRow:0 andSection:section];
     _profileCell = profileCell;
 }
 
@@ -257,6 +294,8 @@ DefineLazyPropertyInitialization(YPBUserAccessModel, userAccessModel)
                 YPBVIPPriviledgeViewController *vipVC = [[YPBVIPPriviledgeViewController alloc] initWithContentType:YPBPaymentContentTypePhoto];
                 [self.navigationController pushViewController:vipVC animated:YES];
             };
+            
+            [YPBStatistics logEvent:kLogUserPhotoViewedEvent fromUser:[YPBUser currentUser].userId toUser:self.userId];
         }
     };
     _photoBar.shouldLockAction = ^BOOL(NSUInteger index) {
@@ -319,7 +358,7 @@ DefineLazyPropertyInitialization(YPBUserAccessModel, userAccessModel)
             return ;
         }
         
-        self->_profileCell.sendGiftAction(nil);
+        [self sendGift];
     };
     [giftCell addSubview:_giftBar];
     {
@@ -347,55 +386,6 @@ DefineLazyPropertyInitialization(YPBUserAccessModel, userAccessModel)
     [_giftBar setImageURLStrings:giftPhotos titleStrings:giftTitles];
 }
 
-- (void)initUserDetailCellLayoutsInSection:(NSUInteger)section {
-    const NSUInteger detailInfoSection = section;
-    [self setHeaderTitle:@"详细资料" height:20 inSection:detailInfoSection];
-    
-    NSUInteger row = 0;
-    YPBTableViewCell *genderCell = [[YPBTableViewCell alloc] initWithImage:[UIImage imageNamed:@"female_icon"] title:@"性别：??"];
-    genderCell.selectionStyle = UITableViewCellSelectionStyleNone;
-    genderCell.imageView.image = self.user.gender==YPBUserGenderUnknown?nil:self.user.gender==YPBUserGenderFemale?[UIImage imageNamed:@"female_icon"]:[UIImage imageNamed:@"male_icon"];
-    genderCell.titleLabel.text = self.user.gender==YPBUserGenderUnknown?nil:self.user.gender==YPBUserGenderFemale?@"性别：女":@"性别：男";
-    [self setLayoutCell:genderCell inRow:row++ andSection:detailInfoSection];
-    
-    YPBTableViewCell *figureCell = [[YPBTableViewCell alloc] initWithImage:[UIImage imageNamed:@"figure_icon"] title:self.user.figureDescription ?: @"身材：?? ?? ??"];
-    figureCell.selectionStyle = UITableViewCellSelectionStyleNone;
-    [self setLayoutCell:figureCell inRow:row++ andSection:detailInfoSection];
-    
-    YPBTableViewCell *heightCell = [[YPBTableViewCell alloc] initWithImage:[UIImage imageNamed:@"height_icon"] title:[NSString stringWithFormat:@"身高：%@", self.user.heightDescription ?: @"???cm"]];
-    heightCell.selectionStyle = UITableViewCellSelectionStyleNone;
-    [self setLayoutCell:heightCell inRow:row++ andSection:detailInfoSection];
-    
-    YPBTableViewCell *professionCell = [[YPBTableViewCell alloc] initWithImage:[UIImage imageNamed:@"profession_icon"] title:[NSString stringWithFormat:@"职业：%@", self.user.profession ?: @"？？？"]];
-    professionCell.selectionStyle = UITableViewCellSelectionStyleNone;
-    [self setLayoutCell:professionCell inRow:row++ andSection:detailInfoSection];
-    
-    YPBTableViewCell *interestCell = [[YPBTableViewCell alloc] initWithImage:[UIImage imageNamed:@"interest_icon"] title:[NSString stringWithFormat:@"兴趣：%@", self.user.note ?: @"？？？"]];
-    interestCell.selectionStyle = UITableViewCellSelectionStyleNone;
-    [self setLayoutCell:interestCell inRow:row++ andSection:detailInfoSection];
-    
-    NSString *wechatTitle = @"微信：*******>>查看微信号";
-    NSMutableAttributedString *attrStr = [[NSMutableAttributedString alloc] initWithString:wechatTitle];
-    [attrStr addAttributes:@{NSForegroundColorAttributeName:[UIColor blueColor], NSUnderlineStyleAttributeName:@(1)} range:NSMakeRange(wechatTitle.length-6, 6)];
-    
-    _wechatCell = [[YPBTableViewCell alloc] initWithImage:[UIImage imageNamed:@"wechat_icon"] title:nil];
-    _wechatCell.selectionStyle = UITableViewCellSelectionStyleNone;
-    _wechatCell.titleLabel.attributedText = attrStr;
-    [self setLayoutCell:_wechatCell inRow:row++ andSection:detailInfoSection];
-    
-    YPBTableViewCell *incomeCell = [[YPBTableViewCell alloc] initWithImage:[UIImage imageNamed:@"income_icon"] title:[NSString stringWithFormat:@"月收入：%@", self.user.monthIncome ?: @"？？？"]];
-    incomeCell.selectionStyle = UITableViewCellSelectionStyleNone;
-    [self setLayoutCell:incomeCell inRow:row++ andSection:detailInfoSection];
-    
-    YPBTableViewCell *assetsCell = [[YPBTableViewCell alloc] initWithImage:[UIImage imageNamed:@"assets_icon"] title:[NSString stringWithFormat:@"资产情况：%@", self.user.assets ?: @"？？？"]];
-    assetsCell.selectionStyle = UITableViewCellSelectionStyleNone;
-    [self setLayoutCell:assetsCell inRow:row++ andSection:detailInfoSection];
-    
-    YPBTableViewCell *ageCell = [[YPBTableViewCell alloc] initWithImage:[UIImage imageNamed:@"age_icon"] title:[NSString stringWithFormat:@"年龄：%@", self.user.ageDescription ?: @"？？"]];
-    ageCell.selectionStyle = UITableViewCellSelectionStyleNone;
-    [self setLayoutCell:ageCell inRow:row++ andSection:detailInfoSection];
-}
-
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
@@ -404,14 +394,14 @@ DefineLazyPropertyInitialization(YPBUserAccessModel, userAccessModel)
 - (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary<NSString *,id> *)change context:(void *)context {
     if ([keyPath isEqualToString:NSStringFromSelector(@selector(isGreet))]) {
         NSNumber *newValue = [change objectForKey:NSKeyValueChangeNewKey];
-        _profileCell.liked = newValue.boolValue;
+        _footerBar.isGreet = newValue.boolValue;
         
         if (newValue.boolValue) {
             SafelyCallBlock1(self.greetSuccessAction, nil);
         }
     } else if ([keyPath isEqualToString:NSStringFromSelector(@selector(receiveGreetCount))]) {
         NSNumber *newValue = [change objectForKey:NSKeyValueChangeNewKey];
-        _profileCell.numberOfLikes = newValue.unsignedIntegerValue;
+        _footerBar.numberOfGreets = newValue.unsignedIntegerValue;
     } else if ([keyPath isEqualToString:NSStringFromSelector(@selector(gifts))]) {
         [self refreshGiftBar];
     }

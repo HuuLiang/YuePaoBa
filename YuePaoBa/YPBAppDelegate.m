@@ -25,10 +25,9 @@
 #import "WeChatPayManager.h"
 #import "AlipayManager.h"
 #import <AlipaySDK/AlipaySDK.h>
-#import "MobClick.h"
 #import <KSCrash/KSCrashInstallationStandard.h>
 
-@interface YPBAppDelegate () <WXApiDelegate>
+@interface YPBAppDelegate () <WXApiDelegate,UITabBarControllerDelegate>
 @property (nonatomic,retain) YPBWeChatPayQueryOrderRequest *wechatPayOrderQueryRequest;
 @end
 
@@ -74,6 +73,7 @@ DefineLazyPropertyInitialization(YPBWeChatPayQueryOrderRequest, wechatPayOrderQu
     UITabBarController *tabBarController = [[UITabBarController alloc] init];
     tabBarController.viewControllers = @[homeNav,vipCenterNav,contactNav,mineNav];
     tabBarController.tabBar.tintColor = kThemeColor;
+    tabBarController.delegate = self;
     return tabBarController;
 }
 
@@ -128,19 +128,6 @@ DefineLazyPropertyInitialization(YPBWeChatPayQueryOrderRequest, wechatPayOrderQu
     
 }
 
-- (void)setupMobStatistics {
-#ifdef DEBUG
-    [MobClick setLogEnabled:YES];
-#endif
-    [MobClick setCrashReportEnabled:NO];
-    NSString *bundleVersion = [NSBundle mainBundle].infoDictionary[@"CFBundleShortVersionString"];
-    if (bundleVersion) {
-        [MobClick setAppVersion:bundleVersion];
-    }
-    [MobClick startWithAppkey:YPB_UMENG_APP_ID reportPolicy:BATCH channelId:YPB_CHANNEL_NO];
-    
-}
-
 - (void)setupCrashReporter {
     KSCrashInstallationStandard* installation = [KSCrashInstallationStandard sharedInstance];
     installation.url = [NSURL URLWithString:[NSString stringWithFormat:@"https://collector.bughd.com/kscrash?key=%@", YPB_KSCRASH_APP_ID]];
@@ -152,7 +139,7 @@ DefineLazyPropertyInitialization(YPBWeChatPayQueryOrderRequest, wechatPayOrderQu
     // Override point for customization after application launch.
     [[YPBErrorHandler sharedHandler] initialize];
     [self setupCommonStyles];
-    [self setupMobStatistics];
+    [YPBStatistics start];
     [YPBUploadManager registerWithSecretKey:YPB_UPLOAD_SECRET_KEY accessKey:YPB_UPLOAD_ACCESS_KEY scope:YPB_UPLOAD_SCOPE];
     
     if ([YPBUtil deviceRegisteredUserId]) {
@@ -261,6 +248,19 @@ DefineLazyPropertyInitialization(YPBWeChatPayQueryOrderRequest, wechatPayOrderQu
             payResult = PAYRESULT_FAIL;
         }
         [[WeChatPayManager sharedInstance] sendNotificationByResult:payResult];
+    }
+}
+
+#pragma mark - UITabBarControllerDelegate
+
+- (void)tabBarController:(UITabBarController *)tabBarController didSelectViewController:(UIViewController *)viewController {
+    if (![YPBUser currentUser].isRegistered) {
+        return ;
+    }
+    
+    NSUInteger index = [tabBarController.viewControllers indexOfObject:viewController];
+    if (index != NSNotFound) {
+        [YPBStatistics logEvent:kLogUserTabClickEvent withUser:[YPBUser currentUser].userId attributeKey:@"序号" attributeValue:@(index).stringValue];
     }
 }
 

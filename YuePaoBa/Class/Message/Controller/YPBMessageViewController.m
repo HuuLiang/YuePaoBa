@@ -38,6 +38,16 @@ DefineLazyPropertyInitialization(NSMutableArray, chatMessages)
     return messageVC;
 }
 
++ (instancetype)showMessageForWeChatWithUser:(YPBUser *)user inViewController:(UIViewController *)viewController; {
+    YPBMessageViewController *messageVC = [self showMessageWithUser:user inViewController:viewController];
+    if (user.weixinNum.length > 0) {
+        [messageVC sendMessage:[NSString stringWithFormat:@"我的微信号是%@，快联系我吧~~~", user.weixinNum] withSender:user.userId];
+    } else {
+        [messageVC sendMessage:@"亲，我俩很投缘，能要一下你的微信号吗？" withSender:[YPBUser currentUser].userId];
+    }
+    return messageVC;
+}
+
 + (instancetype)showMessageWithContact:(YPBContact *)contact inViewController:(UIViewController *)viewController {
     YPBMessageViewController *messageVC = [[self alloc] initWithContact:contact];
     [viewController.navigationController pushViewController:messageVC animated:YES];
@@ -269,6 +279,8 @@ DefineLazyPropertyInitialization(NSMutableArray, chatMessages)
         
         [self.messageInputView.inputTextView resignFirstResponder];
     }
+    
+    [YPBStatistics logEvent:kLogUserChatEvent fromUser:[YPBUser currentUser].userId toUser:self.userId];
 }
 
 - (void)configureCell:(XHMessageTableViewCell *)cell atIndexPath:(NSIndexPath *)indexPath {

@@ -271,6 +271,8 @@ DefineLazyPropertyInitialization(YPBSendGiftModel, sendGiftModel)
         } else {
             [self.giftsMenu showInViewController:self center:self.view.center];
         }
+        
+        [YPBStatistics logEvent:kLogUserGiftPageViewedEvent fromUser:[YPBUser currentUser].userId toUser:self.user.userId];
     } forControlEvents:UIControlEventTouchUpInside];
     [self.view addSubview:_giftButton];
     {
@@ -305,6 +307,17 @@ DefineLazyPropertyInitialization(YPBSendGiftModel, sendGiftModel)
     }
     
     [self loadBarrages];
+    
+    [YPBStatistics logEvent:kLogUserVideoViewedEvent fromUser:[YPBUser currentUser].userId toUser:self.user.userId];
+}
+
+- (void)viewDidAppear:(BOOL)animated {
+    [super viewDidAppear:animated];
+    
+    //[_messagePollingView startPolling];
+    if (_videoPlayer.status != YPBVideoPlayerStatusEnded) {
+        [_videoPlayer startToPlay];
+    }
 }
 
 - (YPBRadioButton *)paymentSelectionButtonWithTitle:(NSString *)title {
@@ -476,15 +489,6 @@ DefineLazyPropertyInitialization(YPBSendGiftModel, sendGiftModel)
     [layer removeFromSuperlayer];
 }
 
-- (void)viewDidAppear:(BOOL)animated {
-    [super viewDidAppear:animated];
-    
-    //[_messagePollingView startPolling];
-    if (_videoPlayer.status != YPBVideoPlayerStatusEnded) {
-        [_videoPlayer startToPlay];
-    }
-}
-
 - (YPBLiveShowUserDetailPanel *)userDetailPanel {
     if (_userDetailPanel) {
         return _userDetailPanel;
@@ -596,6 +600,12 @@ DefineLazyPropertyInitialization(YPBSendGiftModel, sendGiftModel)
                 [self.view.window showMessageWithTitle:@"支付失败"];
             }
         }];
+        
+        [YPBStatistics logEvent:kLogUserGiftButtonClickEvent
+                       fromUser:[YPBUser currentUser].userId
+                         toUser:self.user.userId
+                 withAttributes:@{@"礼物ID":gift.id.stringValue ?: @"0",
+                                  @"礼物名":gift.name?:@""}];
     }
     [_giftButton endLoading];
 }

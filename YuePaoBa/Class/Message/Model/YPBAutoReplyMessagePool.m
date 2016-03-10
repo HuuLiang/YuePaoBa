@@ -98,7 +98,7 @@ static const NSUInteger kReplyingTimeInterval = 60 * 5;
         
         YPBAutoReplyMessage *unrepliedMessage = [allMessages bk_match:^BOOL(YPBAutoReplyMessage *obj)
         {
-            if ([obj.userId isEqualToString:userId] && obj.status.unsignedIntegerValue == YPBAutoReplyStatusUnreplied) {
+            if ([obj.userId isEqualToString:userId]) {
                 return YES;
             }
             return NO;

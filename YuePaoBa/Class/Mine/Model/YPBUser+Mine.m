@@ -79,6 +79,10 @@ static const NSUInteger kDefaultHeight = 160;
     return hipStrings.count > 0 ? hipStrings : nil;
 }
 
++ (NSArray<NSString *> *)allPurposeStrings {
+    return @[@"无所谓",@"E夜情",@"聊天交友",@"恋爱婚姻"];
+}
+
 - (NSUInteger)assetsIndex {
     NSArray *assetsStrings = [[self class] allAssetsStrings];
     NSUInteger index = [assetsStrings indexOfObject:self.assets];

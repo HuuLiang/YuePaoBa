@@ -52,6 +52,7 @@ return _##propertyName; \
 #define kUserProfessionKeyName          @"yuepaoba_userprofession_keyname"
 #define kUserWeChatKeyName              @"yuepaoba_userwechat_keyname"
 #define kUserAssetsKeyName              @"yuepaoba_userassets_keyname"
+#define kUserPurposeKeyName             @"yuepaoba_userpurpose_keyname"
 
 #define kUserIsMemberKeyName            @"yuepaoba_userismember_keyname"
 #define kUserIsVIPKeyName               @"yuepaoba_userisvip_keyname"

@@ -14,8 +14,6 @@ extern NSString *const kPaymentInfoKeyName;
 
 @interface YPBUtil : NSObject
 
-+ (RESideMenu *)sideMenuViewController;
-
 + (NSString *)activationId;
 + (void)setActivationId:(NSString *)activationId;
 

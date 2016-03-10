@@ -21,7 +21,8 @@
                              @"bwh":user.bwh,
                              @"monthIncome":user.monthIncome,
                              @"assets":user.assets,
-                             @"weixinNum":user.weixinNum };
+                             @"weixinNum":user.weixinNum,
+                             @"purpose":user.purpose};
     
     BOOL ret = [self requestURLPath:YPB_USER_DETAIL_UPDATE_URL
                          withParams:params

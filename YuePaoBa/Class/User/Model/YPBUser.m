@@ -160,7 +160,8 @@ static YPBUser *_currentUser;
     copiedUser.profession            = [self.profession copyWithZone:zone];
     copiedUser.weixinNum             = [self.weixinNum copyWithZone:zone];
     copiedUser.assets                = [self.assets copyWithZone:zone];
-
+    copiedUser.purpose               = [self.purpose copyWithZone:zone];
+    
     copiedUser.isVip                 = self.isVip;
     copiedUser.vipEndTime            = [self.vipEndTime copyWithZone:zone];
 
@@ -422,7 +423,8 @@ static YPBUser *_currentUser;
         _profession        = userInfo[kUserProfessionKeyName];
         _weixinNum         = userInfo[kUserWeChatKeyName];
         _assets            = userInfo[kUserAssetsKeyName];
-
+        _purpose           = userInfo[kUserPurposeKeyName];
+        
         _isVip             = ((NSNumber *)userInfo[kUserIsVIPKeyName]).boolValue;
         _vipEndTime        = userInfo[kUserVIPEndTimeKeyName];
 
@@ -475,6 +477,7 @@ static YPBUser *_currentUser;
     [userInfo safely_setObject:self.profession forKey:kUserProfessionKeyName];
     [userInfo safely_setObject:self.weixinNum forKey:kUserWeChatKeyName];
     [userInfo safely_setObject:self.assets forKey:kUserAssetsKeyName];
+    [userInfo safely_setObject:self.purpose forKey:kUserPurposeKeyName];
     
     [userInfo setObject:@(self.isVip) forKey:kUserIsVIPKeyName];
     [userInfo safely_setObject:self.vipEndTime forKey:kUserVIPEndTimeKeyName];
@@ -766,5 +769,12 @@ static YPBUser *_currentUser;
 
 - (NSUInteger)unreadTotalCount {
     return self.unreadAccessCount + self.unreadGreetCount + self.unreadReceiveGreetCount;
+}
+
+- (NSString *)purpose {
+    if (_purpose.length > 0) {
+        return _purpose;
+    }
+    return @"无所谓";
 }
 @end
