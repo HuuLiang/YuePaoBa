@@ -13,9 +13,11 @@
 - (instancetype)initWithTitle:(NSString *)title action:(YPBButtonAction)action {
     self = [super init];
     if (self) {
+        self.layer.cornerRadius = 4;
+        self.layer.masksToBounds = YES;
         self.titleLabel.font = [UIFont boldSystemFontOfSize:22.];
         [self setTitle:title forState:UIControlStateNormal];
-        [self setBackgroundImage:[UIImage imageNamed:@"button_background"] forState:UIControlStateNormal];
+        [self setBackgroundImage:[UIImage imageWithColor:kThemeColor] forState:UIControlStateNormal];
         [self bk_addEventHandler:^(id sender) {
             if (action) {
                 action(sender);

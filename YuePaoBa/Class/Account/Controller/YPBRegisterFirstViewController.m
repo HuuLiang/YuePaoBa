@@ -158,7 +158,7 @@ DefineLazyPropertyInitialization(YPBUser, user)
     _nicknameTextField.placeholder = @"输入昵称";
     _nicknameTextField.font = [UIFont systemFontOfSize:15.];
     _nicknameTextField.delegate = self;
-    _nicknameTextField.returnKeyType = UIReturnKeyDone;
+    _nicknameTextField.returnKeyType = UIReturnKeyNext;
     _nicknameTextField.clearButtonMode = UITextFieldViewModeWhileEditing;
     [nicknameCell addSubview:_nicknameTextField];
     {

@@ -40,7 +40,7 @@ DefineLazyPropertyInitialization(NSMutableDictionary, headerTitles)
         return _layoutTableView;
     }
     
-    _layoutTableView = [[TPKeyboardAvoidingTableView alloc] initWithFrame:CGRectZero style:UITableViewStyleGrouped];
+    _layoutTableView = [[UITableView alloc] initWithFrame:CGRectZero style:UITableViewStyleGrouped];
     _layoutTableView.backgroundColor = kDefaultBackgroundColor;
     _layoutTableView.delegate = self;
     _layoutTableView.dataSource = self;
