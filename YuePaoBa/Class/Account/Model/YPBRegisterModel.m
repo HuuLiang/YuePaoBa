@@ -32,24 +32,26 @@
 
 - (NSDictionary *)paramsFromUser:(YPBUser *)user {
     NSString *bust;
-    switch (user.targetCup) {
-        case YPBUserCupUnspecified:
-            bust = @"0";
-            break;
-        case YPBUserCupA:
-            bust = @"A";
-            break;
-        case YPBUserCupB:
-            bust = @"B";
-            break;
-        case YPBUserCupC:
-            bust = @"C";
-            break;
-        case YPBUserCupCPlus:
-            bust = @"C+";
-            break;
-        default:
-            break;
+    if (user.gender == YPBUserGenderMale) {
+        switch (user.targetCup) {
+            case YPBUserCupUnspecified:
+                bust = @"0";
+                break;
+            case YPBUserCupA:
+                bust = @"A";
+                break;
+            case YPBUserCupB:
+                bust = @"B";
+                break;
+            case YPBUserCupC:
+                bust = @"C";
+                break;
+            case YPBUserCupCPlus:
+                bust = @"C+";
+                break;
+            default:
+                break;
+        }
     }
     
     NSString *heightArea = [NSString stringWithFormat:@"%ld~%ld", user.targetHeight.min, user.targetHeight.max];

@@ -71,7 +71,7 @@ DefineLazyPropertyInitialization(YPBActivateModel, activateModel)
     [self.layoutTableView mas_makeConstraints:^(MASConstraintMaker *make) {
         make.left.right.equalTo(self.view).insets(UIEdgeInsetsMake(0, 30, 0, 30));
         make.top.equalTo(self.view).offset(30);
-        make.height.mas_equalTo(self.layoutTableView.rowHeight*3);
+        make.height.mas_equalTo(self.layoutTableView.rowHeight*(self.user.gender==YPBUserGenderMale?3:2));
     }];
     
     @weakify(self);
@@ -198,12 +198,14 @@ DefineLazyPropertyInitialization(YPBActivateModel, activateModel)
     _ageCell.detailTextLabel.text = self.user.targetAgeDescription;
     [self setLayoutCell:_ageCell inRow:1 andSection:0];
     
-    _cupCell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleValue1 reuseIdentifier:nil];
-    _cupCell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
-    _cupCell.textLabel.text = @"罩杯";
-    _cupCell.textLabel.font = [UIFont systemFontOfSize:15.];
-    _cupCell.detailTextLabel.text = self.user.targetCupDescription;
-    [self setLayoutCell:_cupCell inRow:2 andSection:0];
+    if (self.user.gender == YPBUserGenderMale) {
+        _cupCell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleValue1 reuseIdentifier:nil];
+        _cupCell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
+        _cupCell.textLabel.text = @"罩杯";
+        _cupCell.textLabel.font = [UIFont systemFontOfSize:15.];
+        _cupCell.detailTextLabel.text = self.user.targetCupDescription;
+        [self setLayoutCell:_cupCell inRow:2 andSection:0];
+    }
 }
 
 - (void)onRegisterSuccessfullyWithUserId:(NSString *)uid {
