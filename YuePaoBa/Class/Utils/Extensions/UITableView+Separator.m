@@ -10,7 +10,7 @@
 
 static void *kUpperSeparatorAssociatedKey = &kUpperSeparatorAssociatedKey;
 static void *kLowerSeparatorAssociatedKey = &kLowerSeparatorAssociatedKey;
-static void *kAspectTokenAssociatedKey = &kAspectTokenAssociatedKey;
+//static void *kAspectTokenAssociatedKey = &kAspectTokenAssociatedKey;
 static void *kHasRowSeparatorAssociatedKey = &kHasRowSeparatorAssociatedKey;
 static void *kHasSectionBorderAssociatedKey = &kHasSectionBorderAssociatedKey;
 
@@ -79,18 +79,18 @@ static void *kHasSectionBorderAssociatedKey = &kHasSectionBorderAssociatedKey;
 @end
 
 @interface UITableView ()
-@property (nonatomic,retain) id<AspectToken> aspectToken;
+//@property (nonatomic,retain) id<AspectToken> aspectToken;
 @end
 
 @implementation UITableView (Separator)
 
-- (id<AspectToken>)aspectToken {
-    return objc_getAssociatedObject(self, kAspectTokenAssociatedKey);
-}
-
-- (void)setAspectToken:(id<AspectToken>)aspectToken {
-    objc_setAssociatedObject(self, kAspectTokenAssociatedKey, aspectToken, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
-}
+//- (id<AspectToken>)aspectToken {
+//    return objc_getAssociatedObject(self, kAspectTokenAssociatedKey);
+//}
+//
+//- (void)setAspectToken:(id<AspectToken>)aspectToken {
+//    objc_setAssociatedObject(self, kAspectTokenAssociatedKey, aspectToken, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
+//}
 
 - (BOOL)hasRowSeparator {
     NSNumber *value = objc_getAssociatedObject(self, kHasRowSeparatorAssociatedKey);
@@ -117,7 +117,7 @@ static void *kHasSectionBorderAssociatedKey = &kHasSectionBorderAssociatedKey;
     {
         UITableView *thisTableView = [aspectInfo instance];
         if (![delegate conformsToProtocol:@protocol(UITableViewSeparatorDelegate) ]) {
-            [thisTableView.aspectToken remove];
+//            [thisTableView.aspectToken remove];
             return ;
         }
 
@@ -127,39 +127,39 @@ static void *kHasSectionBorderAssociatedKey = &kHasSectionBorderAssociatedKey;
         
         void (^AddSeparatorWithDataSource)(id) = ^(id dataSource) {
             if ([dataSource respondsToSelector:@selector(tableView:cellForRowAtIndexPath:)]) {
-                thisTableView.aspectToken = [dataSource aspect_hookSelector:@selector(tableView:cellForRowAtIndexPath:)
-                                                                withOptions:AspectPositionInstead
-                                                                 usingBlock:^(id<AspectInfo> dsAspectInfo,
-                                                                             UITableView *tableView,
-                                                                             NSIndexPath *indexPath)
+                [dataSource aspect_hookSelector:@selector(tableView:cellForRowAtIndexPath:)
+                                    withOptions:AspectPositionInstead
+                                     usingBlock:^(id<AspectInfo> dsAspectInfo,
+                                                  UITableView *tableView,
+                                                  NSIndexPath *indexPath)
                                             {
                                                 void *retValue;
                                                 [[dsAspectInfo originalInvocation] invoke];
                                                 [[dsAspectInfo originalInvocation] getReturnValue:&retValue];
                                                 UITableViewCell *cell = (__bridge UITableViewCell *)retValue;
                                                 
-                                                id<UITableViewSeparatorDelegate> separatorDelegate = (id<UITableViewSeparatorDelegate>)delegate;
+                                                id<UITableViewSeparatorDelegate> separatorDelegate = (id<UITableViewSeparatorDelegate>)tableView.delegate;
                                                 NSUInteger numberOfRows = [tableView numberOfRowsInSection:indexPath.section];
                                                 if (([separatorDelegate respondsToSelector:@selector(tableView:hasBorderInSection:)]
-                                                    && [separatorDelegate tableView:thisTableView hasBorderInSection:indexPath.section])
-                                                    || thisTableView.hasSectionBorder)
+                                                    && [separatorDelegate tableView:tableView hasBorderInSection:indexPath.section])
+                                                    || tableView.hasSectionBorder)
                                                 {
                                                     if (indexPath.row == 0) {
-                                                        [cell addUpperSeparatorWithColor:thisTableView.separatorColor insets:UIEdgeInsetsZero];
+                                                        [cell addUpperSeparatorWithColor:tableView.separatorColor insets:UIEdgeInsetsZero];
                                                     }
                                                     if (indexPath.row == numberOfRows-1) {
-                                                        [cell addLowerSeparatorWithColor:thisTableView.separatorColor insets:UIEdgeInsetsZero];
+                                                        [cell addLowerSeparatorWithColor:tableView.separatorColor insets:UIEdgeInsetsZero];
                                                     }
                                                 }
                                                 
                                                 if (indexPath.row != numberOfRows-1) {
                                                     if (([separatorDelegate respondsToSelector:@selector(tableView:hasSeparatorBetweenIndexPath:andIndexPath:)]
-                                                        && [separatorDelegate tableView:thisTableView
+                                                        && [separatorDelegate tableView:tableView
                                                            hasSeparatorBetweenIndexPath:indexPath
                                                                            andIndexPath:[NSIndexPath indexPathForRow:indexPath.row+1 inSection:indexPath.section]])
-                                                        || thisTableView.hasRowSeparator)
+                                                        || tableView.hasRowSeparator)
                                                     {
-                                                        [cell addLowerSeparatorWithColor:thisTableView.separatorColor insets:thisTableView.separatorInset];
+                                                        [cell addLowerSeparatorWithColor:tableView.separatorColor insets:tableView.separatorInset];
                                                     }
                                                 }
                                             } error:nil];
