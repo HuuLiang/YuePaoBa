@@ -108,6 +108,13 @@ NSString *const kPaymentInfoKeyName = @"YPB_PAYMENTINFO_KEYNAME";
     }];
 }
 
++ (NSArray<YPBPaymentInfo *> *)allSuccessfulPaymentInfos {
+    return [self.allPaymentInfos bk_select:^BOOL(id obj) {
+        YPBPaymentInfo *paymentInfo = obj;
+        return paymentInfo.paymentResult.unsignedIntegerValue == PAYRESULT_SUCCESS;
+    }];
+}
+
 + (NSString *)vipExpireDate {
     NSString *expireDate = [SFHFKeychainUtils getPasswordForUsername:kVIPExpireDateKeyChainUserName
                                                       andServiceName:kVIPExpireDateKeyChainServiceName

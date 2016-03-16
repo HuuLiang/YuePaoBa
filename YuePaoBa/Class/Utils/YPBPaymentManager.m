@@ -14,6 +14,7 @@
 
 @interface YPBPaymentManager ()
 @property (nonatomic,retain) YPBUserVIPUpgradeModel *vipUpgradeModel;
+@property (nonatomic,copy) YPBCompletionHandler completionHandler;
 @end
 
 @implementation YPBPaymentManager
@@ -39,6 +40,7 @@ DefineLazyPropertyInitialization(YPBUserVIPUpgradeModel, vipUpgradeModel)
     }
     
     @weakify(self);
+    self.completionHandler = handle;
     if (paymentInfo.paymentType.unsignedIntegerValue == YPBPaymentTypeWeChatPay) {
         [[WeChatPayManager sharedInstance] startWeChatPayWithOrderNo:paymentInfo.orderId
                                                                price:paymentInfo.orderPrice.unsignedIntegerValue
@@ -46,7 +48,7 @@ DefineLazyPropertyInitialization(YPBUserVIPUpgradeModel, vipUpgradeModel)
         {
             @strongify(self);
             [self notifyPaymentResult:payResult withPaymentInfo:paymentInfo];
-            SafelyCallBlock2(handle, payResult==PAYRESULT_SUCCESS, paymentInfo);
+            //SafelyCallBlock2(handle, payResult==PAYRESULT_SUCCESS, paymentInfo);
         }];
     } else if (paymentInfo.paymentType.unsignedIntegerValue == YPBPaymentTypeAlipay) {
         [[AlipayManager shareInstance] startAlipay:paymentInfo.orderId
@@ -55,12 +57,28 @@ DefineLazyPropertyInitialization(YPBUserVIPUpgradeModel, vipUpgradeModel)
          {
             @strongify(self);
             [self notifyPaymentResult:result withPaymentInfo:paymentInfo];
-            SafelyCallBlock2(handle, result==PAYRESULT_SUCCESS, paymentInfo);
+            //SafelyCallBlock2(handle, result==PAYRESULT_SUCCESS, paymentInfo);
         }];
+    } else {
+        SafelyCallBlock2(self.completionHandler, PAYRESULT_UNKNOWN, paymentInfo);
+        self.completionHandler = nil;
     }
 }
 
 - (void)notifyPaymentResult:(PAYRESULT)result withPaymentInfo:(YPBPaymentInfo *)paymentInfo {
+    if (result == PAYRESULT_SUCCESS) {
+        NSArray<YPBPaymentInfo *> *successPaymentInfos = [YPBUtil allSuccessfulPaymentInfos];
+        if ([successPaymentInfos bk_any:^BOOL(id obj) {
+            YPBPaymentInfo *successPaymentInfo = obj;
+            return [successPaymentInfo.orderId isEqualToString:paymentInfo.orderId];
+        }]) {
+            DLog(@"Payment order: %@ has already paid !", paymentInfo.orderId);
+            SafelyCallBlock2(self.completionHandler, result==PAYRESULT_SUCCESS, paymentInfo);
+            self.completionHandler = nil;
+            return ;
+        }
+    }
+    
     paymentInfo.paymentResult = @(result);
     paymentInfo.paymentStatus = @(YPBPaymentStatusNotProcessed);
     [paymentInfo save];
@@ -72,6 +90,9 @@ DefineLazyPropertyInitialization(YPBUserVIPUpgradeModel, vipUpgradeModel)
     } else if (paymentInfo.payPointType.unsignedIntegerValue == YPBPayPointTypeGift) {
 //        [self sendGiftWithPaymentInfo:paymentInfo];
     }
+    
+    SafelyCallBlock2(self.completionHandler, result==PAYRESULT_SUCCESS, paymentInfo);
+    self.completionHandler = nil;
 }
 
 - (void)upgradeVIPWithPaymentInfo:(YPBPaymentInfo *)paymentInfo {

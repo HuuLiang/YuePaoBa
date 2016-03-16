@@ -212,6 +212,8 @@ DefineLazyPropertyInitialization(YPBWeChatPayQueryOrderRequest, wechatPayOrderQu
             [self.wechatPayOrderQueryRequest queryOrderWithNo:paymentInfo.orderId completionHandler:^(BOOL success, NSString *trade_state, double total_fee) {
                 if ([trade_state isEqualToString:@"SUCCESS"]) {
                     [[YPBPaymentManager sharedManager] notifyPaymentResult:PAYRESULT_SUCCESS withPaymentInfo:paymentInfo];
+                } else {
+                    //[[YPBPaymentManager sharedManager] notifyPaymentResult:PAYRESULT_FAIL withPaymentInfo:paymentInfo];
                 }
             }];
         } else {
