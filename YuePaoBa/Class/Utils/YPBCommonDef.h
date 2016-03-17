@@ -90,6 +90,13 @@ return _##propertyName; \
 #define kVIPUpgradeSuccessNotification      @"yuepaoba_vip_upgrade_success_notification"
 #define kUnreadMessageChangeNotification    @"yuepaoba_unread_message_change_notification"
 
+//个推信息
+#define YPB_GTAPPID                   (@"A34dMAQ4BNA3MRLSR2m0n7")
+#define YPB_GTAPPKEY                  (@"kFqXRs6ohv9lfGX1FE1tq2")
+#define YPB_GTAPPSECRET               (@"s07xHhjpMd708Cc1bKzQl8")
+#define YPB_GTMASTERSECRET            (@"iccRAoUFLAAxdQ0989mbS9")
+
+
 typedef struct _YPBIntRange {
     NSInteger min;
     NSInteger max;

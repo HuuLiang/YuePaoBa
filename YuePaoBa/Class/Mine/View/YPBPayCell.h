@@ -10,4 +10,10 @@
 
 @interface YPBPayCell : UITableViewCell
 
+@property (nonatomic,retain) UIImageView * backgroundImage;
+@property (nonatomic,retain) UILabel * priceLabel;
+@property (nonatomic,retain) UILabel * detailLabel;
+@property (nonatomic,retain) UIButton * payButton;
+
+- (void)setDetailText:(NSString *)detailText;
 @end

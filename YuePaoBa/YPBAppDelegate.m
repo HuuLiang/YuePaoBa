@@ -26,8 +26,9 @@
 #import "AlipayManager.h"
 #import <AlipaySDK/AlipaySDK.h>
 #import <KSCrash/KSCrashInstallationStandard.h>
+#import "GeTuiSdk.h"
 
-@interface YPBAppDelegate () <WXApiDelegate,UITabBarControllerDelegate>
+@interface YPBAppDelegate () <WXApiDelegate,UITabBarControllerDelegate,GeTuiSdkDelegate>
 @property (nonatomic,retain) YPBWeChatPayQueryOrderRequest *wechatPayOrderQueryRequest;
 @end
 
@@ -137,6 +138,13 @@ DefineLazyPropertyInitialization(YPBWeChatPayQueryOrderRequest, wechatPayOrderQu
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     // Override point for customization after application launch.
+    
+    // 个推
+    [GeTuiSdk startSdkWithAppId:YPB_GTAPPID appKey:YPB_GTAPPKEY appSecret:YPB_GTAPPSECRET delegate:self];
+    [self registerNotification];
+    [GeTuiSdk runBackgroundEnable:YES];
+    [self receiveNotificationByLaunchingOptions:launchOptions];
+    
     [[YPBErrorHandler sharedHandler] initialize];
     [self setupCommonStyles];
     [YPBStatistics start];
@@ -184,6 +192,7 @@ DefineLazyPropertyInitialization(YPBWeChatPayQueryOrderRequest, wechatPayOrderQu
 }
 
 - (void)applicationWillEnterForeground:(UIApplication *)application {
+    [[UIApplication sharedApplication]setApplicationIconBadgeNumber:0];
     // Called as part of the transition from the background to the inactive state; here you can undo many of the changes made on entering the background.
 }
 
@@ -264,6 +273,103 @@ DefineLazyPropertyInitialization(YPBWeChatPayQueryOrderRequest, wechatPayOrderQu
     if (index != NSNotFound) {
         [YPBStatistics logEvent:kLogUserTabClickEvent withUser:[YPBUser currentUser].userId attributeKey:@"序号" attributeValue:@(index).stringValue];
     }
+}
+
+#pragma mark - 推送
+// 注册APNS
+- (void)registerNotification {
+    if ([[[UIDevice currentDevice] systemVersion] floatValue] >= 8.0 ||
+        [UIApplication instancesRespondToSelector:@selector(registerUserNotificationSettings:)]) {
+        
+        // 定义用户通知类型(Remote.远程 - Badge.标记 Alert.提示 Sound.声音)
+        UIUserNotificationType types = UIUserNotificationTypeAlert | UIUserNotificationTypeBadge | UIUserNotificationTypeSound;
+        
+        // 定义用户通知设置
+        UIUserNotificationSettings *settings = [UIUserNotificationSettings settingsForTypes:types categories:nil];
+        
+        // 注册用户通知 - 根据用户通知设置
+        [[UIApplication sharedApplication] registerUserNotificationSettings:settings];
+        [[UIApplication sharedApplication] registerForRemoteNotifications];
+    } else { // iOS8.0 以前远程推送设置方式
+        // 定义远程通知类型(Remote.远程 - Badge.标记 Alert.提示 Sound.声音)
+        UIRemoteNotificationType myTypes = UIRemoteNotificationTypeBadge | UIRemoteNotificationTypeAlert | UIRemoteNotificationTypeSound;
+        
+        // 注册远程通知 -根据远程通知类型
+        [[UIApplication sharedApplication] registerForRemoteNotificationTypes:myTypes];
+    }
+}
+
+// 处理远程通知启动APP
+- (void)receiveNotificationByLaunchingOptions:(NSDictionary *)launchOptions {
+    NSLog(@"---------->launchOptions: %@",launchOptions);
+    if (!launchOptions)
+        return;
+    NSDictionary *userInfo = [launchOptions objectForKey:UIApplicationLaunchOptionsRemoteNotificationKey];
+    if (userInfo) {
+        NSString *payloadMsg = [userInfo objectForKey:@"payload"];
+        NSString *record = [NSString stringWithFormat:@"APN%@,%@",[NSDate date],payloadMsg];
+        NSLog(@"\n>>>[Launching RemoteNotification]:%@ %@", userInfo,record);
+    }
+}
+
+/** 已登记用户通知 */
+-(void)application:(UIApplication *)application didRegisterUserNotificationSettings:(UIUserNotificationSettings *)notificationSettings {
+    [application registerForRemoteNotifications];
+}
+
+/** 远程通知注册成功委托 */
+- (void)application:(UIApplication *)application didRegisterForRemoteNotificationsWithDeviceToken:(NSData *)deviceToken {
+    NSString *token = [[deviceToken description] stringByTrimmingCharactersInSet:[NSCharacterSet characterSetWithCharactersInString:@"<>"]];
+    token = [token stringByReplacingOccurrencesOfString:@" " withString:@""];
+    NSLog(@"deviceToken:%@", token);
+    [GeTuiSdk registerDeviceToken:token];
+}
+
+/** 远程通知注册失败委托 */
+- (void)application:(UIApplication *)application didFailToRegisterForRemoteNotificationsWithError:(NSError *)error {
+    [GeTuiSdk registerDeviceToken:@""];
+    NSLog(@"\n>>>[DeviceToken Error]:%@\n\n",error.description);
+}
+
+- (void)application:(UIApplication *)application didReceiveRemoteNotification:(NSDictionary *)userInfo {
+    application.applicationIconBadgeNumber = 0;
+    NSLog(@"\n>>>[Receive RemoteNotification]:%@\n\n", userInfo);
+}
+
+- (void)application:(UIApplication *)application didReceiveRemoteNotification:(NSDictionary *)userInfo fetchCompletionHandler:(void (^)(UIBackgroundFetchResult))completionHandler {
+    
+    NSLog(@"\n>>>[Receive RemoteNotification - Background Fetch]:%@\n\n", userInfo);
+    
+    completionHandler(UIBackgroundFetchResultNewData);
+
+}
+
+- (void)application:(UIApplication *)application performFetchWithCompletionHandler:(void (^)(UIBackgroundFetchResult))completionHandler {
+    [GeTuiSdk resume];
+    completionHandler(UIBackgroundFetchResultNewData);
+}
+
+- (void)GeTuiSdkDidRegisterClient:(NSString *)clientId {
+    
+}
+
+- (void)GeTuiSdkDidOccurError:(NSError *)error {
+    NSLog(@"\n>>>[GexinSdk error]:%@\n\n", [error localizedDescription]);
+}
+
+//此方法为sdk运行中的推送方法 可以从后台发送数据给客户端做逻辑判断  并不一定要展示 也可以收集用户运行数据等信息
+- (void)GeTuiSdkDidReceivePayload:(NSString *)payloadId andTaskId:(NSString *)taskId andMessageId:(NSString *)aMsgId andOffLine:(BOOL)offLine fromApplication:(NSString *)appId {
+    NSData *payload = [GeTuiSdk retrivePayloadById:payloadId];
+    NSString *payloadMsg = nil;
+    if (payload) {
+        payloadMsg = [[NSString alloc] initWithBytes:payload.bytes length:payload.length encoding:NSUTF8StringEncoding];
+        NSLog(@"------>payloadMsg:%@",payloadMsg);
+    }
+    
+    NSString *msg = [NSString stringWithFormat:@" payloadId=%@,taskId=%@,messageId:%@,payloadMsg:%@%@",payloadId,taskId,aMsgId,payloadMsg,offLine ? @"<离线消息>" : @""];
+    NSLog(@"\n>>>[GexinSdk ReceivePayload]:%@\n\n", msg);
+    
+    [GeTuiSdk sendFeedbackMessage:90001 taskId:taskId msgId:aMsgId];
 }
 
 @end

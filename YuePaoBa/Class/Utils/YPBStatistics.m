@@ -26,6 +26,7 @@ NSString *const kLogUserGiftButtonClickEvent        = @"YPB_USER_GIFT_BUTTON_CLI
 + (void)start {
 #ifdef DEBUG
     [MobClick setLogEnabled:YES];
+    NSLog(@"%@",[[NSSearchPathForDirectoriesInDomains(NSCachesDirectory, NSUserDomainMask, YES) objectAtIndex:0] stringByAppendingPathComponent:@".umeng"]);
 #endif
     [MobClick setCrashReportEnabled:NO];
     NSString *bundleVersion = [NSBundle mainBundle].infoDictionary[@"CFBundleShortVersionString"];

@@ -21,3 +21,4 @@ pod 'GPUImage', '~> 0.1.7'
 pod 'HMSegmentedControl', '~> 1.5.2'
 # used by MWPhotoBrowser
 pod 'DACircularProgress', '~> 2.3.1'
+pod 'GetuiSDK', '~> 1.3.2' 

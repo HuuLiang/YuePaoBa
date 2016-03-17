@@ -168,6 +168,14 @@ THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND 
 		</dict>
 		<dict>
 			<key>FooterText</key>
+			<string>&#20010;&#25512;&#20113;&#25512;&#36865;&#65292;All Rights Reserved.</string>
+			<key>Title</key>
+			<string>GetuiSDK</string>
+			<key>Type</key>
+			<string>PSGroupSpecifier</string>
+		</dict>
+		<dict>
+			<key>FooterText</key>
 			<string># License
 
 ## MIT License

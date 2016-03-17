@@ -15,13 +15,17 @@
 #import "YPBPaymentModel.h"
 #import "AlipayManager.h"
 #import "YPBPaymentIssueReportViewController.h"
+#import "YPBPayCell.h"
+#import "YPBPayIntroduceView.h"
 
-@interface YPBVIPPriviledgeViewController ()
+
+@interface YPBVIPPriviledgeViewController () <UITableViewDelegate>
 {
     UIImageView *_backgroundImageView;
-    YPBVIPPriceButton *_1MonthPriceButton;
-    YPBVIPPriceButton *_3MonthsPriceButton;
+    YPBPayCell *_oneMonthCell;
+    YPBPayCell *_threeMonthCell;
     UIButton *_feedbackButton;
+    YPBPayIntroduceView *_introduceView;
 }
 @property (nonatomic,retain) YPBUserVIPUpgradeModel *vipUpgradeModel;
 @property (nonatomic,retain) YPBPaymentInfo *paymentInfo;
@@ -43,39 +47,58 @@ DefineLazyPropertyInitialization(YPBUserVIPUpgradeModel, vipUpgradeModel)
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
-    self.title = @"VIP特权";
+    self.title = @"会员支付";
     self.edgesForExtendedLayout = UIRectEdgeNone;
     
     _backgroundImageView = [[UIImageView alloc] init];
+    _backgroundImageView.translatesAutoresizingMaskIntoConstraints = NO;
     [_backgroundImageView sd_setImageWithURL:[NSURL URLWithString:[YPBSystemConfig sharedConfig].payImgUrl]
                             placeholderImage:[UIImage imageNamed:@"vip_page"]];
     _backgroundImageView.contentMode = UIViewContentModeScaleAspectFill;
     [self.view addSubview:_backgroundImageView];
     
+    //购买选项
+    _threeMonthCell = [[YPBPayCell alloc] init];
+    _threeMonthCell.backgroundImage.image = [UIImage imageNamed:@"pay_153-1"];
+    _threeMonthCell.priceLabel.text = @"6个月送6个月";
+    [_threeMonthCell setDetailText:@"限时特惠:优惠50%"];
+    [_threeMonthCell.payButton setTitle:@"96元" forState:UIControlStateNormal];
+    [self.view addSubview:_threeMonthCell];
+    
+    _oneMonthCell = [[YPBPayCell alloc] init];
+    _oneMonthCell.backgroundImage.image = [UIImage imageNamed:@"pay_153-2"];
+    _oneMonthCell.priceLabel.text = @"1个月";
+    [_oneMonthCell setDetailText:@""];
+    [_oneMonthCell.payButton setTitle:@"38元" forState:UIControlStateNormal];
+    [self.view addSubview:_oneMonthCell];
+    
+    //会员特权说明
+    _introduceView = [[YPBPayIntroduceView alloc] init];
+    [self.view addSubview:_introduceView];
+    
+    
     YPBSystemConfig *systemConfig = [YPBSystemConfig sharedConfig];
     NSUInteger price1Month = ((NSString *)systemConfig.vipPointDictionary[@"1"]).integerValue;
     NSUInteger price3Month = ((NSString *)systemConfig.vipPointDictionary[@"3"]).integerValue;
     
-    _1MonthPriceButton = [[YPBVIPPriceButton alloc] init];
-    _1MonthPriceButton.backgroundImage = [UIImage imageNamed:@"vip_payment_1month"];
-    _1MonthPriceButton.title = [NSString stringWithFormat:@"首月体验：%@元/1个月", [YPBUtil priceStringWithValue:price1Month]];
-    [self.view addSubview:_1MonthPriceButton];
-    
-    _3MonthsPriceButton = [[YPBVIPPriceButton alloc] init];
-    _3MonthsPriceButton.backgroundImage = [UIImage imageNamed:@"vip_payment_3month"];
-    _3MonthsPriceButton.title = [NSString stringWithFormat:@"限时特价：%@元/3个月", [YPBUtil priceStringWithValue:price3Month]];
-    [self.view addSubview:_3MonthsPriceButton];
-    
     @weakify(self);
-    [_1MonthPriceButton bk_addEventHandler:^(id sender) {
+    [_oneMonthCell.payButton bk_addEventHandler:^(id sender) {
         @strongify(self);
         [self popPaymentViewWithPrice:price1Month forMonths:1];
     } forControlEvents:UIControlEventTouchUpInside];
-    
-    [_3MonthsPriceButton bk_addEventHandler:^(id sender) {
+    [_threeMonthCell.payButton bk_addEventHandler:^(id sender) {
         @strongify(self);
         [self popPaymentViewWithPrice:price3Month forMonths:3];
     } forControlEvents:UIControlEventTouchUpInside];
+    [_oneMonthCell bk_whenTouches:1 tapped:1 handler:^{
+        @strongify(self)
+         [self popPaymentViewWithPrice:price1Month forMonths:1];
+    }];
+    [_threeMonthCell bk_whenTouches:1 tapped:1 handler:^{
+        @strongify(self)
+        [self popPaymentViewWithPrice:price3Month forMonths:3];
+    }];
+    
     
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(onVIPUpgradeSuccessNotification) name:kVIPUpgradeSuccessNotification object:nil];
     
@@ -103,23 +126,23 @@ DefineLazyPropertyInitialization(YPBUserVIPUpgradeModel, vipUpgradeModel)
 
 - (void)viewDidLayoutSubviews {
     [super viewDidLayoutSubviews];
-    
-    _backgroundImageView.frame = self.view.bounds;
-    
-    const CGFloat width1 = self.view.bounds.size.width*0.5;
-    const CGFloat height1 = width1 * _1MonthPriceButton.backgroundImage.size.height/_1MonthPriceButton.backgroundImage.size.width;
-    _1MonthPriceButton.center = CGPointMake(self.view.bounds.size.width*0.6, self.view.bounds.size.height*0.55);
-    _1MonthPriceButton.bounds = CGRectMake(0, 0, width1, height1);
-    _1MonthPriceButton.contentEdgeInsets = UIEdgeInsetsMake(height1*0.3, 0, 0, 0);
-    _1MonthPriceButton.titleLabel.font = [UIFont boldSystemFontOfSize:height1*0.2];
-    
-    const CGFloat width2 = self.view.bounds.size.width*0.7;
-    const CGFloat height2 = width2 * _3MonthsPriceButton.backgroundImage.size.height/_3MonthsPriceButton.backgroundImage.size.width;
-    _3MonthsPriceButton.center = CGPointMake(self.view.bounds.size.width/2, self.view.bounds.size.height*0.82);
-    _3MonthsPriceButton.bounds = CGRectMake(0, 0, width2, height2);
-    _3MonthsPriceButton.contentEdgeInsets = UIEdgeInsetsMake(height2*0.1, 0, 0, 0);
-    _3MonthsPriceButton.titleLabel.font = [UIFont boldSystemFontOfSize:height2*0.15];
-    
+    NSDictionary * layoutDic = @{@"_back":_backgroundImageView,
+                                 @"_three":_threeMonthCell,
+                                 @"_one":_oneMonthCell,
+                                 @"_intro":_introduceView};
+    NSDictionary * metrices = @{@"_backHeight":@(self.view.frame.size.width/4)};
+    NSArray *contraints1 = [NSLayoutConstraint constraintsWithVisualFormat:@"H:|-0-[_back]-0-|" options:0 metrics:nil views:layoutDic];
+    NSArray *contraints2 = [NSLayoutConstraint constraintsWithVisualFormat:@"H:|-0-[_three]-0-|" options:0 metrics:nil views:layoutDic];
+    NSArray *contraints3 = [NSLayoutConstraint constraintsWithVisualFormat:@"H:|-0-[_one]-0-|" options:0 metrics:nil views:layoutDic];
+    NSArray *contraints4 = [NSLayoutConstraint constraintsWithVisualFormat:@"H:|-0-[_intro]-0-|" options:0 metrics:nil views:layoutDic];
+    NSArray *contraints5 = [NSLayoutConstraint constraintsWithVisualFormat:@"V:|-0-[_back(_backHeight)]-0-[_three(80)]-0-[_one(80)]-0-[_intro]-5-|" options:0 metrics:metrices views:layoutDic];
+    NSMutableArray * array = [[NSMutableArray alloc] init];
+    [array addObjectsFromArray:contraints1];
+    [array addObjectsFromArray:contraints2];
+    [array addObjectsFromArray:contraints3];
+    [array addObjectsFromArray:contraints4];
+    [array addObjectsFromArray:contraints5];
+    [self.view addConstraints:array];
     _feedbackButton.titleLabel.font = [UIFont systemFontOfSize:MIN(16,CGRectGetHeight(self.view.bounds) * 0.03)];
 }
 
@@ -158,12 +181,10 @@ DefineLazyPropertyInitialization(YPBUserVIPUpgradeModel, vipUpgradeModel)
     [[YPBPaymentManager sharedManager] payWithPaymentInfo:paymentInfo completionHandler:^(BOOL success, id obj) {
         @strongify(self);
         [self.view.window endLoading];
-        
         YPBPaymentInfo *paymentInfo = obj;
         PAYRESULT result = paymentInfo.paymentResult.unsignedIntegerValue;
         if (result == PAYRESULT_SUCCESS) {
             [self.paymentPopView hide];
-            
             if (paymentInfo.contentType.integerValue == YPBPaymentContentTypeRenewVIP) {
                 [[YPBMessageCenter defaultCenter] showSuccessWithTitle:@"VIP续费成功" inViewController:self];
             } else {

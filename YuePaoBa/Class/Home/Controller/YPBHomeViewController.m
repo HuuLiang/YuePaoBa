@@ -188,7 +188,6 @@ DefineLazyPropertyInitialization(YPBUserAccessModel, userAccessModel);
         cell.user.receiveGreetCount = @(cell.user.receiveGreetCount.unsignedIntegerValue+1);
     };
     [self.navigationController pushViewController:detailVC animated:YES];
-    
     [YPBStatistics logEvent:kLogUserHomeClickEvent fromUser:[YPBUser currentUser].userId toUser:user.userId];
 }
 @end
