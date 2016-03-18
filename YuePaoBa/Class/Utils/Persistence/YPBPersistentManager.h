@@ -17,6 +17,6 @@
 - (NSError *)persistentObject:(YPBPersistentObject *)object;
 - (void)persistentObjects:(YPBPersistentObjectArray *)objects;
 
-- (RLMRealm *)realmWithNamespace:(NSString *)namespace;
+- (RLMRealm *)realmWithPersistentClass:(Class)persistentClass;
 
 @end

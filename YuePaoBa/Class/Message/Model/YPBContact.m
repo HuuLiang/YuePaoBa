@@ -46,6 +46,7 @@
         contact.userId = user.userId;
         contact.logoUrl = user.logoUrl;
         contact.nickName = user.nickName;
+        contact.userType = user.userType;
     }
     
     return contact;
@@ -62,6 +63,7 @@
         contact.userId = message.userId;
         contact.logoUrl = message.logoUrl;
         contact.nickName = message.nickName;
+        contact.userType = @(YPBUserTypeRobot);
     }
     
     return contact;
@@ -73,5 +75,13 @@
     [contact beginUpdate];
     contact.recentTime = [YPBUtil currentDateString];
     return [contact endUpdate] == nil;
+}
+
++ (NSDictionary<NSString *,NSNumber *> *)newPropertiesForMigration {
+    return @{@"userType":@(1)};
+}
+
++ (NSDictionary<NSString *,id> *)newPropertyDefaultValuesForMigration {
+    return @{@"userType":@(YPBUserTypeRobot)};
 }
 @end

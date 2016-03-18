@@ -14,7 +14,7 @@
             buildForArchiving = "YES">
             <BuildableReference
                BuildableIdentifier = 'primary'
-               BlueprintIdentifier = 'F77D3AE72D7CC0FACD43C1E4'
+               BlueprintIdentifier = 'E45B8879A97B82AE0A750D1E'
                BlueprintName = 'MessageDisplayKit'
                ReferencedContainer = 'container:Pods.xcodeproj'
                BuildableName = 'libMessageDisplayKit.a'>

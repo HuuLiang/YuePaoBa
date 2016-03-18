@@ -151,7 +151,8 @@ static YPBUser *_currentUser;
     copiedUser.nickName              = [self.nickName copyWithZone:zone];
     copiedUser.logoUrl               = [self.logoUrl copyWithZone:zone];
     copiedUser.sex                   = [self.sex copyWithZone:zone];
-
+    copiedUser.userType              = [self.userType copyWithZone:zone];
+    
     copiedUser.age                   = [self.age copyWithZone:zone];
     copiedUser.height                = [self.height copyWithZone:zone];
     copiedUser.bwh                   = [self.bwh copyWithZone:zone];

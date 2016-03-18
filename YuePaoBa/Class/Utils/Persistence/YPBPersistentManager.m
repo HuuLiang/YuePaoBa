@@ -28,26 +28,47 @@
 
 - (NSError *)persistentObject:(YPBPersistentObject *)object {
     NSError *error;
-    RLMRealm *realm = [self realmWithNamespace:[[object class] namespace]];
+    RLMRealm *realm = [self realmWithPersistentClass:[object class]];
     [realm beginWriteTransaction];
     [realm addOrUpdateObject:object];
     [realm commitWriteTransaction:&error];
     return error;
 }
 
-- (RLMRealm *)realmWithNamespace:(NSString *)namespace {
+- (RLMRealm *)realmWithPersistentClass:(Class)persistentClass {
+    if (![persistentClass isSubclassOfClass:[YPBPersistentObject class]]) {
+        return nil;
+    }
+    
     NSString *folder = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES).firstObject;
-    NSString *realmPath = [NSString stringWithFormat:@"%@/%@.realm", folder, namespace];
-    RLMRealm *realm = [RLMRealm realmWithPath:realmPath];
+    NSString *realmPath = [NSString stringWithFormat:@"%@/%@.realm", folder, [persistentClass namespace]];
+    RLMRealmConfiguration *configuration = [RLMRealmConfiguration defaultConfiguration];
+    configuration.path = realmPath;
+    configuration.schemaVersion = YPB_DB_VERSION;
+    configuration.migrationBlock = ^(RLMMigration *migration, uint64_t oldSchemaVersion) {
+        NSDictionary<NSString *, NSNumber *> *newPropertiesForMigration = [persistentClass newPropertiesForMigration];
+        NSDictionary *newPropertyDefaultValues = [persistentClass newPropertyDefaultValuesForMigration];
+        NSMutableDictionary<NSString *, id> *newProperties = [NSMutableDictionary dictionary];
+        [newPropertiesForMigration enumerateKeysAndObjectsUsingBlock:^(NSString * _Nonnull key, NSNumber * _Nonnull obj, BOOL * _Nonnull stop) {
+            if (oldSchemaVersion < obj.unsignedIntegerValue) {
+                id defaultValue = [newPropertyDefaultValues objectForKey:key];
+                if (defaultValue) {
+                    [newProperties setObject:defaultValue forKey:key];
+                }
+            }
+        }];
+
+        if (newProperties.count > 0) {
+            [migration enumerateObjects:[persistentClass className] block:^(RLMObject * _Nullable oldObject, RLMObject * _Nullable newObject) {
+                [newProperties enumerateKeysAndObjectsUsingBlock:^(NSString * _Nonnull key, id  _Nonnull obj, BOOL * _Nonnull stop) {
+                    newObject[key] = obj;
+                }];
+            }];
+        }
+    };
+    
+    RLMRealm *realm = [RLMRealm realmWithConfiguration:configuration error:nil];
     return realm;
-//    RLMRealm *realm = self.realms[namespace];
-//    if (!realm) {
-//        NSString *folder = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES).firstObject;
-//        NSString *realmPath = [NSString stringWithFormat:@"%@/%@.realm", folder, namespace];
-//        realm = [RLMRealm realmWithPath:realmPath];
-//        [self.realms setObject:realm forKey:namespace];
-//    }
-//    return realm;
 }
 
 - (void)persistentObjects:(YPBPersistentObjectArray *)objects {
@@ -61,9 +82,9 @@
         
         [arr addObject:obj];
     }];
-    
+
     [objectNamespaceMapping enumerateKeysAndObjectsUsingBlock:^(NSString * _Nonnull key, YPBPersistentObjectMutableArray * _Nonnull obj, BOOL * _Nonnull stop) {
-        RLMRealm *realm = [self realmWithNamespace:key];
+        RLMRealm *realm = [self realmWithPersistentClass:[obj.firstObject class]];
         [realm beginWriteTransaction];
         [obj enumerateObjectsUsingBlock:^(YPBPersistentObject * _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
             [realm addOrUpdateObject:obj];
@@ -77,8 +98,7 @@
         return nil;
     }
     
-    NSString *namespace = [objClass namespace];
-    RLMRealm *realm = [self realmWithNamespace:namespace];
+    RLMRealm *realm = [self realmWithPersistentClass:objClass];
     if (!realm) {
         return nil;
     }

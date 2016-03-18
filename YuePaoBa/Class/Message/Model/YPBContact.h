@@ -16,6 +16,7 @@
 @property (nonatomic) NSString *userId;
 @property (nonatomic) NSString *logoUrl;
 @property (nonatomic) NSString *nickName;
+@property (nonatomic) NSNumber<RLMInt> *userType; // Added in DB version:1
 
 @property (nonatomic) NSString *recentMessage;
 @property (nonatomic) NSString *recentTime;

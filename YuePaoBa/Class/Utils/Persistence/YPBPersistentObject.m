@@ -39,7 +39,7 @@ static NSString *kDefaultPersistentNamespace = @"yuepaoba_default_persistent_nam
 }
 
 + (RLMRealm *)classRealm {
-    return [[YPBPersistentManager sharedManager] realmWithNamespace:[self namespace]];
+    return [[YPBPersistentManager sharedManager] realmWithPersistentClass:[self class]];
 }
 
 - (void)beginUpdate {
@@ -85,4 +85,8 @@ static NSString *kDefaultPersistentNamespace = @"yuepaoba_default_persistent_nam
     [realm deleteObjects:objects];
     [realm commitWriteTransaction];
 }
+
++ (NSDictionary<NSString *,NSNumber *> *)newPropertiesForMigration { return nil; }
+
++ (NSDictionary<NSString *,id> *)newPropertyDefaultValuesForMigration { return nil; }
 @end
