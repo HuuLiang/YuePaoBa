@@ -301,7 +301,6 @@ DefineLazyPropertyInitialization(YPBWeChatPayQueryOrderRequest, wechatPayOrderQu
 
 // 处理远程通知启动APP
 - (void)receiveNotificationByLaunchingOptions:(NSDictionary *)launchOptions {
-    NSLog(@"---------->launchOptions: %@",launchOptions);
     if (!launchOptions)
         return;
     NSDictionary *userInfo = [launchOptions objectForKey:UIApplicationLaunchOptionsRemoteNotificationKey];
@@ -321,25 +320,19 @@ DefineLazyPropertyInitialization(YPBWeChatPayQueryOrderRequest, wechatPayOrderQu
 - (void)application:(UIApplication *)application didRegisterForRemoteNotificationsWithDeviceToken:(NSData *)deviceToken {
     NSString *token = [[deviceToken description] stringByTrimmingCharactersInSet:[NSCharacterSet characterSetWithCharactersInString:@"<>"]];
     token = [token stringByReplacingOccurrencesOfString:@" " withString:@""];
-    NSLog(@"deviceToken:%@", token);
     [GeTuiSdk registerDeviceToken:token];
 }
 
 /** 远程通知注册失败委托 */
 - (void)application:(UIApplication *)application didFailToRegisterForRemoteNotificationsWithError:(NSError *)error {
     [GeTuiSdk registerDeviceToken:@""];
-    NSLog(@"\n>>>[DeviceToken Error]:%@\n\n",error.description);
 }
 
 - (void)application:(UIApplication *)application didReceiveRemoteNotification:(NSDictionary *)userInfo {
     application.applicationIconBadgeNumber = 0;
-    NSLog(@"\n>>>[Receive RemoteNotification]:%@\n\n", userInfo);
 }
 
 - (void)application:(UIApplication *)application didReceiveRemoteNotification:(NSDictionary *)userInfo fetchCompletionHandler:(void (^)(UIBackgroundFetchResult))completionHandler {
-    
-    NSLog(@"\n>>>[Receive RemoteNotification - Background Fetch]:%@\n\n", userInfo);
-    
     completionHandler(UIBackgroundFetchResultNewData);
 
 }
@@ -349,13 +342,6 @@ DefineLazyPropertyInitialization(YPBWeChatPayQueryOrderRequest, wechatPayOrderQu
     completionHandler(UIBackgroundFetchResultNewData);
 }
 
-- (void)GeTuiSdkDidRegisterClient:(NSString *)clientId {
-    
-}
-
-- (void)GeTuiSdkDidOccurError:(NSError *)error {
-    NSLog(@"\n>>>[GexinSdk error]:%@\n\n", [error localizedDescription]);
-}
 
 //此方法为sdk运行中的推送方法 可以从后台发送数据给客户端做逻辑判断  并不一定要展示 也可以收集用户运行数据等信息
 - (void)GeTuiSdkDidReceivePayload:(NSString *)payloadId andTaskId:(NSString *)taskId andMessageId:(NSString *)aMsgId andOffLine:(BOOL)offLine fromApplication:(NSString *)appId {
@@ -363,7 +349,6 @@ DefineLazyPropertyInitialization(YPBWeChatPayQueryOrderRequest, wechatPayOrderQu
     NSString *payloadMsg = nil;
     if (payload) {
         payloadMsg = [[NSString alloc] initWithBytes:payload.bytes length:payload.length encoding:NSUTF8StringEncoding];
-        NSLog(@"------>payloadMsg:%@",payloadMsg);
     }
     
     NSString *msg = [NSString stringWithFormat:@" payloadId=%@,taskId=%@,messageId:%@,payloadMsg:%@%@",payloadId,taskId,aMsgId,payloadMsg,offLine ? @"<离线消息>" : @""];

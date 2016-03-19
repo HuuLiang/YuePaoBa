@@ -96,6 +96,8 @@ return _##propertyName; \
 #define YPB_GTAPPSECRET               (@"s07xHhjpMd708Cc1bKzQl8")
 #define YPB_GTMASTERSECRET            (@"iccRAoUFLAAxdQ0989mbS9")
 
+#define SCREEN_WIDTH        [[UIScreen mainScreen]bounds].size.width
+#define SCREEN_HEIGHT       [[UIScreen mainScreen]bounds].size.height
 
 typedef struct _YPBIntRange {
     NSInteger min;

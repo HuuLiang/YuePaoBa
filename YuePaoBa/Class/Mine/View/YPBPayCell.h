@@ -15,5 +15,7 @@
 @property (nonatomic,retain) UILabel * detailLabel;
 @property (nonatomic,retain) UIButton * payButton;
 
-- (void)setDetailText:(NSString *)detailText;
+
+- (void)setCellInfoWithMonth:(NSString *)monthInfo;
+
 @end

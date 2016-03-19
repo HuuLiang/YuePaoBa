@@ -72,6 +72,6 @@ NSString *const kLogUserGiftButtonClickEvent        = @"YPB_USER_GIFT_BUTTON_CLI
         [logAttrs addEntriesFromDictionary:attrs];
     }
     
-    [MobClick event:eventId attributes:attrs];
+    [MobClick event:eventId attributes:logAttrs];
 }
 @end
