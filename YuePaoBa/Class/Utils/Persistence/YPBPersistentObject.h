@@ -28,6 +28,9 @@
 - (NSError *)endUpdate;
 - (void)deleteFromPersistence;
 
+// For DataBase Migration
++ (NSDictionary<NSString *, NSNumber *> *)newPropertiesForMigration;
++ (NSDictionary<NSString *, id> *)newPropertyDefaultValuesForMigration;
 @end
 
 typedef NSArray<YPBPersistentObject *> YPBPersistentObjectArray;

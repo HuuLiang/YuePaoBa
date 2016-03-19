@@ -22,6 +22,12 @@ typedef NS_ENUM(NSUInteger, YPBUserCup) {
     YPBUserCupCPlus
 };
 
+typedef NS_ENUM(NSUInteger, YPBUserType) {
+    YPBUserTypeUnknown,
+    YPBUserTypeRobot,
+    YPBUserTypeReal
+};
+
 @interface YPBUserPhoto : NSObject <NSCopying>
 @property (nonatomic) NSNumber *id;
 @property (nonatomic) NSString *userId;
@@ -55,6 +61,7 @@ typedef NS_ENUM(NSUInteger, YPBUserCup) {
 @property (nonatomic) NSString *nickName;
 @property (nonatomic) NSString *logoUrl;
 @property (nonatomic) NSString *sex;
+@property (nonatomic) NSNumber *userType;
 
 @property (nonatomic) NSNumber *age;
 @property (nonatomic) NSNumber *height;

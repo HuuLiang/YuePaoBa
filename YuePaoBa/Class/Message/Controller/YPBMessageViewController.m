@@ -24,6 +24,7 @@ static const void *kMessageCellBottomLabelAssociatedKey = &kMessageCellBottomLab
 @property (nonatomic,readonly) NSString *userId;
 @property (nonatomic,readonly) NSString *logoUrl;
 @property (nonatomic,readonly) NSString *nickName;
+@property (nonatomic,readonly) YPBUserType userType;
 
 @property (nonatomic,retain) NSMutableArray<YPBChatMessage *> *chatMessages;
 @end
@@ -104,6 +105,10 @@ DefineLazyPropertyInitialization(NSMutableArray, chatMessages)
 
 - (NSString *)nickName {
     return _user ? _user.nickName : _contact.nickName;
+}
+
+- (YPBUserType)userType {
+    return _user ? _user.userType.unsignedIntegerValue : _contact.userType.unsignedIntegerValue;
 }
 
 - (void)viewDidLoad {
@@ -232,7 +237,7 @@ DefineLazyPropertyInitialization(NSMutableArray, chatMessages)
     chatMessage.msgTime = dateTime;
     [self addChatMessage:chatMessage];
     
-    if ([sender isEqualToString:[YPBUser currentUser].userId]) {
+    if ([sender isEqualToString:[YPBUser currentUser].userId] && self.userType != YPBUserTypeReal) {
         [[YPBAutoReplyMessagePool sharedPool] addChatMessageForReply:chatMessage];
     }
 }

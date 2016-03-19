@@ -157,10 +157,10 @@ DefineLazyPropertyInitialization(YPBUserVIPUpgradeModel, vipUpgradeModel)
     paymentInfo.contentType = @(self.contentType).stringValue;
     
     @weakify(self);
-    [self.view.window beginLoading];
+    [self.view beginLoading];
     [[YPBPaymentManager sharedManager] payWithPaymentInfo:paymentInfo completionHandler:^(BOOL success, id obj) {
         @strongify(self);
-        [self.view.window endLoading];
+        [self.view endLoading];
         YPBPaymentInfo *paymentInfo = obj;
         PAYRESULT result = paymentInfo.paymentResult.unsignedIntegerValue;
         if (result == PAYRESULT_SUCCESS) {

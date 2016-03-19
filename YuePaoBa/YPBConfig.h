@@ -53,4 +53,6 @@
 
 #define YPB_UMENG_APP_ID                @"569f30e6e0f55a0373002331"
 #define YPB_KSCRASH_APP_ID              @"5261ad83f35a0ba21f4bec18e6ef6b31"
+
+#define YPB_DB_VERSION                  (1)
 #endif /* YPBConfig_h */
