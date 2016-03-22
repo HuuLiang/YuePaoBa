@@ -22,6 +22,7 @@
 #import "YPBPhotoBrowser.h"
 #import "YPBMyGiftViewController.h"
 #import "YPBSettingViewController.h"
+#import "GeTuiSdk.h"
 
 static NSString *const kNoUserInfoErrorMessage = @"无法获取用户详细信息，请刷新后重试";
 
@@ -146,6 +147,10 @@ DefineLazyPropertyInitialization(YPBUserPhotoDeleteModel, photoDeleteModel)
 - (void)refreshMineDetails {
     @weakify(self);
     NSString *userId = [YPBUtil deviceRegisteredUserId];
+    
+    //获取到userid向服务器发送
+    [[YPBSystemConfigModel sharedModel] sendPushInfoWithUserID:userId clientID:[GeTuiSdk clientId]];
+    
     [self.mineDetailModel fetchUserDetailWithUserId:userId
                                              byUser:userId
                                   completionHandler:^(BOOL success, id obj)

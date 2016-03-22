@@ -38,7 +38,6 @@
         SafelyCallBlock2(handler, NO, nil);
         return NO;
     }
-    
     BOOL success = [self requestURLPath:YPB_USER_DETAIL_URL
                              withParams:@{@"userId":userId, @"currentUserId":byUserId}
                         responseHandler:^(YPBURLResponseStatus respStatus, NSString *errorMessage)

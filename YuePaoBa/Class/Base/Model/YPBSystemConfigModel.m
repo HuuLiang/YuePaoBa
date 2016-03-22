@@ -54,4 +54,18 @@
     }];
     return ret;
 }
+
+- (void)sendPushInfoWithUserID:(NSString *)userId clientID:(NSString *)clientId {
+    NSLog(@"%@ %@",userId,clientId);
+    DLog(@"userId================>%@ clientId================>%@",userId,clientId);
+    NSDictionary * params = @{@"userId":userId,
+                              @"clientId":clientId};
+    BOOL ret = [self requestURLPath:YPB_UPDATE_CID_URL withParams:params responseHandler:nil];
+    if (ret) {
+        DLog(@"updata clientId success");
+    } else {
+        DLog(@"updata clientId failed");
+    }
+}
+
 @end

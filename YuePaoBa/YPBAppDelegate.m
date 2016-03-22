@@ -138,7 +138,8 @@ DefineLazyPropertyInitialization(YPBWeChatPayQueryOrderRequest, wechatPayOrderQu
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     // Override point for customization after application launch.
-    
+    DLog(@"--------launchOptions--------%@",launchOptions);
+    application.applicationIconBadgeNumber = [[[UIApplication sharedApplication] scheduledLocalNotifications]count] - 1;
     // 个推
     [GeTuiSdk startSdkWithAppId:YPB_GTAPPID appKey:YPB_GTAPPKEY appSecret:YPB_GTAPPSECRET delegate:self];
     [self registerNotification];
@@ -178,10 +179,15 @@ DefineLazyPropertyInitialization(YPBWeChatPayQueryOrderRequest, wechatPayOrderQu
     [[YPBAutoReplyMessagePool sharedPool] startRollingMessagesToAutoReply];
     
     [self setupCrashReporter];
+    
     return YES;
 }
 
 - (void)applicationWillResignActive:(UIApplication *)application {
+    DLog(@"------------------ResignActive----------------");
+    
+    application.applicationIconBadgeNumber = [[[UIApplication sharedApplication] scheduledLocalNotifications]count];
+    DLog(@"------------------%d",application.applicationIconBadgeNumber);
     // Sent when the application is about to move from active to inactive state. This can occur for certain types of temporary interruptions (such as an incoming phone call or SMS message) or when the user quits the application and it begins the transition to the background state.
     // Use this method to pause ongoing tasks, disable timers, and throttle down OpenGL ES frame rates. Games should use this method to pause the game.
 }
@@ -192,12 +198,15 @@ DefineLazyPropertyInitialization(YPBWeChatPayQueryOrderRequest, wechatPayOrderQu
 }
 
 - (void)applicationWillEnterForeground:(UIApplication *)application {
-    [[UIApplication sharedApplication]setApplicationIconBadgeNumber:0];
+
     // Called as part of the transition from the background to the inactive state; here you can undo many of the changes made on entering the background.
 }
 
 - (void)applicationDidBecomeActive:(UIApplication *)application {
     [self checkPayment];
+    DLog(@"=====BecomeActive=======");
+    DLog(@"badgeNum %d",[[[UIApplication sharedApplication]scheduledLocalNotifications]count]);
+    application.applicationIconBadgeNumber = [[[UIApplication sharedApplication] scheduledLocalNotifications]count];
     // Restart any tasks that were paused (or not yet started) while the application was inactive. If the application was previously in the background, optionally refresh the user interface.
 }
 
@@ -321,6 +330,7 @@ DefineLazyPropertyInitialization(YPBWeChatPayQueryOrderRequest, wechatPayOrderQu
     NSString *token = [[deviceToken description] stringByTrimmingCharactersInSet:[NSCharacterSet characterSetWithCharactersInString:@"<>"]];
     token = [token stringByReplacingOccurrencesOfString:@" " withString:@""];
     [GeTuiSdk registerDeviceToken:token];
+    DLog(@"token---------------->%@",token);
 }
 
 /** 远程通知注册失败委托 */
@@ -329,12 +339,12 @@ DefineLazyPropertyInitialization(YPBWeChatPayQueryOrderRequest, wechatPayOrderQu
 }
 
 - (void)application:(UIApplication *)application didReceiveRemoteNotification:(NSDictionary *)userInfo {
-    application.applicationIconBadgeNumber = 0;
+    
 }
 
 - (void)application:(UIApplication *)application didReceiveRemoteNotification:(NSDictionary *)userInfo fetchCompletionHandler:(void (^)(UIBackgroundFetchResult))completionHandler {
+    DLog(@"----------------->点击通知进入");
     completionHandler(UIBackgroundFetchResultNewData);
-
 }
 
 - (void)application:(UIApplication *)application performFetchWithCompletionHandler:(void (^)(UIBackgroundFetchResult))completionHandler {
@@ -355,6 +365,18 @@ DefineLazyPropertyInitialization(YPBWeChatPayQueryOrderRequest, wechatPayOrderQu
     NSLog(@"\n>>>[GexinSdk ReceivePayload]:%@\n\n", msg);
     
     [GeTuiSdk sendFeedbackMessage:90001 taskId:taskId msgId:aMsgId];
+    
+//    if (!offLine) {
+        UILocalNotification *local = [[UILocalNotification alloc] init];
+        local.fireDate = [[NSDate date] dateByAddingTimeInterval:0];
+        local.timeZone = [NSTimeZone defaultTimeZone];
+        local.alertBody = payloadMsg;
+        local.soundName = UILocalNotificationDefaultSoundName;
+        local.alertAction = NSLocalizedString(payloadMsg, nil);
+        local.applicationIconBadgeNumber = [[[UIApplication sharedApplication] scheduledLocalNotifications]count] + 1;
+        [[UIApplication sharedApplication] scheduleLocalNotification:local];
+//    }
+//    NSDictionary *dict = [NSDictionary dictionaryWithObjectsAndKeys:[NSNumber numberWithInt:tag], nil]
 }
 
 @end

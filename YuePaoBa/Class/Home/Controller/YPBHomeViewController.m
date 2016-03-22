@@ -15,6 +15,7 @@
 #import "YPBVIPPriviledgeViewController.h"
 #import "YPBUserAccessModel.h"
 #import "YPBMessagePushModel.h"
+#import "GeTuiSdk.h"
 
 static NSString *const kHomeCellReusableIdentifier = @"HomeCellReusableIdentifier";
 
@@ -40,7 +41,7 @@ DefineLazyPropertyInitialization(YPBUserAccessModel, userAccessModel);
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
-
+    
     YPBHomeCollectionViewLayout *layout = [[YPBHomeCollectionViewLayout alloc] init];
     layout.interItemSpacing = 1;
     

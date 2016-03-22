@@ -21,4 +21,6 @@
 
 - (BOOL)fetchSystemConfigWithCompletionHandler:(YPBCompletionHandler)handler;
 
+- (void)sendPushInfoWithUserID:(NSString *)userId clientID:(NSString *)clientId;
+
 @end
