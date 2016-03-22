@@ -185,10 +185,14 @@ DefineLazyPropertyInitialization(YPBUserVIPUpgradeModel, vipUpgradeModel)
     @weakify(self);
     if ([info isEqualToString:@"one"]) {
         @strongify(self);
-        [self popPaymentViewWithPrice:price1Month forMonths:1];
+        //[self popPaymentViewWithPrice:price1Month forMonths:1];
+        //购买1个月
+        DLog(@"-------one");
     } else if ([info isEqualToString:@"three"]) {
         @strongify(self);
-        [self popPaymentViewWithPrice:price3Month forMonths:3];
+        //[self popPaymentViewWithPrice:price3Month forMonths:3];
+        //购买3个月
+        DLog(@"-------three");
     }
 }
 
