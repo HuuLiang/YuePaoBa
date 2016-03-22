@@ -16,7 +16,7 @@
 #define YPB_REST_APP_VERSION     ((NSString *)([NSBundle mainBundle].infoDictionary[@"CFBundleShortVersionString"]))
 #define YPB_PAYMENT_RESERVE_DATA [NSString stringWithFormat:@"%@$%@", YPB_REST_APPID, YPB_CHANNEL_NO]
 
-#define YPB_BASE_URL                 @"http://120.24.252.114:8094"     // @"http://mfw.ihuiyx.com"//
+#define YPB_BASE_URL                    @"http://192.168.1.123:8094/"           //@"http://120.24.252.114:8094"     // @"http://mfw.ihuiyx.com"//
 #define YPB_USER_ACTIVATION_URL         @"/mfwcenter/jihuo.json"
 #define YPB_USER_REGISTER_URL           @"/mfwcenter/userCreate.json"
 #define YPB_USER_LIST_URL               @"/mfwcenter/userQuery.json"
@@ -34,6 +34,7 @@
 #define YPB_USER_SENT_GIFTS_URL         @"/mfwcenter/userSendGifts.json"
 #define YPB_FETCH_BARRAGES_URL          @"/mfwcenter/barrages.json"
 #define YPB_SEND_GIFT_URL               @"/mfwcenter/giveGift.json"
+#define YPB_UPDATE_CID_URL              @"/mfwcenter/updateCId.json"
 
 #define YPB_PAYMENT_COMMIT_URL          @"http://pay.iqu8.net/paycenter/qubaPr.json" //@"http://120.24.252.114:8084/paycenter/qubaPr.json" //
 #define YPB_ALIPAY_SCHEME               @"comyuepaobaappalipayschemeurl"
