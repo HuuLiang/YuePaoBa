@@ -46,19 +46,19 @@
 //}
 
 - (void)showMessageWithTitle:(NSString *)title inViewController:(UIViewController *)viewController {
-    [TSMessage showNotificationInViewController:[YPBMessageCenter currentViewController] title:title subtitle:nil type:TSMessageNotificationTypeMessage];
+    [TSMessage showNotificationInViewController:[YPBMessageCenter currentViewController] title:title subtitle:nil type:TSMessageNotificationTypeMessage duration:2];
 }
 
 - (void)showWarningWithTitle:(NSString *)title inViewController:(UIViewController *)viewController {
-    [TSMessage showNotificationInViewController:[YPBMessageCenter currentViewController] title:title subtitle:nil type:TSMessageNotificationTypeWarning];
+    [TSMessage showNotificationInViewController:[YPBMessageCenter currentViewController] title:title subtitle:nil type:TSMessageNotificationTypeWarning duration:2];
 }
 
 - (void)showErrorWithTitle:(NSString *)title inViewController:(UIViewController *)viewController {
-    [TSMessage showNotificationInViewController:[YPBMessageCenter currentViewController] title:title subtitle:nil type:TSMessageNotificationTypeError];
+    [TSMessage showNotificationInViewController:[YPBMessageCenter currentViewController] title:title subtitle:nil type:TSMessageNotificationTypeError duration:2];
 }
 
 - (void)showSuccessWithTitle:(NSString *)title inViewController:(UIViewController *)viewController {
-    [TSMessage showNotificationInViewController:[YPBMessageCenter currentViewController] title:title subtitle:nil type:TSMessageNotificationTypeSuccess];
+    [TSMessage showNotificationInViewController:[YPBMessageCenter currentViewController] title:title subtitle:nil type:TSMessageNotificationTypeSuccess duration:2];
 }
 
 - (void)dismissMessageWithCompletion:(void (^)(void))completion {
