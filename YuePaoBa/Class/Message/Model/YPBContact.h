@@ -11,7 +11,7 @@
 
 @class YPBPushedMessage;
 
-@interface YPBContact : YPBPersistentObject
+@interface YPBContact : YPBPersistentObject <NSCopying>
 
 @property (nonatomic) NSString *userId;
 @property (nonatomic) NSString *logoUrl;
