@@ -8,6 +8,8 @@
 
 #import "YPBSystemConfigModel.h"
 
+#define XcodeAppVersion [[[NSBundle mainBundle] infoDictionary] objectForKey:@"CFBundleShortVersionString"]
+
 @implementation YPBSystemConfigResponse
 
 - (Class)dataClass {
@@ -36,9 +38,11 @@
 }
 
 - (BOOL)fetchSystemConfigWithCompletionHandler:(YPBCompletionHandler)handler {
+    NSDictionary *params = @{@"clientVersion":XcodeAppVersion,
+                             @"channel":YPB_CHANNEL_NO};
     @weakify(self);
     BOOL ret = [self requestURLPath:YPB_SYSTEM_CONFIG_URL
-                         withParams:nil
+                         withParams:params
                     responseHandler:^(YPBURLResponseStatus respStatus, NSString *errorMessage)
     {
         @strongify(self);
