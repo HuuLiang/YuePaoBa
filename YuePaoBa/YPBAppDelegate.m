@@ -11,6 +11,7 @@
 #import "YPBVIPCenterViewController.h"
 #import "YPBContactViewController.h"
 #import "YPBMineViewController.h"
+#import "YPBNeighborViewController.h"
 #import "YPBSettingViewController.h"
 #import "YPBLoginViewController.h"
 #import "YPBActivateModel.h"
@@ -73,11 +74,12 @@ DefineLazyPropertyInitialization(YPBWeChatPayQueryOrderRequest, wechatPayOrderQu
                                                        image:[UIImage imageNamed:@"tabbar_mine_normal_icon"]
                                                selectedImage:[UIImage imageNamed:@"tabbar_mine_selected_icon"]];
     
-//    UITabBarController *tabBarController = [[UITabBarController alloc] init];
-//    tabBarController.viewControllers = @[homeNav,vipCenterNav,contactNav,mineNav];
-//    tabBarController.tabBar.tintColor = kThemeColor;
-//    tabBarController.delegate = self;
-//    return tabBarController;
+    YPBNeighborViewController *neighVC = [[YPBNeighborViewController alloc] initWithTitle:@"附近"];
+    UINavigationController *neighNav = [[UINavigationController alloc] initWithRootViewController:neighVC];
+    neighNav.tabBarItem = [[UITabBarItem alloc] initWithTitle:neighVC.title
+                                                        image:[UIImage imageNamed:@"tabbar_mine_normal_icon"]
+                                                selectedImage:[UIImage imageNamed:@"tabbar_mine_selected_icon"]];
+    
     _tabBarController = [[UITabBarController alloc] init];
     _tabBarController.viewControllers = @[homeNav,vipCenterNav,contactNav,mineNav];
     _tabBarController.tabBar.tintColor = kThemeColor;

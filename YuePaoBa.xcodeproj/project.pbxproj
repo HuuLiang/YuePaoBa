@@ -222,6 +222,8 @@
 		EC2BFB371C9A889E00912302 /* YPBPayIntroduceView.m in Sources */ = {isa = PBXBuildFile; fileRef = EC2BFB361C9A889E00912302 /* YPBPayIntroduceView.m */; };
 		EC7C84A11C982795005CB452 /* YPBPayCell.m in Sources */ = {isa = PBXBuildFile; fileRef = EC7C84A01C982795005CB452 /* YPBPayCell.m */; };
 		ECADD6621CA3C4D300BC85F6 /* YPBApplePay.m in Sources */ = {isa = PBXBuildFile; fileRef = ECADD6611CA3C4D300BC85F6 /* YPBApplePay.m */; };
+		ECADD66A1CA3EB9A00BC85F6 /* YPBNeighborViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = ECADD6691CA3EB9A00BC85F6 /* YPBNeighborViewController.m */; };
+		ECADD6701CA3ECD100BC85F6 /* YPBNeighborCell.m in Sources */ = {isa = PBXBuildFile; fileRef = ECADD66F1CA3ECD100BC85F6 /* YPBNeighborCell.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -649,6 +651,10 @@
 		EC7C84A01C982795005CB452 /* YPBPayCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YPBPayCell.m; sourceTree = "<group>"; };
 		ECADD6601CA3C4D300BC85F6 /* YPBApplePay.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YPBApplePay.h; sourceTree = "<group>"; };
 		ECADD6611CA3C4D300BC85F6 /* YPBApplePay.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YPBApplePay.m; sourceTree = "<group>"; };
+		ECADD6681CA3EB9A00BC85F6 /* YPBNeighborViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YPBNeighborViewController.h; sourceTree = "<group>"; };
+		ECADD6691CA3EB9A00BC85F6 /* YPBNeighborViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YPBNeighborViewController.m; sourceTree = "<group>"; };
+		ECADD66E1CA3ECD100BC85F6 /* YPBNeighborCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YPBNeighborCell.h; sourceTree = "<group>"; };
+		ECADD66F1CA3ECD100BC85F6 /* YPBNeighborCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YPBNeighborCell.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -1484,6 +1490,7 @@
 		BC9A89E31C0EFAB0008816F7 /* Class */ = {
 			isa = PBXGroup;
 			children = (
+				ECADD6641CA3EB5800BC85F6 /* Neighbor */,
 				BC6B748B1C3539B40052777E /* Vendor */,
 				BC1AED451C0F35CA003A0C63 /* Utils */,
 				BC1AED3A1C0F307C003A0C63 /* Base */,
@@ -1583,6 +1590,41 @@
 				BCD15F1A1C104B31002B6C5C /* RACmetamacros.h */,
 			);
 			path = rac_extobjc;
+			sourceTree = "<group>";
+		};
+		ECADD6641CA3EB5800BC85F6 /* Neighbor */ = {
+			isa = PBXGroup;
+			children = (
+				ECADD6671CA3EB5800BC85F6 /* View */,
+				ECADD6651CA3EB5800BC85F6 /* Controller */,
+				ECADD6661CA3EB5800BC85F6 /* Model */,
+			);
+			path = Neighbor;
+			sourceTree = "<group>";
+		};
+		ECADD6651CA3EB5800BC85F6 /* Controller */ = {
+			isa = PBXGroup;
+			children = (
+				ECADD6681CA3EB9A00BC85F6 /* YPBNeighborViewController.h */,
+				ECADD6691CA3EB9A00BC85F6 /* YPBNeighborViewController.m */,
+			);
+			path = Controller;
+			sourceTree = "<group>";
+		};
+		ECADD6661CA3EB5800BC85F6 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
+		ECADD6671CA3EB5800BC85F6 /* View */ = {
+			isa = PBXGroup;
+			children = (
+				ECADD66E1CA3ECD100BC85F6 /* YPBNeighborCell.h */,
+				ECADD66F1CA3ECD100BC85F6 /* YPBNeighborCell.m */,
+			);
+			path = View;
 			sourceTree = "<group>";
 		};
 		FABA1AE34E8532B321D86B4B /* Pods */ = {
@@ -1840,6 +1882,7 @@
 				BC652B8D1C2BF8DE00951DEA /* YPBTextField.m in Sources */,
 				BC50CE151C28F88C00CE88DD /* UIScrollView+Refresh.m in Sources */,
 				BCFB2A6D1C3FDD16003E327D /* YPBPhotoGridViewController.m in Sources */,
+				ECADD6701CA3ECD100BC85F6 /* YPBNeighborCell.m in Sources */,
 				BC7677A31C9181DB001AA508 /* YPBUserProfileViewController.m in Sources */,
 				BC264AE91C3C252E009FBCB8 /* YPBUserPhotoAddModel.m in Sources */,
 				BC3BC50C1C770FE000DE2FBF /* YPBTickCell.m in Sources */,
@@ -1856,6 +1899,7 @@
 				BC739CF21C7C45F300D75AF0 /* YPBPaymentManager.m in Sources */,
 				BC5555071C50DCD300412F7F /* YPBMessageOptionPanel.m in Sources */,
 				BC27422E1C3A65C700C98E6F /* YPBPersistentObject.m in Sources */,
+				ECADD66A1CA3EB9A00BC85F6 /* YPBNeighborViewController.m in Sources */,
 				BC31B7651C1BD8560043E7EB /* YPBRadioButton.m in Sources */,
 				BC5704E21C45F74800DEFAB6 /* DataVerifier.m in Sources */,
 				BC2742341C3A791800C98E6F /* YPBMessagePushModel.m in Sources */,

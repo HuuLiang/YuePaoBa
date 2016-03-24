@@ -7,7 +7,6 @@
 //
 
 #import "YPBPayIntroduceView.h"
-#import "sys/utsname.h"
 
 @implementation YPBPayIntroduceView
 
