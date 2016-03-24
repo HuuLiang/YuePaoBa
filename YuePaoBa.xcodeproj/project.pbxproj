@@ -221,6 +221,7 @@
 		BCFB2A6D1C3FDD16003E327D /* YPBPhotoGridViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BCFB2A6C1C3FDD16003E327D /* YPBPhotoGridViewController.m */; };
 		EC2BFB371C9A889E00912302 /* YPBPayIntroduceView.m in Sources */ = {isa = PBXBuildFile; fileRef = EC2BFB361C9A889E00912302 /* YPBPayIntroduceView.m */; };
 		EC7C84A11C982795005CB452 /* YPBPayCell.m in Sources */ = {isa = PBXBuildFile; fileRef = EC7C84A01C982795005CB452 /* YPBPayCell.m */; };
+		ECADD6621CA3C4D300BC85F6 /* YPBApplePay.m in Sources */ = {isa = PBXBuildFile; fileRef = ECADD6611CA3C4D300BC85F6 /* YPBApplePay.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -646,6 +647,8 @@
 		EC2BFB361C9A889E00912302 /* YPBPayIntroduceView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YPBPayIntroduceView.m; sourceTree = "<group>"; };
 		EC7C849F1C982795005CB452 /* YPBPayCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YPBPayCell.h; sourceTree = "<group>"; };
 		EC7C84A01C982795005CB452 /* YPBPayCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YPBPayCell.m; sourceTree = "<group>"; };
+		ECADD6601CA3C4D300BC85F6 /* YPBApplePay.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YPBApplePay.h; sourceTree = "<group>"; };
+		ECADD6611CA3C4D300BC85F6 /* YPBApplePay.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YPBApplePay.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -778,6 +781,8 @@
 				EC7C84A01C982795005CB452 /* YPBPayCell.m */,
 				EC2BFB351C9A889E00912302 /* YPBPayIntroduceView.h */,
 				EC2BFB361C9A889E00912302 /* YPBPayIntroduceView.m */,
+				ECADD6601CA3C4D300BC85F6 /* YPBApplePay.h */,
+				ECADD6611CA3C4D300BC85F6 /* YPBApplePay.m */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -1659,7 +1664,7 @@
 				TargetAttributes = {
 					BC1A2D7C1C0EF909003D9138 = {
 						CreatedOnToolsVersion = 7.1.1;
-						DevelopmentTeam = S954G7B2DA;
+						DevelopmentTeam = BTTZYVST3G;
 						SystemCapabilities = {
 							com.apple.BackgroundModes = {
 								enabled = 1;
@@ -1915,6 +1920,7 @@
 				BC50CE4A1C297BB400CE88DD /* YPBUserAccessModel.m in Sources */,
 				BC1B49AB1C44F6B900ECB0BA /* YPBUserVIPUpgradeModel.m in Sources */,
 				BC5704DF1C45F74800DEFAB6 /* Order.m in Sources */,
+				ECADD6621CA3C4D300BC85F6 /* YPBApplePay.m in Sources */,
 				BC85EC541C5CC72A00BA74B1 /* MWTapDetectingView.m in Sources */,
 				BC1A7B1E1C117C920082A2FB /* YPBAvatarView.m in Sources */,
 				BCD15F1E1C104EAB002B6C5C /* YPBUtil.m in Sources */,
@@ -2110,8 +2116,8 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
-				CODE_SIGN_IDENTITY = "iPhone Developer: yu xie (2U88YJ8R27)";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: yu xie (2U88YJ8R27)";
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
@@ -2126,9 +2132,9 @@
 					"$(PROJECT_DIR)/YuePaoBa/Class/Vendor/WeChatSDK",
 					"$(PROJECT_DIR)/YuePaoBa/Class/Vendor/UmengAnalytics",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.yuepaoba.app;
+				PRODUCT_BUNDLE_IDENTIFIER = com.iqu8.yuepaoba;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "074b867a-51ca-4e59-8a17-4e7ce22ef1df";
+				PROVISIONING_PROFILE = "1e95f47f-b094-406b-8663-e016fe777085";
 				USER_HEADER_SEARCH_PATHS = "$(PODS_ROOT)/**";
 			};
 			name = Debug;
@@ -2139,8 +2145,8 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
-				CODE_SIGN_IDENTITY = "iPhone Developer: yu xie (2U88YJ8R27)";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: yu xie (2U88YJ8R27)";
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
@@ -2156,9 +2162,9 @@
 					"$(PROJECT_DIR)/YuePaoBa/Class/Vendor/UmengAnalytics",
 				);
 				ONLY_ACTIVE_ARCH = YES;
-				PRODUCT_BUNDLE_IDENTIFIER = com.yuepaoba.app;
+				PRODUCT_BUNDLE_IDENTIFIER = com.iqu8.yuepaoba;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "074b867a-51ca-4e59-8a17-4e7ce22ef1df";
+				PROVISIONING_PROFILE = "1e95f47f-b094-406b-8663-e016fe777085";
 				USER_HEADER_SEARCH_PATHS = "$(PODS_ROOT)/**";
 			};
 			name = Release;
