@@ -20,7 +20,7 @@ typedef NS_ENUM(NSUInteger, YPBChatMessageType) {
 
 @class YPBPushedMessage;
 
-@interface YPBChatMessage : YPBPersistentObject
+@interface YPBChatMessage : YPBPersistentObject <NSCopying>
 
 @property (nonatomic) NSString *msgId;
 @property (nonatomic) NSString *sendUserId;

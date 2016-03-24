@@ -51,4 +51,16 @@
     chatMessage.msgTime = message.msgTime;
     return chatMessage;
 }
+
+- (id)copyWithZone:(NSZone *)zone {
+    YPBChatMessage *copiedMessage = [[[self class] allocWithZone:zone] init];
+    copiedMessage.msgId = [self.msgId copyWithZone:zone];
+    copiedMessage.sendUserId = [self.sendUserId copyWithZone:zone];
+    copiedMessage.receiveUserId = [self.receiveUserId copyWithZone:zone];
+    copiedMessage.msgType = [self.msgType copyWithZone:zone];
+    copiedMessage.msg = [self.msg copyWithZone:zone];
+    copiedMessage.msgTime = [self.msgTime copyWithZone:zone];
+    copiedMessage.options = [self.options copyWithZone:zone];
+    return copiedMessage;
+}
 @end

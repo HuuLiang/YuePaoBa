@@ -117,76 +117,83 @@ DefineLazyPropertyInitialization(NSMutableArray, chatMessages)
     self.messageTableView.backgroundColor = [UIColor colorWithWhite:0.95 alpha:1];
     self.title = self.user ? self.user.nickName : self.contact.nickName;
     self.messageSender = [YPBUser currentUser].userId;
-
-}
-
-- (void)reloadChatMessages {
-    self.chatMessages = [YPBChatMessage allMessagesForUser:self.userId].mutableCopy;
     
-    NSMutableArray<XHMessage *> *messages = [NSMutableArray array];
-    [self.chatMessages enumerateObjectsUsingBlock:^(YPBChatMessage * _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
-        XHMessage *message = [[XHMessage alloc] initWithText:obj.msg sender:obj.sendUserId timestamp:[YPBUtil dateFromString:obj.msgTime]];
-        if ([obj.sendUserId isEqualToString:[YPBUser currentUser].userId]) {
-            message.bubbleMessageType = XHBubbleMessageTypeSending;
+    [self reloadChatMessagesWithComletion:^{
+        YPBChatMessage *lastMessage = self.chatMessages.lastObject;
+        if (lastMessage.msgType.unsignedIntegerValue == YPBChatMessageTypeOption) {
+            @weakify(self);
+            [self showOptionsWithChatMessage:lastMessage completion:^(NSUInteger idx, NSString *selection) {
+                @strongify(self);
+                if (selection.length > 0) {
+                    [self addTextMessage:selection
+                              withSender:[YPBUser currentUser].userId
+                                receiver:self.userId
+                                dateTime:[YPBUtil stringFromDate:[NSDate date]]];
+                }
+                [self.messageInputView.inputTextView becomeFirstResponder];
+            }];
         } else {
-            message.bubbleMessageType = XHBubbleMessageTypeReceiving;
-        }
-        [messages addObject:message];
-    }];
-    self.messages = messages;
-}
-
-- (void)viewWillAppear:(BOOL)animated {
-    [super viewWillAppear:animated];
-    [self reloadChatMessages];
-}
-
-- (void)viewDidAppear:(BOOL)animated {
-    [super viewDidAppear:animated];
-    
-//    if ([YPBVIPEntranceView VIPEntranceInView:self.view]) {
-//        return ;
-//    }
-    
-    YPBChatMessage *lastMessage = self.chatMessages.lastObject;
-    if (lastMessage.msgType.unsignedIntegerValue == YPBChatMessageTypeOption) {
-        @weakify(self);
-        [self showOptionsWithChatMessage:lastMessage completion:^(NSUInteger idx, NSString *selection) {
-            @strongify(self);
-            if (selection.length > 0) {
-                [self addTextMessage:selection
-                          withSender:[YPBUser currentUser].userId
-                            receiver:self.userId
-                            dateTime:[YPBUtil stringFromDate:[NSDate date]]];
-            }
             [self.messageInputView.inputTextView becomeFirstResponder];
-        }];
-    } else {
-        [self.messageInputView.inputTextView becomeFirstResponder];
-    }
+        }
+        
+        [self updateUnreadMessageInContact];
+    }];
 }
 
-- (void)viewWillDisappear:(BOOL)animated {
-    [super viewWillDisappear:animated];
-    
-    if (self.chatMessages.count == 0) {
-        return ;
-    }
-    
-    YPBChatMessage *recentChatMessage = self.chatMessages.lastObject;
-    YPBContact *contact = [YPBContact existingContactWithUserId:self.userId];
-    [contact beginUpdate];
-    
-    if (![contact.recentTime isEqualToString:recentChatMessage.msgTime]
-        || ![contact.recentMessage isEqualToString:recentChatMessage.msg]) {
-        contact.recentTime = recentChatMessage.msgTime;
-        contact.recentMessage = recentChatMessage.msg;
-    }
-    
-    contact.unreadMessages = @(0);
-    [contact endUpdate];
-    
-    [[NSNotificationCenter defaultCenter] postNotificationName:kUnreadMessageChangeNotification object:nil];
+- (void)reloadChatMessagesWithComletion:(void (^)(void))completion {
+    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH, 0), ^{
+        NSArray<YPBChatMessage *> *chatMessages = [YPBChatMessage allMessagesForUser:self.userId];
+        
+        NSMutableArray<YPBChatMessage *> *copiedChatMessages = [NSMutableArray array];
+        NSMutableArray<XHMessage *> *messages = [NSMutableArray array];
+        [chatMessages enumerateObjectsUsingBlock:^(YPBChatMessage * _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
+            [copiedChatMessages addObject:obj.copy];
+            
+            XHMessage *message = [[XHMessage alloc] initWithText:obj.msg sender:obj.sendUserId timestamp:[YPBUtil dateFromString:obj.msgTime]];
+            if ([obj.sendUserId isEqualToString:[YPBUser currentUser].userId]) {
+                message.bubbleMessageType = XHBubbleMessageTypeSending;
+            } else {
+                message.bubbleMessageType = XHBubbleMessageTypeReceiving;
+            }
+            [messages addObject:message];
+        }];
+        
+        self.chatMessages = copiedChatMessages;
+        
+        dispatch_async(dispatch_get_main_queue(), ^{
+            self.messages = messages;
+            [self.messageTableView reloadData];
+            
+            if (completion) {
+                completion();
+            }
+        });
+    });
+}
+
+- (void)updateUnreadMessageInContact {
+    dispatch_async(dispatch_get_global_queue(0, 0), ^{
+        if (self.chatMessages.count == 0) {
+            return ;
+        }
+        
+        YPBChatMessage *recentChatMessage = self.chatMessages.lastObject;
+        YPBContact *contact = [YPBContact existingContactWithUserId:self.userId];
+        [contact beginUpdate];
+        
+        if (![contact.recentTime isEqualToString:recentChatMessage.msgTime]
+            || ![contact.recentMessage isEqualToString:recentChatMessage.msg]) {
+            contact.recentTime = recentChatMessage.msgTime;
+            contact.recentMessage = recentChatMessage.msg;
+        }
+        
+        contact.unreadMessages = @(0);
+        [contact endUpdate];
+        
+        dispatch_async(dispatch_get_main_queue(), ^{
+            [[NSNotificationCenter defaultCenter] postNotificationName:kUnreadMessageChangeNotification object:nil];
+        });
+    });
 }
 
 - (void)showOptionsWithChatMessage:(YPBChatMessage *)chatMessage

@@ -84,4 +84,16 @@
 + (NSDictionary<NSString *,id> *)newPropertyDefaultValuesForMigration {
     return @{@"userType":@(YPBUserTypeRobot)};
 }
+
+- (id)copyWithZone:(NSZone *)zone {
+    YPBContact *contact = [[[self class] allocWithZone:zone] init];
+    contact.userId = [self.userId copyWithZone:zone];
+    contact.logoUrl = [self.logoUrl copyWithZone:zone];
+    contact.nickName = [self.nickName copyWithZone:zone];
+    contact.userType = [self.userType copyWithZone:zone];
+    contact.recentMessage = [self.recentMessage copyWithZone:zone];
+    contact.recentTime = [self.recentTime copyWithZone:zone];
+    contact.unreadMessages = [self.unreadMessages copyWithZone:zone];
+    return contact;
+}
 @end

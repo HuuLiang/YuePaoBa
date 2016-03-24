@@ -84,26 +84,36 @@ static NSString *const kContactCellReusableIdentifier = @"ContactCellReusableIde
 }
 
 - (void)reloadContactsWithUIReload:(BOOL)reloadUI {
-    self.contacts = [YPBContact allContacts];
+    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH, 0), ^{
+        NSArray<YPBContact *> *contacts = [YPBContact allContacts];
+        
+        __block NSUInteger unreadMessages = 0;
+        NSMutableArray *copiedContacts = [NSMutableArray array];
+        [contacts enumerateObjectsUsingBlock:^(YPBContact * _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
+            unreadMessages += obj.unreadMessages.unsignedIntegerValue;
+            
+            [copiedContacts addObject:obj.copy];
+        }];
+        
+        self.contacts = copiedContacts;
     
-    __block NSUInteger unreadMessages = 0;
-    [self.contacts enumerateObjectsUsingBlock:^(YPBContact * _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
-        unreadMessages += obj.unreadMessages.unsignedIntegerValue;
-    }];
+        dispatch_async(dispatch_get_main_queue(), ^{
+            if (unreadMessages > 0) {
+                if (unreadMessages < 100) {
+                    self.navigationController.tabBarItem.badgeValue = [NSString stringWithFormat:@"%ld", (unsigned long)unreadMessages];
+                } else {
+                    self.navigationController.tabBarItem.badgeValue = @"99+";
+                }
+            } else {
+                self.navigationController.tabBarItem.badgeValue = nil;
+            }
+            
+            if (reloadUI) {
+                [_layoutTableView reloadData];
+            }
+        });
+    });
     
-    if (unreadMessages > 0) {
-        if (unreadMessages < 100) {
-            self.navigationController.tabBarItem.badgeValue = [NSString stringWithFormat:@"%ld", (unsigned long)unreadMessages];
-        } else {
-            self.navigationController.tabBarItem.badgeValue = @"99+";
-        }
-    } else {
-        self.navigationController.tabBarItem.badgeValue = nil;
-    }
-    DLog(@"-------unreadMessages--------------%ld",unreadMessages);
-    if (reloadUI) {
-        [_layoutTableView reloadData];
-    }
 }
 
 - (void)onMessagePushNotification:(NSNotification *)notification {
