@@ -32,7 +32,9 @@
 @property (nonatomic,retain) YPBWeChatPayQueryOrderRequest *wechatPayOrderQueryRequest;
 @end
 
-@implementation YPBAppDelegate
+@implementation YPBAppDelegate {
+    UITabBarController *_tabBarController;
+}
 
 DefineLazyPropertyInitialization(YPBWeChatPayQueryOrderRequest, wechatPayOrderQueryRequest)
 
@@ -71,11 +73,11 @@ DefineLazyPropertyInitialization(YPBWeChatPayQueryOrderRequest, wechatPayOrderQu
                                                        image:[UIImage imageNamed:@"tabbar_mine_normal_icon"]
                                                selectedImage:[UIImage imageNamed:@"tabbar_mine_selected_icon"]];
     
-    UITabBarController *tabBarController = [[UITabBarController alloc] init];
-    tabBarController.viewControllers = @[homeNav,vipCenterNav,contactNav,mineNav];
-    tabBarController.tabBar.tintColor = kThemeColor;
-    tabBarController.delegate = self;
-    return tabBarController;
+    _tabBarController = [[UITabBarController alloc] init];
+    _tabBarController.viewControllers = @[homeNav,vipCenterNav,contactNav,mineNav];
+    _tabBarController.tabBar.tintColor = kThemeColor;
+    _tabBarController.delegate = self;
+    return _tabBarController;
 }
 
 - (void)setupCommonStyles {
@@ -175,7 +177,12 @@ DefineLazyPropertyInitialization(YPBWeChatPayQueryOrderRequest, wechatPayOrderQu
     return YES;
 }
 
+- (void)setBadge {
+    [UIApplication sharedApplication].applicationIconBadgeNumber = [[_tabBarController.viewControllers objectAtIndex:2].tabBarItem.badgeValue integerValue] + [[_tabBarController.viewControllers objectAtIndex:3].tabBarItem.badgeValue integerValue];
+}
+
 - (void)applicationWillResignActive:(UIApplication *)application {
+    [self setBadge];
     // Sent when the application is about to move from active to inactive state. This can occur for certain types of temporary interruptions (such as an incoming phone call or SMS message) or when the user quits the application and it begins the transition to the background state.
     // Use this method to pause ongoing tasks, disable timers, and throttle down OpenGL ES frame rates. Games should use this method to pause the game.
 }
@@ -186,7 +193,6 @@ DefineLazyPropertyInitialization(YPBWeChatPayQueryOrderRequest, wechatPayOrderQu
 }
 
 - (void)applicationWillEnterForeground:(UIApplication *)application {
-    [[UIApplication sharedApplication]setApplicationIconBadgeNumber:0];
     // Called as part of the transition from the background to the inactive state; here you can undo many of the changes made on entering the background.
 }
 
@@ -197,6 +203,7 @@ DefineLazyPropertyInitialization(YPBWeChatPayQueryOrderRequest, wechatPayOrderQu
 
 - (void)applicationWillTerminate:(UIApplication *)application {
     // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
+    [self setBadge];
 }
 
 - (BOOL)application:(UIApplication *)application openURL:(NSURL *)url sourceApplication:(NSString *)sourceApplication annotation:(id)annotation {
