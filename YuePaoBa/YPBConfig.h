@@ -9,7 +9,7 @@
 #ifndef YPBConfig_h
 #define YPBConfig_h
 
-#define YPB_CHANNEL_NO   @"QB_MFW_IOS_F_00000001" //@"QB_MFW_IOS_TEST_0000001" //
+#define YPB_CHANNEL_NO       @"QB_MFW_IOS_STORE_TUIGUANG"  //@"QB_MFW_IOS_F_00000001" //@"QB_MFW_IOS_TEST_0000001" //
 
 #define YPB_REST_APPID       @"QUBA_2003"
 #define YPB_REST_PV          @"100"

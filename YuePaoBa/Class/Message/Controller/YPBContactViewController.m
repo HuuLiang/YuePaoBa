@@ -100,7 +100,7 @@ static NSString *const kContactCellReusableIdentifier = @"ContactCellReusableIde
     } else {
         self.navigationController.tabBarItem.badgeValue = nil;
     }
-    
+    DLog(@"-------unreadMessages--------------%ld",unreadMessages);
     if (reloadUI) {
         [_layoutTableView reloadData];
     }

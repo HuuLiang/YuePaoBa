@@ -73,6 +73,9 @@ DefineLazyPropertyInitialization(YPBUserPhotoDeleteModel, photoDeleteModel)
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
+    //进入此界面刷新tarbaritem角标
+    [self refreshBadgeValue];
+    
     self.layoutTableView.rowHeight = MAX(kScreenHeight * 0.07,44);
     [self.layoutTableView mas_makeConstraints:^(MASConstraintMaker *make) {
         make.edges.equalTo(self.view);
@@ -453,6 +456,7 @@ DefineLazyPropertyInitialization(YPBUserPhotoDeleteModel, photoDeleteModel)
     } else {
         self.navigationController.tabBarItem.badgeValue = @"99+";
     }
+    DLog(@"-------unreadCount--------%ld",unreadCount);
 }
 
 - (void)reloadUI {
