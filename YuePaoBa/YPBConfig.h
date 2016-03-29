@@ -9,14 +9,14 @@
 #ifndef YPBConfig_h
 #define YPBConfig_h
 
-#define YPB_CHANNEL_NO       @"QB_MFW_IOS_STORE_TUIGUANG"  //@"QB_MFW_IOS_F_00000001" //@"QB_MFW_IOS_TEST_0000001" //
+#define YPB_CHANNEL_NO       @"QB_MFW_IOS_F_00000001" //@"QB_MFW_IOS_STORE_TUIGUANG"   //@"QB_MFW_IOS_TEST_0000001" //
 
 #define YPB_REST_APPID       @"QUBA_2003"
 #define YPB_REST_PV          @"100"
 #define YPB_REST_APP_VERSION     ((NSString *)([NSBundle mainBundle].infoDictionary[@"CFBundleShortVersionString"]))
 #define YPB_PAYMENT_RESERVE_DATA [NSString stringWithFormat:@"%@$%@", YPB_REST_APPID, YPB_CHANNEL_NO]
 
-#define YPB_BASE_URL                    @"http://192.168.1.123:8094/" //@"http://120.24.252.114:8094" @"http://mfw.ihuiyx.com"
+#define YPB_BASE_URL                    @"http://192.168.1.123:8094/"//@"http://mfw.ihuiyx.com"//@"http://120.24.252.114:8094"  
 #define YPB_USER_ACTIVATION_URL         @"/mfwcenter/jihuo.json"
 #define YPB_USER_REGISTER_URL           @"/mfwcenter/userCreate.json"
 #define YPB_USER_LIST_URL               @"/mfwcenter/userQuery.json"
@@ -35,6 +35,7 @@
 #define YPB_FETCH_BARRAGES_URL          @"/mfwcenter/barrages.json"
 #define YPB_SEND_GIFT_URL               @"/mfwcenter/giveGift.json"
 #define YPB_UPDATE_CID_URL              @"/mfwcenter/updateCId.json"
+#define YPB_SEND_MSG_URL                @"/mfwcenter/smsg.json"
 
 #define YPB_PAYMENT_COMMIT_URL          @"http://pay.iqu8.net/paycenter/qubaPr.json" //@"http://120.24.252.114:8084/paycenter/qubaPr.json" //
 #define YPB_ALIPAY_SCHEME               @"comyuepaobaappalipayschemeurl"
@@ -53,7 +54,7 @@
 #define YPB_DEFAULT_PHOTOSERVER_URL     @"http://7xpobi.com2.z0.glb.qiniucdn.com"
 
 #define YPB_UMENG_APP_ID                @"569f30e6e0f55a0373002331"
-#define YPB_KSCRASH_APP_ID              @"5261ad83f35a0ba21f4bec18e6ef6b31"
+#define YPB_KSCRASH_APP_ID              @"6f10027627cbed6fd17c676e88c4989b" 
 
 #define YPB_DB_VERSION                  (1)
 #endif /* YPBConfig_h */

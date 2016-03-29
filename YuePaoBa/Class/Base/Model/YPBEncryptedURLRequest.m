@@ -77,6 +77,7 @@ static NSString *const kEncryptionPassword = @"wdnxs&*@#!*qb)*&qiang";
     }
     
     NSString *decryptedString = [dataString decryptedStringWithKeys:keys];
+    DLog(@"-----decryptedString---%@",decryptedString);
     id jsonObject = [NSJSONSerialization JSONObjectWithData:[decryptedString dataUsingEncoding:NSUTF8StringEncoding] options:0 error:nil];
     if (jsonObject == nil) {
         jsonObject = decryptedString;

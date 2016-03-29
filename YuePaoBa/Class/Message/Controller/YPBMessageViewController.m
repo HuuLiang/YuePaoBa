@@ -282,6 +282,7 @@ DefineLazyPropertyInitialization(NSMutableArray, chatMessages)
     
     if ([YPBUtil isVIP]) {
         [self addTextMessage:text withSender:sender receiver:self.userId dateTime:[YPBUtil stringFromDate:date]];
+        [[YPBMessagePushModel sharedModel] sendMsgToSeviceWithUserid:sender ReciverId:self.userId Message:text];
         [self finishSendMessageWithBubbleMessageType:XHBubbleMessageMediaTypeText];
     } else {
 //        [YPBVIPEntranceView showVIPEntranceInView:self.view canClose:YES withEnterAction:^(id obj) {
@@ -294,6 +295,7 @@ DefineLazyPropertyInitialization(NSMutableArray, chatMessages)
     
     [YPBStatistics logEvent:kLogUserChatEvent fromUser:[YPBUser currentUser].userId toUser:self.userId];
 }
+
 
 - (void)configureCell:(XHMessageTableViewCell *)cell atIndexPath:(NSIndexPath *)indexPath {
     XHMessage *message = self.messages[indexPath.row];

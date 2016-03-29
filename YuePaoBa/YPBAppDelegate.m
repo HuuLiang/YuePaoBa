@@ -148,7 +148,7 @@ DefineLazyPropertyInitialization(YPBWeChatPayQueryOrderRequest, wechatPayOrderQu
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     // Override point for customization after application launch.
     DLog(@"--------launchOptions--------%@",launchOptions);
-    application.applicationIconBadgeNumber = [[[UIApplication sharedApplication] scheduledLocalNotifications]count] - 1;
+
     // 个推
     [GeTuiSdk startSdkWithAppId:YPB_GTAPPID appKey:YPB_GTAPPKEY appSecret:YPB_GTAPPSECRET delegate:self];
     [self registerNotification];
@@ -193,19 +193,14 @@ DefineLazyPropertyInitialization(YPBWeChatPayQueryOrderRequest, wechatPayOrderQu
 }
 
 - (void)setBadge {
-    DLog(@"---------views-------%ld",_tabBarController.viewControllers.count);
     UIViewController *viewcontroller3 = [_tabBarController.viewControllers objectAtIndex:2];
     UIViewController *viewcontroller4 = [_tabBarController.viewControllers objectAtIndex:3];
     NSInteger badge = [viewcontroller3.tabBarItem.badgeValue integerValue] + [viewcontroller4.tabBarItem.badgeValue integerValue];
-    DLog(@"----------badge---------%ld",badge);
     [UIApplication sharedApplication].applicationIconBadgeNumber = badge;
 }
 
 - (void)applicationWillResignActive:(UIApplication *)application {
-    DLog(@"------------------ResignActive----------------");
-    
     application.applicationIconBadgeNumber = [[[UIApplication sharedApplication] scheduledLocalNotifications]count];
-    DLog(@"------------------%ld",application.applicationIconBadgeNumber);
     
     [self setBadge];
 }
@@ -219,7 +214,7 @@ DefineLazyPropertyInitialization(YPBWeChatPayQueryOrderRequest, wechatPayOrderQu
 - (void)applicationDidBecomeActive:(UIApplication *)application {
     [self checkPayment];
     DLog(@"=====BecomeActive=======");
-    DLog(@"badgeNum %ld",[[[UIApplication sharedApplication]scheduledLocalNotifications]count]);
+    DLog(@"badgeNum %u",[[[UIApplication sharedApplication]scheduledLocalNotifications]count]);
     application.applicationIconBadgeNumber = [[[UIApplication sharedApplication] scheduledLocalNotifications]count];
     // Restart any tasks that were paused (or not yet started) while the application was inactive. If the application was previously in the background, optionally refresh the user interface.
 }
@@ -376,21 +371,18 @@ DefineLazyPropertyInitialization(YPBWeChatPayQueryOrderRequest, wechatPayOrderQu
     }
     
     NSString *msg = [NSString stringWithFormat:@" payloadId=%@,taskId=%@,messageId:%@,payloadMsg:%@%@",payloadId,taskId,aMsgId,payloadMsg,offLine ? @"<离线消息>" : @""];
-    NSLog(@"\n>>>[GexinSdk ReceivePayload]:%@\n\n", msg);
+    DLog(@"\n>>>[GexinSdk ReceivePayload]:%@\n\n", msg);
     
     [GeTuiSdk sendFeedbackMessage:90001 taskId:taskId msgId:aMsgId];
     
-//    if (!offLine) {
-        UILocalNotification *local = [[UILocalNotification alloc] init];
-        local.fireDate = [[NSDate date] dateByAddingTimeInterval:0];
-        local.timeZone = [NSTimeZone defaultTimeZone];
-        local.alertBody = payloadMsg;
-        local.soundName = UILocalNotificationDefaultSoundName;
-        local.alertAction = NSLocalizedString(payloadMsg, nil);
-        local.applicationIconBadgeNumber = [[[UIApplication sharedApplication] scheduledLocalNotifications]count] + 1;
-        [[UIApplication sharedApplication] scheduleLocalNotification:local];
-//    }
-//    NSDictionary *dict = [NSDictionary dictionaryWithObjectsAndKeys:[NSNumber numberWithInt:tag], nil]
+    if (!offLine) {
+        NSDictionary *dic = [NSJSONSerialization JSONObjectWithData:payload options:NSJSONReadingMutableContainers error:nil];
+        int type = [dic[@"msgType"]intValue];
+        if (1 == type) {
+            NSString *msgBody = dic[@"msgBody"];
+            [[YPBMessageCenter defaultCenter] showMessageWithTitle:msgBody inViewController:self.window.rootViewController];
+        }
+    }
 }
 
 @end

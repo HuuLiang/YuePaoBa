@@ -24,4 +24,6 @@
                  loginDuration:(NSUInteger)duration
              completionHandler:(YPBCompletionHandler)handler;
 
+- (void)sendMsgToSeviceWithUserid:(NSString *)userid ReciverId:(NSString *)reciverId Message:(NSString *)text;
+
 @end

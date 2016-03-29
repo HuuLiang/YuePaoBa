@@ -171,4 +171,20 @@
     }];
     return ret;
 }
+
+- (void)sendMsgToSeviceWithUserid:(NSString *)userid ReciverId:(NSString *)reciverId Message:(NSString *)text {
+    NSDictionary *params = @{@"fromUserId":userid,
+                             @"toUserId":reciverId,
+                             @"content":text};
+    BOOL ret = [self requestURLPath:YPB_SEND_MSG_URL
+                         withParams:params
+                    responseHandler:nil];
+    if (ret) {
+        DLog(@"send success");
+    } else {
+        DLog(@"send failed");
+    }
+
+}
+
 @end

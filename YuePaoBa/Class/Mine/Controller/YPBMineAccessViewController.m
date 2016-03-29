@@ -179,16 +179,16 @@ DefineLazyPropertyInitialization(NSMutableArray, userGreets)
                                                                   options:0];
         NSString *accessTime;
         if (diff.day > 0) {
-            accessTime = [NSString stringWithFormat:@"%ld天前", diff.day];
+            accessTime = [NSString stringWithFormat:@"%ld天前", (long)diff.day];
         } else if (diff.hour > 0) {
-            accessTime = [NSString stringWithFormat:@"%ld小时前", diff.hour];
+            accessTime = [NSString stringWithFormat:@"%ld小时前", (long)diff.hour];
         } else if (diff.minute > 0) {
-            accessTime = [NSString stringWithFormat:@"%ld分钟前", diff.minute];
+            accessTime = [NSString stringWithFormat:@"%ld分钟前", (long)diff.minute];
         } else if (diff.second > 0) {
-            accessTime = [NSString stringWithFormat:@"%ld秒钟前", diff.second];
+            accessTime = [NSString stringWithFormat:@"%ld秒钟前", (long)diff.second];
         }
         
-        NSString *details = [NSString stringWithFormat:@"年龄：%@cm   身高：%@\n%@", userGreet.age, userGreet.height, accessTime];
+        NSString *details = [NSString stringWithFormat:@"年龄：%@   身高：%@cm\n%@", userGreet.age, userGreet.height, accessTime];
         cell.subtitle = details;
     }
     return cell;

@@ -191,4 +191,9 @@ DefineLazyPropertyInitialization(YPBUserAccessModel, userAccessModel);
     [self.navigationController pushViewController:detailVC animated:YES];
     [YPBStatistics logEvent:kLogUserHomeClickEvent fromUser:[YPBUser currentUser].userId toUser:user.userId];
 }
+
+- (void)collectionView:(UICollectionView *)collectionView willDisplayCell:(UICollectionViewCell *)cell forItemAtIndexPath:(NSIndexPath *)indexPath {
+    
+}
+
 @end

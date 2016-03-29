@@ -83,6 +83,7 @@ static NSString *const kContactCellReusableIdentifier = @"ContactCellReusableIde
     }
 }
 
+// load dataSource
 - (void)reloadContactsWithUIReload:(BOOL)reloadUI {
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH, 0), ^{
         NSArray<YPBContact *> *contacts = [YPBContact allContacts];
@@ -121,7 +122,9 @@ static NSString *const kContactCellReusableIdentifier = @"ContactCellReusableIde
 }
 
 - (void)onUnreadMessageChangeNotification {
-    
+    DLog(@"--------------------------more notificantion unread now");
+//    [self reloadContactsWithUIReload:YES];
+    [_layoutTableView reloadData];
 }
 
 - (void)onVIPUpgradeSuccessNotification:(NSNotification *)notification {

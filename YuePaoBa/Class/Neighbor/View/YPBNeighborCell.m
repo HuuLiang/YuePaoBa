@@ -12,6 +12,7 @@
 
 - (void)addSubviews {
     self.backgroundColor = [UIColor magentaColor];
+    self.selectionStyle = UITableViewCellSelectionStyleNone;
     
     _userImgV = [[UIImageView alloc] init];
     _userImgV.backgroundColor = [UIColor yellowColor];
@@ -54,34 +55,37 @@
 }
 
 - (void)layoutSubview {
+    NSLog(@"%f,%f",SCREEN_HEIGHT,SCREEN_WIDTH);
+    DLog(@"%@",YPB_BASE_URL);
+    NSLog(@"%@",YPB_BASE_URL);
     [_userImgV mas_makeConstraints:^(MASConstraintMaker *make) {
         make.centerY.equalTo(self);
-        make.left.equalTo(self).offset(20);
-        make.size.mas_equalTo(CGSizeMake(80, 80));
+        make.left.equalTo(self).offset(SCREEN_WIDTH/15);
+        make.size.mas_equalTo(CGSizeMake(80 , 80));
     }];
     
     [_userNameDistance mas_makeConstraints:^(MASConstraintMaker *make) {
         make.top.equalTo(self).offset(20);
-        make.left.equalTo(_userImgV.mas_right).offset(20);
+        make.left.equalTo(_userImgV.mas_right).offset(SCREEN_WIDTH/15);
         make.size.mas_equalTo(CGSizeMake(100, 20));
     }];
     
     [_userDetail mas_makeConstraints:^(MASConstraintMaker *make) {
         make.top.equalTo(_userNameDistance.mas_bottom);
-        make.left.equalTo(_userImgV.mas_right).offset(20);
+        make.left.equalTo(_userImgV.mas_right).offset(SCREEN_WIDTH/15);
         make.size.mas_equalTo(CGSizeMake(100, 20));
     }];
     
     [_focus mas_makeConstraints:^(MASConstraintMaker *make) {
         make.top.equalTo(_userDetail.mas_bottom);
-        make.left.equalTo(_userImgV.mas_right).offset(20);
+        make.left.equalTo(_userImgV.mas_right).offset(SCREEN_WIDTH/15);
         make.size.mas_equalTo(CGSizeMake(100, 20));
     }];
     
     [_contactBtn mas_makeConstraints:^(MASConstraintMaker *make) {
         make.centerY.equalTo(self);
-        make.right.equalTo(self).offset(-30);
-        make.size.mas_equalTo(CGSizeMake(100, 30));
+        make.left.equalTo(_focus.mas_right).offset(SCREEN_WIDTH/8);
+        make.size.mas_equalTo(CGSizeMake(80, 20));
     }];
 }
 

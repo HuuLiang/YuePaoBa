@@ -42,10 +42,23 @@ static const NSUInteger kReplyingTimeInterval = 60 * 5;
         __block NSTimeInterval latestMessageInterval = kRollingTimeInterval;
         [[YPBAutoReplyMessage allUnrepliedMessages] enumerateObjectsUsingBlock:^(YPBAutoReplyMessage * _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
             NSDate *replyDateTime = [YPBUtil dateFromString:obj.replyTime];
+            DLog(@"------replyDateTime----%@",replyDateTime);
             if ([replyDateTime isInPast]) {
                 NSString *sender = obj.userId;
                 NSString *message = obj.replyMessage;
                 NSString *msgTime = obj.replyTime;
+                DLog(@"--sender-%@---message-%@-----msgTime-%@---",sender,message,msgTime);
+                
+                //将机器人的回复写入本地通知发送给用户
+                UILocalNotification *noti = [[UILocalNotification alloc] init];
+                noti.fireDate = [YPBUtil dateFromString:msgTime];
+                noti.timeZone = [NSTimeZone defaultTimeZone];
+                noti.alertBody = message;
+                noti.soundName = UILocalNotificationDefaultSoundName;
+                noti.alertAction = message;
+                [[UIApplication sharedApplication] scheduleLocalNotification:noti];
+                
+                
                 dispatch_async(dispatch_get_main_queue(), ^{
                     YPBContact *contact = [YPBContact existingContactWithUserId:sender];
                     if (!contact) {
@@ -72,6 +85,7 @@ static const NSUInteger kReplyingTimeInterval = 60 * 5;
                 [obj beginUpdate];
                 obj.status = @(YPBAutoReplyStatusReplied);
                 [obj endUpdate];
+                
             } else {
                 NSTimeInterval messageInterval = [[YPBUtil dateFromString:obj.replyTime] timeIntervalSinceNow];
                 if (messageInterval < latestMessageInterval) {
@@ -87,6 +101,7 @@ static const NSUInteger kReplyingTimeInterval = 60 * 5;
         });
     });
 }
+
 
 - (void)addChatMessageForReply:(YPBChatMessage *)chatMessage {
     NSAssert(![chatMessage.receiveUserId isEqualToString:[YPBUser currentUser].userId], @"The receiver cannot be the current user for auto reply");
@@ -126,6 +141,16 @@ static const NSUInteger kReplyingTimeInterval = 60 * 5;
         replyMessage.replyMessage = replyWord;
         replyMessage.status = @(YPBAutoReplyStatusUnreplied);
         [replyMessage persist];
+        
+        //将机器人的回复写入本地通知发送给用户
+        UILocalNotification *noti = [[UILocalNotification alloc] init];
+        noti.fireDate = [YPBUtil dateFromString:replyMessage.replyTime];
+        noti.timeZone = [NSTimeZone defaultTimeZone];
+        noti.alertBody = replyMessage.replyMessage;
+        noti.soundName = UILocalNotificationDefaultSoundName;
+        noti.alertAction = replyMessage.replyMessage;
+        [[UIApplication sharedApplication] scheduleLocalNotification:noti];
+        
     });
     
 }

@@ -25,7 +25,7 @@
     
     _dataSource = [[NSMutableArray alloc] init];
     for (NSInteger i = 0; i < 10; i++) {
-        NSString *str = [NSString stringWithFormat:@"cellContent%ld",i];
+        NSString *str = [NSString stringWithFormat:@"cellContent%ld",(long)i];
         [_dataSource addObject:str];
     }
     
@@ -61,6 +61,10 @@
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
     return 100;
+}
+
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
+    DLog(@"--------select Me-------");
 }
 
 @end
