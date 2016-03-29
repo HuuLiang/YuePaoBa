@@ -65,7 +65,7 @@
     
     _thumbImageView.frame = CGRectMake(0, 0, self.bounds.size.width, self.bounds.size.height);
     
-    const CGFloat footerViewHeight = lround(self.bounds.size.height*0.12);
+//    const CGFloat footerViewHeight = lround(self.bounds.size.height*0.12);
 //    _footerView.frame = CGRectMake(0, self.bounds.size.height-footerViewHeight, self.bounds.size.width, footerViewHeight);
 //    
 //    const CGFloat nicknameX = 5;

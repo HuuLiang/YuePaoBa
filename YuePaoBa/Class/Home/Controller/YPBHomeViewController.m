@@ -190,4 +190,5 @@ DefineLazyPropertyInitialization(YPBUserAccessModel, userAccessModel);
     [self.navigationController pushViewController:detailVC animated:YES];
     [YPBStatistics logEvent:kLogUserHomeClickEvent fromUser:[YPBUser currentUser].userId toUser:user.userId];
 }
+
 @end

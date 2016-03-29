@@ -26,9 +26,8 @@
 #import "AlipayManager.h"
 #import <AlipaySDK/AlipaySDK.h>
 #import <KSCrash/KSCrashInstallationStandard.h>
-#import "GeTuiSdk.h"
 
-@interface YPBAppDelegate () <WXApiDelegate,UITabBarControllerDelegate,GeTuiSdkDelegate>
+@interface YPBAppDelegate () <WXApiDelegate,UITabBarControllerDelegate>
 @property (nonatomic,retain) YPBWeChatPayQueryOrderRequest *wechatPayOrderQueryRequest;
 @end
 
