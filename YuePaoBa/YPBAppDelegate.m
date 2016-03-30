@@ -146,10 +146,12 @@ DefineLazyPropertyInitialization(YPBWeChatPayQueryOrderRequest, wechatPayOrderQu
 }
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
-    // Override point for customization after application launch.
-    DLog(@"--------launchOptions--------%@",launchOptions);
+    
+    //启动删除所有本地通知
+    application.applicationIconBadgeNumber = 0;
+    [[UIApplication sharedApplication] cancelAllLocalNotifications];
 
-    // 个推
+    // 增加个推
     [GeTuiSdk startSdkWithAppId:YPB_GTAPPID appKey:YPB_GTAPPKEY appSecret:YPB_GTAPPSECRET delegate:self];
     [self registerNotification];
     [GeTuiSdk runBackgroundEnable:YES];
@@ -200,8 +202,6 @@ DefineLazyPropertyInitialization(YPBWeChatPayQueryOrderRequest, wechatPayOrderQu
 }
 
 - (void)applicationWillResignActive:(UIApplication *)application {
-    application.applicationIconBadgeNumber = [[[UIApplication sharedApplication] scheduledLocalNotifications]count];
-    
     [self setBadge];
 }
 
@@ -213,10 +213,6 @@ DefineLazyPropertyInitialization(YPBWeChatPayQueryOrderRequest, wechatPayOrderQu
 
 - (void)applicationDidBecomeActive:(UIApplication *)application {
     [self checkPayment];
-    DLog(@"=====BecomeActive=======");
-    DLog(@"badgeNum %u",[[[UIApplication sharedApplication]scheduledLocalNotifications]count]);
-    application.applicationIconBadgeNumber = [[[UIApplication sharedApplication] scheduledLocalNotifications]count];
-    // Restart any tasks that were paused (or not yet started) while the application was inactive. If the application was previously in the background, optionally refresh the user interface.
 }
 
 - (void)applicationWillTerminate:(UIApplication *)application {
@@ -317,15 +313,21 @@ DefineLazyPropertyInitialization(YPBWeChatPayQueryOrderRequest, wechatPayOrderQu
     }
 }
 
-// 处理远程通知启动APP
+// 处理通知启动APP
 - (void)receiveNotificationByLaunchingOptions:(NSDictionary *)launchOptions {
-    if (!launchOptions)
+    if (!launchOptions) {
         return;
-    NSDictionary *userInfo = [launchOptions objectForKey:UIApplicationLaunchOptionsRemoteNotificationKey];
-    if (userInfo) {
-        NSString *payloadMsg = [userInfo objectForKey:@"payload"];
-        NSString *record = [NSString stringWithFormat:@"APN%@,%@",[NSDate date],payloadMsg];
-        NSLog(@"\n>>>[Launching RemoteNotification]:%@ %@", userInfo,record);
+    }
+    
+    NSArray * array = [[UIApplication sharedApplication] scheduledLocalNotifications];
+    if (array.count>0) {
+        for (int i = 0; i< array.count; i++) {
+            UILocalNotification *noti = array[i];
+            NSDictionary *info = noti.userInfo;
+            if ([[info objectForKey:@"key"] isEqualToString:@"localPush"]) {
+                [[UIApplication sharedApplication] cancelLocalNotification:noti];
+            }
+        }
     }
 }
 
@@ -347,12 +349,14 @@ DefineLazyPropertyInitialization(YPBWeChatPayQueryOrderRequest, wechatPayOrderQu
     [GeTuiSdk registerDeviceToken:@""];
 }
 
-- (void)application:(UIApplication *)application didReceiveRemoteNotification:(NSDictionary *)userInfo {
-    
+//点击本地通知进入app
+- (void)application:(UIApplication *)application didReceiveLocalNotification:(nonnull UILocalNotification *)notification {
+    if ([[notification.userInfo objectForKey:@"key"] isEqualToString:@"localPush"]) {
+        [[UIApplication sharedApplication] cancelLocalNotification:notification];
+    }
 }
 
 - (void)application:(UIApplication *)application didReceiveRemoteNotification:(NSDictionary *)userInfo fetchCompletionHandler:(void (^)(UIBackgroundFetchResult))completionHandler {
-    DLog(@"----------------->点击通知进入");
     completionHandler(UIBackgroundFetchResultNewData);
 }
 

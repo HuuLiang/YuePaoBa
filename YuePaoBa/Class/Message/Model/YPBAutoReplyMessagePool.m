@@ -55,7 +55,9 @@ static const NSUInteger kReplyingTimeInterval = 60 * 5;
                 noti.timeZone = [NSTimeZone defaultTimeZone];
                 noti.alertBody = message;
                 noti.soundName = UILocalNotificationDefaultSoundName;
-                noti.alertAction = message;
+                noti.alertAction = @"";
+                NSDictionary *dic = [NSDictionary dictionaryWithObjectsAndKeys:@"localPush",@"key", nil];
+                [noti setUserInfo:dic];
                 [[UIApplication sharedApplication] scheduleLocalNotification:noti];
                 
                 
@@ -143,13 +145,13 @@ static const NSUInteger kReplyingTimeInterval = 60 * 5;
         [replyMessage persist];
         
         //将机器人的回复写入本地通知发送给用户
-        UILocalNotification *noti = [[UILocalNotification alloc] init];
-        noti.fireDate = [YPBUtil dateFromString:replyMessage.replyTime];
-        noti.timeZone = [NSTimeZone defaultTimeZone];
-        noti.alertBody = replyMessage.replyMessage;
-        noti.soundName = UILocalNotificationDefaultSoundName;
-        noti.alertAction = replyMessage.replyMessage;
-        [[UIApplication sharedApplication] scheduleLocalNotification:noti];
+//        UILocalNotification *noti = [[UILocalNotification alloc] init];
+//        noti.fireDate = [YPBUtil dateFromString:replyMessage.replyTime];
+//        noti.timeZone = [NSTimeZone defaultTimeZone];
+//        noti.alertBody = replyMessage.replyMessage;
+//        noti.soundName = UILocalNotificationDefaultSoundName;
+//        noti.alertAction = @"";
+//        [[UIApplication sharedApplication] scheduleLocalNotification:noti];
         
     });
     

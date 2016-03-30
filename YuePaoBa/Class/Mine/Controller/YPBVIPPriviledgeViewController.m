@@ -178,6 +178,7 @@ DefineLazyPropertyInitialization(YPBUserVIPUpgradeModel, vipUpgradeModel)
     }];
 }
 
+
 - (void)payWithInfo:(NSString *)info {
 //    YPBSystemConfig *systemConfig = [YPBSystemConfig sharedConfig];
 //    NSUInteger price1Month = ((NSString *)systemConfig.vipPointDictionary[@"1"]).integerValue;
