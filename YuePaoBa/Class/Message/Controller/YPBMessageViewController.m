@@ -120,7 +120,8 @@ DefineLazyPropertyInitialization(NSMutableArray, chatMessages)
     
     [self reloadChatMessagesWithComletion:^{
         YPBChatMessage *lastMessage = self.chatMessages.lastObject;
-        if (lastMessage.msgType.unsignedIntegerValue == YPBChatMessageTypeOption) {
+        if (lastMessage.msgType.unsignedIntegerValue == YPBChatMessageTypeOption && [[YPBUser currentUser].sex isEqualToString:@"M"]) {
+            DLog(@"问题列表出现，%@----%@",lastMessage,[YPBUser currentUser].sex);
             @weakify(self);
             [self showOptionsWithChatMessage:lastMessage completion:^(NSUInteger idx, NSString *selection) {
                 @strongify(self);
@@ -133,6 +134,7 @@ DefineLazyPropertyInitialization(NSMutableArray, chatMessages)
                 [self.messageInputView.inputTextView becomeFirstResponder];
             }];
         } else {
+            DLog(@"----becomeFirstResponder-----");
             [self.messageInputView.inputTextView becomeFirstResponder];
         }
         

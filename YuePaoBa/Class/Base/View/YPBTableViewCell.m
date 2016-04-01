@@ -90,7 +90,7 @@
     }
     
     _subtitleLabel = [[UILabel alloc] init];
-    _subtitleLabel.font = [UIFont systemFontOfSize:14.];
+    _subtitleLabel.font = [UIFont systemFontOfSize:14];
     _subtitleLabel.textColor = kDefaultTextColor;
     _subtitleLabel.textAlignment = NSTextAlignmentRight;
     [self.contentView addSubview:_subtitleLabel];

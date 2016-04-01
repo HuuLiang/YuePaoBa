@@ -8,6 +8,7 @@
 
 #import <Foundation/Foundation.h>
 #import "YPBPersistentObject.h"
+#import "YPBLocalNotification.h"
 
 @class YPBPushedMessage;
 

@@ -221,6 +221,7 @@
 		BCFB2A6D1C3FDD16003E327D /* YPBPhotoGridViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BCFB2A6C1C3FDD16003E327D /* YPBPhotoGridViewController.m */; };
 		EC2BFB371C9A889E00912302 /* YPBPayIntroduceView.m in Sources */ = {isa = PBXBuildFile; fileRef = EC2BFB361C9A889E00912302 /* YPBPayIntroduceView.m */; };
 		EC7C84A11C982795005CB452 /* YPBPayCell.m in Sources */ = {isa = PBXBuildFile; fileRef = EC7C84A01C982795005CB452 /* YPBPayCell.m */; };
+		EC87FEB01CABDFAD0049445C /* YPBLocalNotification.m in Sources */ = {isa = PBXBuildFile; fileRef = EC87FEAF1CABDFAD0049445C /* YPBLocalNotification.m */; };
 		ECADD6621CA3C4D300BC85F6 /* YPBApplePay.m in Sources */ = {isa = PBXBuildFile; fileRef = ECADD6611CA3C4D300BC85F6 /* YPBApplePay.m */; };
 		ECADD66A1CA3EB9A00BC85F6 /* YPBNeighborViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = ECADD6691CA3EB9A00BC85F6 /* YPBNeighborViewController.m */; };
 		ECADD6701CA3ECD100BC85F6 /* YPBNeighborCell.m in Sources */ = {isa = PBXBuildFile; fileRef = ECADD66F1CA3ECD100BC85F6 /* YPBNeighborCell.m */; };
@@ -649,6 +650,8 @@
 		EC2BFB361C9A889E00912302 /* YPBPayIntroduceView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YPBPayIntroduceView.m; sourceTree = "<group>"; };
 		EC7C849F1C982795005CB452 /* YPBPayCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YPBPayCell.h; sourceTree = "<group>"; };
 		EC7C84A01C982795005CB452 /* YPBPayCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YPBPayCell.m; sourceTree = "<group>"; };
+		EC87FEAE1CABDFAD0049445C /* YPBLocalNotification.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YPBLocalNotification.h; sourceTree = "<group>"; };
+		EC87FEAF1CABDFAD0049445C /* YPBLocalNotification.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YPBLocalNotification.m; sourceTree = "<group>"; };
 		ECADD6601CA3C4D300BC85F6 /* YPBApplePay.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YPBApplePay.h; sourceTree = "<group>"; };
 		ECADD6611CA3C4D300BC85F6 /* YPBApplePay.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YPBApplePay.m; sourceTree = "<group>"; };
 		ECADD6681CA3EB9A00BC85F6 /* YPBNeighborViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YPBNeighborViewController.h; sourceTree = "<group>"; };
@@ -836,6 +839,8 @@
 				BC739CF11C7C45F300D75AF0 /* YPBPaymentManager.m */,
 				BC7677A41C91A3EE001AA508 /* YPBStatistics.h */,
 				BC7677A51C91A3EE001AA508 /* YPBStatistics.m */,
+				EC87FEAE1CABDFAD0049445C /* YPBLocalNotification.h */,
+				EC87FEAF1CABDFAD0049445C /* YPBLocalNotification.m */,
 			);
 			path = Utils;
 			sourceTree = "<group>";
@@ -1919,6 +1924,7 @@
 				BC1B498F1C44F1F500ECB0BA /* WXUtil.mm in Sources */,
 				BC2742311C3A67C100C98E6F /* YPBPersistentManager.m in Sources */,
 				BC652B841C2BB9BA00951DEA /* YPBEditMineDetailViewController.m in Sources */,
+				EC87FEB01CABDFAD0049445C /* YPBLocalNotification.m in Sources */,
 				BC652B871C2BD5D800951DEA /* UITableView+Separator.m in Sources */,
 				BC22DE2D1C3D417500305F58 /* YPBContactCell.m in Sources */,
 				BC6B74961C3539F10052777E /* QiniuToken.m in Sources */,
@@ -2190,7 +2196,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: Yanping Wu (BTTZYVST3G)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Yanping Wu (Q5THSUD98X)";
 				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",

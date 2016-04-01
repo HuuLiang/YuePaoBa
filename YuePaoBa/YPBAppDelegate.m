@@ -17,6 +17,7 @@
 #import "YPBActivateModel.h"
 #import "YPBMessagePushModel.h"
 #import "YPBAutoReplyMessagePool.h"
+#import "YPBLocalNotification.h"
 
 #import "WXApi.h"
 #import "YPBPaymentInfo.h"
@@ -382,9 +383,10 @@ DefineLazyPropertyInitialization(YPBWeChatPayQueryOrderRequest, wechatPayOrderQu
     if (!offLine) {
         NSDictionary *dic = [NSJSONSerialization JSONObjectWithData:payload options:NSJSONReadingMutableContainers error:nil];
         int type = [dic[@"msgType"]intValue];
-        if (1 == type) {
-            NSString *msgBody = dic[@"msgBody"];
-            [[YPBMessageCenter defaultCenter] showMessageWithTitle:msgBody inViewController:self.window.rootViewController];
+        NSString *msgBody = dic[@"msgBody"];
+        if (1 == type || 2 == type) {
+            [[YPBLocalNotification sharedInstance] createLocalNotificationWithMessage:msgBody Date:nil];
+            //[[YPBMessageCenter defaultCenter] showMessageWithTitle:msgBody inViewController:self.window.rootViewController];
         }
     }
 }

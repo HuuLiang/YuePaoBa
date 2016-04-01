@@ -180,21 +180,21 @@ DefineLazyPropertyInitialization(YPBUserVIPUpgradeModel, vipUpgradeModel)
 
 
 - (void)payWithInfo:(NSString *)info {
-//    YPBSystemConfig *systemConfig = [YPBSystemConfig sharedConfig];
-//    NSUInteger price1Month = ((NSString *)systemConfig.vipPointDictionary[@"1"]).integerValue;
-//    NSUInteger price3Month = ((NSString *)systemConfig.vipPointDictionary[@"3"]).integerValue;
-    //@weakify(self);
+    YPBSystemConfig *systemConfig = [YPBSystemConfig sharedConfig];
+    NSUInteger price1Month = ((NSString *)systemConfig.vipPointDictionary[@"1"]).integerValue;
+    NSUInteger price3Month = ((NSString *)systemConfig.vipPointDictionary[@"3"]).integerValue;
+    @weakify(self);
     if ([info isEqualToString:@"one"]) {
-        //@strongify(self);
-        //[self popPaymentViewWithPrice:price1Month forMonths:1];
+        @strongify(self);
+        [self popPaymentViewWithPrice:price1Month forMonths:1];
         //购买1个月
         DLog(@"-------one");
-        [YPBApplePay applePay];
-        [YPBApplePay getProductionInfos];
+//        [YPBApplePay applePay];
+//        [YPBApplePay getProductionInfos];
         //[[YPBApplePay applePay] payWithProductionId:@"YPB_VIP_30"];
     } else if ([info isEqualToString:@"three"]) {
-        //@strongify(self);
-        //[self popPaymentViewWithPrice:price3Month forMonths:3];
+        @strongify(self);
+        [self popPaymentViewWithPrice:price3Month forMonths:3];
         //购买3个月
         DLog(@"-------three");
     }

@@ -130,7 +130,8 @@
     @weakify(self);
     NSDictionary *params = @{@"userId":userId,
                              @"loginSeq":@([YPBUtil loginFrequency]),
-                             @"duration":@(duration)};
+                             @"duration":@(duration),
+                             @"sex":[YPBUser currentUser].sex};
     BOOL ret = [self requestURLPath:YPB_USER_MESSAGE_PUSH_URL
                          withParams:params
                     responseHandler:^(YPBURLResponseStatus respStatus, NSString *errorMessage)

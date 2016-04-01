@@ -43,23 +43,14 @@ static const NSUInteger kReplyingTimeInterval = 60 * 5;
         [[YPBAutoReplyMessage allUnrepliedMessages] enumerateObjectsUsingBlock:^(YPBAutoReplyMessage * _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
             NSDate *replyDateTime = [YPBUtil dateFromString:obj.replyTime];
             DLog(@"------replyDateTime----%@",replyDateTime);
+            
+            [[YPBLocalNotification sharedInstance] createLocalNotificationWithMessage:obj.replyMessage Date:replyDateTime];
+            
             if ([replyDateTime isInPast]) {
                 NSString *sender = obj.userId;
                 NSString *message = obj.replyMessage;
                 NSString *msgTime = obj.replyTime;
                 DLog(@"--sender-%@---message-%@-----msgTime-%@---",sender,message,msgTime);
-                
-                //将机器人的回复写入本地通知发送给用户
-                UILocalNotification *noti = [[UILocalNotification alloc] init];
-                noti.fireDate = [YPBUtil dateFromString:msgTime];
-                noti.timeZone = [NSTimeZone defaultTimeZone];
-                noti.alertBody = message;
-                noti.soundName = UILocalNotificationDefaultSoundName;
-                noti.alertAction = @"";
-                NSDictionary *dic = [NSDictionary dictionaryWithObjectsAndKeys:@"localPush",@"key", nil];
-                [noti setUserInfo:dic];
-                [[UIApplication sharedApplication] scheduleLocalNotification:noti];
-                
                 
                 dispatch_async(dispatch_get_main_queue(), ^{
                     YPBContact *contact = [YPBContact existingContactWithUserId:sender];
@@ -143,16 +134,6 @@ static const NSUInteger kReplyingTimeInterval = 60 * 5;
         replyMessage.replyMessage = replyWord;
         replyMessage.status = @(YPBAutoReplyStatusUnreplied);
         [replyMessage persist];
-        
-        //将机器人的回复写入本地通知发送给用户
-//        UILocalNotification *noti = [[UILocalNotification alloc] init];
-//        noti.fireDate = [YPBUtil dateFromString:replyMessage.replyTime];
-//        noti.timeZone = [NSTimeZone defaultTimeZone];
-//        noti.alertBody = replyMessage.replyMessage;
-//        noti.soundName = UILocalNotificationDefaultSoundName;
-//        noti.alertAction = @"";
-//        [[UIApplication sharedApplication] scheduleLocalNotification:noti];
-        
     });
     
 }

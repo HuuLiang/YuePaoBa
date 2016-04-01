@@ -205,7 +205,6 @@ DefineLazyPropertyInitialization(YPBSendGiftModel, sendGiftModel)
             make.left.equalTo(_avatarImageView);
             make.top.equalTo(_avatarImageView.mas_bottom).offset(30);
             make.right.equalTo(_giftLabel);
-            //make.bottom.equalTo(self.view);
         }];
     }
     [self loadGifts];
