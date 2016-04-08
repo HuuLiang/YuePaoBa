@@ -38,7 +38,8 @@
 }
 
 - (BOOL)fetchSystemConfigWithCompletionHandler:(YPBCompletionHandler)handler {
-    NSDictionary *params = @{@"clientVersion":XcodeAppVersion,@"channle":YPB_CHANNEL_NO};
+    NSDictionary *params = @{@"clientVersion":XcodeAppVersion,
+                             @"channelNo":YPB_CHANNEL_NO};
     @weakify(self);
     BOOL ret = [self requestURLPath:YPB_SYSTEM_CONFIG_URL
                          withParams:params
