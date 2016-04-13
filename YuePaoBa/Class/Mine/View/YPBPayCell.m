@@ -37,17 +37,18 @@
     YPBSystemConfig *systemConfig = [YPBSystemConfig sharedConfig];
     NSUInteger price1Month = ((NSString *)systemConfig.vipPointDictionary[@"1"]).integerValue;
     NSUInteger price3Month = ((NSString *)systemConfig.vipPointDictionary[@"3"]).integerValue;
+    DLog("%lu %lu",(unsigned long)price1Month,(unsigned long)price3Month);
     
     if ([monthInfo isEqualToString:@"one"]) {
         _backgroundImage.image = [UIImage imageNamed:@"pay_153-2"];
         _priceLabel.text = @"1个月";
         _detailLabel.text = @"";
-        [_payButton setTitle:[NSString stringWithFormat:@"%d元",price1Month/100] forState:UIControlStateNormal];
+        [_payButton setTitle:[NSString stringWithFormat:@"%lu元",price1Month/100] forState:UIControlStateNormal];
     } else if ([monthInfo isEqualToString:@"three"]) {
         _backgroundImage.image = [UIImage imageNamed:@"pay_153-1"];
         _priceLabel.text = @"6个月送6个月";
         _detailLabel.text = @"限时特惠:优惠50%";
-        [_payButton setTitle:[NSString stringWithFormat:@"%d元",price3Month/
+        [_payButton setTitle:[NSString stringWithFormat:@"%lu元",price3Month/
                               100] forState:UIControlStateNormal];
     }
     

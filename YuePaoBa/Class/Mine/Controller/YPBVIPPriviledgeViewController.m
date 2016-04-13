@@ -62,6 +62,7 @@ DefineLazyPropertyInitialization(YPBUserVIPUpgradeModel, vipUpgradeModel)
     _backgroundImageView.translatesAutoresizingMaskIntoConstraints = NO;
     [_backgroundImageView sd_setImageWithURL:[NSURL URLWithString:[YPBSystemConfig sharedConfig].payImgUrl]
                             placeholderImage:[UIImage imageNamed:@"vip_page"]];
+    DLog("------userid---%@--",[YPBUser currentUser].userId);
     _backgroundImageView.contentMode = UIViewContentModeScaleAspectFill;
     [self.view addSubview:_backgroundImageView];
     
