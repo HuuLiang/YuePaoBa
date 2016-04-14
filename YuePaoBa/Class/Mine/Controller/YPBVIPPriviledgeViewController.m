@@ -19,7 +19,7 @@
 #import "YPBPayIntroduceView.h"
 #import "YPBApplePay.h"
 
-@interface YPBVIPPriviledgeViewController () <UITableViewDelegate,UITableViewDataSource>
+@interface YPBVIPPriviledgeViewController () <UITableViewDelegate,UITableViewDataSource,sendPaymentStateDelegate>
 {
     UIImageView *_backgroundImageView;
     UIButton *_feedbackButton;
@@ -52,11 +52,7 @@ DefineLazyPropertyInitialization(YPBUserVIPUpgradeModel, vipUpgradeModel)
     self.edgesForExtendedLayout = UIRectEdgeNone;
     
     _dataSource = [[NSMutableArray alloc] init];
-    NSString *oneMonth = @"one";
-    NSString *threeMonth = @"three";
-    [_dataSource addObject:threeMonth];
-    [_dataSource addObject:oneMonth];
-
+    [self getPriceInfo];
     
     _backgroundImageView = [[UIImageView alloc] init];
     _backgroundImageView.translatesAutoresizingMaskIntoConstraints = NO;
@@ -126,6 +122,37 @@ DefineLazyPropertyInitialization(YPBUserVIPUpgradeModel, vipUpgradeModel)
     _feedbackButton.titleLabel.font = [UIFont systemFontOfSize:MIN(16,CGRectGetHeight(self.view.bounds) * 0.03)];
 }
 
+- (void)getPriceInfo {
+    YPBSystemConfig *systemConfig = [YPBSystemConfig sharedConfig];
+    if ([systemConfig.isUseApplePay isEqualToString:@"1"]) {
+        [YPBApplePay applePay].delegate = self;
+        if ([YPBApplePay applePay].isGettingPriceInfo) {
+            [self.view beginLoading];
+            [self performSelector:@selector(getPriceInfo) withObject:nil afterDelay:0.1];
+            [self performSelector:@selector(getPriceInfoError) withObject:nil afterDelay:3.0];
+        } else {
+            [self.view endLoading];
+        }
+    }
+    NSUInteger price1Month = ((NSString *)systemConfig.vipPointDictionary[@"1"]).integerValue;
+    NSUInteger price3Month = ((NSString *)systemConfig.vipPointDictionary[@"3"]).integerValue;
+    NSString * price1 = [NSString stringWithFormat:@"%u",price1Month/100];
+    NSString * price3 = [NSString stringWithFormat:@"%u",price3Month/100];
+    NSDictionary *dic1 = @{@"month":@"one",
+                           @"price":price1};
+    NSDictionary *dic2 = @{@"month":@"three",
+                           @"price":price3};
+    [_dataSource addObject:dic2];
+    [_dataSource addObject:dic1];
+}
+
+- (void)getPriceInfoError {
+    if ([[YPBSystemConfig sharedConfig].isUseApplePay isEqualToString:@"1"] && [YPBApplePay applePay].isGettingPriceInfo) {
+        [self.view endLoading];
+        [self.navigationController popViewControllerAnimated:YES];
+    }
+}
+
 - (void)popPaymentViewWithPrice:(NSUInteger)price forMonths:(NSUInteger)months {
     
 #ifdef DEBUG
@@ -135,11 +162,11 @@ DefineLazyPropertyInitialization(YPBUserVIPUpgradeModel, vipUpgradeModel)
     @weakify(self);
     [self.paymentPopView addPaymentWithImage:[UIImage imageNamed:@"vip_alipay_icon"] title:@"支付宝支付" available:YES action:^(id obj) {
         @strongify(self);
-        [self payWithPrice:price paymentType:YPBPaymentTypeAlipay forMonths:months];
+        [self payWithPrice:price*100 paymentType:YPBPaymentTypeAlipay forMonths:months];
     }];
     [self.paymentPopView addPaymentWithImage:[UIImage imageNamed:@"vip_wechat_icon"] title:@"微信客户端支付" available:YES action:^(id obj) {
         @strongify(self);
-        [self payWithPrice:price paymentType:YPBPaymentTypeWeChatPay forMonths:months];
+        [self payWithPrice:price*100 paymentType:YPBPaymentTypeWeChatPay forMonths:months];
     }];
     [self.paymentPopView showInView:self.view];
 }
@@ -179,24 +206,25 @@ DefineLazyPropertyInitialization(YPBUserVIPUpgradeModel, vipUpgradeModel)
 }
 
 
-- (void)payWithInfo:(NSString *)info {
+- (void)payWithInfo:(NSDictionary *)info {
     YPBSystemConfig *systemConfig = [YPBSystemConfig sharedConfig];
-    NSUInteger price1Month = ((NSString *)systemConfig.vipPointDictionary[@"1"]).integerValue;
-    NSUInteger price3Month = ((NSString *)systemConfig.vipPointDictionary[@"3"]).integerValue;
     @weakify(self);
-    if ([info isEqualToString:@"one"]) {
+    if ([info[@"month"] isEqualToString:@"one"]) {
         @strongify(self);
-        [self popPaymentViewWithPrice:price1Month forMonths:1];
-        //购买1个月
-        DLog(@"-------one");
-//        [YPBApplePay applePay];
-//        [YPBApplePay getProductionInfos];
-        //[[YPBApplePay applePay] payWithProductionId:@"YPB_VIP_30"];
-    } else if ([info isEqualToString:@"three"]) {
+        if ([systemConfig.isUseApplePay isEqualToString:@"1"]) {
+            [self.view beginLoading];
+            [[YPBApplePay applePay] payWithProductionId:@"YPB_VIP_1Month"];
+        } else {
+            [self popPaymentViewWithPrice:[info[@"price"] integerValue] forMonths:1];
+        }
+    } else if ([info[@"month"] isEqualToString:@"three"]) {
         @strongify(self);
-        [self popPaymentViewWithPrice:price3Month forMonths:3];
-        //购买3个月
-        DLog(@"-------three");
+        if ([systemConfig.isUseApplePay isEqualToString:@"1"]) {
+            [self.view beginLoading];
+            [[YPBApplePay applePay] payWithProductionId:@"YPB_VIP_3Month"];
+        } else {
+            [self popPaymentViewWithPrice:[info[@"price"] integerValue] forMonths:3];
+        }
     }
 }
 
@@ -208,10 +236,13 @@ DefineLazyPropertyInitialization(YPBUserVIPUpgradeModel, vipUpgradeModel)
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     YPBPayCell *cell = [tableView dequeueReusableCellWithIdentifier:@"cellID" forIndexPath:indexPath];
-    [cell setCellInfoWithMonth:_dataSource[indexPath.row]];
+    
+    [cell setCellInfoWithPrice:_dataSource[indexPath.row][@"price"] Month:_dataSource[indexPath.row][@"month"]];
+    
     [cell.payButton bk_addEventHandler:^(id sender) {
         [self payWithInfo:_dataSource[indexPath.row]];
     } forControlEvents:UIControlEventTouchUpInside];
+    
     cell.selectionStyle = UITableViewCellSelectionStyleNone;
     return cell;
 }
@@ -231,6 +262,19 @@ DefineLazyPropertyInitialization(YPBUserVIPUpgradeModel, vipUpgradeModel)
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
+}
+
+#pragma mark - sendPaymentStateDelegate
+
+- (void)sendPaymentState:(SKPaymentTransactionState)payState {
+    if (payState == SKPaymentTransactionStatePurchased || payState == SKPaymentTransactionStateFailed) {
+        if (payState == SKPaymentTransactionStateFailed) {
+            YPBShowError(@"购买失败");
+        } else if (payState == SKPaymentTransactionStatePurchasing) {
+            YPBShowMessage(@"购买成功😊");
+        }
+        [self.view endLoading];
+    }
 }
 
 @end

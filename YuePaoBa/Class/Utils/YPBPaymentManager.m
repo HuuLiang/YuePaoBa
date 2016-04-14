@@ -88,7 +88,7 @@ DefineLazyPropertyInitialization(YPBUserVIPUpgradeModel, vipUpgradeModel)
     if (paymentInfo.payPointType.unsignedIntegerValue == YPBPayPointTypeVIP) {
         [self upgradeVIPWithPaymentInfo:paymentInfo];
     } else if (paymentInfo.payPointType.unsignedIntegerValue == YPBPayPointTypeGift) {
-//        [self sendGiftWithPaymentInfo:paymentInfo];
+        
     }
     
     SafelyCallBlock2(self.completionHandler, result==PAYRESULT_SUCCESS, paymentInfo);
@@ -98,22 +98,13 @@ DefineLazyPropertyInitialization(YPBUserVIPUpgradeModel, vipUpgradeModel)
 - (void)upgradeVIPWithPaymentInfo:(YPBPaymentInfo *)paymentInfo {
     PAYRESULT result = paymentInfo.paymentResult.unsignedIntegerValue;
     if (result == PAYRESULT_SUCCESS) {
-        NSString *vipExpireTime = [YPBUtil renewVIPByMonths:paymentInfo.monthsPaid.unsignedIntegerValue];
+        NSUInteger month = paymentInfo.monthsPaid.unsignedIntegerValue;
+        NSString *vipExpireTime = [YPBUtil renewVIPByMonths:month];
+        if (![[YPBSystemConfig sharedConfig].isUseApplePay isEqualToString:@"1"] && month == 3) {
+            vipExpireTime = [YPBUtil renewVIPByMonths:month*2];
+        }
         [self.vipUpgradeModel upgradeToVIPWithExpireTime:vipExpireTime completionHandler:nil];
         [[NSNotificationCenter defaultCenter] postNotificationName:kVIPUpgradeSuccessNotification object:nil];
     }
 }
-
-//- (void)sendGiftWithPaymentInfo:(YPBPaymentInfo *)paymentInfo {
-//    PAYRESULT result = paymentInfo.paymentResult.unsignedIntegerValue;
-//    if (result == PAYRESULT_SUCCESS) {
-//        [self.sendGiftModel sendGift:gift.id
-//                              toUser:self.user.userId
-//                        withNickName:self.user.nickName
-//                   completionHandler:^(BOOL success, id obj)
-//         {
-//             
-//         }];
-//    }
-//}
 @end

@@ -37,6 +37,7 @@
 @property (nonatomic) NSString *vipPointInfo;
 @property (nonatomic) NSString *ballPayWindowurl;
 @property (nonatomic) NSString *payImgUrl;
+@property (nonatomic) NSString *isUseApplePay;
 
 + (instancetype)configFromPersistence;
 + (instancetype)sharedConfig;

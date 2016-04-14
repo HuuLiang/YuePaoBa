@@ -22,6 +22,9 @@
 #import "YPBUserDetailFooterBar.h"
 #import "YPBUserProfileViewController.h"
 
+#import "YPBSystemConfig.h"
+#import "YPBMessageCenter.h"
+
 @interface YPBUserDetailViewController ()
 {
     YPBUserProfileCell *_profileCell;
@@ -193,7 +196,10 @@ DefineLazyPropertyInitialization(YPBUserAccessModel, userAccessModel)
         [[YPBMessageCenter defaultCenter] showErrorWithTitle:@"无法获取用户信息" inViewController:self];
         return ;
     }
-
+    if ([[YPBSystemConfig sharedConfig].isUseApplePay isEqualToString:@"1"]) {
+        [[YPBMessageCenter defaultCenter] showMessageWithTitle:@"暂无法赠送礼物😁" inViewController:self];
+        return;
+    }
     YPBSendGiftViewController *sendGiftVC = [[YPBSendGiftViewController alloc] initWithUser:self.user];
     [self.navigationController pushViewController:sendGiftVC animated:YES];
 }

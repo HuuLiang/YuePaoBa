@@ -8,6 +8,8 @@
 
 #import "YPBPayCell.h"
 #import "Masonry.h"
+#import "YPBApplePay.h"
+#import "YPBSystemConfig.h"
 
 @implementation YPBPayCell
 
@@ -31,25 +33,24 @@
     [self addSubview:_payButton];
 }
 
-- (void)setCellInfoWithMonth:(NSString *)monthInfo {
+- (void)setCellInfoWithPrice:(NSString*)price Month:(NSString *)monthInfo {
     [self addSubiews];
-    
-    YPBSystemConfig *systemConfig = [YPBSystemConfig sharedConfig];
-    NSUInteger price1Month = ((NSString *)systemConfig.vipPointDictionary[@"1"]).integerValue;
-    NSUInteger price3Month = ((NSString *)systemConfig.vipPointDictionary[@"3"]).integerValue;
-    DLog(@"---%ld--%ld-",price1Month,price3Month);
+    DLog("--price--%@-",price);
+    _monthTime = monthInfo;
     
     if ([monthInfo isEqualToString:@"one"]) {
         _backgroundImage.image = [UIImage imageNamed:@"pay_153-2"];
         _priceLabel.text = @"1个月";
         _detailLabel.text = @"";
-        [_payButton setTitle:[NSString stringWithFormat:@"%u元",price1Month/100] forState:UIControlStateNormal];
     } else if ([monthInfo isEqualToString:@"three"]) {
         _backgroundImage.image = [UIImage imageNamed:@"pay_153-1"];
-        _priceLabel.text = @"6个月送6个月";
-        _detailLabel.text = @"限时特惠:优惠50%";
-        [_payButton setTitle:[NSString stringWithFormat:@"%u元",price3Month/100] forState:UIControlStateNormal];
+        _priceLabel.text = @"3个月";
+        _detailLabel.text = @"限时特惠:买3送3";
+        if ([[YPBSystemConfig sharedConfig].isUseApplePay isEqualToString:@"1"]) {
+            _detailLabel.text = @"限时特惠:优惠50%";
+        }
     }
+     [_payButton setTitle:[NSString stringWithFormat:@"%@元",price] forState:UIControlStateNormal];
     
     [self LayoutSubviews];
 }

@@ -9,12 +9,27 @@
 #import <Foundation/Foundation.h>
 #import <StoreKit/StoreKit.h>
 
+@protocol sendPaymentStateDelegate <NSObject>
+
+- (void)sendPaymentState:(SKPaymentTransactionState)payState;
+
+@end
+
 @interface YPBApplePay : NSObject
+
+@property (nonatomic) NSMutableArray *priceArray;
+
+@property (nonatomic) BOOL isGettingPriceInfo;
+
+@property (nonatomic)id<sendPaymentStateDelegate>delegate;
 
 + (YPBApplePay *)applePay;
 
-+ (void)getProductionInfos;
+- (void)getProductionInfos;
 
 - (void)payWithProductionId:(NSString *)proId;
+
+- (void)sendInfoToServer:(NSString *)identifier;
+
 
 @end

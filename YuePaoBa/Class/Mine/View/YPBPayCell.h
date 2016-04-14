@@ -14,8 +14,8 @@
 @property (nonatomic,retain) UILabel * priceLabel;
 @property (nonatomic,retain) UILabel * detailLabel;
 @property (nonatomic,retain) UIButton * payButton;
+@property (nonatomic,retain) NSString *monthTime;
 
-
-- (void)setCellInfoWithMonth:(NSString *)monthInfo;
+- (void)setCellInfoWithPrice:(NSString*)price Month:(NSString *)monthInfo;
 
 @end

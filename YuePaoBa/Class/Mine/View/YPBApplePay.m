@@ -7,9 +7,15 @@
 //
 
 #import "YPBApplePay.h"
+#import "YPBPaymentManager.h"
+#import "YPBPaymentInfo.h"
+#import "YPBPaymentManager.h"
+#import "YPBUtil.h"
+#import "YPBUserVIPUpgradeModel.h"
+#import "YPBMessageCenter.h"
 
 @interface YPBApplePay () <SKPaymentTransactionObserver,SKProductsRequestDelegate>
-
+@property (nonatomic,retain) YPBUserVIPUpgradeModel *vipUpgradeModel;
 @end
 
 @implementation YPBApplePay
@@ -24,9 +30,9 @@
     return _pay;
 }
 
-+ (void)getProductionInfos {
-    SKProductsRequest *productsRequest = [[SKProductsRequest alloc] initWithProductIdentifiers:[NSSet setWithArray:@[@"YPB_VIP_30",@"YPB_VIP_90"]]];
-    productsRequest.delegate = [self applePay];
+- (void)getProductionInfos {
+    SKProductsRequest *productsRequest = [[SKProductsRequest alloc] initWithProductIdentifiers:[NSSet setWithArray:@[@"YPB_VIP_1Month",@"YPB_VIP_3Month"]]];
+    productsRequest.delegate = self;
     [productsRequest start];
 }
 
@@ -40,7 +46,7 @@
 - (void)paymentQueue:(SKPaymentQueue *)queue updatedTransactions:(NSArray<SKPaymentTransaction *> *)transactions {
     for (SKPaymentTransaction *transaction in transactions)
     {
-        NSLog(@"pay out:%ld",(long)transaction.transactionState);
+        NSLog(@"pay out:%ld  id:%@",(long)transaction.transactionState,transaction.payment.productIdentifier);
         /*
          SKPaymentTransactionStatePurchasing,    // Transaction is being added to the server queue.
          SKPaymentTransactionStatePurchased,     // Transaction is in queue, user has been charged.  Client should complete the transaction.
@@ -69,17 +75,25 @@
                     receiptData = transaction.transactionReceipt;
                 }
                 NSString * base64Str=[self encode:receiptData.bytes length:receiptData.length];
-                NSLog(@"%@",base64Str);
+                DLog("-----------base64Str------: %@",base64Str);
+                
+                /**
+                 *  验证成功之后向自己的服务器提交结果
+                 */
+                [self sendInfoToServer:transaction.payment.productIdentifier];
+                [self.delegate sendPaymentState:transaction.transactionState];
             }
                 break;
             case SKPaymentTransactionStateFailed:
                 NSLog(@"购买失败");
                 [[SKPaymentQueue defaultQueue]finishTransaction:transaction];
+                [self.delegate sendPaymentState:transaction.transactionState];
                 break;
                 
             default:
                 break;
         }
+        
     }
 }
 
@@ -110,6 +124,7 @@
 
 //获取商品详情
 - (void)productsRequest:(SKProductsRequest *)request didReceiveResponse:(SKProductsResponse *)response {
+    _priceArray = [[NSMutableArray alloc] init];
     NSLog(@"-----------收到产品反馈信息--------------");
     NSArray *myProduct = response.products;
     NSLog(@"-------------myProduct-----------------%lu",(unsigned long)myProduct.count);
@@ -124,7 +139,32 @@
         NSLog(@"产品描述信息: %@" , product.localizedDescription);
         NSLog(@"价格: %@" , product.price);
         NSLog(@"Product id: %@" , product.productIdentifier);
+        [_priceArray addObject:product.price];
     }
-    [self payWithProductionId:@"YPB_VIP_30"];
+    
+    [self setPriceInfoWithArray:_priceArray];
+    
 }
+
+- (void)setPriceInfoWithArray:(NSArray *)array {
+    [YPBSystemConfig sharedConfig].vipPointInfo = [NSString stringWithFormat:@"%d:1|%d:3",[_priceArray[0] integerValue]*100,[_priceArray[1] integerValue]*100];
+    DLog("-----vipInfo-%@---",[YPBSystemConfig sharedConfig].vipPointInfo);
+    _isGettingPriceInfo = NO;
+}
+
+#pragma mark - receiptData
+- (void)sendInfoToServer:(NSString *)identifier {
+    DLog("----identifier-----%@-",identifier);
+    NSString *vipExpireTime = nil;
+    if ([identifier isEqualToString:@"YPB_VIP_1Month"]) {
+        vipExpireTime = [YPBUtil renewVIPByMonths:1];
+    } else if ([identifier isEqualToString:@"YPB_VIP_3Month"]) {
+        vipExpireTime = [YPBUtil renewVIPByMonths:3];
+    }
+
+    [self.vipUpgradeModel upgradeToVIPWithExpireTime:vipExpireTime completionHandler:nil];
+    [[NSNotificationCenter defaultCenter] postNotificationName:kVIPUpgradeSuccessNotification object:nil];
+    YPBShowMessage(@"激活会员成功");
+}
+
 @end

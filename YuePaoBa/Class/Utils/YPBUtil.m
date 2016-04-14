@@ -193,6 +193,6 @@ NSString *const kPaymentInfoKeyName = @"YPB_PAYMENTINFO_KEYNAME";
 
 + (NSString *)priceStringWithValue:(NSUInteger)priceValue {
     BOOL showInteger = (NSUInteger)(priceValue) % 100 == 0;
-    return showInteger ? [NSString stringWithFormat:@"%ld", priceValue/100] : [NSString stringWithFormat:@"%.2f", priceValue/100.];
+    return showInteger ? [NSString stringWithFormat:@"%d", priceValue/100] : [NSString stringWithFormat:@"%.2f", priceValue/100.];
 }
 @end

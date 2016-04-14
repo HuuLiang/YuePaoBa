@@ -22,6 +22,7 @@
 #import "YPBUserAccessModel.h"
 #import "YPBVideoGiftPollingView.h"
 #import "YPBSendGiftModel.h"
+#import "YPBMessageCenter.h"
 
 @interface YPBLiveShowViewController () <RNGridMenuDelegate>
 {
@@ -128,7 +129,7 @@ DefineLazyPropertyInitialization(YPBSendGiftModel, sendGiftModel)
                 }
             }
         }];
-        
+
         [self.messagePollingView insertMessages:messages forNames:names];
     };
     _videoPlayer.readyAction = ^(id obj) {
@@ -259,6 +260,11 @@ DefineLazyPropertyInitialization(YPBSendGiftModel, sendGiftModel)
         
         [sender beginLoading];
         if (self.giftListModel.fetchedGifts.count == 0) {
+            if ([[YPBSystemConfig sharedConfig].isUseApplePay isEqualToString:@"1"]) {
+                [[YPBMessageCenter defaultCenter] showMessageWithTitle:@"暂无法赠送礼物😁" inViewController:self];
+                [sender endLoading];
+                return ;
+            }
             [self.giftListModel fetchGiftListWithCompletionHandler:^(BOOL success, id obj) {
                 @strongify(self);
                 

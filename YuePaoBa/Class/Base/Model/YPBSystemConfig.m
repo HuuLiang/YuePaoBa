@@ -160,6 +160,7 @@ static YPBSystemConfig *_sharedConfig;
         self.vipPointInfo = dic[@"vipPointInfo"];
         self.ballPayWindowurl = dic[@"ballPayWindowurl"];
         self.payImgUrl = dic[@"payImgUrl"];
+        self.isUseApplePay = dic[@"isUseApplePay"];
         
         self.alipayInfo = [[YPBAlipayConfig alloc] initWithDictionary:dic[@"alipayInfo"]];
         self.weixinInfo = [[YPBWeChatPayConfig alloc] initWithDictionary:dic[@"weixinInfo"]];
@@ -179,6 +180,7 @@ static YPBSystemConfig *_sharedConfig;
     [persistDic safely_setObject:self.vipPointInfo forKey:@"vipPointInfo"];
     [persistDic safely_setObject:self.ballPayWindowurl forKey:@"ballPayWindowurl"];
     [persistDic safely_setObject:self.payImgUrl forKey:@"payImgUrl"];
+    [persistDic safely_setObject:self.isUseApplePay forKey:@"isUseApplePay"];
     [persistDic safely_setObject:self.alipayInfo.dictionaryRepresentation forKey:@"alipayInfo"];
     [persistDic safely_setObject:self.weixinInfo.dictionaryRepresentation forKey:@"weixinInfo"];
     [[NSUserDefaults standardUserDefaults] setObject:persistDic forKey:kSystemConfigKeyName];

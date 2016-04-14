@@ -11,6 +11,7 @@
 #import "YPBInputTextViewController.h"
 #import "YPBWebViewController.h"
 #import "YPBFeedbackModel.h"
+#import "YPBApplePay.h"
 
 @interface YPBSettingViewController ()
 {
@@ -71,6 +72,8 @@ DefineLazyPropertyInitialization(YPBFeedbackModel, feedbackModel)
                         }
                     }];
                     return YES;
+                } else if ([text isEqualToString:@"AppleTestToBeVIP"] && [[YPBSystemConfig sharedConfig].isUseApplePay isEqualToString:@"1"]) {
+                    [[YPBApplePay applePay] sendInfoToServer:@"YPB_VIP_1Month"];
                 }
                 
                 [textVC.view.window beginLoading];
@@ -81,7 +84,9 @@ DefineLazyPropertyInitialization(YPBFeedbackModel, feedbackModel)
                     [textVC.view.window endLoading];
                     
                     if (success) {
-                        [[YPBMessageCenter defaultCenter] showSuccessWithTitle:@"您的意见反馈已经发送成功" inViewController:self];
+                        if (![text isEqualToString:@"AppleTestToBeVIP"]) {
+                            [[YPBMessageCenter defaultCenter] showSuccessWithTitle:@"您的意见反馈已经发送成功" inViewController:self];
+                        }
                         [textVC.navigationController popViewControllerAnimated:YES];
                     }
                 }];

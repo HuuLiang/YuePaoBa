@@ -33,7 +33,8 @@ static const NSTimeInterval kRetryingTimeInterval = 180;
         return NO;
     }
     
-    NSDictionary *params = @{@"userId":[YPBUser currentUser].userId, @"vipEndTime":expireTime};
+    NSDictionary *params = @{@"userId":[YPBUser currentUser].userId,
+                             @"vipEndTime":expireTime};
     BOOL ret = [self requestURLPath:YPB_USER_VIP_UPGRADE_URL
                          withParams:params
                     responseHandler:^(YPBURLResponseStatus respStatus, NSString *errorMessage)

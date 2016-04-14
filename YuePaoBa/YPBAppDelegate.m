@@ -30,6 +30,8 @@
 #import <KSCrash/KSCrashInstallationStandard.h>
 #import "GeTuiSdk.h"
 
+#import "YPBApplePay.h"
+
 @interface YPBAppDelegate () <WXApiDelegate,UITabBarControllerDelegate,GeTuiSdkDelegate>
 @property (nonatomic,retain) YPBWeChatPayQueryOrderRequest *wechatPayOrderQueryRequest;
 @end
@@ -182,7 +184,10 @@ DefineLazyPropertyInitialization(YPBWeChatPayQueryOrderRequest, wechatPayOrderQu
     [[YPBSystemConfigModel sharedModel] fetchSystemConfigWithCompletionHandler:^(BOOL success, id obj) {
         YPBSystemConfig *systemConfig = obj;
         [systemConfig persist];
-        
+        if ([systemConfig.isUseApplePay isEqualToString:@"1"]) {
+            [[YPBApplePay applePay] getProductionInfos];
+            [YPBApplePay applePay].isGettingPriceInfo = YES;
+        }
         [WXApi registerApp:[YPBSystemConfig sharedConfig].weixinInfo.appId];
     }];
     
@@ -386,7 +391,6 @@ DefineLazyPropertyInitialization(YPBWeChatPayQueryOrderRequest, wechatPayOrderQu
         NSString *msgBody = dic[@"msgBody"];
         if (1 == type || 2 == type) {
             [[YPBLocalNotification sharedInstance] createLocalNotificationWithMessage:msgBody Date:nil];
-            //[[YPBMessageCenter defaultCenter] showMessageWithTitle:msgBody inViewController:self.window.rootViewController];
         }
     }
 }
