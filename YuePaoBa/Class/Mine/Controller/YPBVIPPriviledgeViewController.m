@@ -18,6 +18,7 @@
 #import "YPBPayCell.h"
 #import "YPBPayIntroduceView.h"
 #import "YPBApplePay.h"
+#import "YPBWeChatPayQueryOrderRequest.h"
 
 @interface YPBVIPPriviledgeViewController () <UITableViewDelegate,UITableViewDataSource,sendPaymentStateDelegate>
 {
@@ -27,6 +28,7 @@
     NSMutableArray *_dataSource;
     UITableView *_payTableView;
 }
+@property (nonatomic,retain) YPBWeChatPayQueryOrderRequest *wechatPayOrderQueryRequest;
 @property (nonatomic,retain) YPBUserVIPUpgradeModel *vipUpgradeModel;
 @property (nonatomic,retain) YPBPaymentInfo *paymentInfo;
 @property (nonatomic,retain) YPBPaymentPopView *paymentPopView;
@@ -117,6 +119,8 @@ DefineLazyPropertyInitialization(YPBUserVIPUpgradeModel, vipUpgradeModel)
     }
 }
 
+
+
 - (void)viewDidLayoutSubviews {
     [super viewDidLayoutSubviews];
     _feedbackButton.titleLabel.font = [UIFont systemFontOfSize:MIN(16,CGRectGetHeight(self.view.bounds) * 0.03)];
@@ -136,8 +140,8 @@ DefineLazyPropertyInitialization(YPBUserVIPUpgradeModel, vipUpgradeModel)
     }
     NSUInteger price1Month = ((NSString *)systemConfig.vipPointDictionary[@"1"]).integerValue;
     NSUInteger price3Month = ((NSString *)systemConfig.vipPointDictionary[@"3"]).integerValue;
-    NSString * price1 = [NSString stringWithFormat:@"%u",price1Month/100];
-    NSString * price3 = [NSString stringWithFormat:@"%u",price3Month/100];
+    NSString * price1 = [NSString stringWithFormat:@"%lu",price1Month/100];
+    NSString * price3 = [NSString stringWithFormat:@"%lu",price3Month/100];
     NSDictionary *dic1 = @{@"month":@"one",
                            @"price":price1};
     NSDictionary *dic2 = @{@"month":@"three",

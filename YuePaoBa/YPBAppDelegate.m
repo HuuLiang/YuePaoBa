@@ -29,10 +29,10 @@
 #import <AlipaySDK/AlipaySDK.h>
 #import <KSCrash/KSCrashInstallationStandard.h>
 #import "GeTuiSdk.h"
-
+#import "YPBUtil.h"
 #import "YPBApplePay.h"
 
-@interface YPBAppDelegate () <WXApiDelegate,UITabBarControllerDelegate,GeTuiSdkDelegate>
+@interface YPBAppDelegate () <WXApiDelegate,UITabBarControllerDelegate,GeTuiSdkDelegate,UIAlertViewDelegate>
 @property (nonatomic,retain) YPBWeChatPayQueryOrderRequest *wechatPayOrderQueryRequest;
 @end
 
@@ -234,6 +234,14 @@ DefineLazyPropertyInitialization(YPBWeChatPayQueryOrderRequest, wechatPayOrderQu
 }
 
 - (void)checkPayment {
+//    UIAlertView * view = [[UIAlertView alloc] initWithTitle:@"1"
+//                                                    message:@"2"
+//                                                   delegate:self
+//                                          cancelButtonTitle:@"取消"
+//                                          otherButtonTitles:@"好的", nil
+//                          ];
+//    [view show];
+    
     NSArray<YPBPaymentInfo *> *payingPaymentInfos = [YPBUtil payingPaymentInfos];
     [payingPaymentInfos enumerateObjectsUsingBlock:^(YPBPaymentInfo * _Nonnull paymentInfo, NSUInteger idx, BOOL * _Nonnull stop) {
         YPBPaymentType paymentType = paymentInfo.paymentType.unsignedIntegerValue;
@@ -242,16 +250,15 @@ DefineLazyPropertyInitialization(YPBWeChatPayQueryOrderRequest, wechatPayOrderQu
                 if ([trade_state isEqualToString:@"SUCCESS"]) {
                     [[YPBPaymentManager sharedManager] notifyPaymentResult:PAYRESULT_SUCCESS withPaymentInfo:paymentInfo];
                 } else {
-                    //[[YPBPaymentManager sharedManager] notifyPaymentResult:PAYRESULT_FAIL withPaymentInfo:paymentInfo];
+                    [[YPBPaymentManager sharedManager] notifyPaymentResult:PAYRESULT_FAIL withPaymentInfo:paymentInfo];
                 }
             }];
         } else {
-//            paymentInfo.paymentResult = @(PAYRESULT_FAIL);
-//            paymentInfo.paymentStatus = @(YPBPaymentStatusNotProcessed);
-//            [paymentInfo save];
-//            [[NSNotificationCenter defaultCenter] postNotificationName:kVIPUpgradingNotification object:paymentInfo];
+            [[YPBPaymentManager sharedManager] notifyPaymentResult:PAYRESULT_FAIL withPaymentInfo:paymentInfo];
         }
     }];
+
+
 }
 
 - (void)notifyUserLogin {
@@ -261,6 +268,16 @@ DefineLazyPropertyInitialization(YPBWeChatPayQueryOrderRequest, wechatPayOrderQu
     [[YPBMessagePushModel sharedModel] notifyLoginPush];
     [[NSNotificationCenter defaultCenter] postNotificationName:kUserInRestoreNotification object:nil];
 }
+
+#pragma mark - UIAlertViewDelegate
+
+//- (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex {
+//    if (buttonIndex == 0) {
+//        
+//    } else if (buttonIndex ==1) {
+//  
+//    }
+//}
 
 #pragma mark - WeChat delegate
 

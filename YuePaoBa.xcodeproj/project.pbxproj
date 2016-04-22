@@ -2182,9 +2182,10 @@
 					"$(PROJECT_DIR)/YuePaoBa/Class/Vendor/WeChatSDK",
 					"$(PROJECT_DIR)/YuePaoBa/Class/Vendor/UmengAnalytics",
 				);
+				ONLY_ACTIVE_ARCH = YES;
 				PRODUCT_BUNDLE_IDENTIFIER = com.iqu8.yuepaoba;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "ff55d587-f943-414e-8feb-cb9898b9dbd0";
+				PROVISIONING_PROFILE = "98fadcdc-0300-442e-b298-9800c58f9110";
 				USER_HEADER_SEARCH_PATHS = "$(PODS_ROOT)/**";
 			};
 			name = Debug;
@@ -2214,7 +2215,7 @@
 				ONLY_ACTIVE_ARCH = YES;
 				PRODUCT_BUNDLE_IDENTIFIER = com.iqu8.yuepaoba;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "ff55d587-f943-414e-8feb-cb9898b9dbd0";
+				PROVISIONING_PROFILE = "98fadcdc-0300-442e-b298-9800c58f9110";
 				USER_HEADER_SEARCH_PATHS = "$(PODS_ROOT)/**";
 			};
 			name = Release;

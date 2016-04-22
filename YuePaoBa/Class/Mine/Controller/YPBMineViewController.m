@@ -149,10 +149,13 @@ DefineLazyPropertyInitialization(YPBUserPhotoDeleteModel, photoDeleteModel)
 
 - (void)refreshMineDetails {
     @weakify(self);
-    NSString *userId = [YPBUtil deviceRegisteredUserId];
+    NSString *userId = [YPBUser currentUser].userId;
     
-    //获取到userid向服务器发送
-    [[YPBSystemConfigModel sharedModel] sendPushInfoWithUserID:userId clientID:[GeTuiSdk clientId]];
+    NSString * clientId = [GeTuiSdk clientId];
+    //获取到userid 和  clientId向服务器发送
+    if (userId != nil && clientId != nil ) {
+        [[YPBSystemConfigModel sharedModel] sendPushInfoWithUserID:userId clientID:[GeTuiSdk clientId]];
+    }
     
     [self.mineDetailModel fetchUserDetailWithUserId:userId
                                              byUser:userId
