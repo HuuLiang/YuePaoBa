@@ -6,7 +6,7 @@
 //  Copyright © 2015年 iqu8. All rights reserved.
 //
 
-#import <XHMessageTableViewController.h>
+#import "XHMessageTableViewController.h"
 
 @class YPBContact;
 

@@ -14,6 +14,8 @@
 #import "YPBVIPPriviledgeViewController.h"
 #import "YPBMessagePushModel.h"
 #import "YPBAutoReplyMessagePool.h"
+#import "YPBBlacklist.h"
+
 
 static const void *kMessageCellBottomLabelAssociatedKey = &kMessageCellBottomLabelAssociatedKey;
 
@@ -151,7 +153,7 @@ DefineLazyPropertyInitialization(NSMutableArray, chatMessages)
         [chatMessages enumerateObjectsUsingBlock:^(YPBChatMessage * _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
             [copiedChatMessages addObject:obj.copy];
             
-            XHMessage *message = [[XHMessage alloc] initWithText:obj.msg sender:obj.sendUserId timestamp:[YPBUtil dateFromString:obj.msgTime]];
+            XHMessage *message = [[XHMessage alloc] initWithText:obj.msg type:obj.msgType sender:obj.sendUserId timestamp:[YPBUtil dateFromString:obj.msgTime]];
             if ([obj.sendUserId isEqualToString:[YPBUser currentUser].userId]) {
                 message.bubbleMessageType = XHBubbleMessageTypeSending;
             } else {
@@ -252,11 +254,34 @@ DefineLazyPropertyInitialization(NSMutableArray, chatMessages)
 }
 
 - (void)addChatMessage:(YPBChatMessage *)chatMessage {
-    [chatMessage persist];
+    //先检查发送者是否是本人 若是本人 则检查接收者是否在黑名单中
+    if ([chatMessage.sendUserId isEqualToString:[YPBUser currentUser].userId]) {
+        if ([[YPBBlacklist sharedInstance] checkUserIdIsTure:chatMessage.receiveUserId]) {
+            chatMessage.msg = @"";
+            chatMessage.msgType = @(YPBChatMessageTypeSystemInfo);
+        }
+    }
+    //再检查接受者是否是本人 若是本人  则检查发送者是否在黑名单中
+    if ([chatMessage.receiveUserId isEqualToString:[YPBUser currentUser].userId]) {
+        if ([[YPBBlacklist sharedInstance] checkUserIdIsTure:chatMessage.sendUserId]) {
+            chatMessage.msg = @"";
+            chatMessage.msgType = @(YPBChatMessageTypeSystemInfo);
+        }
+    }
+    if (_chatMessages.count > 1) {
+        YPBChatMessage *lastMessage = _chatMessages[_chatMessages.count-1];
+        if (!([lastMessage.msgType isEqual: @(YPBChatMessageTypeSystemInfo)] && [chatMessage.msgType isEqual:@(YPBChatMessageTypeSystemInfo)])) {
+            [chatMessage persist];
+        }
+    } else if (_chatMessages.count == 1) {
+        [chatMessage persist];
+    }
+    
     [self.chatMessages addObject:chatMessage];
     
     if (self.isViewLoaded) {
         XHMessage *xhMsg = [[XHMessage alloc] initWithText:chatMessage.msg
+                                                      type:chatMessage.msgType
                                                     sender:chatMessage.sendUserId
                                                  timestamp:[YPBUtil dateFromString:chatMessage.msgTime]];
         if ([chatMessage.sendUserId isEqualToString:[YPBUser currentUser].userId]) {
@@ -281,27 +306,49 @@ DefineLazyPropertyInitialization(NSMutableArray, chatMessages)
 #pragma mark - XHMessageTableViewControllerDelegate
 
 - (void)didSendText:(NSString *)text fromSender:(NSString *)sender onDate:(NSDate *)date {
-    
     if ([YPBUtil isVIP]) {
         [self addTextMessage:text withSender:sender receiver:self.userId dateTime:[YPBUtil stringFromDate:date]];
         [[YPBMessagePushModel sharedModel] sendMsgToSeviceWithUserid:sender ReciverId:self.userId Message:text];
         [self finishSendMessageWithBubbleMessageType:XHBubbleMessageMediaTypeText];
     } else {
-//        [YPBVIPEntranceView showVIPEntranceInView:self.view canClose:YES withEnterAction:^(id obj) {
-            YPBVIPPriviledgeViewController *vipVC = [[YPBVIPPriviledgeViewController alloc] initWithContentType:YPBPaymentContentTypeMessage];
-            [self.navigationController pushViewController:vipVC animated:YES];
-//        }];
-        
+        YPBVIPPriviledgeViewController *vipVC = [[YPBVIPPriviledgeViewController alloc] initWithContentType:YPBPaymentContentTypeMessage];
+        [self.navigationController pushViewController:vipVC animated:YES];
         [self.messageInputView.inputTextView resignFirstResponder];
     }
     
     [YPBStatistics logEvent:kLogUserChatEvent fromUser:[YPBUser currentUser].userId toUser:self.userId];
 }
 
+- (void)configBlacklistCell:(YPBBlacklistSystemInfoCell *)cell atIndexPath:(NSIndexPath *)indexPath {
+    YPBChatMessage *message = self.chatMessages[indexPath.row];
+    if ([message.msgType isEqual:@(YPBChatMessageTypeSystemInfo)]) {
+        UILabel *systemInfo = [[UILabel alloc] init];
+        systemInfo.backgroundColor = [UIColor lightGrayColor];
+        systemInfo.layer.masksToBounds = YES;
+        systemInfo.font = [UIFont systemFontOfSize:14];
+        systemInfo.textAlignment = NSTextAlignmentCenter;
+        systemInfo.layer.cornerRadius = 5;
+        systemInfo.numberOfLines = 0;
+        systemInfo.text = [NSString stringWithFormat:@"%@已经被您拉黑,无法发起对话\n可在\"我--设置--黑名单\"中解除",self.nickName];
+        [cell addSubview:systemInfo];
+        {
+            [systemInfo mas_makeConstraints:^(MASConstraintMaker *make) {
+                make.left.equalTo(cell.mas_left).offset(20);
+                make.right.equalTo(cell.mas_right).offset(-20);
+                make.top.equalTo(cell.mas_top).offset(5);
+                make.bottom.equalTo(cell.mas_bottom).offset(-5);
+                make.height.equalTo(@(20));
+            }];
+        }
+    }
+}
+
 
 - (void)configureCell:(XHMessageTableViewCell *)cell atIndexPath:(NSIndexPath *)indexPath {
-    XHMessage *message = self.messages[indexPath.row];
-    BOOL isCurrentUser = [message.sender isEqualToString:[YPBUser currentUser].userId];
+    YPBChatMessage *message = self.chatMessages[indexPath.row];
+    XHMessage *messagea = self.messages[indexPath.row];
+    
+    BOOL isCurrentUser = [messagea.sender isEqualToString:[YPBUser currentUser].userId];
     if (isCurrentUser) {
         [cell.avatarButton sd_setImageWithURL:[NSURL URLWithString:[YPBUser currentUser].logoUrl]
                                      forState:UIControlStateNormal
@@ -313,6 +360,7 @@ DefineLazyPropertyInitialization(NSMutableArray, chatMessages)
                                      forState:UIControlStateNormal
                              placeholderImage:[UIImage imageNamed:@"avatar_placeholder"]];
         @weakify(self);
+        [cell.avatarButton bk_removeEventHandlersForControlEvents:UIControlEventTouchUpInside];
         [cell.avatarButton bk_addEventHandler:^(id sender) {
             @strongify(self);
             YPBUserDetailViewController *detailVC = [[YPBUserDetailViewController alloc] initWithUserId:self.userId];
@@ -343,6 +391,8 @@ DefineLazyPropertyInitialization(NSMutableArray, chatMessages)
     } else {
         bottomLabel.text = nil;
     }
+    
+    
 }
 
 - (BOOL)shouldDisplayTimestampForRowAtIndexPath:(NSIndexPath *)indexPath {

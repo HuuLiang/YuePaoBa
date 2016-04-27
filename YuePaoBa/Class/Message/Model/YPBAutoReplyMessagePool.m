@@ -10,6 +10,7 @@
 #import "YPBChatMessage.h"
 #import "YPBAutoReplyMessage.h"
 #import "YPBContact.h"
+#import "YPBBlacklist.h"
 
 static const NSUInteger kRollingTimeInterval = 60;
 static const NSUInteger kReplyingTimeInterval = 60 * 5;
@@ -44,12 +45,20 @@ static const NSUInteger kReplyingTimeInterval = 60 * 5;
             NSDate *replyDateTime = [YPBUtil dateFromString:obj.replyTime];
             DLog(@"------replyDateTime----%@",replyDateTime);
             
-            [[YPBLocalNotification sharedInstance] createLocalNotificationWithMessage:obj.replyMessage Date:replyDateTime];
+            if (![[YPBBlacklist sharedInstance] checkUserIdIsTure:obj.userId]) {
+                [[YPBLocalNotification sharedInstance] createLocalNotificationWithMessage:obj.replyMessage Date:replyDateTime BlacklistUesrId:obj.userId];
+            }
             
             if ([replyDateTime isInPast]) {
-                NSString *sender = obj.userId;
+                
+                if ([[YPBBlacklist sharedInstance] checkUserIdIsTure:obj.userId]) {
+                    [obj deleteFromPersistence];
+                    return ;
+                }
+                
                 NSString *message = obj.replyMessage;
                 NSString *msgTime = obj.replyTime;
+                NSString *sender = obj.userId;
                 DLog(@"--sender-%@---message-%@-----msgTime-%@---",sender,message,msgTime);
                 
                 dispatch_async(dispatch_get_main_queue(), ^{

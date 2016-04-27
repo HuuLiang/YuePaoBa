@@ -12,6 +12,7 @@
 #import "YPBWebViewController.h"
 #import "YPBFeedbackModel.h"
 #import "YPBApplePay.h"
+#import "YPBBlacklistController.h"
 
 @interface YPBSettingViewController ()
 {
@@ -20,6 +21,7 @@
     YPBTableViewCell *_agreementCell;
     YPBTableViewCell *_feedbackCell;
     YPBTableViewCell *_versionCell;
+    YPBTableViewCell *_blacklistCell;
 }
 @property (nonatomic,retain) YPBFeedbackModel *feedbackModel;
 @end
@@ -101,6 +103,10 @@ DefineLazyPropertyInitialization(YPBFeedbackModel, feedbackModel)
             YPBWebViewController *webVC = [[YPBWebViewController alloc] initWithURL:[NSURL URLWithString:YPB_AGREEMENT_URL]];
             webVC.title = @"用户协议";
             [self.navigationController pushViewController:webVC animated:YES];
+        } else if (cell == self ->_blacklistCell) {
+            YPBBlacklistController *listVC = [[YPBBlacklistController alloc] init];
+            listVC.title = @"黑名单列表";
+            [self.navigationController pushViewController:listVC animated:YES];
         }
         
     };
@@ -133,6 +139,9 @@ DefineLazyPropertyInitialization(YPBFeedbackModel, feedbackModel)
     
     _clearCacheCell = [self cellWithCommonStylesAndTitle:@"清理图片缓存"];
     [self setLayoutCell:_clearCacheCell inRow:0 andSection:0];
+    
+    _blacklistCell = [self cellWithCommonStylesAndTitle:@"黑名单列表"];
+    [self setLayoutCell:_blacklistCell inRow:1 andSection:0];
     
     [self setHeaderHeight:10 inSection:1];
     

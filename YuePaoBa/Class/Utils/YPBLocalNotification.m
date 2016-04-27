@@ -27,10 +27,33 @@
     noti.alertBody = message;
     noti.soundName = UILocalNotificationDefaultSoundName;
     noti.alertAction = @"";
-//    NSDictionary *dic = [NSDictionary dictionaryWithObjectsAndKeys:@"localPush",@"key", nil];
-//    [noti setUserInfo:dic];
+    NSDictionary * dic = @{@"userId":@"YPBPusnSystemInfo"};
+    [noti setUserInfo:dic];
     [[UIApplication sharedApplication] scheduleLocalNotification:noti];
 
 }
+
+- (void)createLocalNotificationWithMessage:(NSString *)message Date:(NSDate *)date BlacklistUesrId:(NSString *)userId {
+    UILocalNotification *noti = [[UILocalNotification alloc] init];
+    noti.fireDate = date;
+    noti.timeZone = [NSTimeZone defaultTimeZone];
+    noti.alertBody = message;
+    noti.soundName = UILocalNotificationDefaultSoundName;
+    noti.alertAction = @"";
+    NSDictionary * dic = @{@"userId":userId};
+    [noti setUserInfo:dic];
+    [[UIApplication sharedApplication] scheduleLocalNotification:noti];
+}
+
+- (void)checkLocalNotificationWithUserId:(NSString *)userId {
+    NSArray *narry=[[UIApplication sharedApplication] scheduledLocalNotifications];
+       for (UILocalNotification *noti in narry) {
+        NSDictionary *userInfo = noti.userInfo;
+        if ([userInfo[@"userId"] isEqualToString:userId]) {
+            [[UIApplication sharedApplication] cancelLocalNotification:noti];
+        }
+    }
+}
+
 
 @end

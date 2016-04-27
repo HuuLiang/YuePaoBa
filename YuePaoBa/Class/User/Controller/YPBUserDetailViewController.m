@@ -21,7 +21,9 @@
 #import "YPBLiveShowViewController.h"
 #import "YPBUserDetailFooterBar.h"
 #import "YPBUserProfileViewController.h"
-
+#import "YPBReportViolationViewController.h"
+#import "YPBBlacklist.h"
+#import "YPBLocalNotification.h"
 #import "YPBSystemConfig.h"
 #import "YPBMessageCenter.h"
 
@@ -103,6 +105,51 @@ DefineLazyPropertyInitialization(YPBUserAccessModel, userAccessModel)
     self.layoutTableView.contentInset = UIEdgeInsetsMake(0, 0, 50, 0);
     
     [YPBStatistics logEvent:kLogUserDetailViewedEvent fromUser:[YPBUser currentUser].userId toUser:self.userId];
+    
+    self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] bk_initWithImage:[UIImage imageNamed:@"more_icon"]
+                                                                                 style:UIBarButtonItemStylePlain
+                                                                               handler:^(id sender)
+    {
+        @strongify(self);
+        UIActionSheet *moreSheet = [[UIActionSheet alloc] init];
+        moreSheet.actionSheetStyle = UIActionSheetStyleBlackTranslucent;
+        [moreSheet bk_addButtonWithTitle:@"举报该用户" handler:^{
+            YPBReportViolationViewController *reportVC = [[YPBReportViolationViewController alloc] initWithUserId:self.userId];
+            [self.navigationController pushViewController:reportVC animated:YES];
+        }];
+        if ([[YPBBlacklist sharedInstance] checkUserIdIsTure:_userId]) {
+            [moreSheet bk_addButtonWithTitle:@"移除黑名单" handler:^{
+                if (_userId.length > 0 && _user.nickName.length > 0) {
+                    [[YPBBlacklist sharedInstance] cancleUserFromBlacklist:_userId];
+                    [self.view showMessageWithTitle:@"操作成功"];
+                } else {
+                    [self.view showMessageWithTitle:@"操作无效"];
+                }
+            }];
+        } else {
+            [moreSheet bk_addButtonWithTitle:@"拉黑该用户" handler:^{
+                if (_userId.length > 0 && _user.nickName.length > 0) {
+                    UIAlertView *view = [UIAlertView bk_alertViewWithTitle:@"确认拉黑吗？"];
+                    [view bk_setCancelButtonWithTitle:@"取消" handler:^{
+                        
+                    }];
+                    [view bk_setCancelButtonWithTitle:@"确认" handler:^{
+                        [[YPBBlacklist sharedInstance] addUserIntoBlacklist:_userId UserImage:_user.logoUrl NickName:_user.nickName];
+                        [self.view showMessageWithTitle:@"操作成功"];
+                    }];
+                    [view show];
+                    
+                    //判断是否已经有本地的通知在  若有则删除
+                    [[YPBLocalNotification sharedInstance] checkLocalNotificationWithUserId:_userId];
+                } else {
+                    [self.view showMessageWithTitle:@"操作无效,请重试"];
+                }
+            }];
+        }
+        
+        [moreSheet bk_setCancelButtonWithTitle:@"取消" handler:nil];
+        [moreSheet showInView:self.view];
+    }];
 }
 
 - (void)dealloc {
@@ -412,4 +459,9 @@ DefineLazyPropertyInitialization(YPBUserAccessModel, userAccessModel)
         [self refreshGiftBar];
     }
 }
+
+#pragma mark - UIActionSheetDelegate
+
+
+
 @end
