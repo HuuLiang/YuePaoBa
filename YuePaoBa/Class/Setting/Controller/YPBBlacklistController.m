@@ -117,6 +117,8 @@
             rightItem.title = @"编辑";
             self.navigationItem.leftBarButtonItem = nil;
             [self.navigationItem setHidesBackButton:NO];
+        } else {
+            self.navigationItem.leftBarButtonItem.title = @"全选";
         }
         [[YPBBlacklist sharedInstance] updateUserInfo:_array];
         rightItem.title = @"取消";

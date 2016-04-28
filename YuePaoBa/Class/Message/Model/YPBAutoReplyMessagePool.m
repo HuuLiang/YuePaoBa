@@ -41,6 +41,9 @@ static const NSUInteger kReplyingTimeInterval = 60 * 5;
 - (void)doRollingMessagesAndAutoReply {
     dispatch_async(self.rollingQueue, ^{
         __block NSTimeInterval latestMessageInterval = kRollingTimeInterval;
+        
+        NSMutableArray *deletemeMessages = [NSMutableArray array];
+        
         [[YPBAutoReplyMessage allUnrepliedMessages] enumerateObjectsUsingBlock:^(YPBAutoReplyMessage * _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
             NSDate *replyDateTime = [YPBUtil dateFromString:obj.replyTime];
             DLog(@"------replyDateTime----%@",replyDateTime);
@@ -52,7 +55,8 @@ static const NSUInteger kReplyingTimeInterval = 60 * 5;
             if ([replyDateTime isInPast]) {
                 
                 if ([[YPBBlacklist sharedInstance] checkUserIdIsTure:obj.userId]) {
-                    [obj deleteFromPersistence];
+                    [deletemeMessages addObject:obj];
+//                    [obj deleteFromPersistence];
                     return ;
                 }
                 
@@ -96,6 +100,8 @@ static const NSUInteger kReplyingTimeInterval = 60 * 5;
                 DLog(@"Auto reply message: %@ - will reply in %ld seconds", obj.replyMessage, (long)messageInterval);
             }
         }];
+        
+        [YPBAutoReplyMessage deleteObjects:deletemeMessages];
         
         dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_BACKGROUND, 0), ^{
             sleep(latestMessageInterval);

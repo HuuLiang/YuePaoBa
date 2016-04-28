@@ -129,13 +129,13 @@ DefineLazyPropertyInitialization(YPBUserAccessModel, userAccessModel)
         } else {
             [moreSheet bk_addButtonWithTitle:@"拉黑该用户" handler:^{
                 if (_userId.length > 0 && _user.nickName.length > 0) {
-                    UIAlertView *view = [UIAlertView bk_alertViewWithTitle:@"确认拉黑吗？"];
-                    [view bk_setCancelButtonWithTitle:@"取消" handler:^{
-                        
-                    }];
+                    UIAlertView *view = [UIAlertView bk_alertViewWithTitle:@"拉黑后将不会收到对方发的消息"];
                     [view bk_setCancelButtonWithTitle:@"确认" handler:^{
                         [[YPBBlacklist sharedInstance] addUserIntoBlacklist:_userId UserImage:_user.logoUrl NickName:_user.nickName];
                         [self.view showMessageWithTitle:@"操作成功"];
+                    }];
+                    [view bk_setCancelButtonWithTitle:@"取消" handler:^{
+                        
                     }];
                     [view show];
                     
@@ -204,6 +204,11 @@ DefineLazyPropertyInitialization(YPBUserAccessModel, userAccessModel)
     if (self.user.userId.length == 0) {
         [[YPBMessageCenter defaultCenter] showErrorWithTitle:@"无法获取用户信息" inViewController:self];
         return ;
+    }
+    
+    if ([[YPBBlacklist sharedInstance] checkUserIdIsTure:self.user.userId]) {
+        [[YPBMessageCenter defaultCenter] showErrorWithTitle:@"该用户已被拉黑,打招呼失败" inViewController:self];
+        return;
     }
     
     if (self.user.isGreet) {
