@@ -86,7 +86,7 @@ DefineLazyPropertyInitialization(NSMutableArray, imageViews)
         return _imageNames;
     }
     
-    _imageNames = @[@"login1", @"login2", @"login3"];
+    _imageNames = @[@"loading_1", @"loading_2", @"loading_3"];
     return _imageNames;
 }
 
