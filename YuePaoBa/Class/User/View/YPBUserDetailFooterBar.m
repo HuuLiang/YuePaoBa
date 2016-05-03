@@ -96,7 +96,7 @@
         }
         
         _dateItem = [[YPBUserDetailFooterBarItem alloc] init];
-        [_dateItem setTitle:@"约会吧" forState:UIControlStateNormal];
+        [_dateItem setTitle:@"聊天" forState:UIControlStateNormal];
         [_dateItem setImage:[UIImage imageNamed:@"user_date_footer_icon"] forState:UIControlStateNormal];
         [_dateItem bk_addEventHandler:^(id sender) {
             @strongify(self);
