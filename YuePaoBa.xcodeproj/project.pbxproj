@@ -3071,7 +3071,7 @@
 				ONLY_ACTIVE_ARCH = YES;
 				PRODUCT_BUNDLE_IDENTIFIER = com.iqu8.yuepaoba;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "70a67ff7-29c0-4518-96ea-a0e2f90ba3ac";
+				PROVISIONING_PROFILE = "77f2b370-7baa-4dc6-a6b3-319bbc4731fc";
 				USER_HEADER_SEARCH_PATHS = "$(PODS_ROOT)/**";
 			};
 			name = Debug;
@@ -3101,7 +3101,7 @@
 				ONLY_ACTIVE_ARCH = YES;
 				PRODUCT_BUNDLE_IDENTIFIER = com.iqu8.yuepaoba;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "70a67ff7-29c0-4518-96ea-a0e2f90ba3ac";
+				PROVISIONING_PROFILE = "77f2b370-7baa-4dc6-a6b3-319bbc4731fc";
 				USER_HEADER_SEARCH_PATHS = "$(PODS_ROOT)/**";
 			};
 			name = Release;
