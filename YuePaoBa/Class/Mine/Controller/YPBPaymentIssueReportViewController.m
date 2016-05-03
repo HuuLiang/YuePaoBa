@@ -12,6 +12,7 @@
 #import <ActionSheetStringPicker.h>
 #import "YPBFeedbackModel.h"
 #import "YPBTickCell.h"
+#import "YPBSystemConfig.h"
 
 @interface YPBPaymentIssueReportViewController ()
 {
@@ -121,6 +122,9 @@ DefineLazyPropertyInitialization(YPBFeedbackModel, feedbackModel)
 - (void)onPaymentCell {
     @weakify(self);
     NSArray *rows = @[@"支付宝",@"微信客户端支付"];
+    if ([[YPBSystemConfig sharedConfig].isUseApplePay isEqualToString:@"1"]) {
+        rows = @[@"",@"苹果内购"];
+    }
     NSUInteger index = [rows indexOfObject:_paymentTypeCell.subtitleLabel.text];
     [ActionSheetStringPicker showPickerWithTitle:@"选择支付类型"
                                             rows:rows
