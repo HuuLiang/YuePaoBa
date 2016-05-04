@@ -46,6 +46,8 @@
     _contentScrollview.pagingEnabled = YES;
     _contentScrollview.delegate = self;
     _contentScrollview.showsHorizontalScrollIndicator = NO;
+    _contentScrollview.showsVerticalScrollIndicator = NO;
+    _contentScrollview.bounces = NO;
     //方向锁
     _contentScrollview.directionalLockEnabled = YES;
     //取消自动布局
