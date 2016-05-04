@@ -80,8 +80,8 @@
         }
         
         _giftItem = [[YPBUserDetailFooterBarItem alloc] init];
-//        [_giftItem setTitle:@"送礼物" forState:UIControlStateNormal];
         [_giftItem setImage:[UIImage imageNamed:@"user_gift_footer_icon"] forState:UIControlStateNormal];
+        [_giftItem setImage:[UIImage imageNamed:@"user_gift_selected_footer_icon"] forState:UIControlStateHighlighted];
         [_giftItem bk_addEventHandler:^(id sender) {
             @strongify(self);
             SafelyCallBlock1(self.giftAction, sender);
@@ -96,8 +96,8 @@
         }
         
         _dateItem = [[YPBUserDetailFooterBarItem alloc] init];
-//        [_dateItem setTitle:@"聊天" forState:UIControlStateNormal];
         [_dateItem setImage:[UIImage imageNamed:@"user_date_footer_icon"] forState:UIControlStateNormal];
+        [_dateItem setImage:[UIImage imageNamed:@"user_date_selected_footer_icon"] forState:UIControlStateHighlighted];
         [_dateItem bk_addEventHandler:^(id sender) {
             @strongify(self);
             SafelyCallBlock1(self.dateAction, sender);
