@@ -75,19 +75,7 @@ DefineLazyPropertyInitialization(YPBUserAccessModel, userAccessModel);
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(onVIPUpgradeSuccessNotification:) name:kVIPUpgradeSuccessNotification object:nil];
 }
 
-- (void)loadOrRefreshData:(BOOL)isRefresh {
-//    if (!isRefresh && ![YPBUtil isVIP] && [self.userListModel.paginator.page isEqualToNumber:[YPBSystemConfig sharedConfig].firstPayPages]) {
-//        [_layoutCollectionView YPB_endPullToRefresh];
-//        
-////        @weakify(self);
-////        [YPBVIPEntranceView showVIPEntranceInView:self.view canClose:YES withEnterAction:^(id obj) {
-////            @strongify(self);
-//            YPBVIPPriviledgeViewController *vipVC = [[YPBVIPPriviledgeViewController alloc] initWithContentType:YPBPaymentContentTypeHomePageForMoreUsers];
-//            [self.navigationController pushViewController:vipVC animated:YES];
-////        }];
-//        return ;
-//    }
-    
+- (void)loadOrRefreshData:(BOOL)isRefresh {    
     @weakify(self);
     YPBCompletionHandler handler = ^(BOOL success, id obj) {
         @strongify(self);

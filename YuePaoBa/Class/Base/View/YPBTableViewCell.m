@@ -79,7 +79,7 @@
 - (void)subtitleLabelRemakeConstraints {
     [_subtitleLabel mas_remakeConstraints:^(MASConstraintMaker *make) {
         make.right.equalTo(self.contentView).offset(self.accessoryType==UITableViewCellAccessoryNone?-15:-5);
-        make.left.equalTo(self.contentView.mas_centerX);
+        make.left.mas_equalTo(self.contentView.mas_centerX);
         make.centerY.equalTo(self.contentView);
     }];
 }

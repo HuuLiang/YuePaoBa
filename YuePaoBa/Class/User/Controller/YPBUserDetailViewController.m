@@ -93,8 +93,10 @@ DefineLazyPropertyInitialization(YPBUserAccessModel, userAccessModel)
     [self.view addSubview:_footerBar];
     {
         [_footerBar mas_makeConstraints:^(MASConstraintMaker *make) {
-            make.left.right.bottom.equalTo(self.view);
-            make.height.mas_equalTo(80);
+            make.bottom.equalTo(self.view);
+            make.left.equalTo(self.view).offset(self.view.frame.size.width/5);
+            make.right.equalTo(self.view).offset(-self.view.frame.size.width/5);
+            make.height.mas_equalTo(70);
         }];
     }
     self.layoutTableView.contentInset = UIEdgeInsetsMake(0, 0, 50, 0);

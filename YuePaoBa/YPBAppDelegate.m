@@ -27,6 +27,8 @@
 #import <AlipaySDK/AlipaySDK.h>
 #import <KSCrash/KSCrashInstallationStandard.h>
 
+#import "YPBSegmentViewController.h"
+
 @interface YPBAppDelegate () <WXApiDelegate,UITabBarControllerDelegate>
 @property (nonatomic,retain) YPBWeChatPayQueryOrderRequest *wechatPayOrderQueryRequest;
 @end
@@ -48,7 +50,7 @@ DefineLazyPropertyInitialization(YPBWeChatPayQueryOrderRequest, wechatPayOrderQu
 }
 
 - (UIViewController *)setupRootViewController {
-    YPBHomeViewController *homeVC = [[YPBHomeViewController alloc] initWithTitle:@"今日推荐"];
+    YPBSegmentViewController *homeVC = [[YPBSegmentViewController alloc] initWithTitle:@"今日推荐"];
     UINavigationController *homeNav = [[UINavigationController alloc] initWithRootViewController:homeVC];
     homeNav.tabBarItem = [[UITabBarItem alloc] initWithTitle:homeVC.title
                                                        image:[UIImage imageNamed:@"tabbar_home_normal_icon"]

@@ -29,7 +29,7 @@
     if (CGRectIsEmpty(contentRect)) {
         return CGRectZero;
     }
-    const CGFloat imageWidth = CGRectGetWidth(contentRect)*2/3;
+    const CGFloat imageWidth = CGRectGetWidth(contentRect)*4/5;
     const CGFloat imageHeight = imageWidth;
     const CGFloat imageX = (CGRectGetWidth(contentRect)-imageWidth)/2;
     return CGRectMake(imageX, 5, imageWidth, imageHeight);
