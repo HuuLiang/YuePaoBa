@@ -175,7 +175,7 @@ DefineLazyPropertyInitialization(YPBSendGiftModel, sendGiftModel)
     _giftLabel.numberOfLines = 2;
     _giftLabel.text = [NSString stringWithFormat:@"\"%@\"", giftWord];
     _giftLabel.textColor = [UIColor redColor];
-    _giftLabel.font = [UIFont systemFontOfSize:18.];
+    _giftLabel.font = [UIFont systemFontOfSize:15.];
     [self.view addSubview:_giftLabel];
     {
         [_giftLabel mas_makeConstraints:^(MASConstraintMaker *make) {
