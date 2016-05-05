@@ -23,8 +23,9 @@
 
 - (BOOL)fetchGiftListWithCompletionHandler:(YPBCompletionHandler)handler {
     @weakify(self);
+    NSDictionary *params = @{@"channel":YPB_CHANNEL_NO};
     BOOL ret = [self requestURLPath:YPB_GIFT_LIST_URL
-                         withParams:nil
+                         withParams:params
                     responseHandler:^(YPBURLResponseStatus respStatus, NSString *errorMessage)
     {
         @strongify(self);
