@@ -14,6 +14,7 @@
 #import "YPBRegisterModel.h"
 #import "YPBActivateModel.h"
 
+
 @interface YPBReigsterSecondViewController ()
 {
     UITableViewCell *_heightCell;
@@ -53,16 +54,6 @@ DefineLazyPropertyInitialization(YPBActivateModel, activateModel)
             make.edges.equalTo(self.view);
         }];
     }
-//    
-//    [self.view addSubview:self.titleView];
-//    {
-//        [self.titleView mas_makeConstraints:^(MASConstraintMaker *make) {
-//            make.centerX.equalTo(self.view);
-//            make.centerY.equalTo(self.view).dividedBy(3);
-//            make.left.right.equalTo(self.view).insets(UIEdgeInsetsMake(0, 30, 0, 30));
-//            make.height.mas_equalTo(60);
-//        }];
-//    }
     
     self.layoutTableView.layer.cornerRadius = 8;
     self.layoutTableView.rowHeight = MAX(kScreenHeight * 0.08, 50);
@@ -71,7 +62,11 @@ DefineLazyPropertyInitialization(YPBActivateModel, activateModel)
     [self.layoutTableView mas_makeConstraints:^(MASConstraintMaker *make) {
         make.left.right.equalTo(self.view).insets(UIEdgeInsetsMake(0, 30, 0, 30));
         make.top.equalTo(self.view).offset(30);
-        make.height.mas_equalTo(self.layoutTableView.rowHeight*(self.user.gender==YPBUserGenderMale?3:2));
+        if ([[YPBSystemConfig sharedConfig].isUseApplePay isEqualToString:@"1"]) {
+            make.height.mas_equalTo(self.layoutTableView.rowHeight*2);
+        } else {
+            make.height.mas_equalTo(self.layoutTableView.rowHeight*(self.user.gender==YPBUserGenderMale?3:2));
+        }
     }];
     
     @weakify(self);
@@ -253,7 +248,8 @@ DefineLazyPropertyInitialization(YPBActivateModel, activateModel)
             [self.user setTargetAgeWithRangeStringBetween:selectedValues[0] and:selectedValues[1]];
             self->_ageCell.detailTextLabel.text = self.user.targetAgeDescription;
         } cancelBlock:nil origin:self.view];
-    } else if (indexPath.row == 2) {
+    }
+    else if (indexPath.row == 2) {
         [ActionSheetStringPicker showPickerWithTitle:@"选择对象罩杯"
                                                 rows:[YPBUser allCupsDescription]
                                     initialSelection:self.user.valueIndexOfTargetCup

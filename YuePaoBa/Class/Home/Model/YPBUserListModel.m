@@ -49,7 +49,8 @@
                              @"sex":[YPBUser stringOfGender:gender],
                              @"uPosition":space == YPBUserSpaceHome ? @1 : @2,
                              @"pageNum":@(page),
-                             @"pageSize":space == YPBUserSpaceHome?@18:@10
+                             @"pageSize":space == YPBUserSpaceHome?@18:@10,
+                             @"channel":YPB_CHANNEL_NO
                              };
     BOOL success = [self requestURLPath:YPB_USER_LIST_URL
                              withParams:params
