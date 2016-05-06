@@ -9,6 +9,7 @@
 #import "YPBUser.h"
 
 NSString *const kNotLimitedDescription = @"不限";
+NSString *const kSecretDescription = @"保密";
 static NSString *const kHeightUnitString = @"cm";
 static NSString *const kAgeUnitString = @"岁";
 static YPBUser *_currentUser;
@@ -287,6 +288,19 @@ static YPBUser *_currentUser;
     [self.allAgeValues enumerateObjectsUsingBlock:^(NSNumber * _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
         if ([obj isEqualToNumber:@(0)]) {
             [ageStrings addObject:kNotLimitedDescription];
+        } else {
+            [ageStrings addObject:[obj.stringValue stringByAppendingString:kAgeUnitString]];
+        }
+    }];
+    return ageStrings;
+}
+
++ (NSArray<NSString *> *)allSelfAgeDescription {
+    NSMutableArray *ageStrings = [NSMutableArray array];
+    
+    [self.allAgeValues enumerateObjectsUsingBlock:^(NSNumber * _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
+        if ([obj isEqualToNumber:@(0)]) {
+            [ageStrings addObject:kSecretDescription];
         } else {
             [ageStrings addObject:[obj.stringValue stringByAppendingString:kAgeUnitString]];
         }
@@ -622,6 +636,10 @@ static YPBUser *_currentUser;
     NSString *value1 = self.targetAge.min == 0 ? kNotLimitedDescription : [NSString stringWithFormat:@"%ld岁", self.targetAge.min];
     NSString *value2 = self.targetAge.max == 0 ? kNotLimitedDescription : [NSString stringWithFormat:@"%ld岁", self.targetAge.max];
     return [self filterRangeBetween:value1 and:value2];
+}
+
+- (NSString *)selfAgeDescription {
+    return [[self class] allSelfAgeDescription][0];
 }
 
 - (NSString *)targetCupDescription {

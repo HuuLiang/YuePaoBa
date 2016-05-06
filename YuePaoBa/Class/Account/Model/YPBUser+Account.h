@@ -12,10 +12,12 @@
 
 - (void)setTargetHeightWithRangeStringBetween:(NSString *)value1 and:(NSString *)value2;
 - (void)setTargetAgeWithRangeStringBetween:(NSString *)value1 and:(NSString *)value2;
+- (void)setSelfAgeWithAge:(NSString *)value;
 - (void)setTargetCupWithString:(NSString *)cupString;
 
 - (YPBPair *)valueIndexesOfTargetHeight;
 - (YPBPair *)valueIndexesOfTargetAge;
 - (NSUInteger)valueIndexOfTargetCup;
+- (NSUInteger)valueIndexOfSelfAge;
 
 @end

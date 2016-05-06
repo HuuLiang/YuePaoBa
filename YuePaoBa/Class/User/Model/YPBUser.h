@@ -113,6 +113,7 @@ typedef NS_ENUM(NSUInteger, YPBUserType) {
 + (NSArray<NSString *> *)allCupsDescription;
 + (NSArray<NSString *> *)allHeightRangeDescription;
 + (NSArray<NSString *> *)allAgeRangeDescription;
++ (NSArray<NSString *> *)allSelfAgeDescription;
 + (NSArray<NSNumber *> *)allHeightRangeValues;
 + (NSArray<NSNumber *> *)allWeightRangeValues;
 + (NSArray<NSNumber *> *)allAgeValues;
@@ -147,6 +148,8 @@ typedef NS_ENUM(NSUInteger, YPBUserType) {
 - (NSString *)targetHeightDescription;
 - (NSString *)targetAgeDescription;
 - (NSString *)targetCupDescription;
+
+- (NSString *)selfAgeDescription;
 
 - (BOOL)deleteUserPhoto:(YPBUserPhoto *)photo;
 

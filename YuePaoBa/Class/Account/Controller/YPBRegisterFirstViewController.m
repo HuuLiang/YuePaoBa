@@ -11,10 +11,15 @@
 #import "YPBRadioButton.h"
 #import "YPBRadioButtonGroup.h"
 #import "YPBReigsterSecondViewController.h"
+#import <ActionSheetStringPicker.h>
+#import <ActionSheetMultipleStringPicker.h>
+#import "YPBUser+Account.h"
+
 
 @interface YPBRegisterFirstViewController () <UITextFieldDelegate>
 {
     UITextField *_nicknameTextField;
+    UITableViewCell *_ageCell;
 }
 @property (nonatomic,retain) YPBRadioButtonGroup *genderButtonGroup;
 @property (nonatomic,retain) YPBUser *user;
@@ -27,21 +32,22 @@ DefineLazyPropertyInitialization(YPBUser, user)
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
-    self.title = @"设置个人信息";
+    self.title = @"注册";
     self.edgesForExtendedLayout = UIRectEdgeNone;
-
-    UIImageView *backgroundImageView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"register_background"]];
-    backgroundImageView.contentMode = UIViewContentModeScaleAspectFill;
-    backgroundImageView.userInteractionEnabled = YES;
-    [self.view insertSubview:backgroundImageView atIndex:0];
-    {
-        [backgroundImageView mas_makeConstraints:^(MASConstraintMaker *make) {
-            make.edges.equalTo(self.view);
-        }];
-    }
+    self.layoutTableView.userInteractionEnabled = YES;
+    self.view.backgroundColor = [UIColor colorWithHexString:@"#f6f7ec"];
+//    UIImageView *backgroundImageView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"register_background"]];
+//    backgroundImageView.contentMode = UIViewContentModeScaleAspectFill;
+//    backgroundImageView.userInteractionEnabled = YES;
+//    [self.view insertSubview:backgroundImageView atIndex:0];
+//    {
+//        [backgroundImageView mas_makeConstraints:^(MASConstraintMaker *make) {
+//            make.edges.equalTo(self.view);
+//        }];
+//    }
     
     @weakify(self);
-    [backgroundImageView bk_whenTapped:^{
+    [self.view bk_whenTapped:^{
         @strongify(self);
         [self->_nicknameTextField resignFirstResponder];
     }];
@@ -52,9 +58,9 @@ DefineLazyPropertyInitialization(YPBUser, user)
     self.layoutTableView.separatorInset = UIEdgeInsetsZero;
     [self.layoutTableView mas_makeConstraints:^(MASConstraintMaker *make) {
         make.centerX.equalTo(self.view);
-        make.centerY.equalTo(self.view).dividedBy(2);
-        make.left.right.equalTo(self.view).insets(UIEdgeInsetsMake(0, 30, 0, 30));
-        make.height.mas_equalTo(self.layoutTableView.rowHeight*2);
+        make.centerY.equalTo(self.view).dividedBy(3);
+        make.left.right.equalTo(self.view).insets(UIEdgeInsetsMake(0, 0, 0, 0));
+        make.height.mas_equalTo(self.layoutTableView.rowHeight*3);
     }];
     
     UILabel *promptLabel = [[UILabel alloc] init];
@@ -73,11 +79,11 @@ DefineLazyPropertyInitialization(YPBUser, user)
         @strongify(self);
         [self registerNext];
     }];
-    
+    nextButton.backgroundColor = [UIColor colorWithHexString:@"#ee8838"];
     [self.view addSubview:nextButton];
     {
         [nextButton mas_makeConstraints:^(MASConstraintMaker *make) {
-            make.left.right.equalTo(self.layoutTableView);
+            make.left.right.equalTo(self.view).insets(UIEdgeInsetsMake(0, 20, 0, 20));
             make.top.equalTo(promptLabel.mas_bottom).offset(30);
             make.height.mas_equalTo(self.layoutTableView.rowHeight);
         }];
@@ -89,6 +95,7 @@ DefineLazyPropertyInitialization(YPBUser, user)
 - (void)initLayoutCells {
     [self initGenderCell];
     [self initNicknameCell];
+    [self initAgeCell];
 }
 
 - (void)initGenderCell {
@@ -116,7 +123,7 @@ DefineLazyPropertyInitialization(YPBUser, user)
     {
         [maleButton mas_makeConstraints:^(MASConstraintMaker *make) {
             make.centerY.equalTo(genderCell);
-            make.left.equalTo(titleLabel.mas_right).offset(20);
+            make.left.equalTo(titleLabel.mas_right).offset(30);
             make.size.mas_equalTo(CGSizeMake(35, 15));
         }];
     }
@@ -155,8 +162,11 @@ DefineLazyPropertyInitialization(YPBUser, user)
     }
     
     _nicknameTextField = [[UITextField alloc] init];
-    _nicknameTextField.placeholder = @"输入昵称";
-    _nicknameTextField.font = [UIFont systemFontOfSize:15.];
+    _nicknameTextField.placeholder = @"请输入昵称";
+    [_nicknameTextField setValue:[UIColor colorWithHexString:@"#989994"] forKeyPath:@"_placeholderLabel.textColor"];
+    [_nicknameTextField setValue:[UIFont systemFontOfSize:16.] forKeyPath:@"_placeholderLabel.font"];
+    _nicknameTextField.textAlignment = NSTextAlignmentRight;
+//    _nicknameTextField.font = [UIFont systemFontOfSize:15.];
     _nicknameTextField.delegate = self;
     _nicknameTextField.returnKeyType = UIReturnKeyNext;
     _nicknameTextField.clearButtonMode = UITextFieldViewModeWhileEditing;
@@ -167,6 +177,33 @@ DefineLazyPropertyInitialization(YPBUser, user)
             make.top.right.bottom.equalTo(nicknameCell).insets(UIEdgeInsetsMake(5, 0, 5, 15));
         }];
     }
+}
+
+- (void)initAgeCell {
+    _ageCell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleValue1 reuseIdentifier:nil];
+    _ageCell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
+    _ageCell.textLabel.text = @"年龄";
+    _ageCell.textLabel.font = [UIFont systemFontOfSize:15.];
+    _ageCell.detailTextLabel.text = self.user.selfAgeDescription;
+    [self setLayoutCell:_ageCell inRow:2 andSection:0];
+    [_ageCell bk_whenTapped:^{
+        @weakify(self);
+        [ActionSheetStringPicker showPickerWithTitle:@"设置自己年龄"
+                                                rows:[YPBUser allSelfAgeDescription]
+                                    initialSelection:self.user.valueIndexOfSelfAge
+                                           doneBlock:^(ActionSheetStringPicker *picker, NSInteger selectedIndex, id selectedValue)
+         {
+             @strongify(self);
+             if (![selectedValue isEqualToString:@"保密"]) {
+                 [self.user setSelfAgeWithAge:selectedValue];
+                 self->_ageCell.detailTextLabel.text = [NSString stringWithFormat:@"%@岁",[self.user.age stringValue]];
+             } else {
+                 self.user.age = 0;
+                 _ageCell.detailTextLabel.text = self.user.selfAgeDescription;
+             }
+             
+         } cancelBlock:nil origin:self.view];
+    }];
 }
 
 - (void)registerNext {
@@ -220,6 +257,7 @@ DefineLazyPropertyInitialization(YPBUser, user)
         [alertView show];
     }
 }
+
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];

@@ -64,6 +64,14 @@
     }
 }
 
+- (void)setSelfAgeWithAge:(NSString *)value {
+//    NSUInteger index = [[[self class] allSelfAgeDescription] indexOfObject:value];
+//    if (index != NSNotFound) {
+//        self.age = [NSNumber numberWithUnsignedInteger:index];
+//    }
+    self.age = [NSNumber numberWithInteger:[value integerValue]];
+}
+
 - (YPBPair *)valueIndexesOfTargetHeight {
     NSUInteger minIndex = [[[self class] allHeightRangeValues] indexOfObject:@(self.targetHeight.min)];
     if (minIndex == NSNotFound) {
@@ -93,4 +101,14 @@
 - (NSUInteger)valueIndexOfTargetCup {
     return self.targetCup;
 }
+
+- (NSUInteger)valueIndexOfSelfAge {
+    if (self.age == nil || self.age == 0) {
+        return 0;
+    } else {
+        return [self.age unsignedIntegerValue] - 17;
+    }
+//    return [self.age unsignedIntegerValue];
+}
+
 @end

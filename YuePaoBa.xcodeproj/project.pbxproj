@@ -221,6 +221,8 @@
 		BCFB2A6D1C3FDD16003E327D /* YPBPhotoGridViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BCFB2A6C1C3FDD16003E327D /* YPBPhotoGridViewController.m */; };
 		EC2BFB371C9A889E00912302 /* YPBPayIntroduceView.m in Sources */ = {isa = PBXBuildFile; fileRef = EC2BFB361C9A889E00912302 /* YPBPayIntroduceView.m */; };
 		EC7C84A11C982795005CB452 /* YPBPayCell.m in Sources */ = {isa = PBXBuildFile; fileRef = EC7C84A01C982795005CB452 /* YPBPayCell.m */; };
+		ECB655821CDC4447001E9710 /* ditu_plus.jpg in Resources */ = {isa = PBXBuildFile; fileRef = ECB655801CDC4447001E9710 /* ditu_plus.jpg */; };
+		ECB655831CDC4447001E9710 /* ditu.jpg in Resources */ = {isa = PBXBuildFile; fileRef = ECB655811CDC4447001E9710 /* ditu.jpg */; };
 		ECBBBDEA1CD9BC7700D80B14 /* YPBSegmentViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = ECBBBDE91CD9BC7700D80B14 /* YPBSegmentViewController.m */; };
 		ECBBBDED1CD9C6C800D80B14 /* YPBCommonCityViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = ECBBBDEC1CD9C6C800D80B14 /* YPBCommonCityViewController.m */; };
 /* End PBXBuildFile section */
@@ -648,6 +650,8 @@
 		EC2BFB361C9A889E00912302 /* YPBPayIntroduceView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YPBPayIntroduceView.m; sourceTree = "<group>"; };
 		EC7C849F1C982795005CB452 /* YPBPayCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YPBPayCell.h; sourceTree = "<group>"; };
 		EC7C84A01C982795005CB452 /* YPBPayCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YPBPayCell.m; sourceTree = "<group>"; };
+		ECB655801CDC4447001E9710 /* ditu_plus.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = ditu_plus.jpg; sourceTree = "<group>"; };
+		ECB655811CDC4447001E9710 /* ditu.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = ditu.jpg; sourceTree = "<group>"; };
 		ECBBBDE81CD9BC7700D80B14 /* YPBSegmentViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YPBSegmentViewController.h; sourceTree = "<group>"; };
 		ECBBBDE91CD9BC7700D80B14 /* YPBSegmentViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YPBSegmentViewController.m; sourceTree = "<group>"; };
 		ECBBBDEB1CD9C6C800D80B14 /* YPBCommonCityViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YPBCommonCityViewController.h; sourceTree = "<group>"; };
@@ -1536,6 +1540,8 @@
 		BCCE6C5C1C5A0F4100095461 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				ECB655801CDC4447001E9710 /* ditu_plus.jpg */,
+				ECB655811CDC4447001E9710 /* ditu.jpg */,
 				BC5501FB1C60AC6100A20B3A /* login1.jpg */,
 				BC5501FC1C60AC6100A20B3A /* login2.jpg */,
 				BC5501FD1C60AC6100A20B3A /* login3.jpg */,
@@ -1721,6 +1727,7 @@
 				BC85EC361C5CC72A00BA74B1 /* ImageSelectedSmallOff@2x.png in Resources */,
 				BC5501FE1C60AC6100A20B3A /* login1.jpg in Resources */,
 				BC85EC391C5CC72A00BA74B1 /* ImageSelectedSmallOn@2x.png in Resources */,
+				ECB655831CDC4447001E9710 /* ditu.jpg in Resources */,
 				BC1A2D8D1C0EF909003D9138 /* Assets.xcassets in Resources */,
 				BC85EC481C5CC72A00BA74B1 /* UIBarButtonItemGrid@2x.png in Resources */,
 				BC85EC301C5CC72A00BA74B1 /* ImageSelectedOff@2x.png in Resources */,
@@ -1753,6 +1760,7 @@
 				BC85EC341C5CC72A00BA74B1 /* ImageSelectedOn@3x.png in Resources */,
 				BC5502001C60AC6100A20B3A /* login3.jpg in Resources */,
 				BC85EC321C5CC72A00BA74B1 /* ImageSelectedOn.png in Resources */,
+				ECB655821CDC4447001E9710 /* ditu_plus.jpg in Resources */,
 				BC85EC411C5CC72A00BA74B1 /* UIBarButtonItemArrowLeft.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
