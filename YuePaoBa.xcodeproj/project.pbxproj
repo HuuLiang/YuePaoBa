@@ -95,9 +95,6 @@
 		BC53B9C81C3BBEEA004252B1 /* QBImagePickerThumbnailView.m in Sources */ = {isa = PBXBuildFile; fileRef = BC53B9BD1C3BBEEA004252B1 /* QBImagePickerThumbnailView.m */; };
 		BC53B9CB1C3BF0F3004252B1 /* YPBSystemConfigModel.m in Sources */ = {isa = PBXBuildFile; fileRef = BC53B9CA1C3BF0F3004252B1 /* YPBSystemConfigModel.m */; };
 		BC53B9CE1C3BF435004252B1 /* YPBSystemConfig.m in Sources */ = {isa = PBXBuildFile; fileRef = BC53B9CD1C3BF435004252B1 /* YPBSystemConfig.m */; };
-		BC5501FE1C60AC6100A20B3A /* login1.jpg in Resources */ = {isa = PBXBuildFile; fileRef = BC5501FB1C60AC6100A20B3A /* login1.jpg */; };
-		BC5501FF1C60AC6100A20B3A /* login2.jpg in Resources */ = {isa = PBXBuildFile; fileRef = BC5501FC1C60AC6100A20B3A /* login2.jpg */; };
-		BC5502001C60AC6100A20B3A /* login3.jpg in Resources */ = {isa = PBXBuildFile; fileRef = BC5501FD1C60AC6100A20B3A /* login3.jpg */; };
 		BC5555071C50DCD300412F7F /* YPBMessageOptionPanel.m in Sources */ = {isa = PBXBuildFile; fileRef = BC5555061C50DCD300412F7F /* YPBMessageOptionPanel.m */; };
 		BC5704DC1C45F74800DEFAB6 /* AlipayManager.m in Sources */ = {isa = PBXBuildFile; fileRef = BC5704C41C45F74800DEFAB6 /* AlipayManager.m */; };
 		BC5704DD1C45F74800DEFAB6 /* AlipaySDK.bundle in Resources */ = {isa = PBXBuildFile; fileRef = BC5704C51C45F74800DEFAB6 /* AlipaySDK.bundle */; };
@@ -221,8 +218,9 @@
 		BCFB2A6D1C3FDD16003E327D /* YPBPhotoGridViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BCFB2A6C1C3FDD16003E327D /* YPBPhotoGridViewController.m */; };
 		EC2BFB371C9A889E00912302 /* YPBPayIntroduceView.m in Sources */ = {isa = PBXBuildFile; fileRef = EC2BFB361C9A889E00912302 /* YPBPayIntroduceView.m */; };
 		EC7C84A11C982795005CB452 /* YPBPayCell.m in Sources */ = {isa = PBXBuildFile; fileRef = EC7C84A01C982795005CB452 /* YPBPayCell.m */; };
-		ECB655821CDC4447001E9710 /* ditu_plus.jpg in Resources */ = {isa = PBXBuildFile; fileRef = ECB655801CDC4447001E9710 /* ditu_plus.jpg */; };
-		ECB655831CDC4447001E9710 /* ditu.jpg in Resources */ = {isa = PBXBuildFile; fileRef = ECB655811CDC4447001E9710 /* ditu.jpg */; };
+		EC884D0B1CE188F700598E2D /* YPBActivityViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EC884D0A1CE188F700598E2D /* YPBActivityViewController.m */; };
+		EC884D0D1CE18C9A00598E2D /* bannerImg.jpg in Resources */ = {isa = PBXBuildFile; fileRef = EC884D0C1CE18C9A00598E2D /* bannerImg.jpg */; };
+		EC884D0F1CE1C75200598E2D /* login.jpg in Resources */ = {isa = PBXBuildFile; fileRef = EC884D0E1CE1C75200598E2D /* login.jpg */; };
 		ECBBBDEA1CD9BC7700D80B14 /* YPBSegmentViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = ECBBBDE91CD9BC7700D80B14 /* YPBSegmentViewController.m */; };
 		ECBBBDED1CD9C6C800D80B14 /* YPBCommonCityViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = ECBBBDEC1CD9C6C800D80B14 /* YPBCommonCityViewController.m */; };
 /* End PBXBuildFile section */
@@ -425,9 +423,6 @@
 		BC53B9CA1C3BF0F3004252B1 /* YPBSystemConfigModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YPBSystemConfigModel.m; sourceTree = "<group>"; };
 		BC53B9CC1C3BF435004252B1 /* YPBSystemConfig.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YPBSystemConfig.h; sourceTree = "<group>"; };
 		BC53B9CD1C3BF435004252B1 /* YPBSystemConfig.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YPBSystemConfig.m; sourceTree = "<group>"; };
-		BC5501FB1C60AC6100A20B3A /* login1.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = login1.jpg; sourceTree = "<group>"; };
-		BC5501FC1C60AC6100A20B3A /* login2.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = login2.jpg; sourceTree = "<group>"; };
-		BC5501FD1C60AC6100A20B3A /* login3.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = login3.jpg; sourceTree = "<group>"; };
 		BC5555051C50DCD300412F7F /* YPBMessageOptionPanel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YPBMessageOptionPanel.h; sourceTree = "<group>"; };
 		BC5555061C50DCD300412F7F /* YPBMessageOptionPanel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YPBMessageOptionPanel.m; sourceTree = "<group>"; };
 		BC5704C31C45F74800DEFAB6 /* AlipayManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AlipayManager.h; sourceTree = "<group>"; };
@@ -650,8 +645,10 @@
 		EC2BFB361C9A889E00912302 /* YPBPayIntroduceView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YPBPayIntroduceView.m; sourceTree = "<group>"; };
 		EC7C849F1C982795005CB452 /* YPBPayCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YPBPayCell.h; sourceTree = "<group>"; };
 		EC7C84A01C982795005CB452 /* YPBPayCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YPBPayCell.m; sourceTree = "<group>"; };
-		ECB655801CDC4447001E9710 /* ditu_plus.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = ditu_plus.jpg; sourceTree = "<group>"; };
-		ECB655811CDC4447001E9710 /* ditu.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = ditu.jpg; sourceTree = "<group>"; };
+		EC884D091CE188F700598E2D /* YPBActivityViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YPBActivityViewController.h; sourceTree = "<group>"; };
+		EC884D0A1CE188F700598E2D /* YPBActivityViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YPBActivityViewController.m; sourceTree = "<group>"; };
+		EC884D0C1CE18C9A00598E2D /* bannerImg.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = bannerImg.jpg; sourceTree = "<group>"; };
+		EC884D0E1CE1C75200598E2D /* login.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = login.jpg; sourceTree = "<group>"; };
 		ECBBBDE81CD9BC7700D80B14 /* YPBSegmentViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YPBSegmentViewController.h; sourceTree = "<group>"; };
 		ECBBBDE91CD9BC7700D80B14 /* YPBSegmentViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YPBSegmentViewController.m; sourceTree = "<group>"; };
 		ECBBBDEB1CD9C6C800D80B14 /* YPBCommonCityViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YPBCommonCityViewController.h; sourceTree = "<group>"; };
@@ -801,6 +798,8 @@
 				ECBBBDE91CD9BC7700D80B14 /* YPBSegmentViewController.m */,
 				ECBBBDEB1CD9C6C800D80B14 /* YPBCommonCityViewController.h */,
 				ECBBBDEC1CD9C6C800D80B14 /* YPBCommonCityViewController.m */,
+				EC884D091CE188F700598E2D /* YPBActivityViewController.h */,
+				EC884D0A1CE188F700598E2D /* YPBActivityViewController.m */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -1540,11 +1539,8 @@
 		BCCE6C5C1C5A0F4100095461 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
-				ECB655801CDC4447001E9710 /* ditu_plus.jpg */,
-				ECB655811CDC4447001E9710 /* ditu.jpg */,
-				BC5501FB1C60AC6100A20B3A /* login1.jpg */,
-				BC5501FC1C60AC6100A20B3A /* login2.jpg */,
-				BC5501FD1C60AC6100A20B3A /* login3.jpg */,
+				EC884D0E1CE1C75200598E2D /* login.jpg */,
+				EC884D0C1CE18C9A00598E2D /* bannerImg.jpg */,
 			);
 			path = Resources;
 			sourceTree = "<group>";
@@ -1725,12 +1721,11 @@
 				BC85EC4A1C5CC72A00BA74B1 /* VideoOverlay.png in Resources */,
 				BC85EC431C5CC72A00BA74B1 /* UIBarButtonItemArrowLeft@3x.png in Resources */,
 				BC85EC361C5CC72A00BA74B1 /* ImageSelectedSmallOff@2x.png in Resources */,
-				BC5501FE1C60AC6100A20B3A /* login1.jpg in Resources */,
 				BC85EC391C5CC72A00BA74B1 /* ImageSelectedSmallOn@2x.png in Resources */,
-				ECB655831CDC4447001E9710 /* ditu.jpg in Resources */,
 				BC1A2D8D1C0EF909003D9138 /* Assets.xcassets in Resources */,
 				BC85EC481C5CC72A00BA74B1 /* UIBarButtonItemGrid@2x.png in Resources */,
 				BC85EC301C5CC72A00BA74B1 /* ImageSelectedOff@2x.png in Resources */,
+				EC884D0F1CE1C75200598E2D /* login.jpg in Resources */,
 				BC85EC3E1C5CC72A00BA74B1 /* PlayButtonOverlayLargeTap.png in Resources */,
 				BC85EC4B1C5CC72A00BA74B1 /* VideoOverlay@2x.png in Resources */,
 				BC85EC381C5CC72A00BA74B1 /* ImageSelectedSmallOn.png in Resources */,
@@ -1742,7 +1737,6 @@
 				BC85EC3B1C5CC72A00BA74B1 /* PlayButtonOverlayLarge.png in Resources */,
 				BC85EC371C5CC72A00BA74B1 /* ImageSelectedSmallOff@3x.png in Resources */,
 				BC85EC491C5CC72A00BA74B1 /* UIBarButtonItemGrid@3x.png in Resources */,
-				BC5501FF1C60AC6100A20B3A /* login2.jpg in Resources */,
 				BC85EC451C5CC72A00BA74B1 /* UIBarButtonItemArrowRight@2x.png in Resources */,
 				BC85EC2D1C5CC72A00BA74B1 /* ImageError@2x.png in Resources */,
 				BC85EC2C1C5CC72A00BA74B1 /* ImageError.png in Resources */,
@@ -1758,9 +1752,8 @@
 				BC85EC3D1C5CC72A00BA74B1 /* PlayButtonOverlayLarge@3x.png in Resources */,
 				BC85EC311C5CC72A00BA74B1 /* ImageSelectedOff@3x.png in Resources */,
 				BC85EC341C5CC72A00BA74B1 /* ImageSelectedOn@3x.png in Resources */,
-				BC5502001C60AC6100A20B3A /* login3.jpg in Resources */,
+				EC884D0D1CE18C9A00598E2D /* bannerImg.jpg in Resources */,
 				BC85EC321C5CC72A00BA74B1 /* ImageSelectedOn.png in Resources */,
-				ECB655821CDC4447001E9710 /* ditu_plus.jpg in Resources */,
 				BC85EC411C5CC72A00BA74B1 /* UIBarButtonItemArrowLeft.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -1967,6 +1960,7 @@
 				BC50CE321C2954FF00CE88DD /* YPBUser.m in Sources */,
 				BC1654BD1C25293B00AB1F33 /* NSString+crypt.m in Sources */,
 				BC6B74971C3539F10052777E /* GTMBase64.m in Sources */,
+				EC884D0B1CE188F700598E2D /* YPBActivityViewController.m in Sources */,
 				BC85EBC71C5C910A00BA74B1 /* UIImage+Blur.m in Sources */,
 				BC7677A61C91A3EE001AA508 /* YPBStatistics.m in Sources */,
 				BC1B49A71C44F4B300ECB0BA /* YPBPaymentModel.m in Sources */,

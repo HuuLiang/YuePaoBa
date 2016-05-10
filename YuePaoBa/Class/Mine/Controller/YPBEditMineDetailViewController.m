@@ -12,6 +12,7 @@
 #import "YPBMineFigureViewController.h"
 #import <ActionSheetStringPicker.h>
 #import "YPBUser+Mine.h"
+#import "YPBuser+Account.h"
 #import "YPBUserDetailUpdateModel.h"
 
 @interface YPBEditMineDetailViewController ()
@@ -19,11 +20,13 @@
     YPBTableViewCell *_wechatCell;
     YPBTableViewCell *_interestCell;
     YPBTableViewCell *_professionCell;
+    YPBTableViewCell *_educationCell;
     
     YPBTableViewCell *_heightCell;
     YPBTableViewCell *_figureCell;
     YPBTableViewCell *_ageCell;
     
+    YPBTableViewCell *_marryCell;
     YPBTableViewCell *_incomeCell;
     YPBTableViewCell *_assetsCell;
     YPBTableViewCell *_purposeCell;
@@ -76,12 +79,16 @@ DefineLazyPropertyInitialization(YPBUserDetailUpdateModel, updateModel)
             [self onInterestCell];
         } else if (cell == self->_professionCell) {
             [self onProfessionCell];
+        } else if (cell == self->_educationCell) {
+            [self onEducationCell];
         } else if (cell == self->_heightCell) {
             [self onHeightCell];
         } else if (cell == self->_figureCell) {
             [self onFigureCell];
         } else if (cell == self->_ageCell) {
             [self onAgeCell];
+        } else if (cell == self->_marryCell) {
+            [self onMarryCell];
         } else if (cell == self->_incomeCell) {
             [self onIncomeCell];
         } else if (cell == self->_assetsCell) {
@@ -109,29 +116,37 @@ DefineLazyPropertyInitialization(YPBUserDetailUpdateModel, updateModel)
                                                       title:@"职业" subtitle:self.user.profession];
     [self setLayoutCell:_professionCell inRow:2 andSection:0];
     
+    _educationCell = [self newCellWithCommonStylesAndImage:[UIImage imageNamed:@"education_icon"]
+                                                     title:@"学历" subtitle:self.user.edu];
+    [self setLayoutCell:_educationCell inRow:0 andSection:1];
+    
     _heightCell = [self newCellWithCommonStylesAndImage:[UIImage imageNamed:@"height_icon"]
                                                   title:@"身高" subtitle:self.user.heightDescription];
-    [self setLayoutCell:_heightCell inRow:0 andSection:1];
+    [self setLayoutCell:_heightCell inRow:1 andSection:1];
     
     _figureCell = [self newCellWithCommonStylesAndImage:[UIImage imageNamed:@"figure_icon"]
                                                   title:self.user.gender == YPBUserGenderFemale ? @"身材" : @"体重"
                                                subtitle:self.user.gender == YPBUserGenderFemale ? self.user.bwh : (self.user.bwh.length > 0 ? [self.user.bwh stringByAppendingString:@" kg"] :nil)];
-    [self setLayoutCell:_figureCell inRow:1 andSection:1];
+    [self setLayoutCell:_figureCell inRow:2 andSection:1];
     
     _ageCell = [self newCellWithCommonStylesAndImage:[UIImage imageNamed:@"age_icon"]
                                                title:@"年龄" subtitle:self.user.ageDescription];
-    [self setLayoutCell:_ageCell inRow:2 andSection:1];
+    [self setLayoutCell:_ageCell inRow:3 andSection:1];
+    
+    _marryCell = [self newCellWithCommonStylesAndImage:[UIImage imageNamed:@"marry_icon"]
+                                                 title:@"婚姻状况" subtitle:self.user.marry];
+    [self setLayoutCell:_marryCell inRow:0 andSection:2];
     
     _incomeCell = [self newCellWithCommonStylesAndImage:[UIImage imageNamed:@"income_icon"]
                                                   title:@"月收入" subtitle:self.user.monthIncome];
-    [self setLayoutCell:_incomeCell inRow:0 andSection:2];
+    [self setLayoutCell:_incomeCell inRow:1 andSection:2];
     
     _assetsCell = [self newCellWithCommonStylesAndImage:[UIImage imageNamed:@"assets_icon"]
                                                   title:@"资产情况" subtitle:self.user.assets];
-    [self setLayoutCell:_assetsCell inRow:1 andSection:2];
+    [self setLayoutCell:_assetsCell inRow:2 andSection:2];
     
     _purposeCell = [self newCellWithCommonStylesAndImage:[UIImage imageNamed:@"purpose_icon"] title:@"交友目的" subtitle:self.user.purpose];
-    [self setLayoutCell:_purposeCell inRow:2 andSection:2];
+    [self setLayoutCell:_purposeCell inRow:3 andSection:2];
     
 }
 
@@ -213,6 +228,34 @@ DefineLazyPropertyInitialization(YPBUserDetailUpdateModel, updateModel)
         return YES;
     };
     [self.navigationController pushViewController:inputVC animated:YES];
+}
+
+- (void)onEducationCell {
+    @weakify(self);
+    [ActionSheetStringPicker showPickerWithTitle:@"请选择您的学历"
+                                            rows:[YPBUser allEducationsDescription]
+                                initialSelection:self.user.valueIndexOfSelfEducation
+                                       doneBlock:^(ActionSheetStringPicker *picker, NSInteger selectedIndex, id selectedValue)
+     {
+         @strongify(self);
+         [self.user setSelfEducationWithString:selectedValue];
+         self->_educationCell.subtitleLabel.text = self.user.selfEducationDescription;
+     } cancelBlock:nil origin:self.view];
+
+}
+
+- (void)onMarryCell {
+    @weakify(self);
+    [ActionSheetStringPicker showPickerWithTitle:@"请设置您的近况"
+                                            rows:[YPBUser allMarriageDescription]
+                                initialSelection:self.user.valueIndexOfSelfMarriage
+                                       doneBlock:^(ActionSheetStringPicker *picker, NSInteger selectedIndex, id selectedValue)
+     {
+         @strongify(self);
+         [self.user setSelfMarriageWithString:selectedValue];
+         self->_marryCell.subtitleLabel.text = self.user.selfMarriageDescripiton;
+     } cancelBlock:nil origin:self.view];
+
 }
 
 - (void)onAgeCell {

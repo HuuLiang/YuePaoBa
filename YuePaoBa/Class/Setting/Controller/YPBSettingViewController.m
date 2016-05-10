@@ -18,6 +18,7 @@
     YPBTableViewCell *_questionCell;
     YPBTableViewCell *_agreementCell;
     YPBTableViewCell *_feedbackCell;
+    YPBTableViewCell *_activityCell;
     YPBTableViewCell *_versionCell;
 }
 @property (nonatomic,retain) YPBFeedbackModel *feedbackModel;
@@ -71,21 +72,29 @@ DefineLazyPropertyInitialization(YPBFeedbackModel, feedbackModel)
                         }
                     }];
                     return YES;
+                } else if ([text isEqualToString:@"用户ID"]) {
+                    [UIAlertView bk_showAlertViewWithTitle:@"您的用户ID为：" message:[YPBUser currentUser].userId cancelButtonTitle:@"确定" otherButtonTitles:nil handler:^(UIAlertView *alertView, NSInteger buttonIndex) {
+                        return;
+                    }];
                 }
                 
-                [textVC.view.window beginLoading];
-                [self.feedbackModel sendFeedback:text
-                                          byUser:[YPBUser currentUser].userId
-                           withCompletionHandler:^(BOOL success, id obj)
-                {
-                    [textVC.view.window endLoading];
-                    
-                    if (success) {
-                        [[YPBMessageCenter defaultCenter] showSuccessWithTitle:@"您的意见反馈已经发送成功" inViewController:self];
-                        [textVC.navigationController popViewControllerAnimated:YES];
-                    }
-                }];
-                return NO;
+                if(![text isEqualToString:@"用户ID"]) {
+                    [textVC.view.window beginLoading];
+                    [self.feedbackModel sendFeedback:text
+                                              byUser:[YPBUser currentUser].userId
+                               withCompletionHandler:^(BOOL success, id obj)
+                     {
+                         [textVC.view.window endLoading];
+                         
+                         if (success) {
+                             [[YPBMessageCenter defaultCenter] showSuccessWithTitle:@"您的意见反馈已经发送成功" inViewController:self];
+                             [textVC.navigationController popViewControllerAnimated:YES];
+                         }
+                     }];
+                    return NO;
+                }
+                
+                return YES;
             };
             [self.navigationController pushViewController:inputVC animated:YES];
         } else if (cell == self->_questionCell) {
@@ -95,6 +104,10 @@ DefineLazyPropertyInitialization(YPBFeedbackModel, feedbackModel)
         } else if (cell == self->_agreementCell) {
             YPBWebViewController *webVC = [[YPBWebViewController alloc] initWithURL:[NSURL URLWithString:YPB_AGREEMENT_URL]];
             webVC.title = @"用户协议";
+            [self.navigationController pushViewController:webVC animated:YES];
+        } else if (cell == self->_activityCell) {
+            YPBWebViewController *webVC = [[YPBWebViewController alloc] initWithURL:[NSURL URLWithString:YPB_ACTIVITY_URL]];
+            webVC.title = @"活动相关";
             [self.navigationController pushViewController:webVC animated:YES];
         }
         
@@ -139,6 +152,9 @@ DefineLazyPropertyInitialization(YPBFeedbackModel, feedbackModel)
     
     _feedbackCell = [self cellWithCommonStylesAndTitle:@"意见反馈"];
     [self setLayoutCell:_feedbackCell inRow:2 andSection:1];
+    
+    _activityCell = [self cellWithCommonStylesAndTitle:@"活动相关"];
+    [self setLayoutCell:_activityCell inRow:3 andSection:1];
 }
 
 - (YPBTableViewCell *)cellWithCommonStylesAndTitle:(NSString *)title {

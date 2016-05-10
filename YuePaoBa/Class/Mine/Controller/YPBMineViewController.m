@@ -38,6 +38,8 @@ static NSString *const kNoUserInfoErrorMessage = @"无法获取用户详细信�
     YPBTableViewCell *_figureCell;
     YPBTableViewCell *_heightCell;
     YPBTableViewCell *_professionCell;
+    YPBTableViewCell *_educationCell;
+    YPBTableViewCell *_marryCell;
     YPBTableViewCell *_interestCell;
     YPBTableViewCell *_wechatCell;
     YPBTableViewCell *_incomeCell;
@@ -71,6 +73,7 @@ DefineLazyPropertyInitialization(YPBUserPhotoDeleteModel, photoDeleteModel)
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+
     // Do any additional setup after loading the view.
     self.layoutTableView.rowHeight = MAX(kScreenHeight * 0.07,44);
     [self.layoutTableView mas_makeConstraints:^(MASConstraintMaker *make) {
@@ -124,6 +127,7 @@ DefineLazyPropertyInitialization(YPBUserPhotoDeleteModel, photoDeleteModel)
             [self.navigationController pushViewController:myGiftVC animated:YES];
         }
     };
+    [self reloadUI];
 }
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -251,6 +255,10 @@ DefineLazyPropertyInitialization(YPBUserPhotoDeleteModel, photoDeleteModel)
     _professionCell.selectionStyle = UITableViewCellSelectionStyleNone;
     [self setLayoutCell:_professionCell inRow:row++ andSection:section];
     
+    _educationCell = [[YPBTableViewCell alloc] initWithImage:[UIImage imageNamed:@"education_icon"] title:@"学历：？？？"];
+    _educationCell.selectionStyle = UITableViewCellAccessoryNone;
+    [self setLayoutCell:_educationCell inRow:row++ andSection:section];
+    
     _interestCell = [[YPBTableViewCell alloc] initWithImage:[UIImage imageNamed:@"interest_icon"] title:@"兴趣：？？？"];
     _interestCell.selectionStyle = UITableViewCellSelectionStyleNone;
     [self setLayoutCell:_interestCell inRow:row++ andSection:section];
@@ -271,6 +279,10 @@ DefineLazyPropertyInitialization(YPBUserPhotoDeleteModel, photoDeleteModel)
     _ageCell.selectionStyle = UITableViewCellSelectionStyleNone;
     [self setLayoutCell:_ageCell inRow:row++ andSection:section];
     
+    _marryCell = [[YPBTableViewCell alloc] initWithImage:[UIImage imageNamed:@"marry_icon"] title:@"婚姻状况：？？？"];
+    _marryCell.selectionStyle = UITableViewCellAccessoryNone;
+    [self setLayoutCell:_marryCell inRow:row++ andSection:section];
+    
     _purposeCell = [[YPBTableViewCell alloc] initWithImage:[UIImage imageNamed:@"purpose_icon"] title:@"交友目的: ?"];
     _purposeCell.selectionStyle = UITableViewCellSelectionStyleNone;
     [self setLayoutCell:_purposeCell inRow:row++ andSection:section];
@@ -285,6 +297,9 @@ DefineLazyPropertyInitialization(YPBUserPhotoDeleteModel, photoDeleteModel)
     _profileCell = [[YPBMineProfileCell alloc] init];
 //    _profileCell.name = [YPBUser currentUser].nickName;
 //    _profileCell.isVIP = [YPBUser currentUser].isVip;
+    DLog("%@",[YPBUser currentUser].logoUrl);
+    self.profileCell.avatarURL = [NSURL URLWithString:[YPBUser currentUser].logoUrl];
+
     _profileCell.avatarAction = ^{
         @strongify(self);
         [self pickingAvatar];
@@ -346,7 +361,6 @@ DefineLazyPropertyInitialization(YPBUserPhotoDeleteModel, photoDeleteModel)
              [[YPBMessageCenter defaultCenter] proceedProgressWithPercent:progress];
          } completionHandler:^(BOOL success, id obj) {
              @strongify(self);
-             
              void (^Handler)(BOOL result) = ^(BOOL result){
                  [[YPBMessageCenter defaultCenter] hideProgress];
                  
@@ -505,11 +519,13 @@ DefineLazyPropertyInitialization(YPBUserPhotoDeleteModel, photoDeleteModel)
     _heightCell.titleLabel.text = [NSString stringWithFormat:@"身高：%@", [YPBUser currentUser].heightDescription ?: @""];
     _figureCell.titleLabel.text = [YPBUser currentUser].figureDescription;
     _professionCell.titleLabel.text = [NSString stringWithFormat:@"职业：%@", [YPBUser currentUser].profession ?: @""];
+    _educationCell.titleLabel.text = [NSString stringWithFormat:@"学历：%@",[YPBUser currentUser].edu ?: @""];
     _interestCell.titleLabel.text = [NSString stringWithFormat:@"兴趣：%@", [YPBUser currentUser].note ?: @""];
     _wechatCell.titleLabel.text = [NSString stringWithFormat:@"微信：%@", [YPBUser currentUser].weixinNum ?: @""];
     _incomeCell.titleLabel.text = [NSString stringWithFormat:@"月收入：%@", [YPBUser currentUser].monthIncome ?: @""];
     _assetsCell.titleLabel.text = [NSString stringWithFormat:@"资产情况：%@", [YPBUser currentUser].assets ?: @""];
     _ageCell.titleLabel.text = [NSString stringWithFormat:@"年龄：%@", [YPBUser currentUser].ageDescription ?: @""];
+    _marryCell.titleLabel.text = [NSString stringWithFormat:@"婚姻状况：%@",[YPBUser currentUser].marry ?: @""];
     _purposeCell.titleLabel.text = [NSString stringWithFormat:@"交友目的：%@", [YPBUser currentUser].purpose];
 }
 

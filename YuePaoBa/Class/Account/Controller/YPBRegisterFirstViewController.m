@@ -14,7 +14,7 @@
 #import <ActionSheetStringPicker.h>
 #import <ActionSheetMultipleStringPicker.h>
 #import "YPBUser+Account.h"
-
+#import "YPBUser+Mine.h"
 
 @interface YPBRegisterFirstViewController () <UITextFieldDelegate>
 {
@@ -36,15 +36,6 @@ DefineLazyPropertyInitialization(YPBUser, user)
     self.edgesForExtendedLayout = UIRectEdgeNone;
     self.layoutTableView.userInteractionEnabled = YES;
     self.view.backgroundColor = [UIColor colorWithHexString:@"#f6f7ec"];
-//    UIImageView *backgroundImageView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"register_background"]];
-//    backgroundImageView.contentMode = UIViewContentModeScaleAspectFill;
-//    backgroundImageView.userInteractionEnabled = YES;
-//    [self.view insertSubview:backgroundImageView atIndex:0];
-//    {
-//        [backgroundImageView mas_makeConstraints:^(MASConstraintMaker *make) {
-//            make.edges.equalTo(self.view);
-//        }];
-//    }
     
     @weakify(self);
     [self.view bk_whenTapped:^{
@@ -166,7 +157,6 @@ DefineLazyPropertyInitialization(YPBUser, user)
     [_nicknameTextField setValue:[UIColor colorWithHexString:@"#989994"] forKeyPath:@"_placeholderLabel.textColor"];
     [_nicknameTextField setValue:[UIFont systemFontOfSize:16.] forKeyPath:@"_placeholderLabel.font"];
     _nicknameTextField.textAlignment = NSTextAlignmentRight;
-//    _nicknameTextField.font = [UIFont systemFontOfSize:15.];
     _nicknameTextField.delegate = self;
     _nicknameTextField.returnKeyType = UIReturnKeyNext;
     _nicknameTextField.clearButtonMode = UITextFieldViewModeWhileEditing;
@@ -216,10 +206,6 @@ DefineLazyPropertyInitialization(YPBUser, user)
         [_nicknameTextField becomeFirstResponder];
         return ;
     }
-    
-//    dispatch_async(dispatch_get_main_queue(), ^{
-//        [_nicknameTextField resignFirstResponder];
-//    });
     
     [self->_nicknameTextField resignFirstResponder];
     

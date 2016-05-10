@@ -12,19 +12,19 @@
 @implementation YPBPayCell
 
 - (void)addSubiews {
-    _backgroundImage = [[UIImageView alloc] init];
-    [self addSubview:_backgroundImage];
+//    _backgroundImage = [[UIImageView alloc] init];
+//    [self addSubview:_backgroundImage];
     
     _priceLabel = [[UILabel alloc] init];
     [self addSubview:_priceLabel];
     
     _detailLabel = [[UILabel alloc] init];
-    _detailLabel.textColor = [UIColor grayColor];
+    _detailLabel.textColor = [UIColor redColor];
     _detailLabel.font = [UIFont systemFontOfSize:15];
     [self addSubview:_detailLabel];
     
     _payButton = [UIButton buttonWithType:UIButtonTypeSystem];
-    _payButton.backgroundColor = [UIColor colorWithRed:66/255.0 green:217/255.0 blue:101/255.0 alpha:1.0];
+    _payButton.backgroundColor = [UIColor colorWithHexString:@"#ee8188"];
     _payButton.layer.cornerRadius = 5;
     [_payButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
     _payButton.titleLabel.font = [UIFont systemFontOfSize:20];
@@ -40,16 +40,19 @@
     DLog("%lu %lu",(unsigned long)price1Month,(unsigned long)price3Month);
     
     if ([monthInfo isEqualToString:@"one"]) {
-        _backgroundImage.image = [UIImage imageNamed:@"pay_153-2"];
-        _priceLabel.text = @"1个月";
+//        _backgroundImage.image = [UIImage imageNamed:@"pay_153-2"];
+        _priceLabel.text = [NSString stringWithFormat:@"%lu/每月",(unsigned long)price1Month];
         _detailLabel.text = @"";
-        [_payButton setTitle:[NSString stringWithFormat:@"%lu元",price1Month/100] forState:UIControlStateNormal];
+//        [_payButton setTitle:[NSString stringWithFormat:@"%lu元",price1Month/100] forState:UIControlStateNormal];
+       [_payButton setTitle:@"开通" forState:UIControlStateNormal];
     } else if ([monthInfo isEqualToString:@"three"]) {
-        _backgroundImage.image = [UIImage imageNamed:@"pay_153-1"];
-        _priceLabel.text = @"6个月送6个月";
-        _detailLabel.text = @"限时特惠:优惠50%";
-        [_payButton setTitle:[NSString stringWithFormat:@"%lu元",price3Month/
-                              100] forState:UIControlStateNormal];
+//        _backgroundImage.image = [UIImage imageNamed:@"pay_153-1"];
+        _priceLabel.text = [NSString stringWithFormat:@"%lu元/季度",price3Month];
+        _detailLabel.text = @"购100元返100元";
+//        [_payButton setTitle:[NSString stringWithFormat:@"%lu元",price3Month/
+//                              100] forState:UIControlStateNormal];
+        [_payButton setTitle:@"开通" forState:UIControlStateNormal];
+
     }
     
     [self LayoutSubviews];
@@ -57,29 +60,35 @@
 
 - (void)LayoutSubviews {
     {
-        [_backgroundImage mas_makeConstraints:^(MASConstraintMaker *make) {
-            make.centerY.equalTo(self.mas_centerY);
-            make.left.equalTo(self).offset(10);
-            make.size.mas_equalTo(CGSizeMake(SCREEN_HEIGHT/12, SCREEN_HEIGHT/12));
-        }];
+//        [_backgroundImage mas_makeConstraints:^(MASConstraintMaker *make) {
+//            make.centerY.equalTo(self.mas_centerY);
+//            make.left.equalTo(self).offset(10);
+//            make.size.mas_equalTo(CGSizeMake(SCREEN_HEIGHT/12, SCREEN_HEIGHT/12));
+//        }];
         
-        if ([_detailLabel.text isEqualToString:@""]) {
-            [_priceLabel mas_makeConstraints:^(MASConstraintMaker *make) {
-                make.left.equalTo(_backgroundImage.mas_right).offset(10);
-                make.centerY.equalTo(self.mas_centerY);
-                make.size.mas_equalTo(CGSizeMake(160, 20));
-            }];
-        } else {
-            [_priceLabel mas_makeConstraints:^(MASConstraintMaker *make) {
-                make.left.equalTo(_backgroundImage.mas_right).offset(10);
-                make.bottom.equalTo(self.mas_centerY);
-                make.size.mas_equalTo(CGSizeMake(160, 20));
-            }];
-        }
+//        if ([_detailLabel.text isEqualToString:@""]) {
+//            [_priceLabel mas_makeConstraints:^(MASConstraintMaker *make) {
+//                make.left.equalTo(_backgroundImage.mas_right).offset(10);
+//                make.centerY.equalTo(self.mas_centerY);
+//                make.size.mas_equalTo(CGSizeMake(160, 20));
+//            }];
+//        } else {
+//            [_priceLabel mas_makeConstraints:^(MASConstraintMaker *make) {
+//                make.left.equalTo(_backgroundImage.mas_right).offset(10);
+//                make.bottom.equalTo(self.mas_centerY);
+//                make.size.mas_equalTo(CGSizeMake(160, 20));
+//            }];
+//        }
+        
+        [_priceLabel mas_makeConstraints:^(MASConstraintMaker *make) {
+            make.left.equalTo(self).offset(SCREEN_WIDTH/20);
+            make.center.centerY.equalTo(self);
+            make.size.mas_equalTo(CGSizeMake(SCREEN_WIDTH/10, SCREEN_HEIGHT/30));
+        }];
     
         [_detailLabel mas_makeConstraints:^(MASConstraintMaker *make) {
-            make.left.equalTo(_backgroundImage.mas_right).offset(10);
-            make.top.equalTo(_priceLabel.mas_bottom);
+            make.left.equalTo(self).offset(SCREEN_WIDTH/3);
+            make.centerY.equalTo(self);
             make.size.mas_equalTo(CGSizeMake(160, 20));
         }];
         

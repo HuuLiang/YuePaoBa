@@ -50,7 +50,7 @@ DefineLazyPropertyInitialization(YPBWeChatPayQueryOrderRequest, wechatPayOrderQu
 }
 
 - (UIViewController *)setupRootViewController {
-    YPBSegmentViewController *homeVC = [[YPBSegmentViewController alloc] initWithTitle:@"今日推荐"];
+    YPBHomeViewController *homeVC = [[YPBHomeViewController alloc] initWithTitle:@"今日推荐"];
     UINavigationController *homeNav = [[UINavigationController alloc] initWithRootViewController:homeVC];
     homeNav.tabBarItem = [[UITabBarItem alloc] initWithTitle:homeVC.title
                                                        image:[UIImage imageNamed:@"tabbar_home_normal_icon"]

@@ -12,4 +12,6 @@
 
 - (BOOL)updateDetailOfUser:(YPBUser *)user withCompletionHandler:(YPBCompletionHandler)handler;
 
+- (BOOL)updateUserPhoneWithUserID:(NSString *)userId Phone:(NSString *)phone withCompletionHandler:(YPBCompletionHandler)handler;
+
 @end

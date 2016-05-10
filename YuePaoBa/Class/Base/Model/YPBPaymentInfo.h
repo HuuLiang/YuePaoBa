@@ -31,7 +31,8 @@ typedef NS_ENUM(NSUInteger, YPBPaymentContentType) {
     YPBPaymentContentTypeHomePageForMoreUsers, //首页加载更多用户付费
     YPBPaymentContentTypeGreetMore, //打更多招呼付费
     YPBPaymentContentTypeMineVIP, //我的页面 主动付费
-    YPBPaymentContentTypeRenewVIP //VIP续费
+    YPBPaymentContentTypeRenewVIP, //VIP续费
+    YPBPaymnetContentTypeActivity //活动
 };
 
 @interface YPBPaymentInfo : NSObject

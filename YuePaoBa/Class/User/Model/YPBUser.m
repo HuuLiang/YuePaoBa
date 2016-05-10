@@ -158,6 +158,10 @@ static YPBUser *_currentUser;
     copiedUser.height                = [self.height copyWithZone:zone];
     copiedUser.bwh                   = [self.bwh copyWithZone:zone];
     copiedUser.monthIncome           = [self.monthIncome copyWithZone:zone];
+    copiedUser.edu                   = [self.edu copyWithZone:zone];
+    copiedUser.marry                 = [self.marry copyWithZone:zone];
+    copiedUser.province              = [self.province copyWithZone:zone];
+    copiedUser.city                  = [self.city copyWithZone:zone];
     copiedUser.note                  = [self.note copyWithZone:zone];
     copiedUser.profession            = [self.profession copyWithZone:zone];
     copiedUser.weixinNum             = [self.weixinNum copyWithZone:zone];
@@ -217,6 +221,26 @@ static YPBUser *_currentUser;
 
 + (NSArray<NSString *> *)allCupsDescription {
     return @[@"", @"A罩杯",@"B罩杯",@"C罩杯",@"C罩杯以上"];
+}
+
++ (NSArray<NSString *>*)allSelfEducationDescription {
+    NSMutableArray *arr = [self allEducationsDescription].mutableCopy;
+    arr[0] = kSecretDescription;
+    return  arr;
+}
+
++ (NSArray<NSString *>*)allEducationsDescription {
+    return @[@"",@"小学",@"初中",@"高中",@"大专",@"本科",@"硕士及以上"];
+}
+
++ (NSArray<NSString *> *)allSelfMarriageDescription {
+    NSMutableArray *arr = [self allMarriageDescription].mutableCopy;
+    arr[0] = kSecretDescription;
+    return arr;
+}
+
++ (NSArray<NSString *> *)allMarriageDescription {
+    return @[@"",@"未婚",@"离异",@"丧偶"];
 }
 
 + (NSArray<NSNumber *> *)allHeightRangeValues {
@@ -434,6 +458,10 @@ static YPBUser *_currentUser;
         _height            = userInfo[kUserHeightKeyName];
         _bwh               = userInfo[kUserFigureKeyName];
         _monthIncome       = userInfo[kUserIncomeKeyName];
+        _edu               = userInfo[kUserEduName];
+        _marry             = userInfo[kUserMarryName];
+        _province          = userInfo[kUserProvinceName];
+        _city              = userInfo[kUserCityName];
         _note              = userInfo[kUserInterestKeyName];
         _profession        = userInfo[kUserProfessionKeyName];
         _weixinNum         = userInfo[kUserWeChatKeyName];
@@ -488,6 +516,10 @@ static YPBUser *_currentUser;
     [userInfo safely_setObject:self.height forKey:kUserHeightKeyName];
     [userInfo safely_setObject:self.bwh forKey:kUserFigureKeyName];
     [userInfo safely_setObject:self.monthIncome forKey:kUserIncomeKeyName];
+    [userInfo safely_setObject:self.edu forKey:kUserEduName];
+    [userInfo safely_setObject:self.marry forKey:kUserMarryName];
+    [userInfo safely_setObject:self.province forKey:kUserProvinceName];
+    [userInfo safely_setObject:self.city forKey:kUserCityName];
     [userInfo safely_setObject:self.note forKey:kUserInterestKeyName];
     [userInfo safely_setObject:self.profession forKey:kUserProfessionKeyName];
     [userInfo safely_setObject:self.weixinNum forKey:kUserWeChatKeyName];
@@ -644,6 +676,14 @@ static YPBUser *_currentUser;
 
 - (NSString *)targetCupDescription {
     return [[self class] allTargetCupsDescription][self.targetCup];
+}
+
+- (NSString *)selfEducationDescription {
+    return [[self class] allSelfEducationDescription][self.selfEducation];
+}
+
+- (NSString *)selfMarriageDescripiton {
+    return [[self class] allSelfMarriageDescription][self.selfMarriage];
 }
 
 - (void)setSex:(NSString *)sex {

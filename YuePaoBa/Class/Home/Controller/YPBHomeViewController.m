@@ -15,6 +15,7 @@
 #import "YPBVIPPriviledgeViewController.h"
 #import "YPBUserAccessModel.h"
 #import "YPBMessagePushModel.h"
+#import "YPBActivityViewController.h"
 
 static NSString *const kHomeCellReusableIdentifier = @"HomeCellReusableIdentifier";
 
@@ -73,6 +74,14 @@ DefineLazyPropertyInitialization(YPBUserAccessModel, userAccessModel);
     }];
     
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(onVIPUpgradeSuccessNotification:) name:kVIPUpgradeSuccessNotification object:nil];
+    
+    self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] bk_initWithImage:[UIImage imageNamed:@"VIPprivilege"]
+                                                                                style:UIBarButtonItemStylePlain
+                                                                              handler:^(id sender)
+                                             {
+                                                 YPBActivityViewController *acView = [[YPBActivityViewController alloc] init];
+                                                 [self.navigationController pushViewController:acView animated:YES];
+                                             }];
 }
 
 - (void)loadOrRefreshData:(BOOL)isRefresh {    

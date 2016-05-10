@@ -62,6 +62,15 @@
              @"income":[NSNull null],
              @"bust":bust ?: @"",
              @"heightArea":heightArea,
-             @"ageArea":ageArea};
+             @"ageArea":ageArea,
+             @"age":user.age,
+             @"monthIncome":user.monthIncome,
+             @"height":user.height,
+             @"logoUrl":user.logoUrl,
+             @"edu":user.edu,
+             @"marry":user.marry,
+             @"province":user.province,
+             @"city":user.city};
+    
 }
 @end

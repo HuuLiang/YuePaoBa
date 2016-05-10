@@ -64,11 +64,23 @@
     }
 }
 
+- (void)setSelfEducationWithString:(NSString *)educationString {
+    NSUInteger index = [[[self class] allEducationsDescription] indexOfObject:educationString];
+    if (index != NSNotFound) {
+        self.selfEducation = index;
+    }
+    self.edu = educationString;
+}
+
+- (void)setSelfMarriageWithString:(NSString *)marriageString {
+    NSUInteger index = [[[self class] allMarriageDescription] indexOfObject:marriageString];
+    if (index != NSNotFound) {
+        self.selfMarriage = index;
+    }
+    self.marry = marriageString;
+}
+
 - (void)setSelfAgeWithAge:(NSString *)value {
-//    NSUInteger index = [[[self class] allSelfAgeDescription] indexOfObject:value];
-//    if (index != NSNotFound) {
-//        self.age = [NSNumber numberWithUnsignedInteger:index];
-//    }
     self.age = [NSNumber numberWithInteger:[value integerValue]];
 }
 
@@ -102,13 +114,21 @@
     return self.targetCup;
 }
 
+- (NSUInteger)valueIndexOfSelfEducation {
+    return  self.selfEducation;
+}
+
+- (NSUInteger)valueIndexOfSelfMarriage {
+    return self.selfMarriage;
+}
+
 - (NSUInteger)valueIndexOfSelfAge {
     if (self.age == nil || self.age == 0) {
         return 0;
     } else {
         return [self.age unsignedIntegerValue] - 17;
     }
-//    return [self.age unsignedIntegerValue];
 }
+
 
 @end

@@ -22,6 +22,23 @@ typedef NS_ENUM(NSUInteger, YPBUserCup) {
     YPBUserCupCPlus
 };
 
+typedef NS_ENUM(NSUInteger,YPBUserEducation) {
+    YPBUserEducationNONE,
+    YPBUserEducationA,
+    YPBUserEducationB,
+    YPBUserEducationC,
+    YPBUserEducationD,
+    YPBUserEducationE,
+    YPBUserEducationF
+};
+
+typedef NS_ENUM(NSUInteger,YPBUserMarriage) {
+    YPBUserMarriageUNKNOW,
+    YPBUserMarriageA,
+    YPBUserMarriageB,
+    YPBUserMarriageC
+};
+
 typedef NS_ENUM(NSUInteger, YPBUserType) {
     YPBUserTypeUnknown,
     YPBUserTypeRobot,
@@ -67,6 +84,10 @@ typedef NS_ENUM(NSUInteger, YPBUserType) {
 @property (nonatomic) NSNumber *height;
 @property (nonatomic) NSString *bwh; // 身材
 @property (nonatomic) NSString *monthIncome;
+@property (nonatomic) NSString *edu;
+@property (nonatomic) NSString *marry;
+@property (nonatomic) NSString *province;
+@property (nonatomic) NSString *city;
 @property (nonatomic) NSString *note; // 兴趣
 @property (nonatomic) NSString *profession;
 @property (nonatomic) NSString *weixinNum;
@@ -96,6 +117,8 @@ typedef NS_ENUM(NSUInteger, YPBUserType) {
 @property (nonatomic) YPBIntRange targetHeight;
 @property (nonatomic) YPBIntRange targetAge;
 @property (nonatomic) YPBUserCup targetCup;
+@property (nonatomic) YPBUserEducation selfEducation;
+@property (nonatomic) YPBUserMarriage selfMarriage;
 @property (nonatomic) CGFloat weight;
 @property (nonatomic) CGFloat bust;  //胸围
 @property (nonatomic) CGFloat waist; //腰围
@@ -111,6 +134,10 @@ typedef NS_ENUM(NSUInteger, YPBUserType) {
 //- (instancetype)init __attribute__((unavailable("cannot use init for this class, use +(instancetype)currentUser instead")));
 + (NSArray<NSString *> *)allTargetCupsDescription;
 + (NSArray<NSString *> *)allCupsDescription;
++ (NSArray<NSString *> *)allSelfEducationDescription;
++ (NSArray<NSString *> *)allEducationsDescription;
++ (NSArray<NSString *> *)allSelfMarriageDescription;
++ (NSArray<NSString *> *)allMarriageDescription;
 + (NSArray<NSString *> *)allHeightRangeDescription;
 + (NSArray<NSString *> *)allAgeRangeDescription;
 + (NSArray<NSString *> *)allSelfAgeDescription;
@@ -149,7 +176,11 @@ typedef NS_ENUM(NSUInteger, YPBUserType) {
 - (NSString *)targetAgeDescription;
 - (NSString *)targetCupDescription;
 
+- (NSString *)selfEducationDescription;
+- (NSString *)selfRevenusDescription;
+- (NSString *)selfMarriageDescripiton;
 - (NSString *)selfAgeDescription;
+- (NSString *)selfHeightDescription;
 
 - (BOOL)deleteUserPhoto:(YPBUserPhoto *)photo;
 

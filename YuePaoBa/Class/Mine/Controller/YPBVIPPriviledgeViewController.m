@@ -26,15 +26,20 @@
     YPBPayIntroduceView *_introduceView;
     NSMutableArray *_dataSource;
     UITableView *_payTableView;
+    UIView *_labelView;
+    NSTimer * _timer;
+    NSInteger _count;
 }
 @property (nonatomic,retain) YPBUserVIPUpgradeModel *vipUpgradeModel;
 @property (nonatomic,retain) YPBPaymentInfo *paymentInfo;
 @property (nonatomic,retain) YPBPaymentPopView *paymentPopView;
+@property (nonatomic) NSMutableArray *userNames;
 @end
 
 @implementation YPBVIPPriviledgeViewController
 
 DefineLazyPropertyInitialization(YPBUserVIPUpgradeModel, vipUpgradeModel)
+DefineLazyPropertyInitialization(NSMutableArray, userNames);
 
 - (instancetype)initWithContentType:(YPBPaymentContentType)contentType {
     self = [super init];
@@ -49,6 +54,7 @@ DefineLazyPropertyInitialization(YPBUserVIPUpgradeModel, vipUpgradeModel)
     [super viewDidLoad];
     // Do any additional setup after loading the view.
     self.title = @"会员支付";
+    self.view.backgroundColor = [UIColor colorWithHexString:@"#f6f7ec"];
     self.edgesForExtendedLayout = UIRectEdgeNone;
     
     _dataSource = [[NSMutableArray alloc] init];
@@ -57,6 +63,12 @@ DefineLazyPropertyInitialization(YPBUserVIPUpgradeModel, vipUpgradeModel)
     [_dataSource addObject:threeMonth];
     [_dataSource addObject:oneMonth];
 
+    UILabel *notiLabel = [[UILabel alloc] init];
+    notiLabel.text = @"开通VIP可24小时无限制聊天";
+    notiLabel.textAlignment = NSTextAlignmentCenter;
+    notiLabel.font = [UIFont systemFontOfSize:14.];
+    notiLabel.backgroundColor = [UIColor yellowColor];
+    [self.view addSubview:notiLabel];
     
     _backgroundImageView = [[UIImageView alloc] init];
     _backgroundImageView.translatesAutoresizingMaskIntoConstraints = NO;
@@ -72,11 +84,37 @@ DefineLazyPropertyInitialization(YPBUserVIPUpgradeModel, vipUpgradeModel)
     _payTableView.delegate = self;
     _payTableView.dataSource = self;
     [_payTableView registerClass:[YPBPayCell class] forCellReuseIdentifier:@"cellID"];
+    
+    UIView *payHearderView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, 23)];
+    payHearderView.backgroundColor = [UIColor clearColor];
+    UILabel *paylabel = [[UILabel alloc] init];
+    paylabel.textColor = [UIColor grayColor];
+    paylabel.text = @"   选择钻石VIP套餐";
+    [payHearderView addSubview:paylabel];
+    _payTableView.tableHeaderView = payHearderView;
     [self.view addSubview:_payTableView];
+    {
+        [paylabel mas_makeConstraints:^(MASConstraintMaker *make) {
+            make.left.right.equalTo(payHearderView);
+            make.centerY.equalTo(payHearderView);
+        }];
+    }
     
     //会员特权说明
-    _introduceView = [[YPBPayIntroduceView alloc] init];
+    _introduceView = [[YPBPayIntroduceView alloc] initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, 100)];
     [self.view addSubview:_introduceView];
+    
+    
+    _labelView = [[UIView alloc] init];
+    _labelView.backgroundColor = [UIColor whiteColor];
+    [self.view addSubview:_labelView];
+    _userNames = [NSMutableArray arrayWithArray:[YPBSystemConfig sharedConfig].userNames];
+    _count = 0;
+    _timer = [NSTimer scheduledTimerWithTimeInterval:0.8 target:self selector:@selector(scrollUserNames) userInfo:nil repeats:YES];
+    if (_userNames.count > 0) {
+        [_timer setFireDate:[NSDate distantPast]];
+
+    }
     
     @weakify(self);
     
@@ -99,28 +137,68 @@ DefineLazyPropertyInitialization(YPBUserVIPUpgradeModel, vipUpgradeModel)
     
     
     {
+        [notiLabel mas_makeConstraints:^(MASConstraintMaker *make) {
+            make.left.top.right.equalTo(self.view);
+            make.height.equalTo(@(15));
+        }];
+        
         [_backgroundImageView mas_makeConstraints:^(MASConstraintMaker *make) {
-            make.top.left.right.equalTo(self.view);
+            make.left.right.equalTo(self.view);
+            make.top.equalTo(notiLabel.mas_bottom);
             make.height.equalTo(@(SCREEN_WIDTH/4));
         }];
         
         [_payTableView mas_makeConstraints:^(MASConstraintMaker *make) {
             make.left.right.equalTo(self.view);
-            make.top.equalTo(_backgroundImageView.mas_bottom);
-            make.height.equalTo(@(SCREEN_HEIGHT*3/11));
+            make.top.equalTo(_backgroundImageView.mas_bottom).offset(5);
+            make.height.equalTo(@(SCREEN_HEIGHT*2/11+23));
         }];
         
         [_introduceView mas_makeConstraints:^(MASConstraintMaker *make) {
-            make.left.right.bottom.equalTo(self.view);
-            make.top.equalTo(_payTableView.mas_bottom);
+            make.left.right.equalTo(self.view);
+            make.top.equalTo(_payTableView.mas_bottom).offset(5);
+            make.height.equalTo(@(100));
+        }];
+        
+        [_labelView mas_makeConstraints:^(MASConstraintMaker *make) {
+            make.left.right.equalTo(self.view);
+            make.top.equalTo(_introduceView.mas_bottom).offset(2);
+            make.bottom.equalTo(self.view).offset(-10);
         }];
         
         [_feedbackButton mas_makeConstraints:^(MASConstraintMaker *make) {
             make.centerX.equalTo(self.view);
-            make.bottom.equalTo(self.view).offset(-5);
+            make.bottom.equalTo(self.view).offset(0);
         }];
     }
 }
+
+- (void)scrollUserNames {
+    if (_count > _userNames.count - 1) {
+        _count = 0;
+    } else {
+        UILabel *vipLabel = [[UILabel alloc] init];
+        vipLabel.text = [YPBSystemConfig sharedConfig].userNames[_count];
+        vipLabel.font = [UIFont systemFontOfSize:15.];
+        NSMutableAttributedString *attributedStr = [NSMutableAttributedString alloc] initWithString:[NSString stringWithFormat:@"%@",]
+        [_labelView addSubview:vipLabel];
+        {
+            [vipLabel mas_makeConstraints:^(MASConstraintMaker *make) {
+                make.left.equalTo(_labelView).offset(5);
+                make.bottom.equalTo(_labelView).offset(20);
+                make.size.mas_equalTo(CGSizeMake(150, 15));
+            }];
+        }
+        [UIView animateWithDuration:5 delay:0 options:UIViewAnimationOptionCurveLinear
+                         animations:^{
+            vipLabel.transform = CGAffineTransformMakeTranslation(0, -_labelView.frame.size.height+5);
+        } completion:^(BOOL finished) {
+            [vipLabel removeFromSuperview];
+        }];
+    }
+    _count++;
+}
+
 
 - (void)viewDidLayoutSubviews {
     [super viewDidLayoutSubviews];
@@ -214,7 +292,7 @@ DefineLazyPropertyInitialization(YPBUserVIPUpgradeModel, vipUpgradeModel)
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
-    return SCREEN_HEIGHT*3/22;
+    return SCREEN_HEIGHT*1/11;
 }
 
 - (void)onVIPUpgradeSuccessNotification {
