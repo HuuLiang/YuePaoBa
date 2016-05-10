@@ -178,9 +178,12 @@ DefineLazyPropertyInitialization(NSMutableArray, userNames);
         _count = 0;
     } else {
         UILabel *vipLabel = [[UILabel alloc] init];
-        vipLabel.text = [YPBSystemConfig sharedConfig].userNames[_count];
         vipLabel.font = [UIFont systemFontOfSize:15.];
-        NSMutableAttributedString *attributedStr = [NSMutableAttributedString alloc] initWithString:[NSString stringWithFormat:@"%@",]
+        NSString *string = [NSString stringWithFormat:@"%@充值了100元,成为了尊贵的VIP用户",[YPBSystemConfig sharedConfig].userNames[_count]];
+        NSMutableAttributedString *attributedStr = [[NSMutableAttributedString alloc] initWithString:string];
+        [attributedStr addAttribute:NSForegroundColorAttributeName
+                              value:[UIColor redColor] range:[string rangeOfString:[YPBSystemConfig sharedConfig].userNames[_count]]];
+        vipLabel.attributedText = attributedStr;
         [_labelView addSubview:vipLabel];
         {
             [vipLabel mas_makeConstraints:^(MASConstraintMaker *make) {
