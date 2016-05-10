@@ -214,7 +214,8 @@ DefineLazyPropertyInitialization(YPBUserAvatarUpdateModel, avatarUpdateModel)
     [self.view addSubview:nextButton];
     {
         [nextButton mas_makeConstraints:^(MASConstraintMaker *make) {
-            make.left.right.equalTo(self.layoutTableView);
+            make.left.equalTo(self.layoutTableView).offset(10);
+            make.right.equalTo(self.layoutTableView).offset(-10);
             make.top.equalTo(self.layoutTableView.mas_bottom).offset(30);
             make.height.mas_equalTo(self.layoutTableView.rowHeight);
         }];

@@ -28,14 +28,14 @@
     
     UIView *serveView = [[UIView alloc] init];
     serveView.userInteractionEnabled = YES;
-    serveView.layer.cornerRadius = 30;
+    serveView.layer.cornerRadius = 23;
     serveView.layer.borderWidth = 1;
     serveView.layer.borderColor = [UIColor lightGrayColor].CGColor;
     serveView.layer.masksToBounds = YES;
     [view addSubview:serveView];
     
     UIImageView *serveImg = [[UIImageView alloc] initWithImage:image];
-    serveImg.transform = CGAffineTransformMakeScale(1.5, 1.5);
+    serveImg.transform = CGAffineTransformMakeScale(1.0, 1.0);
     [serveView addSubview:serveImg];
     
     UILabel *label = [[UILabel alloc] init];
@@ -48,7 +48,7 @@
         [serveView mas_makeConstraints:^(MASConstraintMaker *make) {
             make.centerX.equalTo(view);
             make.centerY.equalTo(view).offset(-10);
-            make.size.mas_equalTo(CGSizeMake(60, 60));
+            make.size.mas_equalTo(CGSizeMake(46, 46));
         }];
         
         [serveImg mas_makeConstraints:^(MASConstraintMaker *make) {
@@ -57,7 +57,7 @@
         
         [label mas_makeConstraints:^(MASConstraintMaker *make) {
             make.centerX.equalTo(serveView);
-            make.top.equalTo(serveView.mas_bottom).offset(0);
+            make.top.equalTo(serveView.mas_bottom).offset(5);
             make.size.mas_equalTo(CGSizeMake(100, 15));
         }];
     }
@@ -68,6 +68,7 @@
     UILabel *notiLabel = [[UILabel alloc] init];
     notiLabel.text = @"   钻石VIP特权";
     notiLabel.textColor = [UIColor grayColor];
+    notiLabel.font = [UIFont systemFontOfSize:13.];
     notiLabel.backgroundColor = [UIColor whiteColor];
     [self addSubview:notiLabel];
     

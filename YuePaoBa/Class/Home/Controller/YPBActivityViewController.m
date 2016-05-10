@@ -26,6 +26,8 @@ DefineLazyPropertyInitialization(YPBUserDetailUpdateModel, updateModel)
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    
+    self.title = @"话费兑换";
 
     self.view.backgroundColor = [UIColor colorWithHexString:@"#f6f7ec"];
     
@@ -65,7 +67,7 @@ DefineLazyPropertyInitialization(YPBUserDetailUpdateModel, updateModel)
     UIView *serveView = [[UIView alloc] init];
     serveView.backgroundColor = [UIColor colorWithHexString:@"00a9f5"];
     serveView.userInteractionEnabled = YES;
-    serveView.layer.cornerRadius = 40;
+    serveView.layer.cornerRadius = 25;
     [self.view addSubview:serveView];
     {
         [serveView bk_whenTapped:^{
@@ -77,7 +79,7 @@ DefineLazyPropertyInitialization(YPBUserDetailUpdateModel, updateModel)
     }
 
     UIImageView *serveImg = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"serveImg"]];
-    serveImg.transform = CGAffineTransformMakeScale(1.5, 1.5);
+    serveImg.transform = CGAffineTransformMakeScale(1.0, 1.0);
     [serveView addSubview:serveImg];
     
     UILabel *label = [[UILabel alloc] init];
@@ -90,7 +92,7 @@ DefineLazyPropertyInitialization(YPBUserDetailUpdateModel, updateModel)
         [serveView mas_makeConstraints:^(MASConstraintMaker *make) {
             make.right.equalTo(self.view).offset(-20);
             make.bottom.equalTo(self.view).offset(-30);
-            make.size.mas_equalTo(CGSizeMake(80, 80));
+            make.size.mas_equalTo(CGSizeMake(50, 50));
         }];
         
         [serveImg mas_makeConstraints:^(MASConstraintMaker *make) {

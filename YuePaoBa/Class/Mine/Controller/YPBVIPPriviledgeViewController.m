@@ -65,8 +65,9 @@ DefineLazyPropertyInitialization(NSMutableArray, userNames);
 
     UILabel *notiLabel = [[UILabel alloc] init];
     notiLabel.text = @"开通VIP可24小时无限制聊天";
+    notiLabel.textColor = [UIColor redColor];
     notiLabel.textAlignment = NSTextAlignmentCenter;
-    notiLabel.font = [UIFont systemFontOfSize:14.];
+    notiLabel.font = [UIFont systemFontOfSize:13.];
     notiLabel.backgroundColor = [UIColor yellowColor];
     [self.view addSubview:notiLabel];
     
@@ -90,6 +91,7 @@ DefineLazyPropertyInitialization(NSMutableArray, userNames);
     UILabel *paylabel = [[UILabel alloc] init];
     paylabel.textColor = [UIColor grayColor];
     paylabel.text = @"   选择钻石VIP套餐";
+    paylabel.font = [UIFont systemFontOfSize:13.];
     [payHearderView addSubview:paylabel];
     _payTableView.tableHeaderView = payHearderView;
     [self.view addSubview:_payTableView];
@@ -116,30 +118,71 @@ DefineLazyPropertyInitialization(NSMutableArray, userNames);
 
     }
     
-    @weakify(self);
+//    @weakify(self);
     
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(onVIPUpgradeSuccessNotification) name:kVIPUpgradeSuccessNotification object:nil];
     
-    _feedbackButton = [[UIButton alloc] init];
-    NSDictionary *attributes = @{NSForegroundColorAttributeName:[UIColor redColor],
-                                 //NSFontAttributeName:[UIFont systemFontOfSize:16.],
-                                 NSUnderlineStyleAttributeName:@1};
-    NSAttributedString *feedbackTitle = [[NSAttributedString alloc] initWithString:@"如您遇到支付问题，请按此处反馈问题" attributes:attributes];
-    [_feedbackButton setAttributedTitle:feedbackTitle forState:UIControlStateNormal];
-    _feedbackButton.titleLabel.font = [UIFont systemFontOfSize:12.];
-    [self.view addSubview:_feedbackButton];
+    UIView *serveView = [[UIView alloc] init];
+    serveView.backgroundColor = [UIColor colorWithHexString:@"00a9f5"];
+    serveView.userInteractionEnabled = YES;
+    serveView.layer.cornerRadius = 20;
+    [self.view addSubview:serveView];
+    {
+        [serveView bk_whenTapped:^{
+            YPBPaymentIssueReportViewController *reportVC = [[YPBPaymentIssueReportViewController alloc] init];
+            [self.navigationController pushViewController:reportVC animated:YES];
+        }];
+    }
     
-    [_feedbackButton bk_addEventHandler:^(id sender) {
-        @strongify(self);
-        YPBPaymentIssueReportViewController *reportVC = [[YPBPaymentIssueReportViewController alloc] init];
-        [self.navigationController pushViewController:reportVC animated:YES];
-    } forControlEvents:UIControlEventTouchUpInside];
+    UIImageView *serveImg = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"serveImg"]];
+    serveImg.transform = CGAffineTransformMakeScale(1.0, 1.0);
+    [serveView addSubview:serveImg];
+    
+    UILabel *label = [[UILabel alloc] init];
+    label.font = [UIFont systemFontOfSize:13.];
+    label.textAlignment = NSTextAlignmentCenter;
+    label.text = @"联系客服";
+    [self.view addSubview:label];
+    
+    {
+        [serveView mas_makeConstraints:^(MASConstraintMaker *make) {
+            make.right.equalTo(self.view).offset(-10);
+            make.bottom.equalTo(self.view).offset(-30);
+            make.size.mas_equalTo(CGSizeMake(40, 40));
+        }];
+        
+        [serveImg mas_makeConstraints:^(MASConstraintMaker *make) {
+            make.center.equalTo(serveView);
+        }];
+        
+        [label mas_makeConstraints:^(MASConstraintMaker *make) {
+            make.centerX.equalTo(serveView);
+            make.top.equalTo(serveView.mas_bottom).offset(0);
+            make.size.mas_equalTo(CGSizeMake(100, 15));
+        }];
+    }
+
+    
+//    _feedbackButton = [[UIButton alloc] init];
+//    NSDictionary *attributes = @{NSForegroundColorAttributeName:[UIColor redColor],
+//                                 //NSFontAttributeName:[UIFont systemFontOfSize:16.],
+//                                 NSUnderlineStyleAttributeName:@1};
+//    NSAttributedString *feedbackTitle = [[NSAttributedString alloc] initWithString:@"如您遇到支付问题，请按此处反馈问题" attributes:attributes];
+//    [_feedbackButton setAttributedTitle:feedbackTitle forState:UIControlStateNormal];
+//    _feedbackButton.titleLabel.font = [UIFont systemFontOfSize:12.];
+//    [self.view addSubview:_feedbackButton];
+//    
+//    [_feedbackButton bk_addEventHandler:^(id sender) {
+//        @strongify(self);
+//        YPBPaymentIssueReportViewController *reportVC = [[YPBPaymentIssueReportViewController alloc] init];
+//        [self.navigationController pushViewController:reportVC animated:YES];
+//    } forControlEvents:UIControlEventTouchUpInside];
     
     
     {
         [notiLabel mas_makeConstraints:^(MASConstraintMaker *make) {
             make.left.top.right.equalTo(self.view);
-            make.height.equalTo(@(15));
+            make.height.equalTo(@(16));
         }];
         
         [_backgroundImageView mas_makeConstraints:^(MASConstraintMaker *make) {
@@ -166,10 +209,10 @@ DefineLazyPropertyInitialization(NSMutableArray, userNames);
             make.bottom.equalTo(self.view).offset(-10);
         }];
         
-        [_feedbackButton mas_makeConstraints:^(MASConstraintMaker *make) {
-            make.centerX.equalTo(self.view);
-            make.bottom.equalTo(self.view).offset(0);
-        }];
+//        [_feedbackButton mas_makeConstraints:^(MASConstraintMaker *make) {
+//            make.centerX.equalTo(self.view);
+//            make.bottom.equalTo(self.view).offset(0);
+//        }];
     }
 }
 
@@ -178,7 +221,7 @@ DefineLazyPropertyInitialization(NSMutableArray, userNames);
         _count = 0;
     } else {
         UILabel *vipLabel = [[UILabel alloc] init];
-        vipLabel.font = [UIFont systemFontOfSize:15.];
+        vipLabel.font = [UIFont systemFontOfSize:12.];
         NSString *string = [NSString stringWithFormat:@"%@充值了100元,成为了尊贵的VIP用户",[YPBSystemConfig sharedConfig].userNames[_count]];
         NSMutableAttributedString *attributedStr = [[NSMutableAttributedString alloc] initWithString:string];
         [attributedStr addAttribute:NSForegroundColorAttributeName
@@ -189,14 +232,21 @@ DefineLazyPropertyInitialization(NSMutableArray, userNames);
             [vipLabel mas_makeConstraints:^(MASConstraintMaker *make) {
                 make.left.equalTo(_labelView).offset(5);
                 make.bottom.equalTo(_labelView).offset(20);
-                make.size.mas_equalTo(CGSizeMake(150, 15));
+                make.size.mas_equalTo(CGSizeMake(260, 15));
             }];
         }
-        [UIView animateWithDuration:5 delay:0 options:UIViewAnimationOptionCurveLinear
+        [UIView animateWithDuration:4.5 delay:0 options:UIViewAnimationOptionCurveLinear
                          animations:^{
-            vipLabel.transform = CGAffineTransformMakeTranslation(0, -_labelView.frame.size.height+5);
+            vipLabel.transform = CGAffineTransformMakeTranslation(0, -(_labelView.frame.size.height + 5));
         } completion:^(BOOL finished) {
-            [vipLabel removeFromSuperview];
+            [UIView animateWithDuration:0.5 delay:0 options:UIViewAnimationOptionCurveLinear
+                             animations:^{
+                                 vipLabel.transform = CGAffineTransformMakeTranslation(0, -(_labelView.frame.size.height + 15));
+                                 vipLabel.alpha = 0.3;
+                             } completion:^(BOOL finished) {
+                                 [vipLabel removeFromSuperview];
+
+                             }];
         }];
     }
     _count++;

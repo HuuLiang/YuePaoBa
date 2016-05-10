@@ -27,7 +27,7 @@
     _payButton.backgroundColor = [UIColor colorWithHexString:@"#ee8188"];
     _payButton.layer.cornerRadius = 5;
     [_payButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-    _payButton.titleLabel.font = [UIFont systemFontOfSize:20];
+    _payButton.titleLabel.font = [UIFont systemFontOfSize:17.];
     [self addSubview:_payButton];
 }
 
@@ -95,7 +95,7 @@
         [_payButton mas_makeConstraints:^(MASConstraintMaker *make) {
             make.right.equalTo(self).offset(-10);
             make.centerY.equalTo(self);
-            make.size.mas_equalTo(CGSizeMake(SCREEN_WIDTH/6, SCREEN_HEIGHT/18));
+            make.size.mas_equalTo(CGSizeMake(SCREEN_WIDTH/5, SCREEN_HEIGHT/18));
         }];
     }
 }

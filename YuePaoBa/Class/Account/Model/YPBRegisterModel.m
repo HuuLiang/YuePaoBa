@@ -19,6 +19,16 @@
 }
 
 - (BOOL)requestRegisterUser:(YPBUser *)user withCompletionHandler:(YPBCompletionHandler)handler {
+    if (user.logoUrl == nil) {
+        user.logoUrl = @"";
+    }
+    if (user.age == nil) {
+        user.age = @(18);
+    }
+    
+    if (user.height == nil) {
+        user.height = [NSNumber numberWithInt:160];
+    }
     NSDictionary *params = [self paramsFromUser:user];
     BOOL success = [self requestURLPath:YPB_USER_REGISTER_URL
                              withParams:params
