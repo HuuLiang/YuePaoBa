@@ -14,20 +14,23 @@
 - (void)addSubiews {
 //    _backgroundImage = [[UIImageView alloc] init];
 //    [self addSubview:_backgroundImage];
+    self.backgroundColor = [UIColor colorWithHexString:@"fffffd"];
+//    self.accessoryType = UITableViewCellAccessoryNone;
     
     _priceLabel = [[UILabel alloc] init];
     [self addSubview:_priceLabel];
     
     _detailLabel = [[UILabel alloc] init];
     _detailLabel.textColor = [UIColor redColor];
-    _detailLabel.font = [UIFont systemFontOfSize:15];
+    _detailLabel.font = [UIFont systemFontOfSize:14];
+//    _detailLabel.textAlignment = NSTextAlignmentRight;
     [self addSubview:_detailLabel];
     
     _payButton = [UIButton buttonWithType:UIButtonTypeSystem];
     _payButton.backgroundColor = [UIColor colorWithHexString:@"#ee8188"];
     _payButton.layer.cornerRadius = 5;
     [_payButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-    _payButton.titleLabel.font = [UIFont systemFontOfSize:17.];
+    _payButton.titleLabel.font = [UIFont systemFontOfSize:16.];
     [self addSubview:_payButton];
 }
 
@@ -48,7 +51,7 @@
     } else if ([monthInfo isEqualToString:@"three"]) {
 //        _backgroundImage.image = [UIImage imageNamed:@"pay_153-1"];
         _priceLabel.text = [NSString stringWithFormat:@"%i元/季度",price3Month/100];
-        _detailLabel.text = @"购100元返100元";
+        _detailLabel.text = @"返100元";
 //        [_payButton setTitle:[NSString stringWithFormat:@"%lu元",price3Month/
 //                              100] forState:UIControlStateNormal];
         [_payButton setTitle:@"开通" forState:UIControlStateNormal];
@@ -89,7 +92,7 @@
         }];
     
         [_detailLabel mas_makeConstraints:^(MASConstraintMaker *make) {
-            make.left.equalTo(self).offset(SCREEN_WIDTH/3+10);
+            make.left.equalTo(self).offset(SCREEN_WIDTH/3+24);
             make.centerY.equalTo(self);
             make.size.mas_equalTo(CGSizeMake(160, 20));
         }];

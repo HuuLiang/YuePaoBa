@@ -17,7 +17,7 @@
     if (self) {
         self.userInteractionEnabled = NO;
         self.backgroundColor = [UIColor colorWithHexString:@"#f6f7ec"];
-        
+//        self.backgroundColor = [UIColor clearColor];
         [self layoutIntroduceView];
     }
     return self;
@@ -69,11 +69,11 @@
     notiLabel.text = @"   钻石VIP特权";
     notiLabel.textColor = [UIColor grayColor];
     notiLabel.font = [UIFont systemFontOfSize:13.];
-    notiLabel.backgroundColor = [UIColor whiteColor];
+    notiLabel.backgroundColor = [UIColor colorWithHexString:@"#fffffd"];
     [self addSubview:notiLabel];
     
     UIView * view = [[UIView alloc] init];
-    view.backgroundColor = [UIColor whiteColor];
+    view.backgroundColor = [UIColor colorWithHexString:@"#fffffd"];
     [self addSubview:view];
     
     UIView *viewA = [self createViewWithImage:[UIImage imageNamed:@"vip_payment_A"] string:@"免费查看用户相册"];
@@ -90,12 +90,12 @@
         [notiLabel mas_makeConstraints:^(MASConstraintMaker *make) {
             make.left.equalTo(self);
             make.top.equalTo(self).offset(2);
-            make.size.mas_equalTo(CGSizeMake(self.frame.size.width, 15));
+            make.size.mas_equalTo(CGSizeMake(self.frame.size.width, 18));
         }];
         
         [view mas_makeConstraints:^(MASConstraintMaker *make) {
             make.left.right.equalTo(self);
-            make.top.equalTo(notiLabel.mas_bottom).offset(2);
+            make.top.equalTo(notiLabel.mas_bottom).offset(1);
             make.bottom.equalTo(self.mas_bottom);
         }];
     }

@@ -19,7 +19,7 @@
 #import "YPBPayIntroduceView.h"
 
 
-@interface YPBVIPPriviledgeViewController () <UITableViewDelegate,UITableViewDataSource>
+@interface YPBVIPPriviledgeViewController () <UITableViewSeparatorDelegate,UITableViewDataSource>
 {
     UIImageView *_backgroundImageView;
     UIButton *_feedbackButton;
@@ -105,15 +105,24 @@ DefineLazyPropertyInitialization(NSMutableArray, userNames);
     
     //购买选项
     _payTableView = [[UITableView alloc] init];
+    
+    _payTableView.hasRowSeparator = YES;
+    _payTableView.hasSectionBorder = YES;
+    [_payTableView setSeparatorColor:[UIColor colorWithWhite:0.95 alpha:1]];
+//    UIEdgeInsets inset;
+//    inset.left = SCREEN_WIDTH;
+//    [_payTableView setSeparatorInset:inset];
+    
     _payTableView.scrollEnabled = NO;
     _payTableView.delegate = self;
     _payTableView.dataSource = self;
     [_payTableView registerClass:[YPBPayCell class] forCellReuseIdentifier:@"cellID"];
     
-    UIView *payHearderView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, 23)];
-    payHearderView.backgroundColor = [UIColor clearColor];
+    UIView *payHearderView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, 19)];
+    payHearderView.backgroundColor = [UIColor colorWithHexString:@"#f6f7ec"];
     UILabel *paylabel = [[UILabel alloc] init];
     paylabel.textColor = [UIColor grayColor];
+    paylabel.backgroundColor = [UIColor colorWithHexString:@"fffffd"];
     paylabel.text = @"   选择钻石VIP套餐";
     paylabel.font = [UIFont systemFontOfSize:13.];
     [payHearderView addSubview:paylabel];
@@ -122,17 +131,18 @@ DefineLazyPropertyInitialization(NSMutableArray, userNames);
     {
         [paylabel mas_makeConstraints:^(MASConstraintMaker *make) {
             make.left.right.equalTo(payHearderView);
-            make.centerY.equalTo(payHearderView);
+            make.centerY.equalTo(payHearderView.mas_centerY).offset(-0.5);
+            make.height.equalTo(@(18));
         }];
     }
     
     //会员特权说明
     _introduceView = [[YPBPayIntroduceView alloc] initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, 100)];
     [self.view addSubview:_introduceView];
-    
+
     
     _labelView = [[UIView alloc] init];
-    _labelView.backgroundColor = [UIColor whiteColor];
+    _labelView.backgroundColor = [UIColor colorWithHexString:@"fffffd"];
     [self.view addSubview:_labelView];
     _userNames = [NSMutableArray arrayWithArray:[YPBSystemConfig sharedConfig].userNames];
     _count = 0;
@@ -203,7 +213,7 @@ DefineLazyPropertyInitialization(NSMutableArray, userNames);
         [_payTableView mas_makeConstraints:^(MASConstraintMaker *make) {
             make.left.right.equalTo(self.view);
             make.top.equalTo(_backgroundImageView.mas_bottom).offset(5);
-            make.height.equalTo(@(SCREEN_HEIGHT*2/11+23));
+            make.height.equalTo(@(SCREEN_HEIGHT*2/11+18));
         }];
         
         [_introduceView mas_makeConstraints:^(MASConstraintMaker *make) {
@@ -214,7 +224,7 @@ DefineLazyPropertyInitialization(NSMutableArray, userNames);
         
         [_labelView mas_makeConstraints:^(MASConstraintMaker *make) {
             make.left.right.equalTo(self.view);
-            make.top.equalTo(_introduceView.mas_bottom).offset(2);
+            make.top.equalTo(_introduceView.mas_bottom).offset(6.5);
             make.bottom.equalTo(self.view).offset(0);
         }];
     }
@@ -229,8 +239,11 @@ DefineLazyPropertyInitialization(NSMutableArray, userNames);
         vipLabel.backgroundColor = [UIColor clearColor];
         NSString *string = [NSString stringWithFormat:@"%@刚刚开通了100元/季度充100返100活动",[YPBSystemConfig sharedConfig].userNames[_count]];
         NSMutableAttributedString *attributedStr = [[NSMutableAttributedString alloc] initWithString:string];
-        [attributedStr addAttribute:NSForegroundColorAttributeName
-                              value:[UIColor redColor] range:[string rangeOfString:[YPBSystemConfig sharedConfig].userNames[_count]]];
+        NSRange rangge = [string rangeOfString:[YPBSystemConfig sharedConfig].userNames[_count]];
+        if (rangge.location != NSNotFound) {
+            [attributedStr addAttribute:NSForegroundColorAttributeName
+                                  value:[UIColor redColor] range:rangge];
+        }
         vipLabel.attributedText = attributedStr;
         [_labelView addSubview:vipLabel];
         {

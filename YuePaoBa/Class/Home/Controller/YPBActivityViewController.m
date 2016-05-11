@@ -32,8 +32,14 @@ DefineLazyPropertyInitialization(YPBUserDetailUpdateModel, updateModel)
     self.view.backgroundColor = [UIColor colorWithHexString:@"#f6f7ec"];
     
     _bannerView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"bannerImg.jpg"]];
+    _bannerView.userInteractionEnabled = YES;
     [self.view addSubview:_bannerView];
     {
+        [_bannerView bk_whenTapped:^{
+            YPBVIPPriviledgeViewController *vipVC = [[YPBVIPPriviledgeViewController alloc] initWithContentType:YPBPaymnetContentTypeActivity];
+            [self.navigationController pushViewController:vipVC animated:YES];
+        }];
+        
         [_bannerView mas_makeConstraints:^(MASConstraintMaker *make) {
             make.left.right.equalTo(self.view);
             make.top.equalTo(self.view).offset(64);
