@@ -83,6 +83,14 @@ DefineLazyPropertyInitialization(YPBUserAvatarUpdateModel, avatarUpdateModel)
         }];
     }
     
+    UILabel *notilabel = [[UILabel alloc] init];
+    notilabel.text = @"＊输入真实资料,可极大提高速配机会＊";
+    notilabel.textAlignment = NSTextAlignmentRight;
+    notilabel.textColor = [UIColor lightGrayColor];
+    notilabel.font = [UIFont systemFontOfSize:12.];
+    notilabel.backgroundColor = [UIColor clearColor];
+    [self.view addSubview:notilabel];
+    
     UILabel *label = [[UILabel alloc] init];
     label.text = @"上传真实头像";
     label.textAlignment = NSTextAlignmentCenter;
@@ -95,6 +103,12 @@ DefineLazyPropertyInitialization(YPBUserAvatarUpdateModel, avatarUpdateModel)
             make.centerX.mas_equalTo(_view);
             make.top.mas_equalTo(backgroundImageView.mas_bottom).offset(10);
             make.size.mas_equalTo(CGSizeMake(100, 15));
+        }];
+        
+        [notilabel mas_makeConstraints:^(MASConstraintMaker *make) {
+            make.top.equalTo(_view.mas_bottom).offset(5);
+            make.right.equalTo(self.view).offset(-5);
+            make.size.mas_equalTo(CGSizeMake(SCREEN_WIDTH, 14));
         }];
     }
     {
@@ -123,47 +137,31 @@ DefineLazyPropertyInitialization(YPBUserAvatarUpdateModel, avatarUpdateModel)
                       [[YPBMessageCenter defaultCenter] proceedProgressWithPercent:progress];
                   } completionHandler:^(BOOL success, id obj) {
                       @strongify(self);
-                      
-                      void (^Handler)(BOOL result) = ^(BOOL result){
-                          [[YPBMessageCenter defaultCenter] hideProgress];
-                          
-                          if (result) {
-                              [[YPBMessageCenter defaultCenter] showSuccessWithTitle:@"头像更新成功" inViewController:self];
-                              //self.profileCell.avatarImage = pickedImage;
-                              
-                              _user.logoUrl = obj;
-                              [YPBUser currentUser].logoUrl = obj;
-                              [[YPBUser currentUser] saveAsCurrentUser];
-                          } else {
-                              [[YPBMessageCenter defaultCenter] showErrorWithTitle:@"头像更新失败" inViewController:self];
-                          }
-                      };
-                      
+                      [[YPBMessageCenter defaultCenter] hideProgress];
                       if (success) {
-                          [self.avatarUpdateModel updateAvatarOfUser:[YPBUser currentUser].userId withURL:obj completionHandler:^(BOOL success, id errorMsg) {
-                              [_view.subviews makeObjectsPerformSelector:@selector(removeFromSuperview)];
-                              UIImageView *imgV = [[UIImageView alloc] init];
-                              [imgV sd_setImageWithURL:obj];
-                              imgV.userInteractionEnabled = YES;
-                              imgV.layer.cornerRadius = imgV.frame.size.width/2;
-                              [_view addSubview:imgV];
-                              {
-                                  [imgV mas_makeConstraints:^(MASConstraintMaker *make) {
-                                      make.top.left.bottom.right.equalTo(_view);
-                                  }];
-                              }
-
-                              Handler(success);
-                          }];
+                          [[YPBMessageCenter defaultCenter] showSuccessWithTitle:@"头像更新成功" inViewController:self];
+                          [YPBUser currentUser].logoUrl = obj;
+                          [_view.subviews makeObjectsPerformSelector:@selector(removeFromSuperview)];
+                          UIImageView *imgV = [[UIImageView alloc] init];
+                          [imgV sd_setImageWithURL:obj];
+                          imgV.userInteractionEnabled = YES;
+                          imgV.layer.cornerRadius = imgV.frame.size.width/2;
+                          [_view addSubview:imgV];
+                          {
+                              [imgV mas_makeConstraints:^(MASConstraintMaker *make) {
+                                  make.top.left.bottom.right.equalTo(_view);
+                              }];
+                          }
                       } else {
-                          Handler(NO);
+                       [[YPBMessageCenter defaultCenter] showErrorWithTitle:@"头像更新失败" inViewController:self];
                       }
                   }];
              }];
         }];
     }
+    DLog("%f",SCREEN_HEIGHT);
     self.layoutTableView.layer.cornerRadius = 8;
-    self.layoutTableView.rowHeight = MAX(kScreenHeight * 0.08, 50);
+    self.layoutTableView.rowHeight = MAX(kScreenHeight * 0.08, SCREEN_HEIGHT/15);
     self.layoutTableView.scrollEnabled = NO;
     self.layoutTableView.separatorInset = UIEdgeInsetsZero;
     [self.layoutTableView mas_makeConstraints:^(MASConstraintMaker *make) {
@@ -216,7 +214,7 @@ DefineLazyPropertyInitialization(YPBUserAvatarUpdateModel, avatarUpdateModel)
         [nextButton mas_makeConstraints:^(MASConstraintMaker *make) {
             make.left.equalTo(self.layoutTableView).offset(10);
             make.right.equalTo(self.layoutTableView).offset(-10);
-            make.top.equalTo(self.layoutTableView.mas_bottom).offset(30);
+            make.top.equalTo(self.layoutTableView.mas_bottom).offset(SCREEN_HEIGHT/15);
             make.height.mas_equalTo(self.layoutTableView.rowHeight);
         }];
     }
@@ -324,6 +322,11 @@ DefineLazyPropertyInitialization(YPBUserAvatarUpdateModel, avatarUpdateModel)
         @strongify(self);
         [[YPBMessageCenter defaultCenter] dismissMessageWithCompletion:^{
             self.user.userId = uid;
+            [YPBUser currentUser].userId = uid;
+            [self.avatarUpdateModel updateAvatarOfUser:[YPBUser currentUser].userId withURL:[YPBUser currentUser].logoUrl completionHandler:^(BOOL success, id errorMsg) {
+                
+            }];
+
             [self.user saveAsCurrentUser];
             [self dismissViewControllerAnimated:YES completion:nil];
             [YPBUtil notifyRegisterSuccessfully];

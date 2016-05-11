@@ -67,17 +67,41 @@ DefineLazyPropertyInitialization(NSMutableArray, userNames);
     notiLabel.text = @"开通VIP可24小时无限制聊天";
     notiLabel.textColor = [UIColor redColor];
     notiLabel.textAlignment = NSTextAlignmentCenter;
-    notiLabel.font = [UIFont systemFontOfSize:13.];
+    notiLabel.font = [UIFont systemFontOfSize:12];
     notiLabel.backgroundColor = [UIColor yellowColor];
+    notiLabel.alpha = 0.5;
     [self.view addSubview:notiLabel];
-    
+
     _backgroundImageView = [[UIImageView alloc] init];
     _backgroundImageView.translatesAutoresizingMaskIntoConstraints = NO;
     [_backgroundImageView sd_setImageWithURL:[NSURL URLWithString:[YPBSystemConfig sharedConfig].payImgUrl]
                             placeholderImage:[UIImage imageNamed:@"vip_page"]];
-    DLog("------userid---%@--",[YPBUser currentUser].userId);
     _backgroundImageView.contentMode = UIViewContentModeScaleAspectFill;
+    _backgroundImageView.userInteractionEnabled = YES;
+    _backgroundImageView.clipsToBounds = YES;
     [self.view addSubview:_backgroundImageView];
+
+    UILabel *actionLabel = [[UILabel alloc] init];
+    actionLabel.backgroundColor = [UIColor clearColor];
+//    actionLabel.
+    actionLabel.userInteractionEnabled = YES;
+    [actionLabel bk_whenTapped:^{
+        notiLabel.text = @"活动详情请进入我－设置－最新活动查看";
+        [actionLabel bk_performBlock:^(id obj) {
+            notiLabel.text = @"开通VIP可24小时无限制聊天";
+        } afterDelay:2];
+    }];
+    DLog("%f %f",SCREEN_WIDTH,SCREEN_HEIGHT);
+    [_backgroundImageView addSubview:actionLabel];
+    {
+        [actionLabel mas_makeConstraints:^(MASConstraintMaker *make) {
+            make.right.equalTo(_backgroundImageView).offset(-SCREEN_WIDTH/30);
+            make.bottom.equalTo(_backgroundImageView).offset(-SCREEN_WIDTH/9);
+            make.size.mas_equalTo(CGSizeMake(SCREEN_WIDTH/6, SCREEN_WIDTH/32));
+        }];
+
+    }
+    
     
     //购买选项
     _payTableView = [[UITableView alloc] init];
@@ -163,32 +187,17 @@ DefineLazyPropertyInitialization(NSMutableArray, userNames);
     }
 
     
-//    _feedbackButton = [[UIButton alloc] init];
-//    NSDictionary *attributes = @{NSForegroundColorAttributeName:[UIColor redColor],
-//                                 //NSFontAttributeName:[UIFont systemFontOfSize:16.],
-//                                 NSUnderlineStyleAttributeName:@1};
-//    NSAttributedString *feedbackTitle = [[NSAttributedString alloc] initWithString:@"如您遇到支付问题，请按此处反馈问题" attributes:attributes];
-//    [_feedbackButton setAttributedTitle:feedbackTitle forState:UIControlStateNormal];
-//    _feedbackButton.titleLabel.font = [UIFont systemFontOfSize:12.];
-//    [self.view addSubview:_feedbackButton];
-//    
-//    [_feedbackButton bk_addEventHandler:^(id sender) {
-//        @strongify(self);
-//        YPBPaymentIssueReportViewController *reportVC = [[YPBPaymentIssueReportViewController alloc] init];
-//        [self.navigationController pushViewController:reportVC animated:YES];
-//    } forControlEvents:UIControlEventTouchUpInside];
-    
-    
     {
         [notiLabel mas_makeConstraints:^(MASConstraintMaker *make) {
-            make.left.top.right.equalTo(self.view);
-            make.height.equalTo(@(16));
+            make.left.right.equalTo(self.view);
+            make.top.equalTo(self.view).offset(0);
+            make.height.equalTo(@(14));
         }];
         
         [_backgroundImageView mas_makeConstraints:^(MASConstraintMaker *make) {
             make.left.right.equalTo(self.view);
-            make.top.equalTo(notiLabel.mas_bottom);
-            make.height.equalTo(@(SCREEN_WIDTH/4));
+            make.top.equalTo(notiLabel.mas_bottom).offset(0);
+            make.height.equalTo(@(SCREEN_WIDTH/4+10));
         }];
         
         [_payTableView mas_makeConstraints:^(MASConstraintMaker *make) {
@@ -206,13 +215,8 @@ DefineLazyPropertyInitialization(NSMutableArray, userNames);
         [_labelView mas_makeConstraints:^(MASConstraintMaker *make) {
             make.left.right.equalTo(self.view);
             make.top.equalTo(_introduceView.mas_bottom).offset(2);
-            make.bottom.equalTo(self.view).offset(-10);
+            make.bottom.equalTo(self.view).offset(0);
         }];
-        
-//        [_feedbackButton mas_makeConstraints:^(MASConstraintMaker *make) {
-//            make.centerX.equalTo(self.view);
-//            make.bottom.equalTo(self.view).offset(0);
-//        }];
     }
 }
 
@@ -222,7 +226,8 @@ DefineLazyPropertyInitialization(NSMutableArray, userNames);
     } else {
         UILabel *vipLabel = [[UILabel alloc] init];
         vipLabel.font = [UIFont systemFontOfSize:12.];
-        NSString *string = [NSString stringWithFormat:@"%@充值了100元,成为了尊贵的VIP用户",[YPBSystemConfig sharedConfig].userNames[_count]];
+        vipLabel.backgroundColor = [UIColor clearColor];
+        NSString *string = [NSString stringWithFormat:@"%@刚刚开通了100元/季度充100返100活动",[YPBSystemConfig sharedConfig].userNames[_count]];
         NSMutableAttributedString *attributedStr = [[NSMutableAttributedString alloc] initWithString:string];
         [attributedStr addAttribute:NSForegroundColorAttributeName
                               value:[UIColor redColor] range:[string rangeOfString:[YPBSystemConfig sharedConfig].userNames[_count]]];
@@ -232,17 +237,17 @@ DefineLazyPropertyInitialization(NSMutableArray, userNames);
             [vipLabel mas_makeConstraints:^(MASConstraintMaker *make) {
                 make.left.equalTo(_labelView).offset(5);
                 make.bottom.equalTo(_labelView).offset(20);
-                make.size.mas_equalTo(CGSizeMake(260, 15));
+                make.size.mas_equalTo(CGSizeMake(SCREEN_WIDTH, 15));
             }];
         }
         [UIView animateWithDuration:4.5 delay:0 options:UIViewAnimationOptionCurveLinear
                          animations:^{
-            vipLabel.transform = CGAffineTransformMakeTranslation(0, -(_labelView.frame.size.height + 5));
+            vipLabel.transform = CGAffineTransformMakeTranslation(0, -(_labelView.frame.size.height));
         } completion:^(BOOL finished) {
-            [UIView animateWithDuration:0.5 delay:0 options:UIViewAnimationOptionCurveLinear
+            [UIView animateWithDuration:0.4 delay:0 options:UIViewAnimationOptionCurveLinear
                              animations:^{
-                                 vipLabel.transform = CGAffineTransformMakeTranslation(0, -(_labelView.frame.size.height + 15));
-                                 vipLabel.alpha = 0.3;
+                                 vipLabel.transform = CGAffineTransformMakeTranslation(0, -(_labelView.frame.size.height + 8));
+                                 vipLabel.alpha = 0.1;
                              } completion:^(BOOL finished) {
                                  [vipLabel removeFromSuperview];
 

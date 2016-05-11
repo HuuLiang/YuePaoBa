@@ -29,6 +29,15 @@
     if (user.height == nil) {
         user.height = [NSNumber numberWithInt:160];
     }
+    
+    if (user.province == nil) {
+        user.province = @"";
+    }
+    
+    if (user.city == nil) {
+        user.city = @"";
+    }
+    
     NSDictionary *params = [self paramsFromUser:user];
     BOOL success = [self requestURLPath:YPB_USER_REGISTER_URL
                              withParams:params
@@ -64,8 +73,8 @@
         }
     }
     
-    NSString *heightArea = [NSString stringWithFormat:@"%ld~%ld", user.targetHeight.min, user.targetHeight.max];
-    NSString *ageArea = [NSString stringWithFormat:@"%ld~%ld", user.targetAge.min, user.targetAge.max];
+    NSString *heightArea = [NSString stringWithFormat:@"%ld~%ld", (long)user.targetHeight.min, (long)user.targetHeight.max];
+    NSString *ageArea = [NSString stringWithFormat:@"%ld~%ld", (long)user.targetAge.min, (long)user.targetAge.max];
     return @{@"sex":user.sex,
              @"nickName":user.nickName,
              @"uuid":[YPBUtil activationId],

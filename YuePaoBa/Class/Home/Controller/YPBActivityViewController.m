@@ -49,11 +49,15 @@ DefineLazyPropertyInitialization(YPBUserDetailUpdateModel, updateModel)
     [button bk_whenTapped:^{
         [button removeFromSuperview];
         if ([YPBUser currentUser].isVip) {
-            [self popPhoneNumberView];
+            if ([YPBUser currentUser].phone.length == 0) {
+                [self popPhoneNumberView];
+            } else {
+                [self popSuccessWithInfo:[YPBUser currentUser].phone];
+            }
+            
         } else {
             [self popVIPNoti];
         }
-//        [self popPhoneNumberView];
     }];
     [self.view addSubview:button];
     {

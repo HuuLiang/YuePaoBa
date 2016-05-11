@@ -88,6 +88,7 @@ typedef NS_ENUM(NSUInteger, YPBUserType) {
 @property (nonatomic) NSString *marry;
 @property (nonatomic) NSString *province;
 @property (nonatomic) NSString *city;
+@property (nonatomic) NSString *phone;
 @property (nonatomic) NSString *note; // 兴趣
 @property (nonatomic) NSString *profession;
 @property (nonatomic) NSString *weixinNum;

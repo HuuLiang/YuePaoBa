@@ -52,6 +52,7 @@ return _##propertyName; \
 #define kUserMarryName                  @"yuepaoba_usermarry_keyname"
 #define kUserProvinceName               @"yuepaoba_userprovince_keyname"
 #define kUserCityName                   @"yuepaoba_usercity_keyname"
+#define kUserPhoneName                  @"yuepaoba_userphone_keyname"
 #define kUserInterestKeyName            @"yuepaoba_userinterest_keyname"
 #define kUserProfessionKeyName          @"yuepaoba_userprofession_keyname"
 #define kUserWeChatKeyName              @"yuepaoba_userwechat_keyname"

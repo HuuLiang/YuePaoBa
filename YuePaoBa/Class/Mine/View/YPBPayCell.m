@@ -41,18 +41,20 @@
     
     if ([monthInfo isEqualToString:@"one"]) {
 //        _backgroundImage.image = [UIImage imageNamed:@"pay_153-2"];
-        _priceLabel.text = [NSString stringWithFormat:@"%lu/每月",(unsigned long)price1Month];
+        _priceLabel.text = [NSString stringWithFormat:@"%i元/每月",price1Month/100];
         _detailLabel.text = @"";
 //        [_payButton setTitle:[NSString stringWithFormat:@"%lu元",price1Month/100] forState:UIControlStateNormal];
        [_payButton setTitle:@"开通" forState:UIControlStateNormal];
     } else if ([monthInfo isEqualToString:@"three"]) {
 //        _backgroundImage.image = [UIImage imageNamed:@"pay_153-1"];
-        _priceLabel.text = [NSString stringWithFormat:@"%lu元/季度",price3Month];
+        _priceLabel.text = [NSString stringWithFormat:@"%i元/季度",price3Month/100];
         _detailLabel.text = @"购100元返100元";
 //        [_payButton setTitle:[NSString stringWithFormat:@"%lu元",price3Month/
 //                              100] forState:UIControlStateNormal];
         [_payButton setTitle:@"开通" forState:UIControlStateNormal];
-
+    }
+    if ([YPBUser currentUser].isVip) {
+        [_payButton setTitle:@"续费" forState:UIControlStateNormal];
     }
     
     [self LayoutSubviews];
@@ -87,7 +89,7 @@
         }];
     
         [_detailLabel mas_makeConstraints:^(MASConstraintMaker *make) {
-            make.left.equalTo(self).offset(SCREEN_WIDTH/3);
+            make.left.equalTo(self).offset(SCREEN_WIDTH/3+10);
             make.centerY.equalTo(self);
             make.size.mas_equalTo(CGSizeMake(160, 20));
         }];
