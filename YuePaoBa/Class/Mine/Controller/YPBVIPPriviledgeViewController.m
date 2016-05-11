@@ -163,7 +163,7 @@ DefineLazyPropertyInitialization(NSMutableArray, userNames);
     [serveView addSubview:serveImg];
     
     UILabel *label = [[UILabel alloc] init];
-    label.font = [UIFont systemFontOfSize:13.];
+    label.font = [UIFont systemFontOfSize:11.];
     label.textAlignment = NSTextAlignmentCenter;
     label.text = @"联系客服";
     [self.view addSubview:label];

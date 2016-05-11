@@ -54,7 +54,6 @@ DefineLazyPropertyInitialization(YPBUserDetailUpdateModel, updateModel)
             } else {
                 [self popSuccessWithInfo:[YPBUser currentUser].phone];
             }
-            
         } else {
             [self popVIPNoti];
         }
@@ -190,6 +189,8 @@ DefineLazyPropertyInitialization(YPBUserDetailUpdateModel, updateModel)
                                                       Phone:textField.text withCompletionHandler:^(BOOL success, id obj)
                 {
                     if (success) {
+                        [YPBUser currentUser].phone = textField.text;
+                        [[YPBUser currentUser] saveAsCurrentUser];
                         [self popSuccessWithInfo:textField.text];
                     }
                 }];

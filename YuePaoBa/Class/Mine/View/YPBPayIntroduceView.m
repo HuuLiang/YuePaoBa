@@ -29,7 +29,7 @@
     UIView *serveView = [[UIView alloc] init];
     serveView.userInteractionEnabled = YES;
     serveView.layer.cornerRadius = 23;
-    serveView.layer.borderWidth = 1;
+    serveView.layer.borderWidth = 0;
     serveView.layer.borderColor = [UIColor lightGrayColor].CGColor;
     serveView.layer.masksToBounds = YES;
     [view addSubview:serveView];
