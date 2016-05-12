@@ -75,7 +75,7 @@ DefineLazyPropertyInitialization(YPBUserAccessModel, userAccessModel);
     
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(onVIPUpgradeSuccessNotification:) name:kVIPUpgradeSuccessNotification object:nil];
     
-    self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] bk_initWithImage:[UIImage imageNamed:@"VIPprivilege"]
+    self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] bk_initWithTitle:@"兑换"
                                                                                 style:UIBarButtonItemStylePlain
                                                                               handler:^(id sender)
                                              {

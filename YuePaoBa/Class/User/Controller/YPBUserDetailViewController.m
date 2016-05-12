@@ -78,6 +78,9 @@ DefineLazyPropertyInitialization(YPBUserAccessModel, userAccessModel)
     };
     
     _footerBar = [[YPBUserDetailFooterBar alloc] init];
+    _footerBar.layer.masksToBounds = YES;
+    _footerBar.layer.borderColor = [UIColor colorWithHexString:@"#c0c0c0"].CGColor;
+    _footerBar.layer.borderWidth = 0.5;
     _footerBar.greetAction = ^(id sender) {
         @strongify(self);
         [self greetUser];
@@ -93,10 +96,10 @@ DefineLazyPropertyInitialization(YPBUserAccessModel, userAccessModel)
     [self.view addSubview:_footerBar];
     {
         [_footerBar mas_makeConstraints:^(MASConstraintMaker *make) {
-            make.bottom.equalTo(self.view);
-            make.left.equalTo(self.view).offset(self.view.frame.size.width/5);
-            make.right.equalTo(self.view).offset(-self.view.frame.size.width/5);
-            make.height.mas_equalTo(70);
+            make.bottom.left.right.equalTo(self.view);
+//            make.left.equalTo(self.view).offset(self.view.frame.size.width/5);
+//            make.right.equalTo(self.view).offset(-self.view.frame.size.width/5);
+            make.height.mas_equalTo(50);
         }];
     }
     self.layoutTableView.contentInset = UIEdgeInsetsMake(0, 0, 50, 0);

@@ -17,6 +17,7 @@
 {
     YPBTableViewCell *_paymentTypeCell;
     YPBTableViewCell *_orderCell;
+    YPBTableViewCell *_serveCell;
     
     YPBTableViewCell *_otherIssueCell;
 }
@@ -50,6 +51,8 @@ DefineLazyPropertyInitialization(YPBFeedbackModel, feedbackModel)
             [self onPaymentCell];
         } else if (cell == self->_orderCell) {
             [self onOrderCell];
+        } else if (cell == self->_serveCell) {
+            [self onServeCell];
         } else if (indexPath.section == 1) {
             [self onIssueCell:cell atIndexPath:indexPath];
         }
@@ -100,6 +103,10 @@ DefineLazyPropertyInitialization(YPBFeedbackModel, feedbackModel)
     _orderCell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
     [self setLayoutCell:_orderCell inRow:row++ andSection:0];
     
+    _serveCell = [self newCellWithTitle:@"咨询客服"];
+    _serveCell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
+    [self setLayoutCell:_serveCell inRow:row++ andSection:0];
+    
     [self setHeaderTitle:@"问题描述" height:30 inSection:1];
     
     row = 0;
@@ -147,6 +154,12 @@ DefineLazyPropertyInitialization(YPBFeedbackModel, feedbackModel)
         return YES;
     };
     [self.navigationController pushViewController:textVC animated:YES];
+}
+
+- (void)onServeCell {
+    [UIAlertView bk_showAlertViewWithTitle:@"咨询客服QQ:2686229951\n投诉客服QQ:3153715820" message:@"工作时间:每周一至周五10:00-18:00" cancelButtonTitle:@"确定" otherButtonTitles:nil handler:^(UIAlertView *alertView, NSInteger buttonIndex) {
+        
+    }];
 }
 
 - (void)onIssueCell:(UITableViewCell *)cell atIndexPath:(NSIndexPath *)indexPath {

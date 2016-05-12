@@ -47,6 +47,7 @@ DefineLazyPropertyInitialization(YPBUser, user)
     self.layoutTableView.rowHeight = MAX(kScreenHeight * 0.08, 50);
     self.layoutTableView.scrollEnabled = NO;
     self.layoutTableView.separatorInset = UIEdgeInsetsZero;
+    self.layoutTableView.backgroundColor = [UIColor colorWithHexString:@"#fffffd"];
     [self.layoutTableView mas_makeConstraints:^(MASConstraintMaker *make) {
         make.centerX.equalTo(self.view);
         make.centerY.equalTo(self.view).dividedBy(3);
@@ -91,6 +92,7 @@ DefineLazyPropertyInitialization(YPBUser, user)
 
 - (void)initGenderCell {
     UITableViewCell *genderCell = [[UITableViewCell alloc] init];
+    genderCell.backgroundColor = [UIColor colorWithHexString:@"#fffffd"];
     genderCell.selectionStyle = UITableViewCellSelectionStyleNone;
     [self setLayoutCell:genderCell cellHeight:MAX(kScreenHeight * 0.08, 50) inRow:0 andSection:0];
     
@@ -137,6 +139,7 @@ DefineLazyPropertyInitialization(YPBUser, user)
 
 - (void)initNicknameCell {
     UITableViewCell *nicknameCell = [[UITableViewCell alloc] init];
+    nicknameCell.backgroundColor = [UIColor colorWithHexString:@"#fffffd"];
     nicknameCell.selectionStyle = UITableViewCellSelectionStyleNone;
     [self setLayoutCell:nicknameCell cellHeight:MAX(kScreenHeight * 0.08, 50) inRow:1 andSection:0];
     
@@ -171,6 +174,7 @@ DefineLazyPropertyInitialization(YPBUser, user)
 
 - (void)initAgeCell {
     _ageCell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleValue1 reuseIdentifier:nil];
+    _ageCell.backgroundColor = [UIColor colorWithHexString:@"#fffffd"];
     _ageCell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
     _ageCell.textLabel.text = @"年龄";
     _ageCell.textLabel.font = [UIFont systemFontOfSize:15.];

@@ -61,6 +61,7 @@ DefineLazyPropertyInitialization(YPBUserAvatarUpdateModel, avatarUpdateModel)
     _view = [[UIView alloc] init];
     _view.backgroundColor = [UIColor colorWithHexString:@"#fffff9"];
     _view.layer.cornerRadius = 55;
+    _view.layer.borderWidth = 0.5;
     _view.layer.borderColor = [UIColor colorWithHexString:@"#c3c4bc"].CGColor;
     _view.layer.masksToBounds = YES;
     [self.view addSubview:_view];
@@ -74,7 +75,7 @@ DefineLazyPropertyInitialization(YPBUserAvatarUpdateModel, avatarUpdateModel)
     
     UIImageView *backgroundImageView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"photoPick"]];
     backgroundImageView.contentMode = UIViewContentModeScaleToFill;
-    backgroundImageView.transform = CGAffineTransformMakeScale(1.5, 1.5);
+    backgroundImageView.transform = CGAffineTransformMakeScale(1.2, 1.2);
     [_view addSubview:backgroundImageView];
     {
         [backgroundImageView mas_makeConstraints:^(MASConstraintMaker *make) {
@@ -85,7 +86,7 @@ DefineLazyPropertyInitialization(YPBUserAvatarUpdateModel, avatarUpdateModel)
     
     UILabel *notilabel = [[UILabel alloc] init];
     notilabel.text = @"＊输入真实资料,可极大提高速配机会＊";
-    notilabel.textAlignment = NSTextAlignmentRight;
+    notilabel.textAlignment = NSTextAlignmentCenter;
     notilabel.textColor = [UIColor lightGrayColor];
     notilabel.font = [UIFont systemFontOfSize:12.];
     notilabel.backgroundColor = [UIColor clearColor];
@@ -107,10 +108,25 @@ DefineLazyPropertyInitialization(YPBUserAvatarUpdateModel, avatarUpdateModel)
         
         [notilabel mas_makeConstraints:^(MASConstraintMaker *make) {
             make.top.equalTo(_view.mas_bottom).offset(5);
-            make.right.equalTo(self.view).offset(-5);
+            make.right.equalTo(self.view).offset(0);
             make.size.mas_equalTo(CGSizeMake(SCREEN_WIDTH, 14));
         }];
     }
+    self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] bk_initWithTitle:@""
+                                                                                style:UIBarButtonItemStylePlain
+                                                                              handler:nil];
+//    //定位信息展示
+//    UIImageView *locateView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"positioning"]];
+//    locateView.backgroundColor = [UIColor grayColor];
+//    [self.view addSubview:locateView];
+//    {
+//        [locateView mas_makeConstraints:^(MASConstraintMaker *make) {
+//            make.centerX.equalTo(_view).offset(70);
+//            make.centerY.equalTo(_view).offset(20);
+//            
+//        }];
+//    }
+    
     {
         [_view bk_whenTapped:^{
             @weakify(self);
@@ -211,10 +227,11 @@ DefineLazyPropertyInitialization(YPBUserAvatarUpdateModel, avatarUpdateModel)
     
     [self.view addSubview:nextButton];
     {
+        
         [nextButton mas_makeConstraints:^(MASConstraintMaker *make) {
             make.left.equalTo(self.layoutTableView).offset(10);
             make.right.equalTo(self.layoutTableView).offset(-10);
-            make.top.equalTo(self.layoutTableView.mas_bottom).offset(SCREEN_HEIGHT/15);
+            make.top.equalTo(self.layoutTableView.mas_bottom).offset(SCREEN_HEIGHT/16);
             make.height.mas_equalTo(self.layoutTableView.rowHeight);
         }];
     }
@@ -243,6 +260,7 @@ DefineLazyPropertyInitialization(YPBUserAvatarUpdateModel, avatarUpdateModel)
 
 - (void)initLayoutCells {
     _jobCell = [[UITableViewCell alloc] init];
+    _jobCell.backgroundColor = [UIColor colorWithHexString:@"#fffffd"];
     _jobCell.selectionStyle = UITableViewCellSelectionStyleNone;
     [self setLayoutCell:_jobCell inRow:0 andSection:0];
     UILabel *titleLabel = [[UILabel alloc] init];
@@ -281,6 +299,7 @@ DefineLazyPropertyInitialization(YPBUserAvatarUpdateModel, avatarUpdateModel)
 
     
     _educationCell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleValue1 reuseIdentifier:nil];
+    _educationCell.backgroundColor = [UIColor colorWithHexString:@"#fffffd"];
     _educationCell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
     _educationCell.textLabel.text = @"学历";
     _educationCell.textLabel.font = [UIFont systemFontOfSize:15.];
@@ -290,6 +309,7 @@ DefineLazyPropertyInitialization(YPBUserAvatarUpdateModel, avatarUpdateModel)
     [self setLayoutCell:_educationCell inRow:1 andSection:0];
     
     _revenuesCell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleValue1 reuseIdentifier:nil];
+    _revenuesCell.backgroundColor = [UIColor colorWithHexString:@"#fffffd"];
     _revenuesCell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
     _revenuesCell.textLabel.text = @"收入";
     _revenuesCell.textLabel.font = [UIFont systemFontOfSize:15.];
@@ -298,6 +318,7 @@ DefineLazyPropertyInitialization(YPBUserAvatarUpdateModel, avatarUpdateModel)
     [self setLayoutCell:_revenuesCell inRow:2 andSection:0];
     
     _heightCell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleValue1 reuseIdentifier:nil];
+    _heightCell.backgroundColor = [UIColor colorWithHexString:@"#fffffd"];
     _heightCell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
     _heightCell.textLabel.text = @"身高";
     _heightCell.textLabel.font = [UIFont systemFontOfSize:15.];
@@ -305,6 +326,7 @@ DefineLazyPropertyInitialization(YPBUserAvatarUpdateModel, avatarUpdateModel)
     [self setLayoutCell:_heightCell inRow:3 andSection:0];
     
     _marriageCell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleValue1 reuseIdentifier:nil];
+    _marriageCell.backgroundColor = [UIColor colorWithHexString:@"#fffffd"];
     _marriageCell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
     _marriageCell.textLabel.text = @"婚姻";
     _marriageCell.textLabel.font = [UIFont systemFontOfSize:15.];
@@ -446,6 +468,7 @@ DefineLazyPropertyInitialization(YPBUserAvatarUpdateModel, avatarUpdateModel)
     _locationManager.distanceFilter = kCLDistanceFilterNone;
     [_locationManager requestAlwaysAuthorization];
     [_locationManager startUpdatingLocation];
+    
 }
 
 - (void)locationManager:(CLLocationManager *)manager didUpdateLocations:(nonnull NSArray<CLLocation *> *)locations {
@@ -457,6 +480,7 @@ DefineLazyPropertyInitialization(YPBUserAvatarUpdateModel, avatarUpdateModel)
             DLog("%@ %@",placemark.administrativeArea,placemark.locality);
             _user.province = placemark.administrativeArea;
             _user.city = placemark.locality;
+            self.navigationItem.rightBarButtonItem.title = placemark.locality;
         }
     }];
 }

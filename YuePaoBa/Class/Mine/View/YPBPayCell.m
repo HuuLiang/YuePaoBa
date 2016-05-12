@@ -51,7 +51,7 @@
     } else if ([monthInfo isEqualToString:@"three"]) {
 //        _backgroundImage.image = [UIImage imageNamed:@"pay_153-1"];
         _priceLabel.text = [NSString stringWithFormat:@"%i元/季度",price3Month/100];
-        _detailLabel.text = @"返100元";
+        _detailLabel.text = @"返100元话费";
 //        [_payButton setTitle:[NSString stringWithFormat:@"%lu元",price3Month/
 //                              100] forState:UIControlStateNormal];
         [_payButton setTitle:@"开通" forState:UIControlStateNormal];
