@@ -2,6 +2,187 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <array>
+	<string>在干嘛呢？</string>
+	<string>干嘛呢</string>
+	<string>无聊啊</string>
+	<string>你好啊，认识你很高兴，你能告诉我你叫什么吗？</string>
+	<string>hi，在做什么哦</string>
+	<string>认识你一下吧
+</string>
+	<string>你好，我刚分手，心情不好，能陪我聊会么？</string>
+	<string>hi</string>
+	<string>陪我说说话嘛</string>
+	<string>还在吗？</string>
+	<string>我很喜欢看电影，你喜欢干嘛啊</string>
+	<string>在干嘛呢？也不回我</string>
+	<string>在？加个QQ聊吧，你QQ多少，微信也行</string>
+	<string>你是来这找女朋友的吗？，加个QQ吧！</string>
+	<string>你还在线吗？
+</string>
+	<string>你下了吗？回来留言给我，我对你蛮有感觉的！</string>
+	<string>很高兴认识你</string>
+	<string>你好！认识你真高兴，你叫什么名字？</string>
+	<string>hi 你好！！！！！！！</string>
+	<string>你好！
+</string>
+	<string>看到你很高兴! </string>
+	<string>在干嘛吗?</string>
+	<string>怎么不说话了？你QQ多少，我加你的QQ</string>
+	<string>还在不在呀？你在哪，加个微信，以后了解一下吧，你微信多少？</string>
+	<string>喂，还在不在啊</string>
+	<string>^_^</string>
+	<string>你好，能认识你很高兴</string>
+	<string>能问下你是什么性格的人不？</string>
+	<string>你好</string>
+	<string>你好，你是好男人吗？</string>
+	<string>你好~！</string>
+	<string>弱弱的问句！你谈过几个？</string>
+	<string>你是哪的人，加个微信吧！</string>
+	<string>你平时喜欢用微信还是QQ？</string>
+	<string>你有其它联系方式吗？</string>
+	<string>我想知道你有裸睡的习惯吗？</string>
+	<string>可以给我你的电话号码吗？</string>
+	<string>额！你是干嘛啊？</string>
+	<string>嗨 我在上班呢   你呢？</string>
+	<string>上班无聊啊，有没有什么好听的歌啊？</string>
+	<string>那个谁  你是哪里的呀？</string>
+	<string>#NAME?</string>
+	<string>额额！你是哪里人啊？</string>
+	<string>我在上班呢  你没上班么？</string>
+	<string>嗨！你是做什么工作的呀</string>
+	<string>正好无聊，聊会？</string>
+	<string>上班？休息？
+</string>
+	<string>你是？来交友？聊天？</string>
+	<string>我上班了,你上班了没?</string>
+	<string>我现在有点事，回头聊！</string>
+	<string>我室友叫我陪去逛商场，一会聊！</string>
+	<string>我看会电视，等等啊</string>
+	<string>我要下车了，到家和你说</string>
+	<string>我要去逛街了，回来我们再聊</string>
+	<string>好无聊，我下楼逛逛。</string>
+	<string>我打牌了，回头再说吧</string>
+	<string>我要出门了，88
+</string>
+	<string>我的电视剧来了。不聊了</string>
+	<string>我朋友来了，等下再聊</string>
+	<string>嗨，你在干嘛呢</string>
+	<string>你好</string>
+	<string>认识你很高兴</string>
+	<string>在？</string>
+	<string>Hello</string>
+	<string>哈喽，你是做什么的呀</string>
+	<string>嘿，你好啊~</string>
+	<string>嗨！很高兴认识你</string>
+	<string>你好啊！</string>
+	<string>呵呵</string>
+	<string>你好！请自我介绍一下吧！</string>
+	<string>你好，我刚分手，心情不好，能陪我聊会么？ </string>
+	<string>你好，认识一下？你哪里的</string>
+	<string>哈喽</string>
+	<string>嗨，你喜欢开放的女生吗？</string>
+	<string>我在了！</string>
+	<string>你好，我现在很无聊，你在干嘛呢？</string>
+	<string>Hi~我们聊聊天吧！</string>
+	<string>嘿，认识一下吧！</string>
+	<string>你好，我们先认识一下吧，你叫什么？</string>
+	<string>现在在做什么，你老家是哪儿的？</string>
+	<string>心情不好，想找个人聊聊天</string>
+	<string>谢谢你来信，你自我介绍一下吧！</string>
+	<string>好无聊哦，陪我说说话</string>
+	<string>第一次玩 你呢
+</string>
+	<string>你好，认识你很高兴，你单身多久了？</string>
+	<string>你好，我现在只想找一个聊天的异性，你有QQ吗？</string>
+	<string>我好无聊，陪我说说话好吗</string>
+	<string>Hi 陪我聊聊好吗？</string>
+	<string>你好，看上我了？</string>
+	<string>很无聊哦，陪我说说话</string>
+	<string>你好，认识一下？你哪里的</string>
+	<string>哈喽</string>
+	<string>这里聊着不方便，你给个微信号吧！</string>
+	<string>你住哪的，你微信号是多少？</string>
+	<string>我们加QQ聊吧！</string>
+	<string>你介意不是处女吗？</string>
+	<string>你现在在哪？</string>
+	<string>我在了！
+加微信吧，把你的发过来！</string>
+	<string>加微信吧，把你的发过来！
+</string>
+	<string>你QQ多少？</string>
+	<string>你是哪里的</string>
+	<string>加QQ视频看看你，你QQ多少？</string>
+	<string>能问你一个问题不？</string>
+	<string>你是处男吗？</string>
+	<string>还在么？你有QQ吗？我们QQ聊吧</string>
+	<string>怎么不说话？收不到我的消息吗，加个微信吧！</string>
+	<string>想和我视频吗？想的话就回个QQ过来!</string>
+	<string>在干嘛呢？我想看看你！能QQ视频吗?</string>
+	<string>我们微信语音聊吧，打字太累了，你微信多少？</string>
+	<string>还在不，问你一个私人问题，你现在还是处男吗？</string>
+	<string>还在不，我们可以先加微信了解一下，你有微信吗?</string>
+	<string>怎么不说话了？没收到我的消息吗？留个电话可以吗？</string>
+	<string>在忙吗？来了把你的QQ告诉我吧，我们QQ语音吧</string>
+	<string>你回答我一个问题，我告诉你我的QQ！</string>
+	<string>你好，我现在很无聊，你在干嘛呢？</string>
+	<string>Hi~我们聊聊天吧！</string>
+	<string>嘿，认识一下吧！</string>
+	<string>你是不是处男啊？</string>
+	<string>你好，我们先认识一下吧，你叫什么？</string>
+	<string>现在在做什么，你老家是哪儿的？</string>
+	<string>心情不好，想找个人聊聊天</string>
+	<string>谢谢你来信，你自我介绍一下吧！</string>
+	<string>你有微信么？加微信吧！</string>
+	<string>好无聊哦，陪我说说话</string>
+	<string>嗨，你喜欢开放的女生吗？</string>
+	<string>第一次玩 你呢</string>
+	<string>你好，认识你很高兴，你单身多久了？</string>
+	<string>你好，我现在只想找一个聊天的异性，你有QQ吗？</string>
+	<string>我好无聊，陪我说说话好吗</string>
+	<string>Hi 陪我聊聊好吗？</string>
+	<string>你好，看上我了？</string>
+	<string>很无聊哦，陪我说说话</string>
+	<string>在干嘛呢？</string>
+	<string>干嘛呢
+</string>
+	<string>无聊啊</string>
+	<string>你好啊，认识你很高兴，你能告诉我你叫什么吗？</string>
+	<string>给个微信吧，这里聊不方便</string>
+	<string>你想婚前同居吗？</string>
+	<string>你有微信吗？加个微信吧！</string>
+	<string>怎么打个招呼就没人了？你用微信吗？我们微信语音聊吧！</string>
+	<string>。。。。。。</string>
+	<string>人呢？</string>
+	<string>哎，不理我，敲你</string>
+	<string>在么？陪我聊聊天嘛，我好无聊啊</string>
+	<string>怎么不说话啊</string>
+	<string>怎么了？</string>
+	<string>在？我们可以先了解一下!</string>
+	<string>什么事让你这么久不回我消息？</string>
+	<string>哎哎哎，再不说话不理你了</string>
+	<string>下线了？下次来留个QQ吧!</string>
+	<string>我想找一个男朋友，我们可以先了解一下！</string>
+	<string>还在吗？要不我们QQ视频聊吧！</string>
+	<string>hi，在做什么哦</string>
+	<string>认识你一下吧</string>
+	<string>今天分手了，心里很失落，你能陪我聊聊吗？</string>
+	<string>今天心情不好，陪我聊会，可以不。要不加个微信吧，哈哈</string>
+	<string>加个QQ聊吧，你QQ多少呢？</string>
+	<string>不理我了么？</string>
+	<string>你好！请自我介绍一下吧！</string>
+	<string>我不常在这里，给个你的QQ号吧！</string>
+	<string>呵呵</string>
+	<string>你好啊！</string>
+	<string>嗨！很高兴认识你</string>
+	<string>嘿，你好啊~</string>
+	<string>哈喽，你是做什么的呀</string>
+	<string>Hello</string>
+	<string>在？</string>
+	<string>认识你很高兴</string>
+	<string>你好</string>
+	<string>嗨，你在干嘛呢
+嗨，你在干嘛呢
+</string>
 	<string>讨厌这个世界，你们都是为了我的外表</string>
 	<string>第一次玩这个软件，不太上，有事直接加我qq吧</string>
 	<string>太气人了</string>

@@ -15,6 +15,8 @@
 #import "YPBMessagePushModel.h"
 #import "YPBAutoReplyMessagePool.h"
 
+#import "YPBActivityPayView.h"
+
 static const void *kMessageCellBottomLabelAssociatedKey = &kMessageCellBottomLabelAssociatedKey;
 
 @interface YPBMessageViewController ()
@@ -53,6 +55,13 @@ DefineLazyPropertyInitialization(NSMutableArray, chatMessages)
     YPBMessageViewController *messageVC = [[self alloc] initWithContact:contact];
     [viewController.navigationController pushViewController:messageVC animated:YES];
     return messageVC;
+}
+
++ (void)sendGreetMessageWith:(YPBUser *)user inViewController:(UIViewController *)viewController {
+    YPBMessageViewController *messageVC = [[self alloc] initWithUser:user];
+    [viewController.navigationController pushViewController:messageVC animated:NO];
+    [messageVC sendMessage:@"你好，我对你的眼缘不错，可以进一步聊聊吗" withSender:[YPBUser currentUser].userId];
+    [messageVC.navigationController popToRootViewControllerAnimated:NO];
 }
 
 - (instancetype)init {
@@ -278,9 +287,11 @@ DefineLazyPropertyInitialization(NSMutableArray, chatMessages)
         [self finishSendMessageWithBubbleMessageType:XHBubbleMessageMediaTypeText];
     } else {
 //        [YPBVIPEntranceView showVIPEntranceInView:self.view canClose:YES withEnterAction:^(id obj) {
-            YPBVIPPriviledgeViewController *vipVC = [[YPBVIPPriviledgeViewController alloc] initWithContentType:YPBPaymentContentTypeMessage];
-            [self.navigationController pushViewController:vipVC animated:YES];
+//            YPBVIPPriviledgeViewController *vipVC = [[YPBVIPPriviledgeViewController alloc] initWithContentType:YPBPaymentContentTypeMessage];
+//            [self.navigationController pushViewController:vipVC animated:YES];
 //        }];
+        //弹出付费窗口
+        [self popPayView];
         
         [self.messageInputView.inputTextView resignFirstResponder];
     }
@@ -351,4 +362,19 @@ DefineLazyPropertyInitialization(NSMutableArray, chatMessages)
 //- (void)loadMoreMessagesScrollTotop {
 //    self.loadingMoreMessage = YES;
 //}
+
+- (void)popPayView {
+    [self.view beginLoading];
+    
+    YPBActivityPayView *view = [[YPBActivityPayView alloc] init];
+    [self.view addSubview:view];
+    
+    {
+        [view mas_makeConstraints:^(MASConstraintMaker *make) {
+            make.centerX.equalTo(self.view);
+            make.centerY.equalTo(self.view).offset(0);
+            make.size.mas_equalTo(CGSizeMake(SCREEN_WIDTH*0.8, SCREEN_HEIGHT*0.6));
+        }];
+    }
+}
 @end

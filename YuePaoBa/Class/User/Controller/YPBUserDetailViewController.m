@@ -25,6 +25,7 @@
 @interface YPBUserDetailViewController ()
 {
     YPBUserProfileCell *_profileCell;
+    YPBTableViewCell *_wechatCell;
 
     YPBPhotoBar *_photoBar;
     YPBTableViewCell *_liveShowCell;
@@ -71,9 +72,11 @@ DefineLazyPropertyInitialization(YPBUserAccessModel, userAccessModel)
     self.layoutTableViewAction = ^(NSIndexPath *indexPath, UITableViewCell *cell) {
         @strongify(self);
         if (cell == self->_profileCell) {
-            [self onProfile];
+//            [self onProfile];
         } else if (cell == self->_liveShowCell) {
             [self onLiveShow];
+        } else if (cell == self->_wechatCell) {
+            [self onWechat];
         }
     };
     
@@ -189,6 +192,9 @@ DefineLazyPropertyInitialization(YPBUserAccessModel, userAccessModel)
             self.user.isGreet = YES;
             self.user.receiveGreetCount = @(self.user.receiveGreetCount.unsignedIntegerValue+1);
             [[YPBMessageCenter defaultCenter] showSuccessWithTitle:@"打招呼成功" inViewController:self];
+            if ([YPBContact refreshContactRecentTimeWithUser:self.user]) {
+                [YPBMessageViewController sendGreetMessageWith:self.user inViewController:self];
+            }
         }
     }];
 }
@@ -236,6 +242,21 @@ DefineLazyPropertyInitialization(YPBUserAccessModel, userAccessModel)
     [self.navigationController pushViewController:profileVC animated:YES];
 }
 
+- (void)onWechat {
+    if (![YPBUtil isVIP]) {
+        if (self.user.isRegistered) {
+            [YPBMessageViewController showMessageForWeChatWithUser:self.user inViewController:self];
+        } else {
+            [[YPBMessageCenter defaultCenter] showErrorWithTitle:@"无法获取用户信息" inViewController:self];
+        }
+    } else {
+        YPBVIPPriviledgeViewController *vipVC = [[YPBVIPPriviledgeViewController alloc] initWithContentType:YPBPaymentContentTypeWeChatId];
+        [self.navigationController pushViewController:vipVC animated:YES];
+        
+        [YPBStatistics logEvent:kLogUserWeChatViewedForPaymentEvent fromUser:[YPBUser currentUser].userId toUser:self.user.userId];
+    }
+}
+
 - (void)updateLayoutCells {
     [self removeAllLayoutCells];
     
@@ -246,12 +267,14 @@ DefineLazyPropertyInitialization(YPBUserAccessModel, userAccessModel)
         [self initUserLiveShowCellLayoutsInSection:section++];
     }
     [self initUserGiftCellLayoutsInSection:section++];
+    [self initUserProfileView:section];
     [self.layoutTableView reloadData];
 }
 
 - (void)initUserProfileCellLayoutsInSection:(NSUInteger)section {
     YPBUserProfileCell *profileCell = [[YPBUserProfileCell alloc] init];
-    profileCell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
+//    profileCell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
+    profileCell.accessoryType = UITableViewCellAccessoryNone;
     profileCell.user = self.user;
     @weakify(self);
     profileCell.wechatAction = ^(id sender) {
@@ -375,6 +398,67 @@ DefineLazyPropertyInitialization(YPBUserAccessModel, userAccessModel)
     if (self.user.gifts.count > 0) {
         [self refreshGiftBar];
     }
+}
+
+- (void)initUserProfileView:(NSUInteger)section {
+    [self setHeaderTitle:@"" height:7 inSection:section];
+    YPBTableViewCell *genderCell = [[YPBTableViewCell alloc] initWithImage:[UIImage imageNamed:@"female_icon"] title:@"性别：??"];
+    genderCell.selectionStyle = UITableViewCellSelectionStyleNone;
+    genderCell.imageView.image = self.user.gender==YPBUserGenderUnknown?nil:self.user.gender==YPBUserGenderFemale?[UIImage imageNamed:@"female_icon"]:[UIImage imageNamed:@"male_icon"];
+    genderCell.titleLabel.text = self.user.gender==YPBUserGenderUnknown?nil:self.user.gender==YPBUserGenderFemale?@"性别：女":@"性别：男";
+    [self setLayoutCell:genderCell inRow:0 andSection:section];
+    
+    NSString *wechatTitle = @"微信：*******>>查看微信号";
+    NSMutableAttributedString *attrStr = [[NSMutableAttributedString alloc] initWithString:wechatTitle];
+    [attrStr addAttributes:@{NSForegroundColorAttributeName:[UIColor blueColor], NSUnderlineStyleAttributeName:@(1)} range:NSMakeRange(wechatTitle.length-6, 6)];
+    
+    _wechatCell = [[YPBTableViewCell alloc] initWithImage:[UIImage imageNamed:@"wechat_icon"] title:nil];
+    _wechatCell.selectionStyle = UITableViewCellSelectionStyleNone;
+    _wechatCell.titleLabel.attributedText = attrStr;
+    [self setLayoutCell:_wechatCell inRow:1 andSection:section];
+    
+    YPBTableViewCell *interestCell = [[YPBTableViewCell alloc] initWithImage:[UIImage imageNamed:@"interest_icon"] title:[NSString stringWithFormat:@"兴趣：%@", self.user.note ?: @"？？？"]];
+    interestCell.selectionStyle = UITableViewCellSelectionStyleNone;
+    [self setLayoutCell:interestCell inRow:2 andSection:section];
+    
+    YPBTableViewCell *purposeCell = [[YPBTableViewCell alloc] initWithImage:[UIImage imageNamed:@"purpose_icon"] title:[NSString stringWithFormat:@"交友目的：%@", self.user.purpose]];
+    purposeCell.selectionStyle = UITableViewCellSelectionStyleNone;
+    [self setLayoutCell:purposeCell inRow:3 andSection:section];
+    
+    YPBTableViewCell *marryCell = [[YPBTableViewCell alloc] initWithImage:[UIImage imageNamed:@"marry_icon"] title:[NSString stringWithFormat:@"婚姻状况：%@",self.user.marry]];
+    marryCell.selectionStyle = UITableViewCellSelectionStyleNone;
+    [self setLayoutCell:marryCell inRow:4 andSection:section++];
+    
+    [self setHeaderHeight:7 inSection:section];
+    YPBTableViewCell *heightCell = [[YPBTableViewCell alloc] initWithImage:[UIImage imageNamed:@"height_icon"] title:[NSString stringWithFormat:@"身高：%@", self.user.heightDescription ?: @"???cm"]];
+    heightCell.selectionStyle = UITableViewCellSelectionStyleNone;
+    [self setLayoutCell:heightCell inRow:0 andSection:section];
+    
+    YPBTableViewCell *ageCell = [[YPBTableViewCell alloc] initWithImage:[UIImage imageNamed:@"age_icon"] title:[NSString stringWithFormat:@"年龄：%@", self.user.ageDescription ?: @"？？"]];
+    ageCell.selectionStyle = UITableViewCellSelectionStyleNone;
+    [self setLayoutCell:ageCell inRow:1 andSection:section];
+    
+    YPBTableViewCell *figureCell = [[YPBTableViewCell alloc] initWithImage:[UIImage imageNamed:@"figure_icon"] title:self.user.figureDescription ?: @"身材：?? ?? ??"];
+    figureCell.selectionStyle = UITableViewCellSelectionStyleNone;
+    [self setLayoutCell:figureCell inRow:2 andSection:section++];
+    
+    [self setHeaderHeight:7 inSection:section];
+    
+    YPBTableViewCell *educationCell = [[YPBTableViewCell alloc] initWithImage:[UIImage imageNamed:@"education_icon"] title:[NSString stringWithFormat:@"学历：%@",self.user.edu?:@"？？？"]];
+    educationCell.selectionStyle = UITableViewCellSelectionStyleNone;
+    [self setLayoutCell:educationCell inRow:0 andSection:section];
+    
+    YPBTableViewCell *incomeCell = [[YPBTableViewCell alloc] initWithImage:[UIImage imageNamed:@"income_icon"] title:[NSString stringWithFormat:@"月收入：%@", self.user.monthIncome ?: @"？？？"]];
+    incomeCell.selectionStyle = UITableViewCellSelectionStyleNone;
+    [self setLayoutCell:incomeCell inRow:1 andSection:section];
+    
+    YPBTableViewCell *professionCell = [[YPBTableViewCell alloc] initWithImage:[UIImage imageNamed:@"profession_icon"] title:[NSString stringWithFormat:@"职业：%@", self.user.profession ?: @"？？？"]];
+    professionCell.selectionStyle = UITableViewCellSelectionStyleNone;
+    [self setLayoutCell:professionCell inRow:2 andSection:section];
+    
+    YPBTableViewCell *assetsCell = [[YPBTableViewCell alloc] initWithImage:[UIImage imageNamed:@"assets_icon"] title:[NSString stringWithFormat:@"资产情况：%@", self.user.assets ?: @"？？？"]];
+    assetsCell.selectionStyle = UITableViewCellSelectionStyleNone;
+    [self setLayoutCell:assetsCell inRow:3 andSection:section];
 }
 
 - (void)refreshGiftBar {

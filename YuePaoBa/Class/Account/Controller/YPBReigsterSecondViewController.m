@@ -345,10 +345,9 @@ DefineLazyPropertyInitialization(YPBUserAvatarUpdateModel, avatarUpdateModel)
         [[YPBMessageCenter defaultCenter] dismissMessageWithCompletion:^{
             self.user.userId = uid;
             [YPBUser currentUser].userId = uid;
-            [self.avatarUpdateModel updateAvatarOfUser:[YPBUser currentUser].userId withURL:[YPBUser currentUser].logoUrl completionHandler:^(BOOL success, id errorMsg) {
-                
-            }];
-
+            if ([YPBUser currentUser].logoUrl != nil) {
+                [self.avatarUpdateModel updateAvatarOfUser:[YPBUser currentUser].userId withURL:[YPBUser currentUser].logoUrl completionHandler:nil];
+            }
             [self.user saveAsCurrentUser];
             [self dismissViewControllerAnimated:YES completion:nil];
             [YPBUtil notifyRegisterSuccessfully];

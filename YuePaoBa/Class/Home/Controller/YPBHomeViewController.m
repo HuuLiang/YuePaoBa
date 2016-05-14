@@ -17,14 +17,23 @@
 #import "YPBMessagePushModel.h"
 #import "YPBActivityViewController.h"
 
+#import "YPBMessageViewController.h"
+#import "YPBRecommendCell.h"
+#import "YPBContact.h"
+
 static NSString *const kHomeCellReusableIdentifier = @"HomeCellReusableIdentifier";
+static NSString *const kRecommendCellReuseIdentifier = @"RecommendCellReuseIdentifier";
+static NSString *const kFirstRecommentIdentifier = @"FirstRecomment";
 
 @interface YPBHomeViewController () <UICollectionViewDataSource,UICollectionViewDelegate>
 {
     UICollectionView *_layoutCollectionView;
+    UICollectionView *_recommendCollectionView;
 }
 @property (nonatomic,retain) YPBUserListModel *userListModel;
 @property (nonatomic,retain) NSMutableArray<YPBUser *> *users;
+@property (nonatomic,retain) NSMutableArray<YPBUser *> *recommendUsers;
+@property (nonatomic,retain) NSMutableArray<YPBUser *> *greetUsers;
 @property (nonatomic,retain) YPBUserAccessModel *userAccessModel;
 @end
 
@@ -32,6 +41,8 @@ static NSString *const kHomeCellReusableIdentifier = @"HomeCellReusableIdentifie
 
 DefineLazyPropertyInitialization(YPBUserListModel, userListModel)
 DefineLazyPropertyInitialization(NSMutableArray, users)
+DefineLazyPropertyInitialization(NSMutableArray, recommendUsers);
+DefineLazyPropertyInitialization(NSMutableArray, greetUsers);
 DefineLazyPropertyInitialization(YPBUserAccessModel, userAccessModel);
 
 - (void)didRestoreUser:(YPBUser *)user {
@@ -73,15 +84,23 @@ DefineLazyPropertyInitialization(YPBUserAccessModel, userAccessModel);
         [self loadOrRefreshData:NO];
     }];
     
+    NSUserDefaults *recommendDefaults = [NSUserDefaults standardUserDefaults];
+    NSString * string = [recommendDefaults objectForKey:kFirstRecommentIdentifier];
+    if (![string isEqualToString:kFirstRecommentIdentifier]) {
+       [self popRecommendView];
+    }
+    
+    
+    
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(onVIPUpgradeSuccessNotification:) name:kVIPUpgradeSuccessNotification object:nil];
     
-    self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] bk_initWithTitle:@"兑换"
-                                                                                style:UIBarButtonItemStylePlain
-                                                                              handler:^(id sender)
-                                             {
-                                                 YPBActivityViewController *acView = [[YPBActivityViewController alloc] init];
-                                                 [self.navigationController pushViewController:acView animated:YES];
-                                             }];
+//    self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] bk_initWithTitle:@"兑换"
+//                                                                                style:UIBarButtonItemStylePlain
+//                                                                              handler:^(id sender)
+//                                             {
+//                                                 YPBActivityViewController *acView = [[YPBActivityViewController alloc] init];
+//                                                 [self.navigationController pushViewController:acView animated:YES];
+//                                             }];
 }
 
 - (void)loadOrRefreshData:(BOOL)isRefresh {    
@@ -101,6 +120,10 @@ DefineLazyPropertyInitialization(YPBUserAccessModel, userAccessModel);
             
             [self.users addObjectsFromArray:obj];
             [self->_layoutCollectionView reloadData];
+            
+            [self.recommendUsers addObjectsFromArray:obj];
+            [self.greetUsers addObjectsFromArray:obj];
+            [self->_recommendCollectionView reloadData];
             
             if (self.userListModel.hasNoMoreData) {
                 [self->_layoutCollectionView YPB_pagingRefreshNoMoreData];
@@ -130,62 +153,208 @@ DefineLazyPropertyInitialization(YPBUserAccessModel, userAccessModel);
     // Dispose of any resources that can be recreated.
 }
 
+- (void)popRecommendView {
+    [self.view  beginLoading];
+    
+    UIView *recommendView = [[UIView alloc] init];
+    recommendView.backgroundColor = [UIColor whiteColor];
+    recommendView.layer.cornerRadius = 7;
+    [self.view addSubview:recommendView];
+    
+    UIImageView *bgImg = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"home_bgImg"]];
+    bgImg.contentMode = UIViewContentModeScaleToFill;
+    bgImg.clipsToBounds = YES;
+    bgImg.userInteractionEnabled = YES;
+    [recommendView addSubview:bgImg];
+    
+    UIImageView *starImg = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"home_star"]];
+    starImg.contentMode = UIViewContentModeScaleAspectFit;
+    starImg.userInteractionEnabled = YES;
+    [bgImg addSubview:starImg];
+    
+    UIButton *closeButton = [[UIButton alloc] init];
+    [closeButton setImage:[UIImage imageNamed:@"home_close"] forState:UIControlStateNormal];
+    [recommendView addSubview:closeButton];
+
+    [closeButton bk_addEventHandler:^(id sender) {
+        [self.view endLoading];
+        [recommendView removeFromSuperview];
+    } forControlEvents:UIControlEventTouchUpInside];
+    
+    UILabel *greetLabel = [[UILabel alloc] init];
+    greetLabel.text = @"立即打招呼";
+    greetLabel.textColor = [UIColor whiteColor];
+    greetLabel.textAlignment = NSTextAlignmentCenter;
+    greetLabel.layer.cornerRadius = 3;
+    greetLabel.layer.masksToBounds = YES;
+    greetLabel.userInteractionEnabled = YES;
+    greetLabel.backgroundColor = [UIColor colorWithHexString:@"#50aad9"];
+    [recommendView addSubview:greetLabel];
+    {
+        [greetLabel bk_whenTapped:^{
+            //批量打招呼
+            for (YPBUser *user in _greetUsers) {
+                [self.userAccessModel accessUserWithUserId:user.userId accessType:YPBUserAccessTypeGreet completionHandler:^(BOOL success, id obj) {
+                    if (success) {
+                        user.receiveGreetCount = @(user.receiveGreetCount.unsignedIntegerValue+1);
+                        user.isGreet = YES;
+                        if ([YPBContact refreshContactRecentTimeWithUser:user]) {
+                            [YPBMessageViewController sendGreetMessageWith:user inViewController:self];
+                        }
+                    }
+                }];
+            }
+            [self.view endLoading];
+            [recommendView removeFromSuperview];
+            [self loadOrRefreshData:YES];
+            //
+            NSUserDefaults *recommendDefaults = [NSUserDefaults standardUserDefaults];
+            [recommendDefaults setObject:kFirstRecommentIdentifier forKey:kFirstRecommentIdentifier];
+            [recommendDefaults synchronize];
+        }];
+    }
+    
+    _recommendCollectionView = [[UICollectionView alloc] initWithFrame:CGRectMake(0, 0, 100, 100) collectionViewLayout:[self createLayout]];
+//    _recommendCollectionView.collectionViewLayout = [self createLayout];
+    _recommendCollectionView.backgroundColor = [UIColor clearColor];
+    _recommendCollectionView.delegate = self;
+    _recommendCollectionView.dataSource = self;
+    _recommendCollectionView.showsVerticalScrollIndicator = NO;
+    [_recommendCollectionView registerClass:[YPBRecommendCell class] forCellWithReuseIdentifier:kRecommendCellReuseIdentifier];
+    [bgImg addSubview:_recommendCollectionView];
+    
+    {
+        [recommendView mas_makeConstraints:^(MASConstraintMaker *make) {
+            make.centerX.equalTo(self.view);
+            make.top.equalTo(self.view).offset(SCREEN_HEIGHT/35);
+            make.size.mas_equalTo(CGSizeMake(SCREEN_WIDTH *0.8, SCREEN_HEIGHT*0.6+SCREEN_HEIGHT/8));
+        }];
+        
+        
+        [bgImg mas_makeConstraints:^(MASConstraintMaker *make) {
+            make.top.left.right.equalTo(recommendView);
+            make.height.equalTo(@(SCREEN_HEIGHT*0.6));
+        }];
+        
+        [starImg mas_makeConstraints:^(MASConstraintMaker *make) {
+            make.centerX.equalTo(bgImg);
+            make.top.equalTo(recommendView).offset(0);
+        }];
+        
+        [closeButton mas_makeConstraints:^(MASConstraintMaker *make) {
+            make.centerX.equalTo(recommendView.mas_right).offset(-8);
+            make.centerY.equalTo(recommendView.mas_top).offset(8);
+            make.size.mas_equalTo(CGSizeMake(30, 30));
+        }];
+        
+        [greetLabel mas_makeConstraints:^(MASConstraintMaker *make) {
+            make.centerX.equalTo(recommendView);
+            make.top.equalTo(bgImg.mas_bottom).offset(SCREEN_HEIGHT/8*0.2);
+            make.size.mas_equalTo(CGSizeMake(210, SCREEN_HEIGHT/8*0.6));
+        }];
+        
+        [_recommendCollectionView mas_makeConstraints:^(MASConstraintMaker *make) {
+            make.left.right.bottom.equalTo(bgImg);
+            make.top.equalTo(bgImg).offset(SCREEN_HEIGHT/14);
+        }];
+    }
+}
+
+- (UICollectionViewFlowLayout *)createLayout {
+    UICollectionViewFlowLayout *layout = [[UICollectionViewFlowLayout alloc] init];
+    
+    layout.minimumLineSpacing = SCREEN_HEIGHT/50.;
+    layout.minimumInteritemSpacing = SCREEN_WIDTH/37.;
+    layout.itemSize = CGSizeMake((SCREEN_WIDTH*0.8-30-2*SCREEN_WIDTH/37)/3-9, (SCREEN_WIDTH*0.8-30-2*SCREEN_WIDTH/37)/3+3);
+    layout.sectionInset = UIEdgeInsetsMake(15, 15, 15, 15);
+    return layout;
+}
+
 #pragma mark - UICollectionViewDataSource,UICollectionViewDelegate
 
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath {
-    YPBHomeCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:kHomeCellReusableIdentifier forIndexPath:indexPath];
-    
-    if (indexPath.item < self.users.count) {
-        YPBUser *user = self.users[indexPath.item];
-        cell.user = user;
+    if (collectionView == _layoutCollectionView) {
+        YPBHomeCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:kHomeCellReusableIdentifier forIndexPath:indexPath];
         
-        @weakify(self,cell);
-        cell.likeAction = ^(id sender) {
-            @strongify(self,cell);
-            if (user.isGreet) {
-                [[YPBMessageCenter defaultCenter] showErrorWithTitle:@"您已经和TA打过招呼了！" inViewController:self];
-                return ;
-            }
+        if (indexPath.item < self.users.count) {
+            YPBUser *user = self.users[indexPath.item];
+            cell.user = user;
             
-            if (![YPBUtil isVIP] && [YPBUser currentUser].greetCount.unsignedIntegerValue >= 5) {
-                YPBVIPPriviledgeViewController *vipVC = [[YPBVIPPriviledgeViewController alloc] initWithContentType:YPBPaymentContentTypeGreetMore];
-                [self.navigationController pushViewController:vipVC animated:YES];
-                return;
-            }
-            
-            [sender beginLoading];
-            [self.userAccessModel accessUserWithUserId:user.userId accessType:YPBUserAccessTypeGreet completionHandler:^(BOOL success, id obj) {
-                [sender endLoading];
-                
-                if (success) {
-                    //[[YPBMessageCenter defaultCenter] showSuccessWithTitle:@"打招呼成功" inViewController:self];
-                    
-                    user.receiveGreetCount = @(user.receiveGreetCount.unsignedIntegerValue+1);
-                    user.isGreet = YES;
-                    cell.user = user;
+            @weakify(self,cell);
+            cell.likeAction = ^(id sender) {
+                @strongify(self,cell);
+                if (user.isGreet) {
+                    [[YPBMessageCenter defaultCenter] showErrorWithTitle:@"您已经和TA打过招呼了！" inViewController:self];
+                    return ;
                 }
-            }];
-        };
+                
+                if (![YPBUtil isVIP] && [YPBUser currentUser].greetCount.unsignedIntegerValue >= 5) {
+                    YPBVIPPriviledgeViewController *vipVC = [[YPBVIPPriviledgeViewController alloc] initWithContentType:YPBPaymentContentTypeGreetMore];
+                    [self.navigationController pushViewController:vipVC animated:YES];
+                    return;
+                }
+                
+                [sender beginLoading];
+                [self.userAccessModel accessUserWithUserId:user.userId accessType:YPBUserAccessTypeGreet completionHandler:^(BOOL success, id obj) {
+                    [sender endLoading];
+                    
+                    if (success) {
+                        //[[YPBMessageCenter defaultCenter] showSuccessWithTitle:@"打招呼成功" inViewController:self];
+                        
+                        user.receiveGreetCount = @(user.receiveGreetCount.unsignedIntegerValue+1);
+                        user.isGreet = YES;
+                        cell.user = user;
+                    }
+                }];
+            };
+        }
+        
+        return cell;
+    } else {
+        YPBRecommendCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:kRecommendCellReuseIdentifier forIndexPath:indexPath];
+        if (indexPath.item < self.recommendUsers.count) {
+            YPBUser *user = self.recommendUsers[indexPath.item];
+            cell.user = user;
+        }
+//        [cell bk_whenTapped:^{
+//            [cell setBtnState];
+//        }];
+        return cell;
     }
-    
-    return cell;
 }
 
 - (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section {
-    return self.users.count;
+    if (collectionView == _layoutCollectionView) {
+        return self.users.count;
+    } else {
+        return self.recommendUsers.count;
+    }
+    
 }
 
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath {
-    YPBUser *user = self.users[indexPath.item];
-    YPBHomeCell *cell = (YPBHomeCell *)[collectionView cellForItemAtIndexPath:indexPath];
-    
-    YPBUserDetailViewController *detailVC = [[YPBUserDetailViewController alloc] initWithUserId:user.userId];
-    detailVC.greetSuccessAction = ^(id obj) {
-        cell.user.isGreet = YES;
-        cell.user.receiveGreetCount = @(cell.user.receiveGreetCount.unsignedIntegerValue+1);
-    };
-    [self.navigationController pushViewController:detailVC animated:YES];
-    [YPBStatistics logEvent:kLogUserHomeClickEvent fromUser:[YPBUser currentUser].userId toUser:user.userId];
+    if (collectionView == _layoutCollectionView) {
+        YPBUser *user = self.users[indexPath.item];
+        YPBHomeCell *cell = (YPBHomeCell *)[collectionView cellForItemAtIndexPath:indexPath];
+        
+        YPBUserDetailViewController *detailVC = [[YPBUserDetailViewController alloc] initWithUserId:user.userId];
+        detailVC.greetSuccessAction = ^(id obj) {
+            cell.user.isGreet = YES;
+            cell.user.receiveGreetCount = @(cell.user.receiveGreetCount.unsignedIntegerValue+1);
+        };
+        [self.navigationController pushViewController:detailVC animated:YES];
+        [YPBStatistics logEvent:kLogUserHomeClickEvent fromUser:[YPBUser currentUser].userId toUser:user.userId];
+    } else if (collectionView == _recommendCollectionView) {
+        YPBUser *user = self.recommendUsers[indexPath.item];
+        YPBRecommendCell *cell = (YPBRecommendCell *)[collectionView cellForItemAtIndexPath:indexPath];
+        [cell setBtnState];
+        if (cell.btn.selected) {
+            [_greetUsers addObject:user];
+        } else if (!cell.btn.selected) {
+            [_greetUsers removeObject:user];
+        }
+    }
+
 }
 
 @end

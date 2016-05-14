@@ -13,6 +13,7 @@
 #import "YPBUserDetailViewController.h"
 #import "YPBVIPEntranceView.h"
 #import "YPBVIPPriviledgeViewController.h"
+#import "YPBChatMessage.h"
 
 static NSString *const kContactCellReusableIdentifier = @"ContactCellReusableIdentifier";
 
@@ -21,9 +22,13 @@ static NSString *const kContactCellReusableIdentifier = @"ContactCellReusableIde
     UITableView *_layoutTableView;
 }
 @property (nonatomic,retain) NSArray<YPBContact *> *contacts;
+@property (nonatomic,retain) NSMutableArray<YPBChatMessage *> *chatMessages;
+
 @end
 
 @implementation YPBContactViewController
+
+DefineLazyPropertyInitialization(NSMutableArray, chatMessages)
 
 - (instancetype)init {
     self = [super init];
@@ -127,11 +132,18 @@ static NSString *const kContactCellReusableIdentifier = @"ContactCellReusableIde
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     YPBContactCell *cell = [tableView dequeueReusableCellWithIdentifier:kContactCellReusableIdentifier forIndexPath:indexPath];
+//    [self.chatMessages removeAllObjects];
     
+
     if (indexPath.row < self.contacts.count) {
         YPBContact *contact = self.contacts[indexPath.row];
+        
+//        self.chatMessages = [YPBChatMessage allMessagesForUser:contact.userId].mutableCopy;
+//        YPBChatMessage *recentMessage = self.chatMessages.lastObject;
+        
         cell.imageURL = [NSURL URLWithString:contact.logoUrl];
         cell.title = contact.nickName;
+//        cell.subtitle = recentMessage.msg;
         cell.subtitle = contact.recentMessage;
         cell.numberOfNotifications = contact.unreadMessages.unsignedIntegerValue;
         

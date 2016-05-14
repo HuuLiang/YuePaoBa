@@ -38,6 +38,7 @@ DefineLazyPropertyInitialization(YPBUserDetailUpdateModel, updateModel)
         [_bannerView bk_whenTapped:^{
             YPBVIPPriviledgeViewController *vipVC = [[YPBVIPPriviledgeViewController alloc] initWithContentType:YPBPaymnetContentTypeActivity];
             [self.navigationController pushViewController:vipVC animated:YES];
+            [YPBStatistics logEvent:kLogUserTabActivityBannerEvent withUser:[YPBUser currentUser].userId attributeKey:nil attributeValue:nil];
         }];
         
         [_bannerView mas_makeConstraints:^(MASConstraintMaker *make) {
@@ -63,6 +64,7 @@ DefineLazyPropertyInitialization(YPBUserDetailUpdateModel, updateModel)
         } else {
             [self popVIPNoti];
         }
+        [YPBStatistics logEvent:kLogUserTAbActivityChargesEvent withUser:[YPBUser currentUser].userId attributeKey:nil attributeValue:nil];
     }];
     [self.view addSubview:button];
     {

@@ -9,6 +9,8 @@
 #import "YPBSegmentViewController.h"
 #import "YPBHomeViewController.h"
 #import "YPBCommonCityViewController.h"
+#import "YPBActivityViewController.h"
+#import "YPBStatistics.h"
 
 @interface YPBSegmentViewController () <UIScrollViewDelegate>
 @property (nonatomic ) UISegmentedControl  *headerSegment;
@@ -31,6 +33,17 @@
     [self setUpScrollView];
     [self setUpChildViewControll];
     [_headerSegment addTarget:self action:@selector(segmentSelect:) forControlEvents:UIControlEventValueChanged];
+    
+    self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] bk_initWithTitle:@"兑换"
+                                                                                style:UIBarButtonItemStylePlain
+                                                                              handler:^(id sender)
+                                             {
+                                                 YPBActivityViewController *acView = [[YPBActivityViewController alloc] init];
+                                                 [self.navigationController pushViewController:acView animated:YES];
+                                                 [YPBStatistics logEvent:kLogUserTabActivityButtomEvent withUser:[YPBUser currentUser].userId attributeKey:nil attributeValue:nil];
+
+                                             }];
+    
 }
 -(void)segmentSelect:(UISegmentedControl*)seg{
     NSInteger index = seg.selectedSegmentIndex;

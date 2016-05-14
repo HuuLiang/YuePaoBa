@@ -99,7 +99,6 @@ DefineLazyPropertyInitialization(NSMutableArray, userNames);
             make.bottom.equalTo(_backgroundImageView).offset(-SCREEN_WIDTH/9);
             make.size.mas_equalTo(CGSizeMake(SCREEN_WIDTH/6, SCREEN_WIDTH/32));
         }];
-
     }
     
     
@@ -109,9 +108,6 @@ DefineLazyPropertyInitialization(NSMutableArray, userNames);
     _payTableView.hasRowSeparator = YES;
     _payTableView.hasSectionBorder = YES;
     [_payTableView setSeparatorColor:[UIColor colorWithWhite:0.95 alpha:1]];
-//    UIEdgeInsets inset;
-//    inset.left = SCREEN_WIDTH;
-//    [_payTableView setSeparatorInset:inset];
     
     _payTableView.scrollEnabled = NO;
     _payTableView.delegate = self;

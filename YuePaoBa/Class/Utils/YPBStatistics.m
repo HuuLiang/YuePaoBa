@@ -21,6 +21,10 @@ NSString *const kLogUserTabClickEvent               = @"YPB_USER_TAB_CLICK";
 NSString *const kLogUserHomeClickEvent              = @"YPB_USER_HOME_CLICK";
 NSString *const kLogUserGiftButtonClickEvent        = @"YPB_USER_GIFT_BUTTON_CLICK";
 
+NSString *const kLogUserTabActivityButtomEvent      = @"YPB_USER_TAB_ACTIVITY_BUTTON";
+NSString *const kLogUserTabActivityBannerEvent      = @"YPB_USER_TAB_ACTIVITY_BANNER";
+NSString *const kLogUserTAbActivityChargesEvent     = @"YPB_USER_TAB_ACTIVITY_PHONE";
+
 @implementation YPBStatistics
 
 + (void)start {

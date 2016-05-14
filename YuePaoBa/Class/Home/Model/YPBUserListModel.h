@@ -11,7 +11,8 @@
 typedef NS_ENUM(NSUInteger, YPBUserSpace) {
     YPBUserSpaceUnknown,
     YPBUserSpaceHome,
-    YPBUserSpaceVIP
+    YPBUserSpaceVIP,
+    YPBUserSPaceRecommend
 };
 
 @interface YPBUserListResponse : YPBURLResponse

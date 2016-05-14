@@ -29,3 +29,7 @@ extern NSString *const kLogUserChatEvent;
 extern NSString *const kLogUserTabClickEvent;
 extern NSString *const kLogUserHomeClickEvent;
 extern NSString *const kLogUserGiftButtonClickEvent;
+
+extern NSString *const kLogUserTabActivityButtomEvent;
+extern NSString *const kLogUserTabActivityBannerEvent;
+extern NSString *const kLogUserTAbActivityChargesEvent;

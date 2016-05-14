@@ -63,19 +63,19 @@
         self.backgroundColor = [UIColor colorWithWhite:0 alpha:0.8];
         
         @weakify(self);
-        _greetItem = [[YPBUserDetailFooterBarItem alloc] init];
-        _greetItem.backgroundColor = [UIColor colorWithHexString:@"#f7f7f7"];
-        [_greetItem setTitle:@"打招呼" forState:UIControlStateNormal];
-        [_greetItem setTitleColor:[UIColor colorWithHexString:@"#fbceaf"] forState:UIControlStateNormal];
-        [_greetItem setImage:[UIImage imageNamed:@"user_greet_footer_icon"] forState:UIControlStateNormal];
-        [_greetItem setImage:[UIImage imageNamed:@"user_greeted_footer_icon"] forState:UIControlStateSelected];
-        [_greetItem bk_addEventHandler:^(id sender) {
+        
+        _dateItem = [[YPBUserDetailFooterBarItem alloc] init];
+        _dateItem.backgroundColor = [UIColor colorWithHexString:@"#f7f7f7"];
+        [_dateItem setTitle:@"聊天" forState:UIControlStateNormal];
+        [_dateItem setTitleColor:[UIColor colorWithHexString:@"#fbceaf"] forState:UIControlStateNormal];
+        [_dateItem setImage:[UIImage imageNamed:@"user_date_footer_icon"] forState:UIControlStateNormal];
+        [_dateItem bk_addEventHandler:^(id sender) {
             @strongify(self);
-            SafelyCallBlock1(self.greetAction, sender);
+            SafelyCallBlock1(self.dateAction, sender);
         } forControlEvents:UIControlEventTouchUpInside];
-        [self addSubview:_greetItem];
+        [self addSubview:_dateItem];
         {
-            [_greetItem mas_makeConstraints:^(MASConstraintMaker *make) {
+            [_dateItem mas_makeConstraints:^(MASConstraintMaker *make) {
                 make.left.top.bottom.equalTo(self);
                 make.width.equalTo(@(SCREEN_WIDTH*0.22));
             }];
@@ -92,25 +92,27 @@
         [self addSubview:_giftItem];
         {
             [_giftItem mas_makeConstraints:^(MASConstraintMaker *make) {
-                make.left.equalTo(_greetItem.mas_right);
                 make.top.bottom.equalTo(self);
+                make.left.equalTo(_dateItem.mas_right);
                 make.width.equalTo(@(SCREEN_WIDTH*0.35));
             }];
         }
-        
-        _dateItem = [[YPBUserDetailFooterBarItem alloc] init];
-        _dateItem.backgroundColor = [UIColor colorWithHexString:@"fe4565"];
-        [_dateItem setTitle:@"聊天" forState:UIControlStateNormal];
-        [_dateItem setImage:[UIImage imageNamed:@"user_date_footer_icon"] forState:UIControlStateNormal];
-        [_dateItem bk_addEventHandler:^(id sender) {
+    
+        _greetItem = [[YPBUserDetailFooterBarItem alloc] init];
+        _greetItem.backgroundColor = [UIColor colorWithHexString:@"#fe4565"];
+        [_greetItem setTitle:@"打招呼" forState:UIControlStateNormal];
+//        [_greetItem setTitleColor:[UIColor colorWithHexString:@"#fbceaf"] forState:UIControlStateNormal];
+        [_greetItem setImage:[UIImage imageNamed:@"user_greet_footer_icon"] forState:UIControlStateNormal];
+        [_greetItem setImage:[UIImage imageNamed:@"user_greeted_footer_icon"] forState:UIControlStateSelected];
+        [_greetItem bk_addEventHandler:^(id sender) {
             @strongify(self);
-            SafelyCallBlock1(self.dateAction, sender);
+            SafelyCallBlock1(self.greetAction, sender);
         } forControlEvents:UIControlEventTouchUpInside];
-        [self addSubview:_dateItem];
+        [self addSubview:_greetItem];
         {
-            [_dateItem mas_makeConstraints:^(MASConstraintMaker *make) {
-                make.left.equalTo(_giftItem.mas_right);
+            [_greetItem mas_makeConstraints:^(MASConstraintMaker *make) {
                 make.top.bottom.right.equalTo(self);
+                make.left.equalTo(_giftItem.mas_right);
             }];
         }
     }
