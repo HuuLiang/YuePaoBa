@@ -15,4 +15,6 @@
 - (instancetype)init __attribute__((unavailable("Must use initWithContentType: instead.")));
 - (instancetype)initWithContentType:(YPBPaymentContentType)contentType;
 
+- (void)payWithPrice:(NSUInteger)price paymentType:(YPBPaymentType)paymentType forMonths:(NSUInteger)months;
+
 @end

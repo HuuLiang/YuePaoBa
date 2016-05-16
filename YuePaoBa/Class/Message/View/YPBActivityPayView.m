@@ -8,6 +8,8 @@
 
 #import "YPBActivityPayView.h"
 #import "YPBPaymentModel.h"
+#import "YPBVIPPriviledgeViewController.h"
+#import "YPBSystemConfig.h"
 
 @interface YPBActivityPayView ()
 {
@@ -16,11 +18,17 @@
     UITableViewCell *_cellOne;
     UITableViewCell *_cellTwo;
     UITableViewCell *_cellThree;
+    
+    UIButton        *_oneBtn;
+    NSInteger        price;
 }
-
+@property (nonatomic,retain) YPBVIPPriviledgeViewController *vipView;
+@property (nonatomic,retain) YPBSystemConfig *payConfig;
 @end
 
 @implementation YPBActivityPayView
+
+//DefineLazyPropertyInitialization(YPBVIPPriviledgeViewController, vipView);
 
 - (void)initCell:(UITableViewCell *)cell WithImage:(NSString *)imageName Title:(NSString *)title {
     UIImageView *imgV = [[UIImageView alloc] initWithImage:[UIImage imageNamed:imageName]];
@@ -28,33 +36,67 @@
     
     UILabel * label = [[UILabel alloc] init];
     label.text = title;
-    label.backgroundColor = [UIColor redColor];
+    label.font = [UIFont systemFontOfSize:13.];
+//    label.backgroundColor = [UIColor redColor];
     [cell addSubview:label];
-    
+
     UIButton *payBtn = [UIButton buttonWithType:UIButtonTypeSystem];
-    [payBtn setBackgroundImage:[UIImage imageNamed:@""] forState:UIControlStateNormal];
+    UIImage *image = [UIImage imageNamed:@"vip_payment_button_go_normal"];
+    [payBtn setBackgroundImage:image forState:UIControlStateNormal];
+    [payBtn setBackgroundImage:[UIImage imageNamed:@"vip_payment_button_go_highlight"] forState:UIControlStateSelected];
+    [cell addSubview:payBtn];
+    
+    [cell bk_whenTapped:^{
+        if (cell == _cellTwo) {
+            [self payWithPaymentType:YPBPaymentTypeWeChatPay];
+        } else if (cell == _cellThree) {
+            [self payWithPaymentType:YPBPaymentTypeAlipay];
+        }
+    }];
+    
+    [payBtn bk_whenTapped:^{
+        if (cell == _cellTwo) {
+            [self payWithPaymentType:YPBPaymentTypeWeChatPay];
+        } else if (cell == _cellThree) {
+            [self payWithPaymentType:YPBPaymentTypeAlipay];
+        }
+    }];
     
     {
         [imgV mas_makeConstraints:^(MASConstraintMaker *make) {
             make.centerY.equalTo(cell);
+            make.left.equalTo(cell).offset(cell.frame.size.width/20.);
+            make.size.mas_equalTo(CGSizeMake(cell.frame.size.height*0.9, cell.frame.size.height*0.9));
+        }];
         
+        [label mas_makeConstraints:^(MASConstraintMaker *make) {
+            make.centerY.equalTo(cell);
+            make.left.equalTo(imgV.mas_right).offset(10);
+            make.size.mas_equalTo(CGSizeMake(80, cell.frame.size.height*0.8));
+        }];
+
+        [payBtn mas_makeConstraints:^(MASConstraintMaker *make) {
+            make.centerY.equalTo(cell);
+            make.right.equalTo(cell).offset(-cell.frame.size.width/20.);
+            make.height.equalTo(@(cell.frame.size.height*0.9));
+            make.width.equalTo(payBtn.mas_height).multipliedBy(image.size.width/image.size.height);
         }];
     }
-    
 }
 
 - (void)initCell {
     _cellOne.backgroundColor = [UIColor colorWithHexString:@"#fffffd"];
     _cellOne.selectionStyle = UITableViewCellSelectionStyleNone;
     
-    UIButton *oneBtn = [UIButton buttonWithType:UIButtonTypeSystem];
-    [oneBtn setBackgroundImage:[UIImage imageNamed:@"message_choose"] forState:UIControlStateNormal];
-    [oneBtn setBackgroundImage:[UIImage imageNamed:@"message_choose_done"] forState:UIControlStateSelected];
-    oneBtn.layer.cornerRadius = 15;
-    oneBtn.layer.masksToBounds = YES;
-    oneBtn.selected = YES;
-    [_cellOne addSubview:oneBtn];
+    _oneBtn = [UIButton buttonWithType:UIButtonTypeSystem];
+    [_oneBtn setBackgroundImage:[UIImage imageNamed:@"message_choose"] forState:UIControlStateNormal];
+    [_oneBtn setBackgroundImage:[UIImage imageNamed:@"message_choose_done"] forState:UIControlStateSelected];
+    _oneBtn.layer.cornerRadius = 15;
+    _oneBtn.layer.masksToBounds = YES;
+    _oneBtn.selected = YES;
+    [_cellOne addSubview:_oneBtn];
     
+    price = [_payConfig.vipPointDictionary[@"1"] integerValue]/100;
     
     UIButton *threeBtn = [UIButton buttonWithType:UIButtonTypeSystem];
     [threeBtn setBackgroundImage:[UIImage imageNamed:@"message_choose"] forState:UIControlStateNormal];
@@ -64,18 +106,24 @@
     threeBtn.selected = NO;
     [_cellOne addSubview:threeBtn];
     
-    [oneBtn bk_whenTapped:^{
-        oneBtn.selected = !oneBtn.selected;
-        threeBtn.selected = !threeBtn.selected;
+    [_oneBtn bk_whenTapped:^{
+        if (!_oneBtn.selected) {
+            _oneBtn.selected = YES;
+            threeBtn.selected = NO;
+            price = [_payConfig.vipPointDictionary[@"1"] integerValue]/100;
+        }
     }];
     
     [threeBtn bk_whenTapped:^{
-        oneBtn.selected = !oneBtn.selected;
-        threeBtn.selected = !threeBtn.selected;
+        if (!threeBtn.selected) {
+            _oneBtn.selected = NO;
+            threeBtn.selected = YES;
+            price = [_payConfig.vipPointDictionary[@"3"] integerValue]/100;
+        }
     }];
     
     UILabel *oneLabel = [[UILabel alloc] init];
-    oneLabel.text = [NSString stringWithFormat:@"%@/个月",@"50"];
+    oneLabel.text = [NSString stringWithFormat:@"%ld/季度\n返100元话费",((NSString *)_payConfig.vipPointDictionary[@"1"]).integerValue/100];
     oneLabel.font = [UIFont systemFontOfSize:14.];
     oneLabel.backgroundColor = [UIColor clearColor];
     [_cellOne addSubview:oneLabel];
@@ -84,7 +132,7 @@
     threeLabel.backgroundColor = [UIColor clearColor];
     threeLabel.font = [UIFont systemFontOfSize:14.];
     threeLabel.numberOfLines = 0;
-    NSString *string = [NSString stringWithFormat:@"%@/季度\n返100元话费",@"100"];
+    NSString *string = [NSString stringWithFormat:@"%ld/季度\n返100元话费",((NSString *)_payConfig.vipPointDictionary[@"3"]).integerValue/100];
     NSMutableAttributedString *attributedStr = [[NSMutableAttributedString alloc] initWithString:string];
     NSRange rangge = [string rangeOfString:[NSString stringWithFormat:@"返100元话费"]];
     if (rangge.location != NSNotFound) {
@@ -95,7 +143,7 @@
     [_cellOne addSubview:threeLabel];
     
     {
-        [oneBtn mas_makeConstraints:^(MASConstraintMaker *make) {
+        [_oneBtn mas_makeConstraints:^(MASConstraintMaker *make) {
             make.left.equalTo(_cellOne).offset(10);
             make.centerY.equalTo(_cellOne);
             make.size.mas_equalTo(CGSizeMake(30, 30));
@@ -103,7 +151,7 @@
         
         [oneLabel mas_makeConstraints:^(MASConstraintMaker *make) {
             make.centerY.equalTo(_cellOne);
-            make.left.equalTo(oneBtn.mas_right).offset(5);
+            make.left.equalTo(_oneBtn.mas_right).offset(5);
             make.size.mas_equalTo(CGSizeMake(60, _cellOne.frame.size.height*0.8));
         }];
         
@@ -128,7 +176,9 @@
     self = [super init];
     if (self) {
         
-        self.backgroundColor = [UIColor redColor];
+        _payConfig = [YPBSystemConfig sharedConfig];
+        
+        self.backgroundColor = [UIColor whiteColor];
         self.layer.cornerRadius = 10;
         
         _bgImg = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"message_paybanner"]];
@@ -149,19 +199,31 @@
         [self initCell];
         
         _cellTwo = [[UITableViewCell alloc] init];
-        _cellTwo.backgroundColor = [UIColor cyanColor];
+        _cellTwo.layer.borderWidth = 0.5;
+        _cellTwo.layer.borderColor = [UIColor lightGrayColor].CGColor;
+        _cellTwo.layer.masksToBounds = YES;
         [self addSubview:_cellTwo];
-        [self initCell:_cellTwo WithImage:@"vip_wenchat_icon" Title:@"微信支付"];
+        [self initCell:_cellTwo WithImage:@"vip_wechat_icon" Title:@"微信支付"];
         
         _cellThree = [[UITableViewCell alloc] init];
-        _cellThree.backgroundColor = [UIColor blueColor];
-        _cellThree.alpha = 0.5;
         _cellThree.layer.cornerRadius = 10;
         [self addSubview:_cellThree];
         [self initCell:_cellThree WithImage:@"vip_alipay_icon" Title:@"支付宝支付"];
-        
     }
     return self;
+}
+
+- (void)payWithPaymentType:(YPBPaymentType)type {
+    self.vipView = [[YPBVIPPriviledgeViewController alloc] initWithContentType:YPBPaymnetContentTypeActivity];
+    NSInteger month = 1;
+    if (!_oneBtn.selected) {
+        month = 3;
+    }
+    
+#if DEBUG
+    price = 1;
+#endif
+    [self.vipView payWithPrice:price paymentType:type forMonths:month];
 }
 
 - (void)layoutSubviews {
