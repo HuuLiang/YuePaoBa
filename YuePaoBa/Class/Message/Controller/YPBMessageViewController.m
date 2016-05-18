@@ -8,7 +8,6 @@
 
 #import "YPBMessageViewController.h"
 #import "YPBContact.h"
-#import "YPBChatMessage.h"
 #import "YPBUserDetailViewController.h"
 #import "YPBVIPEntranceView.h"
 #import "YPBVIPPriviledgeViewController.h"
@@ -16,18 +15,26 @@
 #import "YPBAutoReplyMessagePool.h"
 
 #import "YPBActivityPayView.h"
+#import "YPBEditMineDetailViewController.h"
+#import "YPBMineAccessViewController.h"
+#import "YPBMessageCenter.h"
 
 static const void *kMessageCellBottomLabelAssociatedKey = &kMessageCellBottomLabelAssociatedKey;
 
+static NSString *const kRobotPushWelcomeIdentifier = @"kRobotPushWelcomeIdentifier";
+static NSString *const kRobotPushGreetIdentifier   = @"kRobotPushGreetIdentifier";
+static NSString *const kNoUserInfoErrorMessage = @"无法获取用户详细信息，请刷新后重试";
+
+
 @interface YPBMessageViewController ()
 {
-
+   
 }
+@property (nonatomic) NSInteger greetCount;
 @property (nonatomic,readonly) NSString *userId;
 @property (nonatomic,readonly) NSString *logoUrl;
 @property (nonatomic,readonly) NSString *nickName;
 @property (nonatomic,readonly) YPBUserType userType;
-
 @property (nonatomic,retain) NSMutableArray<YPBChatMessage *> *chatMessages;
 @end
 
@@ -61,8 +68,27 @@ DefineLazyPropertyInitialization(NSMutableArray, chatMessages)
     YPBMessageViewController *messageVC = [[self alloc] initWithUser:user];
     [viewController.navigationController pushViewController:messageVC animated:NO];
     [messageVC sendMessage:@"你好，我对你的眼缘不错，可以进一步聊聊吗" withSender:[YPBUser currentUser].userId];
+    if (![NSStringFromClass(viewController.class) isEqualToString:@"YPBUserDetailViewController"]) {
+        [messageVC.navigationController popToRootViewControllerAnimated:NO];
+    } else {
+        [messageVC.navigationController popViewControllerAnimated:NO];
+    }
+}
+
++ (void)sendSystemMessageWith:(YPBContact *)contact Type:(YPBRobotPushType)type count:(NSInteger)count inViewController:(UIViewController *)viewController {
+    YPBMessageViewController *messageVC = [[self alloc] initWithContact:contact];
+//    [contact beginUpdate];
+    [viewController.navigationController pushViewController:messageVC animated:NO];
+    if (type == YPBRobotPushTypeWelCome) {
+        [messageVC addTextMessage:kRobotPushWelcomeIdentifier withSender:contact.userId receiver:[YPBUser currentUser].userId dateTime:[YPBUtil stringFromDate:[NSDate date]]];
+    } else if (type == YPBRobotPushTypeGreet) {
+        [messageVC addTextMessage:kRobotPushGreetIdentifier withSender:contact.userId receiver:[YPBUser currentUser].userId dateTime:[YPBUtil stringFromDate:[NSDate date]]];
+        messageVC.greetCount = count;
+    }
+//    [contact endUpdate];
     [messageVC.navigationController popToRootViewControllerAnimated:NO];
 }
+
 
 - (instancetype)init {
     self = [super init];
@@ -122,10 +148,25 @@ DefineLazyPropertyInitialization(NSMutableArray, chatMessages)
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    
+    _greetCount = 0;
     self.messageTableView.backgroundColor = [UIColor colorWithWhite:0.95 alpha:1];
     self.title = self.user ? self.user.nickName : self.contact.nickName;
     self.messageSender = [YPBUser currentUser].userId;
+    
+//    if ([self.contact.nickName isEqualToString:@"红娘小助手"]) {
+//        self.title = @"心动速配小红娘";
+//        //测试用
+//        self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] bk_initWithTitle:@"测试"
+//                                                                                     style:UIBarButtonItemStylePlain
+//                                                                                   handler:^(id sender)
+//                                                  {
+////                                                      [self addTextMessage:kRobotPushWelcomeIdentifier withSender:self.contact.userId receiver:[YPBUser currentUser].userId dateTime:[YPBUtil stringFromDate:[NSDate date]]];
+//                                                      
+//                                                      [self addTextMessage:kRobotPushGreetIdentifier withSender:self.contact.userId receiver:[YPBUser currentUser].userId dateTime:[YPBUtil stringFromDate:[NSDate date]]];
+//                                                  }];
+//    }
+//    
+
 
 }
 
@@ -134,7 +175,7 @@ DefineLazyPropertyInitialization(NSMutableArray, chatMessages)
     
     NSMutableArray<XHMessage *> *messages = [NSMutableArray array];
     [self.chatMessages enumerateObjectsUsingBlock:^(YPBChatMessage * _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
-        XHMessage *message = [[XHMessage alloc] initWithText:obj.msg sender:obj.sendUserId timestamp:[YPBUtil dateFromString:obj.msgTime]];
+        XHMessage *message = [[XHMessage alloc] initWithText:obj.msg type:obj.msgType sender:obj.sendUserId timestamp:[YPBUtil dateFromString:obj.msgTime]];
         if ([obj.sendUserId isEqualToString:[YPBUser currentUser].userId]) {
             message.bubbleMessageType = XHBubbleMessageTypeSending;
         } else {
@@ -190,6 +231,13 @@ DefineLazyPropertyInitialization(NSMutableArray, chatMessages)
         || ![contact.recentMessage isEqualToString:recentChatMessage.msg]) {
         contact.recentTime = recentChatMessage.msgTime;
         contact.recentMessage = recentChatMessage.msg;
+        if ([contact.userId isEqualToString:YPBROBOTID]) {
+            if ([contact.recentMessage isEqualToString:kRobotPushWelcomeIdentifier]) {
+                contact.recentMessage = @"欢迎来到红娘小助手";
+            } else if ([[contact.recentMessage componentsSeparatedByString:YPBROBOTID][0] isEqualToString:kRobotPushGreetIdentifier]) {
+                contact.recentMessage = [NSString stringWithFormat:@"有%@人给您打了招呼快来看看吧！",[contact.recentMessage componentsSeparatedByString:YPBROBOTID][1]];
+            }
+        }
     }
     
     contact.unreadMessages = @(0);
@@ -244,6 +292,13 @@ DefineLazyPropertyInitialization(NSMutableArray, chatMessages)
     chatMessage.msgType = @(YPBChatMessageTypeWord);
     chatMessage.msg = message;
     chatMessage.msgTime = dateTime;
+    if ([chatMessage.sendUserId isEqualToString:YPBROBOTID]) {
+        chatMessage.msgType = @(YPBChatMessageTypeRobotPush);
+        if ([chatMessage.msg isEqualToString:kRobotPushGreetIdentifier]) {
+            chatMessage.msg = [NSString stringWithFormat:@"%@%@%ld",kRobotPushGreetIdentifier,YPBROBOTID,self.greetCount];
+        }
+    }
+
     [self addChatMessage:chatMessage];
     
     if ([sender isEqualToString:[YPBUser currentUser].userId] && self.userType != YPBUserTypeReal) {
@@ -257,6 +312,7 @@ DefineLazyPropertyInitialization(NSMutableArray, chatMessages)
     
     if (self.isViewLoaded) {
         XHMessage *xhMsg = [[XHMessage alloc] initWithText:chatMessage.msg
+                                                      type:chatMessage.msgType
                                                     sender:chatMessage.sendUserId
                                                  timestamp:[YPBUtil dateFromString:chatMessage.msgTime]];
         if ([chatMessage.sendUserId isEqualToString:[YPBUser currentUser].userId]) {
@@ -282,7 +338,7 @@ DefineLazyPropertyInitialization(NSMutableArray, chatMessages)
 
 - (void)didSendText:(NSString *)text fromSender:(NSString *)sender onDate:(NSDate *)date {
     
-    if ([YPBUtil isVIP]) {
+    if ([YPBUtil isVIP] || [self.contact.userId isEqualToString:YPBROBOTID]) {
         [self addTextMessage:text withSender:sender receiver:self.userId dateTime:[YPBUtil stringFromDate:date]];
         [self finishSendMessageWithBubbleMessageType:XHBubbleMessageMediaTypeText];
     } else {
@@ -301,6 +357,7 @@ DefineLazyPropertyInitialization(NSMutableArray, chatMessages)
 
 - (void)configureCell:(XHMessageTableViewCell *)cell atIndexPath:(NSIndexPath *)indexPath {
     XHMessage *message = self.messages[indexPath.row];
+//    YPBChatMessage *chatMessage = self.chatMessages[indexPath.row];
     BOOL isCurrentUser = [message.sender isEqualToString:[YPBUser currentUser].userId];
     if (isCurrentUser) {
         [cell.avatarButton sd_setImageWithURL:[NSURL URLWithString:[YPBUser currentUser].logoUrl]
@@ -342,6 +399,37 @@ DefineLazyPropertyInitialization(NSMutableArray, chatMessages)
         bottomLabel.text = @"请等待ta的回复...";
     } else {
         bottomLabel.text = nil;
+    }
+}
+
+- (void)configRobotCell:(YPBRobotTableViewCell *)cell atIndexPath:(NSIndexPath *)indexPath {
+    YPBChatMessage *message = self.chatMessages[indexPath.row];
+    [cell.subviews makeObjectsPerformSelector:@selector(removeFromSuperview)];
+    cell.userInteractionEnabled = YES;
+    cell.selectionStyle = UITableViewCellSelectionStyleNone;
+    if ([message.msgType isEqual:@(YPBChatMessageTypeRobotPush)]) {
+        if ([message.msg isEqualToString:kRobotPushWelcomeIdentifier]) {
+            [cell layoutWelcomeSubviewsWithInfo:self.contact.logoUrl];
+            cell.editCell.userInteractionEnabled = YES;
+            [cell.editCell bk_whenTapped:^{
+                if ([YPBUser currentUser].isRegistered) {
+                    YPBEditMineDetailViewController *editView = [[YPBEditMineDetailViewController alloc] initWithUser:[YPBUser currentUser]];
+                    [self.navigationController pushViewController:editView animated:YES];
+                } else {
+                    [[YPBMessageCenter defaultCenter] showErrorWithTitle:kNoUserInfoErrorMessage inViewController:self];
+                }
+            }];
+        } else if ([[message.msg componentsSeparatedByString:YPBROBOTID][0] isEqualToString:kRobotPushGreetIdentifier]) {
+            [cell layoutGreetSubviewsWithInfo:self.contact.logoUrl count:[message.msg componentsSeparatedByString:YPBROBOTID][1]];
+            [cell.greetCell bk_whenTapped:^{
+                if ([YPBUser currentUser].isRegistered) {
+                    YPBMineAccessViewController *recvVC = [[YPBMineAccessViewController alloc] initWithAccessType:YPBMineAccessTypeGreetingReceived];
+                    [self.navigationController pushViewController:recvVC animated:YES];
+                } else {
+                    [[YPBMessageCenter defaultCenter] showErrorWithTitle:kNoUserInfoErrorMessage inViewController:self];
+                }
+            }];
+        }
     }
 }
 

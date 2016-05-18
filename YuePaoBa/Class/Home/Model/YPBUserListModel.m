@@ -14,6 +14,10 @@
     return [YPBUser class];
 }
 
+- (Class)usersElementClass {
+    return [YPBUser class];
+}
+
 @end
 
 @interface YPBUserListModel ()
@@ -41,16 +45,28 @@
         SafelyCallBlock2(handler, NO, @"当前用户未登录，请登录后再尝试刷新");
         return NO;
     }
+    NSDictionary *params = nil;
+    
+    if (space != 3) {
+        params = @{@"userId":[YPBUser currentUser].userId,
+                   @"sex":[YPBUser stringOfGender:gender],
+                   @"uPosition":space == YPBUserSpaceHome ? @1 : @2,
+                   @"pageNum":@(page),
+                   @"pageSize":space == YPBUserSpaceHome?@18:@10
+                   };
+    } else {
+        params = @{@"userId":[YPBUser currentUser].userId,
+                   @"sex":[YPBUser stringOfGender:gender],
+                   @"uPosition":@3,
+                   @"pageNum":@(page),
+                   @"pageSize":space == YPBUserSpaceHome?@18:@10
+                   };
+    }
     
     _requestedGender = gender;
     _requestedSpace = space;
     
-    NSDictionary *params = @{@"userId":[YPBUser currentUser].userId,
-                             @"sex":[YPBUser stringOfGender:gender],
-                             @"uPosition":space == YPBUserSpaceHome ? @1 : @2,
-                             @"pageNum":@(page),
-                             @"pageSize":space == YPBUserSpaceHome?@18:@10
-                             };
+    
     BOOL success = [self requestURLPath:YPB_USER_LIST_URL
                              withParams:params
                         responseHandler:^(YPBURLResponseStatus respStatus, NSString *errorMessage)
@@ -81,4 +97,26 @@
 - (BOOL)hasNoMoreData {
     return [self.paginator.page isEqualToNumber:self.paginator.pages];
 }
+
+- (BOOL)fetchUserRecommendUserListWithSex:(YPBUserGender)gender CompletionHandler:(YPBCompletionHandler)handler {
+    DLog("%@",[YPBUser currentUser].userId);
+    DLog("%@",[YPBUser stringOfGender:gender]);
+    NSDictionary *params = @{@"sex":[YPBUser stringOfGender:gender],
+                             @"channelNo":YPB_CHANNEL_NO,
+                             @"userId":[YPBUser currentUser].userId
+                             };
+    BOOL success = [self requestURLPath:YPB_HOMEGREETUSERS_URL
+                             withParams:params
+                        responseHandler:^(YPBURLResponseStatus respStatus, NSString *errorMessage)
+    {
+        YPBUserListResponse *resp = self.response;
+        if (respStatus == YPBURLResponseSuccess) {
+            _fetchedUsers = resp.users;
+        }
+        handler(respStatus==YPBURLResponseSuccess,_fetchedUsers);
+    }];
+    return success;
+    
+}
+
 @end

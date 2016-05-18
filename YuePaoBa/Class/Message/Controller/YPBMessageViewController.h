@@ -6,7 +6,8 @@
 //  Copyright © 2015年 iqu8. All rights reserved.
 //
 
-#import <XHMessageTableViewController.h>
+#import "XHMessageTableViewController.h"
+#import "YPBChatMessage.h"
 
 @class YPBContact;
 
@@ -22,5 +23,7 @@
 + (void)sendGreetMessageWith:(YPBUser *)user inViewController:(UIViewController *)viewController;;
 
 - (void)sendMessage:(NSString *)message withSender:(NSString *)sender;
+
++ (void)sendSystemMessageWith:(YPBContact *)contact Type:(YPBRobotPushType)type count:(NSInteger)count inViewController:(UIViewController *)viewController;
 
 @end

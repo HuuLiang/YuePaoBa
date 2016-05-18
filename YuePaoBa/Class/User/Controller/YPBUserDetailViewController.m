@@ -169,11 +169,12 @@ DefineLazyPropertyInitialization(YPBUserAccessModel, userAccessModel)
         return ;
     }
     
-    if (![YPBUtil isVIP] && [YPBUser currentUser].greetCount.unsignedIntegerValue >= 5) {
-        YPBVIPPriviledgeViewController *vipVC = [[YPBVIPPriviledgeViewController alloc] initWithContentType:YPBPaymentContentTypeGreetMore];
-        [self.navigationController pushViewController:vipVC animated:YES];
-        return;
-    }
+    //&& [YPBUser currentUser].greetCount.unsignedIntegerValue >= 5
+//    if (![YPBUtil isVIP] ) {
+//        YPBVIPPriviledgeViewController *vipVC = [[YPBVIPPriviledgeViewController alloc] initWithContentType:YPBPaymentContentTypeGreetMore];
+//        [self.navigationController pushViewController:vipVC animated:YES];
+//        return;
+//    }
     
     @weakify(self);
     [_profileCell beginLoading];

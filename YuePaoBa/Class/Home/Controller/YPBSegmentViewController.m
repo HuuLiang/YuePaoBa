@@ -12,7 +12,10 @@
 #import "YPBActivityViewController.h"
 #import "YPBStatistics.h"
 
-@interface YPBSegmentViewController () <UIScrollViewDelegate>
+
+@interface YPBSegmentViewController () <UIScrollViewDelegate> {
+  
+}
 @property (nonatomic ) UISegmentedControl  *headerSegment;
 @property (nonatomic ) UIScrollView        *contentScrollview;
 @property (nonatomic,strong) YPBHomeViewController  * first;
@@ -21,7 +24,6 @@
 @end
 
 @implementation YPBSegmentViewController
-
 - (void)viewDidLoad {
     [super viewDidLoad];
     NSArray *array = [NSArray arrayWithObjects:@"今日推荐",@"同城交友", nil];
@@ -44,7 +46,10 @@
 
                                              }];
     
+    
 }
+
+
 -(void)segmentSelect:(UISegmentedControl*)seg{
     NSInteger index = seg.selectedSegmentIndex;
     CGRect frame = _contentScrollview.frame;

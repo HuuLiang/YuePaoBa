@@ -17,11 +17,13 @@
 
 static NSString *const kContactCellReusableIdentifier = @"ContactCellReusableIdentifier";
 
+
 @interface YPBContactViewController () <UITableViewDataSource,UITableViewSeparatorDelegate>
 {
     UITableView *_layoutTableView;
+    BOOL isHaveRobot;
 }
-@property (nonatomic,retain) NSArray<YPBContact *> *contacts;
+@property (nonatomic,retain) NSMutableArray<YPBContact *> *contacts;
 @property (nonatomic,retain) NSMutableArray<YPBChatMessage *> *chatMessages;
 
 @end
@@ -29,6 +31,7 @@ static NSString *const kContactCellReusableIdentifier = @"ContactCellReusableIde
 @implementation YPBContactViewController
 
 DefineLazyPropertyInitialization(NSMutableArray, chatMessages)
+DefineLazyPropertyInitialization(NSMutableArray, contacts);
 
 - (instancetype)init {
     self = [super init];
@@ -48,6 +51,7 @@ DefineLazyPropertyInitialization(NSMutableArray, chatMessages)
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
+    isHaveRobot = NO;
     _layoutTableView = [[UITableView alloc] init];
     _layoutTableView.delegate = self;
     _layoutTableView.dataSource = self;
@@ -77,6 +81,8 @@ DefineLazyPropertyInitialization(NSMutableArray, chatMessages)
         [self->_layoutTableView YPB_endPullToRefresh];
     }];
     
+    [self reloadContactsWithUIReload:YES];
+    
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(onVIPUpgradeSuccessNotification:) name:kVIPUpgradeSuccessNotification object:nil];
 }
 
@@ -89,12 +95,34 @@ DefineLazyPropertyInitialization(NSMutableArray, chatMessages)
 }
 
 - (void)reloadContactsWithUIReload:(BOOL)reloadUI {
-    self.contacts = [YPBContact allContacts];
+    self.contacts = [NSMutableArray arrayWithArray:[YPBContact allContacts]];
     
     __block NSUInteger unreadMessages = 0;
     [self.contacts enumerateObjectsUsingBlock:^(YPBContact * _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
         unreadMessages += obj.unreadMessages.unsignedIntegerValue;
+        if ([obj.userType isEqualToNumber:[NSNumber numberWithInteger:76839]]) {
+            isHaveRobot = YES;
+            if ([self.contacts indexOfObject:obj] != 0) {
+                [self.contacts exchangeObjectAtIndex:0 withObjectAtIndex:[self.contacts indexOfObject:obj]];
+            }
+        }
     }];
+    //添加红娘小助手
+    if (!isHaveRobot) {
+        YPBContact *robotContact = [[YPBContact alloc] init];
+        robotContact.userId = YPBROBOTID;
+        robotContact.logoUrl = kRobotContactLogoUrl;
+        robotContact.nickName = @"红娘小助手";
+        robotContact.userType = [NSNumber numberWithInteger:[YPBROBOTID integerValue]];
+        robotContact.recentMessage = @"欢迎来到心动速配";
+        robotContact.recentTime = [YPBUtil stringFromDate:[NSDate date]];
+        [robotContact persist];
+        [self.contacts addObject:robotContact];
+        
+        [YPBMessageViewController sendSystemMessageWith:robotContact Type:YPBRobotPushTypeWelCome count:0 inViewController:self];
+//        [_layoutTableView reloadData];
+        isHaveRobot = YES;
+    }
     
     if (unreadMessages > 0) {
         if (unreadMessages < 100) {
@@ -140,7 +168,7 @@ DefineLazyPropertyInitialization(NSMutableArray, chatMessages)
         
 //        self.chatMessages = [YPBChatMessage allMessagesForUser:contact.userId].mutableCopy;
 //        YPBChatMessage *recentMessage = self.chatMessages.lastObject;
-        
+        DLog("%@",contact.userType);
         cell.imageURL = [NSURL URLWithString:contact.logoUrl];
         cell.title = contact.nickName;
 //        cell.subtitle = recentMessage.msg;
@@ -150,8 +178,10 @@ DefineLazyPropertyInitialization(NSMutableArray, chatMessages)
         @weakify(self);
         cell.avatarTapAction = ^(id obj) {
             @strongify(self);
-            YPBUserDetailViewController *detailVC = [[YPBUserDetailViewController alloc] initWithUserId:contact.userId];
-            [self.navigationController pushViewController:detailVC animated:YES];
+            if (![contact.userType isEqualToNumber:[NSNumber numberWithInteger:[YPBROBOTID integerValue]]]) {
+                YPBUserDetailViewController *detailVC = [[YPBUserDetailViewController alloc] initWithUserId:contact.userId];
+                [self.navigationController pushViewController:detailVC animated:YES];
+            }
         };
         
         cell.notificationTapAction = ^(id obj) {

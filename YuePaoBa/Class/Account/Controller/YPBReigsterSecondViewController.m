@@ -53,6 +53,17 @@ DefineLazyPropertyInitialization(YPBUserAvatarUpdateModel, avatarUpdateModel)
     [super viewDidLoad];
     //定位
     [self locate];
+    
+    UIImageView *bgImg = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"register_bgImg.jpg"]];
+    [self.view addSubview:bgImg];
+    [self.view sendSubviewToBack:bgImg];
+    {
+        [bgImg mas_makeConstraints:^(MASConstraintMaker *make) {
+            make.top.left.right.bottom.equalTo(self.view);
+        }];
+    }
+
+    
     // Do any additional setup after loading the view.
     self.title = @"设置交友对象";
     self.edgesForExtendedLayout = UIRectEdgeNone;
@@ -64,6 +75,7 @@ DefineLazyPropertyInitialization(YPBUserAvatarUpdateModel, avatarUpdateModel)
     _view.layer.borderWidth = 0.5;
     _view.layer.borderColor = [UIColor colorWithHexString:@"#c3c4bc"].CGColor;
     _view.layer.masksToBounds = YES;
+    _view.alpha = 0.5;
     [self.view addSubview:_view];
     {
         [_view mas_makeConstraints:^(MASConstraintMaker *make) {
@@ -86,8 +98,9 @@ DefineLazyPropertyInitialization(YPBUserAvatarUpdateModel, avatarUpdateModel)
     
     UILabel *notilabel = [[UILabel alloc] init];
     notilabel.text = @"＊输入真实资料,可极大提高速配机会＊";
+    notilabel.alpha = 0.5;
     notilabel.textAlignment = NSTextAlignmentCenter;
-    notilabel.textColor = [UIColor lightGrayColor];
+    notilabel.textColor = [UIColor colorWithHexString:@"262523"];
     notilabel.font = [UIFont systemFontOfSize:12.];
     notilabel.backgroundColor = [UIColor clearColor];
     [self.view addSubview:notilabel];
@@ -95,7 +108,7 @@ DefineLazyPropertyInitialization(YPBUserAvatarUpdateModel, avatarUpdateModel)
     UILabel *label = [[UILabel alloc] init];
     label.text = @"上传真实头像";
     label.textAlignment = NSTextAlignmentCenter;
-    label.textColor = [UIColor lightGrayColor];
+    label.textColor = [UIColor colorWithHexString:@"262523"];
     label.font = [UIFont systemFontOfSize:12.];
     label.backgroundColor = [UIColor clearColor];
     [_view addSubview:label];
@@ -180,6 +193,7 @@ DefineLazyPropertyInitialization(YPBUserAvatarUpdateModel, avatarUpdateModel)
     self.layoutTableView.rowHeight = MAX(kScreenHeight * 0.08, SCREEN_HEIGHT/15);
     self.layoutTableView.scrollEnabled = NO;
     self.layoutTableView.separatorInset = UIEdgeInsetsZero;
+    self.layoutTableView.alpha = 0.5;
     [self.layoutTableView mas_makeConstraints:^(MASConstraintMaker *make) {
         make.left.right.equalTo(self.view).insets(UIEdgeInsetsMake(0, 0, 0, 0));
         make.top.equalTo(_view.mas_bottom).offset(20);

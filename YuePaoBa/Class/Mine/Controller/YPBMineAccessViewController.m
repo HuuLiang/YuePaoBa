@@ -84,7 +84,7 @@ DefineLazyPropertyInitialization(NSMutableArray, userGreets)
 - (void)loadDataWithRefresh:(BOOL)isRefresh {
     @weakify(self);
     
-    YPBUserAccessType userAccessType = _accessType == YPBMineAccessTypeAccessViewed ? YPBUserAccessTypeViewing : YPBUserAccessTypeGreeting;
+    YPBUserGetAccessType userAccessType = _accessType == YPBMineAccessTypeAccessViewed ? YPBUserGetAccessTypeViewing : YPBUserGetAccessTypeGreeting;
     YPBUserGreetingType userGreetingType = _accessType == YPBMineAccessTypeGreetingSent ? YPBUserGreetingTypeSent : YPBUserGreetingTypeReceived;
     [self.accessQueryModel queryUser:[YPBUser currentUser].userId
                       withAccessType:userAccessType

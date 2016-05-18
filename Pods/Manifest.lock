@@ -44,7 +44,6 @@ PODS:
   - HMSegmentedControl (1.5.2)
   - Masonry (0.6.4)
   - MBProgressHUD (0.9.2)
-  - MessageDisplayKit (5.4)
   - MJRefresh (2.4.12)
   - OpenSSL (1.0.204.1)
   - Realm (0.98.5):
@@ -71,7 +70,6 @@ DEPENDENCIES:
   - HMSegmentedControl (~> 1.5.2)
   - Masonry (~> 0.6.3)
   - MBProgressHUD (~> 0.9.2)
-  - MessageDisplayKit (~> 5.4)
   - MJRefresh (~> 2.4.12)
   - OpenSSL (~> 1.0.204.1)
   - Realm (~> 0.98.5)
@@ -94,7 +92,6 @@ SPEC CHECKSUMS:
   HMSegmentedControl: 83b9686022d2176fb6457d2bdb61e5d6393fed7d
   Masonry: 281802d04d787ea2973179ee8bcb50500579ede2
   MBProgressHUD: 1569cf7ace17a8bac47aabfbb8580a49690386d1
-  MessageDisplayKit: dfec1bb7cdd2881228459ede16b3a8a557c35f89
   MJRefresh: ca8e9589895977df32d379d46e6b8a5450b3ff44
   OpenSSL: 7f853fcada78e5162c2183b4d90ebbd0aa02f5ac
   Realm: db08379969e45cea2edd1c3c0a090fe9e22d2d2f

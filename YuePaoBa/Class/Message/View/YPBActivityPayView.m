@@ -93,7 +93,7 @@
     [_oneBtn setBackgroundImage:[UIImage imageNamed:@"message_choose_done"] forState:UIControlStateSelected];
     _oneBtn.layer.cornerRadius = 15;
     _oneBtn.layer.masksToBounds = YES;
-    _oneBtn.selected = YES;
+    _oneBtn.selected = NO;
     [_cellOne addSubview:_oneBtn];
     
     price = [_payConfig.vipPointDictionary[@"1"] integerValue]/100;
@@ -103,7 +103,7 @@
     [threeBtn setBackgroundImage:[UIImage imageNamed:@"message_choose_done"] forState:UIControlStateSelected];
     threeBtn.layer.cornerRadius = 15;
     threeBtn.layer.masksToBounds = YES;
-    threeBtn.selected = NO;
+    threeBtn.selected = YES;
     [_cellOne addSubview:threeBtn];
     
     [_oneBtn bk_whenTapped:^{
@@ -123,7 +123,7 @@
     }];
     
     UILabel *oneLabel = [[UILabel alloc] init];
-    oneLabel.text = [NSString stringWithFormat:@"%ld/季度\n返100元话费",((NSString *)_payConfig.vipPointDictionary[@"1"]).integerValue/100];
+    oneLabel.text = [NSString stringWithFormat:@"%ld/月\n返100元话费",((NSString *)_payConfig.vipPointDictionary[@"1"]).integerValue/100];
     oneLabel.font = [UIFont systemFontOfSize:14.];
     oneLabel.backgroundColor = [UIColor clearColor];
     [_cellOne addSubview:oneLabel];

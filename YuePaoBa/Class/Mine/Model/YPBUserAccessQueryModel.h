@@ -9,10 +9,10 @@
 #import "YPBEncryptedURLRequest.h"
 #import "YPBUserGreet.h"
 
-typedef NS_ENUM(NSUInteger, YPBUserAccessType) {
-    YPBUserAccessTypeUnknown,
-    YPBUserAccessTypeGreeting,
-    YPBUserAccessTypeViewing
+typedef NS_ENUM(NSUInteger, YPBUserGetAccessType) {
+    YPBUserGetAccessTypeUnknown,
+    YPBUserGetAccessTypeGreeting,
+    YPBUserGetAccessTypeViewing
 };
 
 typedef NS_ENUM(NSUInteger, YPBUserGreetingType) {
@@ -31,7 +31,7 @@ typedef NS_ENUM(NSUInteger, YPBUserGreetingType) {
 @property (nonatomic,retain) YPBUserAccess *userAccess;
 
 - (BOOL)queryUser:(NSString *)userId
-   withAccessType:(YPBUserAccessType)accessType
+   withAccessType:(YPBUserGetAccessType)accessType
         greetType:(YPBUserGreetingType)greetType
              page:(NSUInteger)page
 completionHandler:(YPBCompletionHandler)handler;

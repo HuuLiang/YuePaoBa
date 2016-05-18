@@ -12,11 +12,12 @@ typedef NS_ENUM(NSUInteger, YPBUserSpace) {
     YPBUserSpaceUnknown,
     YPBUserSpaceHome,
     YPBUserSpaceVIP,
-    YPBUserSPaceRecommend
+    YPBUserSpaceRecommend
 };
 
 @interface YPBUserListResponse : YPBURLResponse
 @property (nonatomic,retain) NSArray<YPBUser *> *list;
+@property (nonatomic,retain) NSArray<YPBUser *> *users;
 @end
 
 @interface YPBUserListModel : YPBEncryptedURLRequest
@@ -30,5 +31,7 @@ typedef NS_ENUM(NSUInteger, YPBUserSpace) {
 
 - (BOOL)fetchUserListInNextPageWithCompletionHandler:(YPBCompletionHandler)handler;
 - (BOOL)hasNoMoreData;
+
+- (BOOL)fetchUserRecommendUserListWithSex:(YPBUserGender)gender CompletionHandler:(YPBCompletionHandler)handler;
 
 @end

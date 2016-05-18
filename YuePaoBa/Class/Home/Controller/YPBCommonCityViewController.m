@@ -107,7 +107,7 @@ DefineLazyPropertyInitialization(YPBUserAccessModel, userAccessModel);
     };
     
     if (isRefresh) {
-        [self.userListModel fetchUserListWithGender:[YPBUser currentUser].oppositeGender space:YPBUserSpaceHome completionHandler:handler];
+        [self.userListModel fetchUserListWithGender:[YPBUser currentUser].oppositeGender space:YPBUserSpaceRecommend completionHandler:handler];
     } else {
         [self.userListModel fetchUserListInNextPageWithCompletionHandler:handler];
     }

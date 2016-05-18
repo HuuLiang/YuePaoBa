@@ -21,6 +21,9 @@
 #import "YPBRecommendCell.h"
 #import "YPBContact.h"
 
+#import "YPBUserAccessQueryModel.h"
+
+
 static NSString *const kHomeCellReusableIdentifier = @"HomeCellReusableIdentifier";
 static NSString *const kRecommendCellReuseIdentifier = @"RecommendCellReuseIdentifier";
 static NSString *const kFirstRecommentIdentifier = @"FirstRecomment";
@@ -29,12 +32,15 @@ static NSString *const kFirstRecommentIdentifier = @"FirstRecomment";
 {
     UICollectionView *_layoutCollectionView;
     UICollectionView *_recommendCollectionView;
+    BOOL _isHaveRobot;
 }
 @property (nonatomic,retain) YPBUserListModel *userListModel;
 @property (nonatomic,retain) NSMutableArray<YPBUser *> *users;
 @property (nonatomic,retain) NSMutableArray<YPBUser *> *recommendUsers;
 @property (nonatomic,retain) NSMutableArray<YPBUser *> *greetUsers;
 @property (nonatomic,retain) YPBUserAccessModel *userAccessModel;
+@property (nonatomic) YPBUserAccessQueryModel *accessQueryModel;
+@property (nonatomic,retain) NSMutableArray<YPBContact *> *contacts;
 @end
 
 @implementation YPBHomeViewController
@@ -44,6 +50,8 @@ DefineLazyPropertyInitialization(NSMutableArray, users)
 DefineLazyPropertyInitialization(NSMutableArray, recommendUsers);
 DefineLazyPropertyInitialization(NSMutableArray, greetUsers);
 DefineLazyPropertyInitialization(YPBUserAccessModel, userAccessModel);
+DefineLazyPropertyInitialization(YPBUserAccessQueryModel, accessQueryModel)
+
 
 - (void)didRestoreUser:(YPBUser *)user {
     [_layoutCollectionView YPB_triggerPullToRefresh];
@@ -52,7 +60,7 @@ DefineLazyPropertyInitialization(YPBUserAccessModel, userAccessModel);
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
-
+    _isHaveRobot = NO;
     YPBHomeCollectionViewLayout *layout = [[YPBHomeCollectionViewLayout alloc] init];
     layout.interItemSpacing = 1;
     
@@ -87,10 +95,18 @@ DefineLazyPropertyInitialization(YPBUserAccessModel, userAccessModel);
     NSUserDefaults *recommendDefaults = [NSUserDefaults standardUserDefaults];
     NSString * string = [recommendDefaults objectForKey:kFirstRecommentIdentifier];
     if (![string isEqualToString:kFirstRecommentIdentifier]) {
-       [self popRecommendView];
+        DLog("%ld",[YPBUser currentUser].gender);
+        if ([YPBUser currentUser].userId != nil && [YPBUser currentUser].gender != 0) {
+            [self popRecommendView];
+            [self.userListModel fetchUserRecommendUserListWithSex:[YPBUser currentUser].oppositeGender CompletionHandler:^(BOOL success, id obj) {
+                if (success) {
+                    [self.recommendUsers addObjectsFromArray:obj];
+                    [self.greetUsers addObjectsFromArray:obj];
+                    [self->_recommendCollectionView reloadData];
+                }
+            }];
+        }
     }
-    
-    
     
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(onVIPUpgradeSuccessNotification:) name:kVIPUpgradeSuccessNotification object:nil];
     
@@ -121,9 +137,7 @@ DefineLazyPropertyInitialization(YPBUserAccessModel, userAccessModel);
             [self.users addObjectsFromArray:obj];
             [self->_layoutCollectionView reloadData];
             
-            [self.recommendUsers addObjectsFromArray:obj];
-            [self.greetUsers addObjectsFromArray:obj];
-            [self->_recommendCollectionView reloadData];
+
             
             if (self.userListModel.hasNoMoreData) {
                 [self->_layoutCollectionView YPB_pagingRefreshNoMoreData];
@@ -179,6 +193,9 @@ DefineLazyPropertyInitialization(YPBUserAccessModel, userAccessModel);
     [closeButton bk_addEventHandler:^(id sender) {
         [self.view endLoading];
         [recommendView removeFromSuperview];
+        //获取招呼数量  创建小红娘
+        //检测打招呼人数
+        [self performSelector:@selector(checkAccess) withObject:self afterDelay:10];
     } forControlEvents:UIControlEventTouchUpInside];
     
     UILabel *greetLabel = [[UILabel alloc] init];
@@ -207,6 +224,7 @@ DefineLazyPropertyInitialization(YPBUserAccessModel, userAccessModel);
             [self.view endLoading];
             [recommendView removeFromSuperview];
             [self loadOrRefreshData:YES];
+            [self performSelector:@selector(checkAccess) withObject:self afterDelay:10];
             //
             NSUserDefaults *recommendDefaults = [NSUserDefaults standardUserDefaults];
             [recommendDefaults setObject:kFirstRecommentIdentifier forKey:kFirstRecommentIdentifier];
@@ -269,6 +287,57 @@ DefineLazyPropertyInitialization(YPBUserAccessModel, userAccessModel);
     layout.sectionInset = UIEdgeInsetsMake(15, 15, 15, 15);
     return layout;
 }
+
+- (void)checkAccess {
+    [self.accessQueryModel queryUser:[YPBUser currentUser].userId withAccessType:YPBUserGetAccessTypeGreeting greetType:YPBUserGreetingTypeSent page:1 completionHandler:^(BOOL success, id obj) {
+        if (success) {
+            NSArray * array = obj;
+            if (array.count >= 5) {
+                //通知红娘小助手
+                self.contacts = [NSMutableArray arrayWithArray:[YPBContact allContacts]];
+                
+                __block NSUInteger unreadMessages = 0;
+                [self.contacts enumerateObjectsUsingBlock:^(YPBContact * _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
+                    unreadMessages += obj.unreadMessages.unsignedIntegerValue;
+                    if ([obj.userType isEqualToNumber:[NSNumber numberWithInteger:[YPBROBOTID integerValue]]]) {
+                        _isHaveRobot = YES;
+                    }
+                }];
+                //添加红娘小助手
+                if (!_isHaveRobot) {
+                    YPBContact *robotContact = [[YPBContact alloc] init];
+                    [robotContact beginUpdate];
+                    robotContact.userId = YPBROBOTID;
+                    robotContact.logoUrl = kRobotContactLogoUrl;
+                    robotContact.nickName = @"红娘小助手";
+                    robotContact.userType = [NSNumber numberWithInteger:[YPBROBOTID integerValue]];
+                    robotContact.recentMessage = @"欢迎来到心动速配";
+                    robotContact.recentTime = [YPBUtil stringFromDate:[NSDate date]];
+                    [robotContact endUpdate];
+                    [self.contacts addObject:robotContact];
+                    
+                    [YPBMessageViewController sendSystemMessageWith:robotContact Type:YPBRobotPushTypeWelCome count:0 inViewController:self];
+                    [YPBMessageViewController sendSystemMessageWith:robotContact Type:YPBRobotPushTypeGreet count:array.count inViewController:self];
+                    
+                    //                    [self performSelector:@selector(checkAccess) withObject:self afterDelay:200];
+                    
+                } else {
+                    for (YPBContact *contact in self.contacts) {
+                        if ([contact.userType isEqualToNumber:[NSNumber numberWithInteger:[YPBROBOTID integerValue]]]) {
+                            [YPBMessageViewController sendSystemMessageWith:contact Type:YPBRobotPushTypeGreet count:array.count inViewController:self];
+                        }
+                    }
+                }
+                
+            } else {
+                [self performSelector:@selector(checkAccess) withObject:self afterDelay:100];
+            }
+        } else {
+            [self performSelector:@selector(checkAccess) withObject:self afterDelay:20];
+        }
+    }];
+}
+
 
 #pragma mark - UICollectionViewDataSource,UICollectionViewDelegate
 

@@ -23,7 +23,7 @@
 }
 
 - (BOOL)queryUser:(NSString *)userId
-   withAccessType:(YPBUserAccessType)accessType
+   withAccessType:(YPBUserGetAccessType)accessType
         greetType:(YPBUserGreetingType)greetType
              page:(NSUInteger)page
 completionHandler:(YPBCompletionHandler)handler

@@ -104,6 +104,10 @@ return _##propertyName; \
 #define SCREEN_WIDTH        [[UIScreen mainScreen]bounds].size.width
 #define SCREEN_HEIGHT       [[UIScreen mainScreen]bounds].size.height
 
+#define YPBROBOTID          (@"76839")
+
+#define kRobotContactLogoUrl  (@"http://7xpobi.com2.z0.glb.qiniucdn.com/8201605162225467_20160516153450_avatar.jpg")
+
 typedef struct _YPBIntRange {
     NSInteger min;
     NSInteger max;

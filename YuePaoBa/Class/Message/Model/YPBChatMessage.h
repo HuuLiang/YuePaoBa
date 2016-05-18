@@ -15,7 +15,14 @@ typedef NS_ENUM(NSUInteger, YPBChatMessageType) {
     YPBChatMessageTypePhoto,
     YPBChatMessageTypeVoice,
     YPBChatMessageTypeOption,
-    YPBChatMessageTypeAutoReply
+    YPBChatMessageTypeAutoReply,
+    YPBChatMessageTypeRobotPush,
+};
+
+typedef NS_ENUM(NSUInteger ,YPBRobotPushType) {
+    YPBRobotPushTypeUnknown,
+    YPBRobotPushTypeWelCome,
+    YPBRobotPushTypeGreet
 };
 
 @class YPBPushedMessage;

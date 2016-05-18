@@ -34,16 +34,23 @@ DefineLazyPropertyInitialization(YPBUser, user)
     // Do any additional setup after loading the view.
     self.title = @"注册";
     self.edgesForExtendedLayout = UIRectEdgeNone;
-    self.layoutTableView.userInteractionEnabled = YES;
-    self.view.backgroundColor = [UIColor colorWithHexString:@"#f6f7ec"];
+    UIImageView *bgImg = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"register_bgImg.jpg"]];
+    [self.view addSubview:bgImg];
+    [self.view sendSubviewToBack:bgImg];
+    {
+        [bgImg mas_makeConstraints:^(MASConstraintMaker *make) {
+            make.top.left.right.bottom.equalTo(self.view);
+        }];
+    }
     
     @weakify(self);
     [self.view bk_whenTapped:^{
         @strongify(self);
         [self->_nicknameTextField resignFirstResponder];
     }];
-    
+    self.layoutTableView.userInteractionEnabled = YES;
     self.layoutTableView.layer.cornerRadius = 5;
+    self.layoutTableView.alpha = 0.5;
     self.layoutTableView.rowHeight = MAX(kScreenHeight * 0.08, 50);
     self.layoutTableView.scrollEnabled = NO;
     self.layoutTableView.separatorInset = UIEdgeInsetsZero;
