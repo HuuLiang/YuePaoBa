@@ -141,9 +141,11 @@ DefineLazyPropertyInitialization(YPBWeChatPayQueryOrderRequest, wechatPayOrderQu
 
 //注册本地通知
 - (void)registerUserNotifcation {
-    UIUserNotificationType type = UIUserNotificationTypeBadge | UIUserNotificationTypeSound | UIUserNotificationTypeAlert;
-    UIUserNotificationSettings *notiSettings = [UIUserNotificationSettings settingsForTypes:type categories:nil];
-    [[UIApplication sharedApplication] registerUserNotificationSettings:notiSettings];
+    if (NSClassFromString(@"UIUserNotificationSettings")) {
+        UIUserNotificationType notiType = UIUserNotificationTypeBadge | UIUserNotificationTypeSound | UIUserNotificationTypeAlert;
+        UIUserNotificationSettings *notiSettings = [UIUserNotificationSettings settingsForTypes:notiType categories:nil];
+        [[UIApplication sharedApplication] registerUserNotificationSettings:notiSettings];
+    }
 }
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
@@ -152,7 +154,7 @@ DefineLazyPropertyInitialization(YPBWeChatPayQueryOrderRequest, wechatPayOrderQu
     [[YPBErrorHandler sharedHandler] initialize];
     [self setupCommonStyles];
     [YPBStatistics start];
-    [self registerUserNotifcation];
+//    [self registerUserNotifcation];
     [YPBUploadManager registerWithSecretKey:YPB_UPLOAD_SECRET_KEY accessKey:YPB_UPLOAD_ACCESS_KEY scope:YPB_UPLOAD_SCOPE];
     
     if ([YPBUtil deviceRegisteredUserId]) {
