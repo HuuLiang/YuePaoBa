@@ -226,12 +226,10 @@
 		EC7C9C001CCF1A0700DC639A /* YPBBlacklistController.m in Sources */ = {isa = PBXBuildFile; fileRef = EC7C9BFF1CCF1A0700DC639A /* YPBBlacklistController.m */; };
 		EC7C9C041CCF4ED000DC639A /* YPBBlacklistDetail.m in Sources */ = {isa = PBXBuildFile; fileRef = EC7C9C031CCF4ED000DC639A /* YPBBlacklistDetail.m */; };
 		EC87FEB01CABDFAD0049445C /* YPBLocalNotification.m in Sources */ = {isa = PBXBuildFile; fileRef = EC87FEAF1CABDFAD0049445C /* YPBLocalNotification.m */; };
+		EC9E68CF1CED9229006AA980 /* login.jpg in Resources */ = {isa = PBXBuildFile; fileRef = EC9E68CE1CED9229006AA980 /* login.jpg */; };
 		ECADD6621CA3C4D300BC85F6 /* YPBApplePay.m in Sources */ = {isa = PBXBuildFile; fileRef = ECADD6611CA3C4D300BC85F6 /* YPBApplePay.m */; };
 		ECADD66A1CA3EB9A00BC85F6 /* YPBNeighborViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = ECADD6691CA3EB9A00BC85F6 /* YPBNeighborViewController.m */; };
 		ECADD6701CA3ECD100BC85F6 /* YPBNeighborCell.m in Sources */ = {isa = PBXBuildFile; fileRef = ECADD66F1CA3ECD100BC85F6 /* YPBNeighborCell.m */; };
-		ECDEEAD61CD8782800E685D0 /* loading_1.jpg in Resources */ = {isa = PBXBuildFile; fileRef = ECDEEAD31CD8782800E685D0 /* loading_1.jpg */; };
-		ECDEEAD71CD8782800E685D0 /* loading_2.jpg in Resources */ = {isa = PBXBuildFile; fileRef = ECDEEAD41CD8782800E685D0 /* loading_2.jpg */; };
-		ECDEEAD81CD8782800E685D0 /* loading_3.jpg in Resources */ = {isa = PBXBuildFile; fileRef = ECDEEAD51CD8782800E685D0 /* loading_3.jpg */; };
 		ECEB98BF1CD06E4A00F97DEB /* NSString+MessageInputView.m in Sources */ = {isa = PBXBuildFile; fileRef = ECEB97F01CD06E4900F97DEB /* NSString+MessageInputView.m */; };
 		ECEB98C01CD06E4A00F97DEB /* NSString+XHMD5.m in Sources */ = {isa = PBXBuildFile; fileRef = ECEB97F21CD06E4900F97DEB /* NSString+XHMD5.m */; };
 		ECEB98C11CD06E4A00F97DEB /* UIImage+Alpha.m in Sources */ = {isa = PBXBuildFile; fileRef = ECEB97F51CD06E4900F97DEB /* UIImage+Alpha.m */; };
@@ -779,15 +777,13 @@
 		EC7C9C031CCF4ED000DC639A /* YPBBlacklistDetail.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YPBBlacklistDetail.m; sourceTree = "<group>"; };
 		EC87FEAE1CABDFAD0049445C /* YPBLocalNotification.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YPBLocalNotification.h; sourceTree = "<group>"; };
 		EC87FEAF1CABDFAD0049445C /* YPBLocalNotification.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YPBLocalNotification.m; sourceTree = "<group>"; };
+		EC9E68CE1CED9229006AA980 /* login.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = login.jpg; sourceTree = "<group>"; };
 		ECADD6601CA3C4D300BC85F6 /* YPBApplePay.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YPBApplePay.h; sourceTree = "<group>"; };
 		ECADD6611CA3C4D300BC85F6 /* YPBApplePay.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YPBApplePay.m; sourceTree = "<group>"; };
 		ECADD6681CA3EB9A00BC85F6 /* YPBNeighborViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YPBNeighborViewController.h; sourceTree = "<group>"; };
 		ECADD6691CA3EB9A00BC85F6 /* YPBNeighborViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YPBNeighborViewController.m; sourceTree = "<group>"; };
 		ECADD66E1CA3ECD100BC85F6 /* YPBNeighborCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YPBNeighborCell.h; sourceTree = "<group>"; };
 		ECADD66F1CA3ECD100BC85F6 /* YPBNeighborCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YPBNeighborCell.m; sourceTree = "<group>"; };
-		ECDEEAD31CD8782800E685D0 /* loading_1.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = loading_1.jpg; sourceTree = "<group>"; };
-		ECDEEAD41CD8782800E685D0 /* loading_2.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = loading_2.jpg; sourceTree = "<group>"; };
-		ECDEEAD51CD8782800E685D0 /* loading_3.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = loading_3.jpg; sourceTree = "<group>"; };
 		ECEB97EF1CD06E4900F97DEB /* NSString+MessageInputView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSString+MessageInputView.h"; sourceTree = "<group>"; };
 		ECEB97F01CD06E4900F97DEB /* NSString+MessageInputView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSString+MessageInputView.m"; sourceTree = "<group>"; };
 		ECEB97F11CD06E4900F97DEB /* NSString+XHMD5.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSString+XHMD5.h"; sourceTree = "<group>"; };
@@ -1869,9 +1865,7 @@
 		BCCE6C5C1C5A0F4100095461 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
-				ECDEEAD31CD8782800E685D0 /* loading_1.jpg */,
-				ECDEEAD41CD8782800E685D0 /* loading_2.jpg */,
-				ECDEEAD51CD8782800E685D0 /* loading_3.jpg */,
+				EC9E68CE1CED9229006AA980 /* login.jpg */,
 			);
 			path = Resources;
 			sourceTree = "<group>";
@@ -2517,7 +2511,6 @@
 				BC85EC401C5CC72A00BA74B1 /* PlayButtonOverlayLargeTap@3x.png in Resources */,
 				ECEB99181CD06E4A00F97DEB /* RecordingSignal001@2x.png in Resources */,
 				BC5704DD1C45F74800DEFAB6 /* AlipaySDK.bundle in Resources */,
-				ECDEEAD81CD8782800E685D0 /* loading_3.jpg in Resources */,
 				BC85EC4A1C5CC72A00BA74B1 /* VideoOverlay.png in Resources */,
 				BC85EC431C5CC72A00BA74B1 /* UIBarButtonItemArrowLeft@3x.png in Resources */,
 				ECEB99201CD06E4A00F97DEB /* SECoreTextView.bundle in Resources */,
@@ -2539,12 +2532,12 @@
 				ECEB99071CD06E4A00F97DEB /* input-bar-flat.png in Resources */,
 				ECEB991B1CD06E4A00F97DEB /* RecordingSignal004@2x.png in Resources */,
 				ECEB990F1CD06E4A00F97DEB /* multiMedia_HL@2x.png in Resources */,
-				ECDEEAD61CD8782800E685D0 /* loading_1.jpg in Resources */,
 				BC85EC301C5CC72A00BA74B1 /* ImageSelectedOff@2x.png in Resources */,
 				BC85EC3E1C5CC72A00BA74B1 /* PlayButtonOverlayLargeTap.png in Resources */,
 				BC85EC4B1C5CC72A00BA74B1 /* VideoOverlay@2x.png in Resources */,
 				BC85EC381C5CC72A00BA74B1 /* ImageSelectedSmallOn.png in Resources */,
 				ECEB99291CD06E4A00F97DEB /* VoiceBtn_BlackHL@2x.png in Resources */,
+				EC9E68CF1CED9229006AA980 /* login.jpg in Resources */,
 				ECEB99041CD06E4A00F97DEB /* face@2x.png in Resources */,
 				ECEB99121CD06E4A00F97DEB /* ReceiverVoiceNodePlaying001@2x.png in Resources */,
 				ECEB99241CD06E4A00F97DEB /* SenderVoiceNodePlaying003@2x.png in Resources */,
@@ -2581,7 +2574,6 @@
 				BC85EC3A1C5CC72A00BA74B1 /* ImageSelectedSmallOn@3x.png in Resources */,
 				BC85EC471C5CC72A00BA74B1 /* UIBarButtonItemGrid.png in Resources */,
 				BCC5A2FF1C5F5E6D005672D6 /* AutoReplyWords.plist in Resources */,
-				ECDEEAD71CD8782800E685D0 /* loading_2.jpg in Resources */,
 				BC85EC3D1C5CC72A00BA74B1 /* PlayButtonOverlayLarge@3x.png in Resources */,
 				BC85EC311C5CC72A00BA74B1 /* ImageSelectedOff@3x.png in Resources */,
 				ECEB99251CD06E4A00F97DEB /* SenderVoiceNodePlaying@2x.png in Resources */,

@@ -9,6 +9,7 @@
 #import "YPBUser.h"
 
 NSString *const kNotLimitedDescription = @"不限";
+NSString *const kSecretDescription = @"保密";
 static NSString *const kHeightUnitString = @"cm";
 static NSString *const kAgeUnitString = @"岁";
 static YPBUser *_currentUser;
@@ -216,6 +217,26 @@ static YPBUser *_currentUser;
 
 + (NSArray<NSString *> *)allCupsDescription {
     return @[@"", @"A罩杯",@"B罩杯",@"C罩杯",@"C罩杯以上"];
+}
+
++ (NSArray<NSString *>*)allSelfEducationDescription {
+    NSMutableArray *arr = [self allEducationsDescription].mutableCopy;
+    arr[0] = kSecretDescription;
+    return  arr;
+}
+
++ (NSArray<NSString *>*)allEducationsDescription {
+    return @[@"",@"小学",@"初中",@"高中",@"大专",@"本科",@"硕士及以上"];
+}
+
++ (NSArray<NSString *> *)allSelfMarriageDescription {
+    NSMutableArray *arr = [self allMarriageDescription].mutableCopy;
+    arr[0] = kSecretDescription;
+    return arr;
+}
+
++ (NSArray<NSString *> *)allMarriageDescription {
+    return @[@"",@"未婚",@"离异",@"丧偶"];
 }
 
 + (NSArray<NSNumber *> *)allHeightRangeValues {
@@ -626,6 +647,14 @@ static YPBUser *_currentUser;
 
 - (NSString *)targetCupDescription {
     return [[self class] allTargetCupsDescription][self.targetCup];
+}
+
+- (NSString *)selfEducationDescription {
+    return [[self class] allSelfEducationDescription][self.selfEducation];
+}
+
+- (NSString *)selfMarriageDescripiton {
+    return [[self class] allSelfMarriageDescription][self.selfMarriage];
 }
 
 - (void)setSex:(NSString *)sex {

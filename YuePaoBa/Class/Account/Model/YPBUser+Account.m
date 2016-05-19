@@ -64,6 +64,22 @@
     }
 }
 
+- (void)setSelfEducationWithString:(NSString *)educationString {
+    NSUInteger index = [[[self class] allEducationsDescription] indexOfObject:educationString];
+    if (index != NSNotFound) {
+        self.selfEducation = index;
+    }
+    self.edu = educationString;
+}
+
+- (void)setSelfMarriageWithString:(NSString *)marriageString {
+    NSUInteger index = [[[self class] allMarriageDescription] indexOfObject:marriageString];
+    if (index != NSNotFound) {
+        self.selfMarriage = index;
+    }
+    self.marry = marriageString;
+}
+
 - (YPBPair *)valueIndexesOfTargetHeight {
     NSUInteger minIndex = [[[self class] allHeightRangeValues] indexOfObject:@(self.targetHeight.min)];
     if (minIndex == NSNotFound) {
@@ -93,4 +109,13 @@
 - (NSUInteger)valueIndexOfTargetCup {
     return self.targetCup;
 }
+
+- (NSUInteger)valueIndexOfSelfEducation {
+    return  self.selfEducation;
+}
+
+- (NSUInteger)valueIndexOfSelfMarriage {
+    return self.selfMarriage;
+}
+
 @end

@@ -13,9 +13,12 @@
 - (void)setTargetHeightWithRangeStringBetween:(NSString *)value1 and:(NSString *)value2;
 - (void)setTargetAgeWithRangeStringBetween:(NSString *)value1 and:(NSString *)value2;
 - (void)setTargetCupWithString:(NSString *)cupString;
+- (void)setSelfEducationWithString:(NSString *)educationString;
+- (void)setSelfMarriageWithString:(NSString *)marriageString;
 
 - (YPBPair *)valueIndexesOfTargetHeight;
 - (YPBPair *)valueIndexesOfTargetAge;
 - (NSUInteger)valueIndexOfTargetCup;
-
+- (NSUInteger)valueIndexOfSelfEducation;
+- (NSUInteger)valueIndexOfSelfMarriage;
 @end
