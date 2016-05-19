@@ -38,6 +38,10 @@
         user.city = @"";
     }
     
+    if (user.monthIncome == nil) {
+        user.monthIncome = @"";
+    }
+    
     NSDictionary *params = [self paramsFromUser:user];
     BOOL success = [self requestURLPath:YPB_USER_REGISTER_URL
                              withParams:params
@@ -78,12 +82,11 @@
     return @{@"sex":user.sex,
              @"nickName":user.nickName,
              @"uuid":[YPBUtil activationId],
-             @"income":[NSNull null],
+             @"income":user.monthIncome,
              @"bust":bust ?: @"",
              @"heightArea":heightArea,
              @"ageArea":ageArea,
              @"age":user.age,
-             @"monthIncome":user.monthIncome,
              @"height":user.height,
              @"logoUrl":user.logoUrl,
              @"edu":user.edu,

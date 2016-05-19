@@ -170,6 +170,7 @@ DefineLazyPropertyInitialization(YPBUserAvatarUpdateModel, avatarUpdateModel)
                       if (success) {
                           [[YPBMessageCenter defaultCenter] showSuccessWithTitle:@"头像更新成功" inViewController:self];
                           [YPBUser currentUser].logoUrl = obj;
+                          
                           [_view.subviews makeObjectsPerformSelector:@selector(removeFromSuperview)];
                           UIImageView *imgV = [[UIImageView alloc] init];
                           [imgV sd_setImageWithURL:obj];
@@ -183,6 +184,7 @@ DefineLazyPropertyInitialization(YPBUserAvatarUpdateModel, avatarUpdateModel)
                           }
                       } else {
                        [[YPBMessageCenter defaultCenter] showErrorWithTitle:@"头像更新失败" inViewController:self];
+                          [YPBUser currentUser].logoUrl = @"";
                       }
                   }];
              }];

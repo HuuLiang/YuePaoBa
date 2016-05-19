@@ -274,9 +274,9 @@ DefineLazyPropertyInitialization(NSMutableArray, userNames);
 
 - (void)popPaymentViewWithPrice:(NSUInteger)price forMonths:(NSUInteger)months {
     
-#ifdef DEBUG
-    price = 1;
-#endif
+//#ifdef DEBUG
+//    price = 1;
+//#endif
     self.paymentPopView = [[YPBPaymentPopView alloc] init];
     @weakify(self);
     [self.paymentPopView addPaymentWithImage:[UIImage imageNamed:@"vip_alipay_icon"] title:@"支付宝支付" available:YES action:^(id obj) {

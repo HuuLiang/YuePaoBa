@@ -96,7 +96,7 @@
     _oneBtn.selected = NO;
     [_cellOne addSubview:_oneBtn];
     
-    price = [_payConfig.vipPointDictionary[@"1"] integerValue]/100;
+    price = [_payConfig.vipPointDictionary[@"3"] integerValue];
     
     UIButton *threeBtn = [UIButton buttonWithType:UIButtonTypeSystem];
     [threeBtn setBackgroundImage:[UIImage imageNamed:@"message_choose"] forState:UIControlStateNormal];
@@ -110,7 +110,7 @@
         if (!_oneBtn.selected) {
             _oneBtn.selected = YES;
             threeBtn.selected = NO;
-            price = [_payConfig.vipPointDictionary[@"1"] integerValue]/100;
+            price = [_payConfig.vipPointDictionary[@"1"] integerValue];
         }
     }];
     
@@ -118,7 +118,7 @@
         if (!threeBtn.selected) {
             _oneBtn.selected = NO;
             threeBtn.selected = YES;
-            price = [_payConfig.vipPointDictionary[@"3"] integerValue]/100;
+            price = [_payConfig.vipPointDictionary[@"3"] integerValue];
         }
     }];
     
