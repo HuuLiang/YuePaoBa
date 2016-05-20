@@ -241,7 +241,9 @@ DefineLazyPropertyInitialization(NSMutableArray, userNames);
 }
 
 - (void)scrollUserNames:(NSInteger)count{
-    DLog("%ld %ld",_userNames.count,_count);
+    CGFloat  kLabelViewHeight = _labelView.frame.size.height;
+    
+//    DLog("%ld %ld",_userNames.count,_count);
     UILabel *vipLabel = [[UILabel alloc] init];
     vipLabel.font = [UIFont systemFontOfSize:12.];
     vipLabel.backgroundColor = [UIColor clearColor];
@@ -253,37 +255,33 @@ DefineLazyPropertyInitialization(NSMutableArray, userNames);
                               value:[UIColor redColor] range:rangge];
     }
     vipLabel.attributedText = attributedStr;
+    vipLabel.frame = CGRectMake(5, _labelView.frame.size.height, SCREEN_WIDTH, 15);
     [_labelView addSubview:vipLabel];
-    {
-        [vipLabel mas_makeConstraints:^(MASConstraintMaker *make) {
-            make.left.equalTo(_labelView).offset(5);
-            make.top.equalTo(_labelView.mas_bottom);
-            make.size.mas_equalTo(CGSizeMake(SCREEN_WIDTH, 15));
-        }];
-    }
+//    {
+//        [vipLabel mas_makeConstraints:^(MASConstraintMaker *make) {
+//            make.left.equalTo(_labelView).offset(5);
+//            make.top.equalTo(_labelView.mas_bottom);
+//            make.size.mas_equalTo(CGSizeMake(SCREEN_WIDTH, 15));
+//        }];
+//    }
     
-    [vipLabel layoutIfNeeded];
-    DLog("%@ \n %@",NSStringFromCGRect(_labelView.frame),NSStringFromCGRect(vipLabel.frame));
+//    DLog("%@ \n %@",NSStringFromCGRect(_labelView.frame),NSStringFromCGRect(vipLabel.frame));
     
     [UIView animateWithDuration:4.5 delay:0 options:UIViewAnimationOptionCurveLinear
                      animations:^{
-                         [vipLabel mas_remakeConstraints:^(MASConstraintMaker *make) {
-                             make.left.equalTo(_labelView).offset(5);
-                             make.top.equalTo(_labelView);
-                             make.size.mas_equalTo(CGSizeMake(SCREEN_WIDTH, 15));
-                         }];
-                         [vipLabel layoutIfNeeded];
+                         vipLabel.transform = CGAffineTransformMakeTranslation(0, -kLabelViewHeight);
+//                         vipLabel.frame = CGRectMake(5, 0, SCREEN_WIDTH, 15);
+
                      } completion:^(BOOL finished) {
-//                         [UIView animateWithDuration:0.2 delay:0 options:UIViewAnimationOptionCurveLinear
-//                                          animations:^{
-//                                              [vipLabel mas_updateConstraints:^(MASConstraintMaker *make) {
-//                                                  make.top.equalTo(_labelView.mas_bottom).offset(-(_labelView.frame.size.height));
-//                                              }];
-//                                              vipLabel.alpha = 0.1;
-//                                          } completion:^(BOOL finished) {
-//                                              [vipLabel removeFromSuperview];
-//                                              
-//                                          }];
+                         [UIView animateWithDuration:0.2 delay:0 options:UIViewAnimationOptionCurveLinear
+                                          animations:^{
+//                                              vipLabel.frame = CGRectMake(5, 0, SCREEN_WIDTH, 15);
+                                              vipLabel.transform = CGAffineTransformMakeTranslation(0, -kLabelViewHeight);
+                                              vipLabel.alpha = 0.1;
+                                          } completion:^(BOOL finished) {
+                                              [vipLabel removeFromSuperview];
+                                              
+                                          }];
                      }];
  
 }

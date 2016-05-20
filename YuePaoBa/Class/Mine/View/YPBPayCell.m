@@ -86,20 +86,20 @@
 //        }
         
         [_priceLabel mas_makeConstraints:^(MASConstraintMaker *make) {
-            make.left.equalTo(self).offset(SCREEN_WIDTH/20);
-            make.center.centerY.equalTo(self);
-            make.size.mas_equalTo(CGSizeMake(SCREEN_WIDTH/10, SCREEN_HEIGHT/30));
+            make.left.equalTo(self.mas_left).offset(SCREEN_WIDTH/20);
+            make.centerY.equalTo(self.mas_centerY);
+            make.size.mas_equalTo(CGSizeMake(100, SCREEN_HEIGHT/30));
         }];
     
         [_detailLabel mas_makeConstraints:^(MASConstraintMaker *make) {
-            make.left.equalTo(self).offset(SCREEN_WIDTH/3+24);
-            make.centerY.equalTo(self);
+            make.left.equalTo(_priceLabel.mas_right).offset(SCREEN_WIDTH/15);
+            make.centerY.equalTo(self.mas_centerY);
             make.size.mas_equalTo(CGSizeMake(160, 20));
         }];
         
         [_payButton mas_makeConstraints:^(MASConstraintMaker *make) {
-            make.right.equalTo(self).offset(-10);
-            make.centerY.equalTo(self);
+            make.right.equalTo(self.mas_right).offset(-10);
+            make.centerY.equalTo(self.mas_centerY);
             make.size.mas_equalTo(CGSizeMake(SCREEN_WIDTH/5, SCREEN_HEIGHT/18));
         }];
     }
