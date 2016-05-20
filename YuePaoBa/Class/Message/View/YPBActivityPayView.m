@@ -209,6 +209,8 @@
         _cellThree.layer.cornerRadius = 10;
         [self addSubview:_cellThree];
         [self initCell:_cellThree WithImage:@"vip_alipay_icon" Title:@"支付宝支付"];
+        
+        [self layoutSubview];
     }
     return self;
 }
@@ -226,7 +228,7 @@
     [self.vipView payWithPrice:price paymentType:type forMonths:month];
 }
 
-- (void)layoutSubviews {
+- (void)layoutSubview {
     [_bgImg mas_makeConstraints:^(MASConstraintMaker *make) {
         make.left.top.right.equalTo(self);
         make.height.equalTo(@(SCREEN_WIDTH*0.8*0.55));

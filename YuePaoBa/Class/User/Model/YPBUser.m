@@ -231,7 +231,7 @@ static YPBUser *_currentUser;
 }
 
 + (NSArray<NSString *>*)allEducationsDescription {
-    return @[@"",@"小学",@"初中",@"高中",@"大专",@"本科",@"硕士及以上"];
+    return @[@"",@"初中及以下",@"高中及中专",@"大专",@"本科",@"硕士及以上"];
 }
 
 + (NSArray<NSString *> *)allSelfMarriageDescription {

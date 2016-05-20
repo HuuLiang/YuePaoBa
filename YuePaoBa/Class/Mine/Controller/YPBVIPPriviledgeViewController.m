@@ -50,6 +50,7 @@ DefineLazyPropertyInitialization(NSMutableArray, userNames);
     return self;
 }
 
+
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
@@ -139,14 +140,10 @@ DefineLazyPropertyInitialization(NSMutableArray, userNames);
     
     _labelView = [[UIView alloc] init];
     _labelView.backgroundColor = [UIColor colorWithHexString:@"fffffd"];
+//    _labelView.backgroundColor = [UIColor cyanColor];
     [self.view addSubview:_labelView];
     _userNames = [NSMutableArray arrayWithArray:[YPBSystemConfig sharedConfig].userNames];
     _count = 0;
-    
-     _timer = [NSTimer scheduledTimerWithTimeInterval:0.8 target:self selector:@selector(checkCount) userInfo:nil repeats:YES];
-    if (_userNames.count > 0) {
-        [_timer setFireDate:[NSDate distantPast]];
-    }
     
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(onVIPUpgradeSuccessNotification) name:kVIPUpgradeSuccessNotification object:nil];
     
@@ -222,6 +219,15 @@ DefineLazyPropertyInitialization(NSMutableArray, userNames);
             make.bottom.equalTo(self.view).offset(0);
         }];
     }
+    
+    _timer = [NSTimer scheduledTimerWithTimeInterval:0.8 target:self selector:@selector(checkCount) userInfo:nil repeats:YES];
+    if (_userNames.count > 0) {
+        [_timer setFireDate:[NSDate distantPast]];
+    }
+}
+
+- (void)viewWillDisappear:(BOOL)animated {
+    [_timer setFireDate:[NSDate distantFuture]];
 }
 
 - (void)checkCount {
@@ -251,24 +257,33 @@ DefineLazyPropertyInitialization(NSMutableArray, userNames);
     {
         [vipLabel mas_makeConstraints:^(MASConstraintMaker *make) {
             make.left.equalTo(_labelView).offset(5);
-            make.bottom.equalTo(_labelView).offset(20);
+            make.top.equalTo(_labelView.mas_bottom);
             make.size.mas_equalTo(CGSizeMake(SCREEN_WIDTH, 15));
         }];
     }
-
-    [vipLabel setNeedsDisplay];
+    
+    [vipLabel layoutIfNeeded];
+    DLog("%@ \n %@",NSStringFromCGRect(_labelView.frame),NSStringFromCGRect(vipLabel.frame));
+    
     [UIView animateWithDuration:4.5 delay:0 options:UIViewAnimationOptionCurveLinear
                      animations:^{
-                         vipLabel.transform = CGAffineTransformMakeTranslation(0, -(_labelView.frame.size.height));
+                         [vipLabel mas_remakeConstraints:^(MASConstraintMaker *make) {
+                             make.left.equalTo(_labelView).offset(5);
+                             make.top.equalTo(_labelView);
+                             make.size.mas_equalTo(CGSizeMake(SCREEN_WIDTH, 15));
+                         }];
+                         [vipLabel layoutIfNeeded];
                      } completion:^(BOOL finished) {
-                         [UIView animateWithDuration:0.4 delay:0 options:UIViewAnimationOptionCurveLinear
-                                          animations:^{
-                                              vipLabel.transform = CGAffineTransformMakeTranslation(0, -(_labelView.frame.size.height + 8));
-                                              vipLabel.alpha = 0.1;
-                                          } completion:^(BOOL finished) {
-                                              [vipLabel removeFromSuperview];
-                                              
-                                          }];
+//                         [UIView animateWithDuration:0.2 delay:0 options:UIViewAnimationOptionCurveLinear
+//                                          animations:^{
+//                                              [vipLabel mas_updateConstraints:^(MASConstraintMaker *make) {
+//                                                  make.top.equalTo(_labelView.mas_bottom).offset(-(_labelView.frame.size.height));
+//                                              }];
+//                                              vipLabel.alpha = 0.1;
+//                                          } completion:^(BOOL finished) {
+//                                              [vipLabel removeFromSuperview];
+//                                              
+//                                          }];
                      }];
  
 }
@@ -281,9 +296,9 @@ DefineLazyPropertyInitialization(NSMutableArray, userNames);
 
 - (void)popPaymentViewWithPrice:(NSUInteger)price forMonths:(NSUInteger)months {
     
-//#ifdef DEBUG
-//    price = 1;
-//#endif
+#ifdef DEBUG
+    price = 1;
+#endif
     self.paymentPopView = [[YPBPaymentPopView alloc] init];
     @weakify(self);
     [self.paymentPopView addPaymentWithImage:[UIImage imageNamed:@"vip_alipay_icon"] title:@"支付宝支付" available:YES action:^(id obj) {

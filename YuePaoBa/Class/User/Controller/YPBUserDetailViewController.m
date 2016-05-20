@@ -426,7 +426,9 @@ DefineLazyPropertyInitialization(YPBUserAccessModel, userAccessModel)
     purposeCell.selectionStyle = UITableViewCellSelectionStyleNone;
     [self setLayoutCell:purposeCell inRow:3 andSection:section];
     
-    YPBTableViewCell *marryCell = [[YPBTableViewCell alloc] initWithImage:[UIImage imageNamed:@"marry_icon"] title:[NSString stringWithFormat:@"婚姻状况：%@",self.user.marry]];
+    
+    NSInteger count = [self.user.marry integerValue];
+    YPBTableViewCell *marryCell = [[YPBTableViewCell alloc] initWithImage:[UIImage imageNamed:@"marry_icon"] title:[NSString stringWithFormat:@"婚姻状况：%@",[YPBUser allMarriageDescription][count]]];
     marryCell.selectionStyle = UITableViewCellSelectionStyleNone;
     [self setLayoutCell:marryCell inRow:4 andSection:section++];
     
@@ -445,7 +447,8 @@ DefineLazyPropertyInitialization(YPBUserAccessModel, userAccessModel)
     
     [self setHeaderHeight:7 inSection:section];
     
-    YPBTableViewCell *educationCell = [[YPBTableViewCell alloc] initWithImage:[UIImage imageNamed:@"education_icon"] title:[NSString stringWithFormat:@"学历：%@",self.user.edu?:@"？？？"]];
+    NSInteger eduCount = [self.user.edu integerValue];
+    YPBTableViewCell *educationCell = [[YPBTableViewCell alloc] initWithImage:[UIImage imageNamed:@"education_icon"] title:[NSString stringWithFormat:@"学历：%@",[YPBUser allEducationsDescription][eduCount]]];
     educationCell.selectionStyle = UITableViewCellSelectionStyleNone;
     [self setLayoutCell:educationCell inRow:0 andSection:section];
     

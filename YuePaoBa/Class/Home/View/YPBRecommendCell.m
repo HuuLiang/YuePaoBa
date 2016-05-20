@@ -45,11 +45,13 @@
         _btn.hidden = NO;
         _btn.selected =  YES;
         [self addSubview:_btn];
+        
+        [self layoutSubview];
     }
     return self;
 }
 
-- (void)layoutSubviews {
+- (void)layoutSubview {
     {
         [_bgImg mas_makeConstraints:^(MASConstraintMaker *make) {
             make.top.left.right.equalTo(self);

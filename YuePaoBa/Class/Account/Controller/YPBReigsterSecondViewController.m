@@ -52,6 +52,7 @@ DefineLazyPropertyInitialization(YPBUserAvatarUpdateModel, avatarUpdateModel)
 - (void)viewDidLoad {
     [super viewDidLoad];
     //定位
+    
     [self locate];
     
     UIImageView *bgImg = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"register_bgImg.jpg"]];
@@ -481,7 +482,9 @@ DefineLazyPropertyInitialization(YPBUserAvatarUpdateModel, avatarUpdateModel)
     _locationManager.delegate = self;
     _locationManager.desiredAccuracy = kCLLocationAccuracyBest;
     _locationManager.distanceFilter = kCLDistanceFilterNone;
-    [_locationManager requestAlwaysAuthorization];
+    if ([[[UIDevice currentDevice] systemVersion] floatValue] >= 8.0) {
+        [_locationManager requestAlwaysAuthorization];
+    }
     [_locationManager startUpdatingLocation];
     
 }
