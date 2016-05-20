@@ -27,6 +27,7 @@
 static NSString *const kHomeCellReusableIdentifier = @"HomeCellReusableIdentifier";
 static NSString *const kRecommendCellReuseIdentifier = @"RecommendCellReuseIdentifier";
 static NSString *const kFirstRecommentIdentifier = @"FirstRecomment";
+static NSString *const KNotiGreetIdentifier     = @"NotiGreetIdentifier";
 
 @interface YPBHomeViewController () <UICollectionViewDataSource,UICollectionViewDelegate>
 {
@@ -292,45 +293,50 @@ DefineLazyPropertyInitialization(YPBUserAccessQueryModel, accessQueryModel)
     [self.accessQueryModel queryUser:[YPBUser currentUser].userId withAccessType:YPBUserGetAccessTypeGreeting greetType:YPBUserGreetingTypeSent page:1 completionHandler:^(BOOL success, id obj) {
         if (success) {
             NSArray * array = obj;
-            if (array.count >= 5) {
-                //通知红娘小助手
-                self.contacts = [NSMutableArray arrayWithArray:[YPBContact allContacts]];
-                
-                __block NSUInteger unreadMessages = 0;
-                [self.contacts enumerateObjectsUsingBlock:^(YPBContact * _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
-                    unreadMessages += obj.unreadMessages.unsignedIntegerValue;
-                    if ([obj.userType isEqualToNumber:[NSNumber numberWithInteger:[YPBROBOTID integerValue]]]) {
-                        _isHaveRobot = YES;
-                    }
-                }];
-                //添加红娘小助手
-                if (!_isHaveRobot) {
-                    YPBContact *robotContact = [[YPBContact alloc] init];
-                    [robotContact beginUpdate];
-                    robotContact.userId = YPBROBOTID;
-                    robotContact.logoUrl = kRobotContactLogoUrl;
-                    robotContact.nickName = @"红娘小助手";
-                    robotContact.userType = [NSNumber numberWithInteger:[YPBROBOTID integerValue]];
-                    robotContact.recentMessage = @"欢迎来到心动速配";
-                    robotContact.recentTime = [YPBUtil stringFromDate:[NSDate date]];
-                    [robotContact endUpdate];
-                    [self.contacts addObject:robotContact];
+            NSUserDefaults *greetDefaults = [NSUserDefaults standardUserDefaults];
+            if (array.count/5 == [greetDefaults integerForKey:KNotiGreetIdentifier]) {
+                return ;
+            } else {
+                [greetDefaults setInteger:array.count/5 forKey:KNotiGreetIdentifier];
+                [greetDefaults synchronize];
+                if (array.count/5 >= 1) {
+                    //通知红娘小助手
+                    self.contacts = [NSMutableArray arrayWithArray:[YPBContact allContacts]];
                     
-                    [YPBMessageViewController sendSystemMessageWith:robotContact Type:YPBRobotPushTypeWelCome count:0 inViewController:self];
-                    [YPBMessageViewController sendSystemMessageWith:robotContact Type:YPBRobotPushTypeGreet count:array.count inViewController:self];
-                    
-                    //                    [self performSelector:@selector(checkAccess) withObject:self afterDelay:200];
-                    
-                } else {
-                    for (YPBContact *contact in self.contacts) {
-                        if ([contact.userType isEqualToNumber:[NSNumber numberWithInteger:[YPBROBOTID integerValue]]]) {
-                            [YPBMessageViewController sendSystemMessageWith:contact Type:YPBRobotPushTypeGreet count:array.count inViewController:self];
+                    __block NSUInteger unreadMessages = 0;
+                    [self.contacts enumerateObjectsUsingBlock:^(YPBContact * _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
+                        unreadMessages += obj.unreadMessages.unsignedIntegerValue;
+                        if ([obj.userType isEqualToNumber:[NSNumber numberWithInteger:[YPBROBOTID integerValue]]]) {
+                            _isHaveRobot = YES;
+                        }
+                    }];
+                    //添加红娘小助手
+                    if (!_isHaveRobot) {
+                        YPBContact *robotContact = [[YPBContact alloc] init];
+                        [robotContact beginUpdate];
+                        robotContact.userId = YPBROBOTID;
+                        robotContact.logoUrl = kRobotContactLogoUrl;
+                        robotContact.nickName = @"红娘小助手";
+                        robotContact.userType = [NSNumber numberWithInteger:[YPBROBOTID integerValue]];
+                        robotContact.recentMessage = @"欢迎来到心动速配";
+                        robotContact.recentTime = [YPBUtil stringFromDate:[NSDate date]];
+                        [robotContact endUpdate];
+                        [self.contacts addObject:robotContact];
+                        
+                        [YPBMessageViewController sendSystemMessageWith:robotContact Type:YPBRobotPushTypeWelCome count:0 inViewController:self];
+                        [YPBMessageViewController sendSystemMessageWith:robotContact Type:YPBRobotPushTypeGreet count:array.count inViewController:self];
+                        
+                    } else {
+                        for (YPBContact *contact in self.contacts) {
+                            if ([contact.userType isEqualToNumber:[NSNumber numberWithInteger:[YPBROBOTID integerValue]]]) {
+                                [YPBMessageViewController sendSystemMessageWith:contact Type:YPBRobotPushTypeGreet count:array.count-array.count%5 inViewController:self];
+                            }
                         }
                     }
+                    
+                } else {
+                    [self performSelector:@selector(checkAccess) withObject:self afterDelay:100];
                 }
-                
-            } else {
-                [self performSelector:@selector(checkAccess) withObject:self afterDelay:100];
             }
         } else {
             [self performSelector:@selector(checkAccess) withObject:self afterDelay:20];

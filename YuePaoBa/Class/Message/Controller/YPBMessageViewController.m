@@ -30,7 +30,6 @@ static NSString *const kNoUserInfoErrorMessage = @"无法获取用户详细信�
 {
    
 }
-@property (nonatomic) NSInteger greetCount;
 @property (nonatomic,readonly) NSString *userId;
 @property (nonatomic,readonly) NSString *logoUrl;
 @property (nonatomic,readonly) NSString *nickName;
@@ -77,15 +76,12 @@ DefineLazyPropertyInitialization(NSMutableArray, chatMessages)
 
 + (void)sendSystemMessageWith:(YPBContact *)contact Type:(YPBRobotPushType)type count:(NSInteger)count inViewController:(UIViewController *)viewController {
     YPBMessageViewController *messageVC = [[self alloc] initWithContact:contact];
-//    [contact beginUpdate];
     [viewController.navigationController pushViewController:messageVC animated:NO];
     if (type == YPBRobotPushTypeWelCome) {
         [messageVC addTextMessage:kRobotPushWelcomeIdentifier withSender:contact.userId receiver:[YPBUser currentUser].userId dateTime:[YPBUtil stringFromDate:[NSDate date]]];
     } else if (type == YPBRobotPushTypeGreet) {
-        [messageVC addTextMessage:kRobotPushGreetIdentifier withSender:contact.userId receiver:[YPBUser currentUser].userId dateTime:[YPBUtil stringFromDate:[NSDate date]]];
-        messageVC.greetCount = count;
+        [messageVC addTextMessage:[NSString stringWithFormat:@"%@%@%ld",kRobotPushGreetIdentifier,YPBROBOTID,count] withSender:contact.userId receiver:[YPBUser currentUser].userId dateTime:[YPBUtil stringFromDate:[NSDate date]]];
     }
-//    [contact endUpdate];
     [messageVC.navigationController popToRootViewControllerAnimated:NO];
 }
 
@@ -148,7 +144,6 @@ DefineLazyPropertyInitialization(NSMutableArray, chatMessages)
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    _greetCount = 0;
     self.messageTableView.backgroundColor = [UIColor colorWithWhite:0.95 alpha:1];
     self.title = self.user ? self.user.nickName : self.contact.nickName;
     self.messageSender = [YPBUser currentUser].userId;
@@ -294,9 +289,6 @@ DefineLazyPropertyInitialization(NSMutableArray, chatMessages)
     chatMessage.msgTime = dateTime;
     if ([chatMessage.sendUserId isEqualToString:YPBROBOTID]) {
         chatMessage.msgType = @(YPBChatMessageTypeRobotPush);
-        if ([chatMessage.msg isEqualToString:kRobotPushGreetIdentifier]) {
-            chatMessage.msg = [NSString stringWithFormat:@"%@%@%ld",kRobotPushGreetIdentifier,YPBROBOTID,self.greetCount];
-        }
     }
 
     [self addChatMessage:chatMessage];
@@ -443,6 +435,7 @@ DefineLazyPropertyInitialization(NSMutableArray, chatMessages)
     }
     return YES;
 }
+
 //- (BOOL)shouldLoadMoreMessagesScrollToTop {
 //    return YES;
 //}

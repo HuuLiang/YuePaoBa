@@ -51,6 +51,11 @@ static const NSUInteger kReplyingTimeInterval = 60 * 5;
                     if (!contact) {
                         return ;
                     }
+                    
+                    if ([contact.userId isEqualToString:YPBROBOTID]) {
+                        return ;
+                    }
+                    
                     [contact beginUpdate];
                     contact.unreadMessages = @(contact.unreadMessages.unsignedIntegerValue+1);
                     contact.recentMessage = message;

@@ -27,8 +27,8 @@
     NSMutableArray *_dataSource;
     UITableView *_payTableView;
     UIView *_labelView;
-    NSTimer * _timer;
     NSInteger _count;
+    NSTimer *_timer;
 }
 @property (nonatomic,retain) YPBUserVIPUpgradeModel *vipUpgradeModel;
 @property (nonatomic,retain) YPBPaymentInfo *paymentInfo;
@@ -142,13 +142,11 @@ DefineLazyPropertyInitialization(NSMutableArray, userNames);
     [self.view addSubview:_labelView];
     _userNames = [NSMutableArray arrayWithArray:[YPBSystemConfig sharedConfig].userNames];
     _count = 0;
-    _timer = [NSTimer scheduledTimerWithTimeInterval:0.8 target:self selector:@selector(scrollUserNames) userInfo:nil repeats:YES];
+    
+     _timer = [NSTimer scheduledTimerWithTimeInterval:0.8 target:self selector:@selector(checkCount) userInfo:nil repeats:YES];
     if (_userNames.count > 0) {
         [_timer setFireDate:[NSDate distantPast]];
-
     }
-    
-//    @weakify(self);
     
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(onVIPUpgradeSuccessNotification) name:kVIPUpgradeSuccessNotification object:nil];
     
@@ -226,44 +224,53 @@ DefineLazyPropertyInitialization(NSMutableArray, userNames);
     }
 }
 
-- (void)scrollUserNames {
-    if (_count > _userNames.count - 1) {
+- (void)checkCount {
+    if (_count == _userNames.count - 1) {
+        [self scrollUserNames:_count];
         _count = 0;
-    } else {
-        UILabel *vipLabel = [[UILabel alloc] init];
-        vipLabel.font = [UIFont systemFontOfSize:12.];
-        vipLabel.backgroundColor = [UIColor clearColor];
-        NSString *string = [NSString stringWithFormat:@"%@刚刚开通了100元/季度充100返100活动",[YPBSystemConfig sharedConfig].userNames[_count]];
-        NSMutableAttributedString *attributedStr = [[NSMutableAttributedString alloc] initWithString:string];
-        NSRange rangge = [string rangeOfString:[YPBSystemConfig sharedConfig].userNames[_count]];
-        if (rangge.location != NSNotFound) {
-            [attributedStr addAttribute:NSForegroundColorAttributeName
-                                  value:[UIColor redColor] range:rangge];
-        }
-        vipLabel.attributedText = attributedStr;
-        [_labelView addSubview:vipLabel];
-        {
-            [vipLabel mas_makeConstraints:^(MASConstraintMaker *make) {
-                make.left.equalTo(_labelView).offset(5);
-                make.bottom.equalTo(_labelView).offset(20);
-                make.size.mas_equalTo(CGSizeMake(SCREEN_WIDTH, 15));
-            }];
-        }
-        [UIView animateWithDuration:4.5 delay:0 options:UIViewAnimationOptionCurveLinear
-                         animations:^{
-            vipLabel.transform = CGAffineTransformMakeTranslation(0, -(_labelView.frame.size.height));
-        } completion:^(BOOL finished) {
-            [UIView animateWithDuration:0.4 delay:0 options:UIViewAnimationOptionCurveLinear
-                             animations:^{
-                                 vipLabel.transform = CGAffineTransformMakeTranslation(0, -(_labelView.frame.size.height + 8));
-                                 vipLabel.alpha = 0.1;
-                             } completion:^(BOOL finished) {
-                                 [vipLabel removeFromSuperview];
+    } else if (_count < _userNames.count -1) {
+        [self scrollUserNames:_count];
+        _count++;
+    }
+}
 
-                             }];
+- (void)scrollUserNames:(NSInteger)count{
+    DLog("%ld %ld",_userNames.count,_count);
+    UILabel *vipLabel = [[UILabel alloc] init];
+    vipLabel.font = [UIFont systemFontOfSize:12.];
+    vipLabel.backgroundColor = [UIColor clearColor];
+    NSString *string = [NSString stringWithFormat:@"%@刚刚开通了100元/季度充100返100活动",[YPBSystemConfig sharedConfig].userNames[count]];
+    NSMutableAttributedString *attributedStr = [[NSMutableAttributedString alloc] initWithString:string];
+    NSRange rangge = [string rangeOfString:[YPBSystemConfig sharedConfig].userNames[count]];
+    if (rangge.location != NSNotFound) {
+        [attributedStr addAttribute:NSForegroundColorAttributeName
+                              value:[UIColor redColor] range:rangge];
+    }
+    vipLabel.attributedText = attributedStr;
+    [_labelView addSubview:vipLabel];
+    {
+        [vipLabel mas_makeConstraints:^(MASConstraintMaker *make) {
+            make.left.equalTo(_labelView).offset(5);
+            make.bottom.equalTo(_labelView).offset(20);
+            make.size.mas_equalTo(CGSizeMake(SCREEN_WIDTH, 15));
         }];
     }
-    _count++;
+
+    [vipLabel setNeedsDisplay];
+    [UIView animateWithDuration:4.5 delay:0 options:UIViewAnimationOptionCurveLinear
+                     animations:^{
+                         vipLabel.transform = CGAffineTransformMakeTranslation(0, -(_labelView.frame.size.height));
+                     } completion:^(BOOL finished) {
+                         [UIView animateWithDuration:0.4 delay:0 options:UIViewAnimationOptionCurveLinear
+                                          animations:^{
+                                              vipLabel.transform = CGAffineTransformMakeTranslation(0, -(_labelView.frame.size.height + 8));
+                                              vipLabel.alpha = 0.1;
+                                          } completion:^(BOOL finished) {
+                                              [vipLabel removeFromSuperview];
+                                              
+                                          }];
+                     }];
+ 
 }
 
 

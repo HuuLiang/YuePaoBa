@@ -244,7 +244,7 @@ DefineLazyPropertyInitialization(YPBUserAccessModel, userAccessModel)
 }
 
 - (void)onWechat {
-    if (![YPBUtil isVIP]) {
+    if ([YPBUtil isVIP]) {
         if (self.user.isRegistered) {
             [YPBMessageViewController showMessageForWeChatWithUser:self.user inViewController:self];
         } else {
