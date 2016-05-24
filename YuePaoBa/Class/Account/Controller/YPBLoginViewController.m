@@ -10,6 +10,7 @@
 #import "YPBLoginViewController.h"
 #import "YPBRegisterFirstViewController.h"
 #import "YPBImageIndicatorView.h"
+#import "YPBLoginAccountViewController.h"
 
 @interface YPBLoginViewController () <UIScrollViewDelegate>
 {
@@ -107,8 +108,11 @@ DefineLazyPropertyInitialization(NSMutableArray, imageViews)
             } forControlEvents:UIControlEventTouchUpInside];
             
             [loginButton bk_addEventHandler:^(id sender) {
-                //                @strongify(self);
+                @strongify(self);
                 //弹出登录页面
+                YPBLoginAccountViewController *accountView = [[YPBLoginAccountViewController alloc] init];
+                UINavigationController *nc = [[UINavigationController alloc] initWithRootViewController:accountView];
+                [self presentViewController:nc animated:YES completion:nil];
             } forControlEvents:UIControlEventTouchUpInside];
         }
     }];

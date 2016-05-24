@@ -13,6 +13,7 @@
 #import "YPBFeedbackModel.h"
 #import "YPBApplePay.h"
 #import "YPBBlacklistController.h"
+#import "YPBLoginViewController.h"
 
 @interface YPBSettingViewController ()
 {
@@ -22,6 +23,7 @@
     YPBTableViewCell *_feedbackCell;
     YPBTableViewCell *_versionCell;
     YPBTableViewCell *_blacklistCell;
+    YPBTableViewCell *_logoutCell;
 }
 @property (nonatomic,retain) YPBFeedbackModel *feedbackModel;
 @end
@@ -67,7 +69,11 @@ DefineLazyPropertyInitialization(YPBFeedbackModel, feedbackModel)
                 @strongify(self);
                 YPBInputTextViewController *textVC = sender;
                 if ([text isEqualToString:@"$$$UNBIND$$$"]) {
-                    [UIAlertView bk_showAlertViewWithTitle:@"警告" message:@"是否确认接触手机的用户绑定？此操作将导致当前的用户无效！！！" cancelButtonTitle:@"取消" otherButtonTitles:@[@"确定"] handler:^(UIAlertView *alertView, NSInteger buttonIndex) {
+                    [UIAlertView bk_showAlertViewWithTitle:@"警告"
+                                                   message:@"是否确认接触手机的用户绑定？此操作将导致当前的用户无效！！！"
+                                         cancelButtonTitle:@"取消"
+                                         otherButtonTitles:@[@"确定"]
+                                                   handler:^(UIAlertView *alertView, NSInteger buttonIndex) {
                         if (buttonIndex == 1) {
                             [YPBUtil removeDeviceBinding];
                             exit(-1);
@@ -107,6 +113,18 @@ DefineLazyPropertyInitialization(YPBFeedbackModel, feedbackModel)
             YPBBlacklistController *listVC = [[YPBBlacklistController alloc] init];
             listVC.title = @"黑名单列表";
             [self.navigationController pushViewController:listVC animated:YES];
+        } else if (cell == self ->_logoutCell) {
+            [UIAlertView bk_showAlertViewWithTitle:@"注意"
+                                           message:@"是否确认退出当前账号"
+                                 cancelButtonTitle:@"取消"
+                                 otherButtonTitles:@[@"确定"]
+                                           handler:^(UIAlertView *alertView, NSInteger buttonIndex)
+             {
+                 if (buttonIndex == 1) {
+                     [YPBUtil removeDeviceBinding];
+                     
+                 }
+            }];
         }
         
     };
@@ -153,6 +171,10 @@ DefineLazyPropertyInitialization(YPBFeedbackModel, feedbackModel)
     
     _feedbackCell = [self cellWithCommonStylesAndTitle:@"意见反馈"];
     [self setLayoutCell:_feedbackCell inRow:2 andSection:1];
+    
+    [self setHeaderHeight:10 inSection:2];
+    _logoutCell = [self cellWithCommonStylesAndTitle:@"退出当前账号"];
+    [self setLayoutCell:_logoutCell inRow:0 andSection:2];
 }
 
 - (YPBTableViewCell *)cellWithCommonStylesAndTitle:(NSString *)title {

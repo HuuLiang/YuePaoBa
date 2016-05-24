@@ -165,6 +165,7 @@ DefineLazyPropertyInitialization(YPBWeChatPayQueryOrderRequest, wechatPayOrderQu
     [YPBStatistics start];
     [YPBUploadManager registerWithSecretKey:YPB_UPLOAD_SECRET_KEY accessKey:YPB_UPLOAD_ACCESS_KEY scope:YPB_UPLOAD_SCOPE];
     
+    //进入登录界面
     if ([YPBUtil deviceRegisteredUserId]) {
         [self notifyUserLogin];
     } else {

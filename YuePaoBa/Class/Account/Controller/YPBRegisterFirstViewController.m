@@ -51,7 +51,7 @@ DefineLazyPropertyInitialization(YPBUser, user)
     }];
     self.layoutTableView.userInteractionEnabled = YES;
     self.layoutTableView.layer.cornerRadius = 5;
-//    self.layoutTableView.alpha = 0.5;
+
     self.layoutTableView.rowHeight = MAX(kScreenHeight * 0.08, 50);
     self.layoutTableView.scrollEnabled = NO;
     self.layoutTableView.separatorInset = UIEdgeInsetsZero;
