@@ -13,13 +13,14 @@
 #import "YPBMineViewController.h"
 #import "YPBNeighborViewController.h"
 #import "YPBSettingViewController.h"
-#import "YPBLoginViewController.h"
+#import "YPBLoginViewController.h"          
+#import "YPBAccountViewController.h"
 #import "YPBActivateModel.h"
 #import "YPBMessagePushModel.h"
 #import "YPBAutoReplyMessagePool.h"
 #import "YPBLocalNotification.h"
 
-#import "WXApi.h"
+
 #import "YPBPaymentInfo.h"
 #import "YPBWeChatPayQueryOrderRequest.h"
 #import "YPBPaymentModel.h"
@@ -169,9 +170,10 @@ DefineLazyPropertyInitialization(YPBWeChatPayQueryOrderRequest, wechatPayOrderQu
     if ([YPBUtil deviceRegisteredUserId]) {
         [self notifyUserLogin];
     } else {
-        YPBLoginViewController *loginVC = [[YPBLoginViewController alloc] init];
-        self.window.rootViewController = loginVC;
-        [self.window makeKeyAndVisible];
+//        YPBLoginViewController *loginVC = [[YPBLoginViewController alloc] init];
+//        self.window.rootViewController = loginVC;
+//        [self.window makeKeyAndVisible];
+        [self loginAccount];
     }
     
     if (![YPBUtil activationId]) {
@@ -190,6 +192,9 @@ DefineLazyPropertyInitialization(YPBWeChatPayQueryOrderRequest, wechatPayOrderQu
             [YPBApplePay applePay].isGettingPriceInfo = YES;
         }
         [WXApi registerApp:[YPBSystemConfig sharedConfig].weixinInfo.appId];
+        if ([self.delegate respondsToSelector:@selector(checkRegisterWeChat)]) {
+            [self.delegate checkRegisterWeChat];
+        }
     }];
     
     [[YPBPaymentModel sharedModel] startRetryingToCommitUnprocessedOrders];
@@ -199,6 +204,14 @@ DefineLazyPropertyInitialization(YPBWeChatPayQueryOrderRequest, wechatPayOrderQu
     [self setupCrashReporter];
     
     return YES;
+}
+
+- (void)loginAccount {
+    YPBAccountViewController *accountVC = [[YPBAccountViewController alloc] init];
+    UINavigationController *nc = [[UINavigationController alloc] initWithRootViewController:accountVC];
+    self.delegate = accountVC;
+    self.window.rootViewController = nc;
+    [self.window makeKeyAndVisible];
 }
 
 - (void)setBadge {
@@ -213,9 +226,11 @@ DefineLazyPropertyInitialization(YPBWeChatPayQueryOrderRequest, wechatPayOrderQu
 }
 
 - (void)applicationDidEnterBackground:(UIApplication *)application {
+    
 }
 
 - (void)applicationWillEnterForeground:(UIApplication *)application {
+    
 }
 
 - (void)applicationDidBecomeActive:(UIApplication *)application {
@@ -283,7 +298,7 @@ DefineLazyPropertyInitialization(YPBWeChatPayQueryOrderRequest, wechatPayOrderQu
 #pragma mark - WeChat delegate
 
 - (void)onReq:(BaseReq *)req {
-    
+    DLog("%@",req);
 }
 
 - (void)onResp:(BaseResp *)resp {
@@ -297,6 +312,11 @@ DefineLazyPropertyInitialization(YPBWeChatPayQueryOrderRequest, wechatPayOrderQu
             payResult = PAYRESULT_FAIL;
         }
         [[WeChatPayManager sharedInstance] sendNotificationByResult:payResult];
+    } else if ([resp isKindOfClass:[SendAuthResp class]]) {
+        DLog("%d%@",resp.errCode,resp.errStr);
+        if ([self.delegate respondsToSelector:@selector(sendAuthRespCode:)]) {
+            [self.delegate sendAuthRespCode:resp];
+        }
     }
 }
 

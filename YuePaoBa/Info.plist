@@ -47,6 +47,8 @@
 	<string>1</string>
 	<key>LSApplicationQueriesSchemes</key>
 	<array>
+		<string>weixin</string>
+		<string>wechat</string>
 		<string>alipay</string>
 		<string>baidumobads</string>
 	</array>

@@ -14,6 +14,7 @@
 #import "YPBApplePay.h"
 #import "YPBBlacklistController.h"
 #import "YPBLoginViewController.h"
+#import "YPBAppDelegate.h"
 
 @interface YPBSettingViewController ()
 {
@@ -122,7 +123,8 @@ DefineLazyPropertyInitialization(YPBFeedbackModel, feedbackModel)
              {
                  if (buttonIndex == 1) {
                      [YPBUtil removeDeviceBinding];
-                     
+                     YPBAppDelegate *appDelegate = (YPBAppDelegate *)[UIApplication sharedApplication].delegate;
+                     [appDelegate loginAccount];
                  }
             }];
         }

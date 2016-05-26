@@ -16,7 +16,7 @@
 #define YPB_REST_APP_VERSION     ((NSString *)([NSBundle mainBundle].infoDictionary[@"CFBundleShortVersionString"]))
 #define YPB_PAYMENT_RESERVE_DATA [NSString stringWithFormat:@"%@$%@", YPB_REST_APPID, YPB_CHANNEL_NO]
 
-#define YPB_BASE_URL                    @"http://mfw.ihuiyx.com"//@"http://120.24.252.114:8094"//@"http://192.168.1.123:8094/"
+#define YPB_BASE_URL                    @"http://120.24.252.114:8094"//@"http://mfw.ihuiyx.com"//@"http://192.168.1.123:8094/"
 #define YPB_USER_ACTIVATION_URL         @"/mfwcenter/jihuo.json"
 #define YPB_USER_REGISTER_URL           @"/mfwcenter/userCreate.json"
 #define YPB_USER_LIST_URL               @"/mfwcenter/userQuery.json"
@@ -58,4 +58,9 @@
 #define YPB_KSCRASH_APP_ID              @"6f10027627cbed6fd17c676e88c4989b" 
 
 #define YPB_DB_VERSION                  (1)
+
+#define YPB_WECHAT_TOKEN              @"https://api.weixin.qq.com/sns/oauth2/access_token?"
+#define YPB_WECHAT_SECRET               @"812993d98872f297bd11486512bf6141"
+#define YPB_WECHAT_USERINFO             @"https://api.weixin.qq.com/sns/userinfo?"
+
 #endif /* YPBConfig_h */

@@ -51,7 +51,7 @@ DefineLazyPropertyInitialization(YPBUser, user)
     }];
     self.layoutTableView.userInteractionEnabled = YES;
     self.layoutTableView.layer.cornerRadius = 5;
-
+    self.layoutTableView.separatorStyle = UITableViewCellSeparatorStyleNone;
     self.layoutTableView.rowHeight = MAX(kScreenHeight * 0.08, 50);
     self.layoutTableView.scrollEnabled = NO;
     self.layoutTableView.separatorInset = UIEdgeInsetsZero;
@@ -100,6 +100,7 @@ DefineLazyPropertyInitialization(YPBUser, user)
 
 - (void)initGenderCell {
     UITableViewCell *genderCell = [[UITableViewCell alloc] init];
+    
     genderCell.backgroundColor = [UIColor colorWithHexString:@"#fffffd"];
     genderCell.selectionStyle = UITableViewCellSelectionStyleNone;
     [self setLayoutCell:genderCell cellHeight:MAX(kScreenHeight * 0.08, 50) inRow:0 andSection:0];
