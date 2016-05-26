@@ -364,6 +364,7 @@ DefineLazyPropertyInitialization(YPBUserAvatarUpdateModel, avatarUpdateModel)
             [YPBUser currentUser].userId = uid;
             if ([YPBUser currentUser].logoUrl != nil) {
                 [self.avatarUpdateModel updateAvatarOfUser:[YPBUser currentUser].userId withURL:[YPBUser currentUser].logoUrl completionHandler:nil];
+                
             }
             [self.user saveAsCurrentUser];
             [self dismissViewControllerAnimated:YES completion:nil];
