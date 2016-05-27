@@ -8,6 +8,7 @@
 
 #import "YPBRegisterAccountViewController.h"
 #import "YPBActionButton.h"
+#import "YPBWebViewController.h"
 
 @interface YPBRegisterAccountViewController () <UITextFieldDelegate>
 {
@@ -41,6 +42,8 @@
     
     [self initCells];
     [self initEnterBtn];
+    [self initRegisterProtocol];
+    
 }
 
 - (void)initCells {
@@ -147,6 +150,41 @@
         [_password mas_makeConstraints:^(MASConstraintMaker *make) {
             make.left.equalTo(titleLabel.mas_right).offset(20);
             make.top.right.bottom.equalTo(passwordCell).insets(UIEdgeInsetsMake(5, 0, 5, 15));
+        }];
+    }
+}
+
+- (void)initRegisterProtocol {
+    UIButton *agreementButton = [[UIButton alloc] init];
+    NSString *appName = [NSBundle mainBundle].infoDictionary[@"CFBundleDisplayName"];
+    NSMutableAttributedString *agreementTitle = [[NSMutableAttributedString alloc] initWithString:[NSString stringWithFormat:@"《%@许可及服务协议》",appName]
+                                                                                       attributes:@{NSForegroundColorAttributeName:[UIColor redColor],
+                                                                                                    NSFontAttributeName:[UIFont systemFontOfSize:14.]}];
+    [agreementTitle addAttribute:NSUnderlineStyleAttributeName value:@1 range:NSMakeRange(1, agreementTitle.string.length-2)];
+    [agreementButton setAttributedTitle:agreementTitle forState:UIControlStateNormal];
+    [self.view addSubview:agreementButton];
+    {
+        [agreementButton mas_makeConstraints:^(MASConstraintMaker *make) {
+            make.centerX.equalTo(self.view);
+            make.bottom.equalTo(self.view).offset(-15);
+        }];
+    }
+    
+    [agreementButton bk_addEventHandler:^(id sender) {
+        YPBWebViewController *webVC = [[YPBWebViewController alloc] initWithURL:[NSURL URLWithString:YPB_AGREEMENT_URL]];
+        webVC.title = @"用户协议";
+        [self.navigationController pushViewController:webVC animated:YES];
+    } forControlEvents:UIControlEventTouchUpInside];
+    
+    UILabel *agreementLabel = [[UILabel alloc] init];
+    agreementLabel.font = [UIFont systemFontOfSize:14.];
+//    agreementLabel.textColor = [UIColor blackColor];
+    agreementLabel.text = @"轻触上面的\"确定注册\"按钮，即表示你同意";
+    [self.view addSubview:agreementLabel];
+    {
+        [agreementLabel mas_makeConstraints:^(MASConstraintMaker *make) {
+            make.centerX.equalTo(self.view);
+            make.bottom.equalTo(agreementButton.mas_top).offset(-2);
         }];
     }
 }
