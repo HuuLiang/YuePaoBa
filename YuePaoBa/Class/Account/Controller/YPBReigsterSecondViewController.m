@@ -232,6 +232,7 @@ DefineLazyPropertyInitialization(YPBUserAvatarUpdateModel, avatarUpdateModel)
         if ([YPBUtil activationId].length == 0) {
             [self.activateModel requestActivationWithCompletionHandler:^(BOOL success, id obj) {
                 if (success) {
+                    [YPBUtil setActivationId:obj];
                     RegisterBlock();
                 } else {
                     [self.view endLoading];

@@ -77,6 +77,8 @@ DefineLazyPropertyInitialization(YPBWeChatPayQueryOrderRequest, wechatPayOrderQu
     _tabBarController = [[UITabBarController alloc] init];
     _tabBarController.viewControllers = @[homeNav,vipCenterNav,contactNav,mineNav];
     _tabBarController.tabBar.tintColor = kThemeColor;
+//    _tabBarController.tabBar.alpha = 0.5;
+    _tabBarController.tabBar.translucent = NO;
     _tabBarController.delegate = self;
     return _tabBarController;
 }

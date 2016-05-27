@@ -41,7 +41,8 @@ DefineLazyPropertyInitialization(YPBUserAccessModel, userAccessModel);
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
-    
+    self.edgesForExtendedLayout = UIRectEdgeNone;
+    self.automaticallyAdjustsScrollViewInsets = NO;
     YPBHomeCollectionViewLayout *layout = [[YPBHomeCollectionViewLayout alloc] init];
     layout.interItemSpacing = 1;
     

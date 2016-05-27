@@ -13,28 +13,48 @@
 #import "YPBStatistics.h"
 
 
-@interface YPBSegmentViewController () <UIScrollViewDelegate> {
-  
+@interface YPBSegmentViewController () <UIPageViewControllerDelegate,UIPageViewControllerDataSource>
+{
+    UISegmentedControl *_segmentedControl;
+    UIPageViewController *_pageViewController;
 }
-@property (nonatomic ) UISegmentedControl  *headerSegment;
-@property (nonatomic ) UIScrollView        *contentScrollview;
-@property (nonatomic,strong) YPBHomeViewController  * first;
-@property (nonatomic,strong) YPBCommonCityViewController * second;
-
+@property (nonatomic,retain) NSMutableArray <UIViewController *> *viewControllers;
 @end
 
 @implementation YPBSegmentViewController
+
+DefineLazyPropertyInitialization(NSMutableArray, viewControllers)
+
 - (void)viewDidLoad {
     [super viewDidLoad];
-    NSArray *array = [NSArray arrayWithObjects:@"今日推荐",@"同城交友", nil];
-    _headerSegment = [[UISegmentedControl alloc] initWithItems:array];
-    self.navigationItem.titleView = _headerSegment;
+    self.automaticallyAdjustsScrollViewInsets = NO;
+    self.edgesForExtendedLayout = UIRectEdgeNone;
     
-    _headerSegment.selectedSegmentIndex = 0;
+    YPBHomeViewController *homeVC = [[YPBHomeViewController alloc] init];
+    [self.viewControllers addObject:homeVC];
     
-    [self setUpScrollView];
-    [self setUpChildViewControll];
-    [_headerSegment addTarget:self action:@selector(segmentSelect:) forControlEvents:UIControlEventValueChanged];
+    YPBCommonCityViewController *commonVC = [[YPBCommonCityViewController alloc] init];
+    [self.viewControllers addObject:commonVC];
+    
+    _pageViewController = [[UIPageViewController alloc] initWithTransitionStyle:UIPageViewControllerTransitionStyleScroll navigationOrientation:UIPageViewControllerNavigationOrientationHorizontal options:nil];
+    _pageViewController.delegate = self;
+    _pageViewController.dataSource = self;
+    [_pageViewController setViewControllers:@[self.viewControllers.firstObject] direction:UIPageViewControllerNavigationDirectionForward animated:NO completion:nil];
+    [self addChildViewController:_pageViewController];
+    [self.view addSubview:_pageViewController.view];
+    [_pageViewController didMoveToParentViewController:self];
+    
+    NSArray *segmentItems = @[@"推 荐",@"同 城"];
+    _segmentedControl = [[UISegmentedControl alloc] initWithItems:segmentItems];
+    for (NSUInteger i = 0; i < segmentItems.count; ++i) {
+        [_segmentedControl setWidth:66 forSegmentAtIndex:i];
+    }
+    _segmentedControl.selectedSegmentIndex = 0;
+    [_segmentedControl addObserver:self
+                        forKeyPath:NSStringFromSelector(@selector(selectedSegmentIndex))
+                           options:NSKeyValueObservingOptionNew
+                           context:nil];
+    self.navigationItem.titleView = _segmentedControl;
     
     self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] bk_initWithTitle:@"兑换"
                                                                                 style:UIBarButtonItemStylePlain
@@ -45,62 +65,54 @@
                                                  [YPBStatistics logEvent:kLogUserTabActivityButtomEvent withUser:[YPBUser currentUser].userId attributeKey:nil attributeValue:nil];
 
                                              }];
-    
-    
 }
 
-
--(void)segmentSelect:(UISegmentedControl*)seg{
-    NSInteger index = seg.selectedSegmentIndex;
-    CGRect frame = _contentScrollview.frame;
-    frame.origin.x = index * CGRectGetWidth(_contentScrollview.frame);
-    frame.origin.y = 0;
-    [_contentScrollview scrollRectToVisible:frame animated:YES];
-}
--(void)setUpScrollView{
-    _contentScrollview = [[UIScrollView alloc] init];
-    [self.view addSubview:_contentScrollview];
-    _contentScrollview.frame = CGRectMake(0, 64, SCREEN_WIDTH, SCREEN_HEIGHT-64);
-    _contentScrollview.pagingEnabled = YES;
-    _contentScrollview.delegate = self;
-    _contentScrollview.showsHorizontalScrollIndicator = NO;
-    _contentScrollview.showsVerticalScrollIndicator = NO;
-    _contentScrollview.bounces = NO;
-    //方向锁
-    _contentScrollview.directionalLockEnabled = YES;
-    //取消自动布局
-    self.automaticallyAdjustsScrollViewInsets = NO;
-    _contentScrollview.contentSize = CGSizeMake(SCREEN_WIDTH * 2, SCREEN_HEIGHT - 64);
-}
-/**
- *  设置控制的每一个子控制器
- */
--(void)setUpChildViewControll{
-    self.first = [[YPBHomeViewController alloc] initWithTitle:@"今日推荐"];
-    self.second = [[YPBCommonCityViewController alloc] initWithTitle:@"同城交友"];
-    //指定该控制器为其子控制器
-    [self addChildViewController:_first];
-    [self addChildViewController:_second];
-    //将视图view加入到scrollview上
-    [_contentScrollview addSubview:_first.view];
-    [_contentScrollview addSubview:_second.view];
-    //设置两个控制器的  位置
-    CGRect secondRect = _second.view.frame;
-    secondRect.origin.x = SCREEN_WIDTH;
-    secondRect.size.height = CGRectGetHeight(_contentScrollview.frame);
-    _second.view.frame = secondRect;
+- (NSUInteger)currentIndex {
+    return _segmentedControl.selectedSegmentIndex;
 }
 
-#pragma mark - Scrollview delegate
--(void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView{
-    CGFloat offSetX = scrollView.contentOffset.x;
-    NSInteger ratio = round(offSetX / SCREEN_WIDTH);
-    _headerSegment.selectedSegmentIndex = ratio;
-}
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
 }
 
+- (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary<NSString *,id> *)change context:(void *)context {
+    if ([keyPath isEqualToString:NSStringFromSelector(@selector(selectedSegmentIndex))]) {
+        NSNumber *oldValue = change[NSKeyValueChangeOldKey];
+        NSNumber *newValue = change[NSKeyValueChangeNewKey];
+        
+        [_pageViewController setViewControllers:@[self.viewControllers[newValue.unsignedIntegerValue]]
+                                      direction:newValue.unsignedIntegerValue>oldValue.unsignedIntegerValue?UIPageViewControllerNavigationDirectionForward:UIPageViewControllerNavigationDirectionReverse
+                                       animated:YES completion:nil];
+    }
+}
+
+#pragma mark - UIPageViewControllerDelegate,UIPageViewControllerDataSource
+
+- (UIViewController *)pageViewController:(UIPageViewController *)pageViewController viewControllerAfterViewController:(UIViewController *)viewController {
+    NSUInteger viewControllerIndex = [self.viewControllers indexOfObject:viewController];
+    if (viewControllerIndex != self.viewControllers.count-1) {
+        return self.viewControllers[viewControllerIndex+1];
+    }
+    return nil;
+}
+
+- (UIViewController *)pageViewController:(UIPageViewController *)pageViewController viewControllerBeforeViewController:(UIViewController *)viewController {
+    NSUInteger viewControllerIndex = [self.viewControllers indexOfObject:viewController];
+    if (viewControllerIndex != 0) {
+        return self.viewControllers[viewControllerIndex-1];
+    }
+    return nil;
+}
+
+- (void)pageViewController:(UIPageViewController *)pageViewController
+        didFinishAnimating:(BOOL)finished
+   previousViewControllers:(NSArray<UIViewController *> *)previousViewControllers
+       transitionCompleted:(BOOL)completed
+{
+    if (completed) {
+        _segmentedControl.selectedSegmentIndex = [self.viewControllers indexOfObject:pageViewController.viewControllers.firstObject];
+    }
+}
 
 
 @end

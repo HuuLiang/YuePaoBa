@@ -54,7 +54,7 @@
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
-            shouldBeEnabled = "Yes"
+            shouldBeEnabled = "No"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "YuePaoBa/Class/Account/Model/YPBRegisterModel.m"
@@ -64,6 +64,22 @@
             startingLineNumber = "46"
             endingLineNumber = "46"
             landmarkName = "-requestRegisterUser:withCompletionHandler:"
+            landmarkType = "5">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "YuePaoBa/Class/Account/Model/YPBRegisterModel.m"
+            timestampString = "485960971.071219"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "58"
+            endingLineNumber = "58"
+            landmarkName = "-paramsFromUser:"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>
