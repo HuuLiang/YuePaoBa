@@ -16,4 +16,6 @@
 
 - (BOOL)requestRegisterUser:(YPBUser *)user withCompletionHandler:(YPBCompletionHandler)handler;
 
+- (BOOL)requestRegisterAccount:(YPBUser *)user withCompletionHandler:(YPBCompletionHandler)handler;
+
 @end

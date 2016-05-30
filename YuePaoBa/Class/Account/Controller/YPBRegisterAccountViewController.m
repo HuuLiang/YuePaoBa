@@ -9,12 +9,16 @@
 #import "YPBRegisterAccountViewController.h"
 #import "YPBActionButton.h"
 #import "YPBWebViewController.h"
+#import "YPBRadioButton.h"
+#import "YPBRadioButtonGroup.h"
 
 @interface YPBRegisterAccountViewController () <UITextFieldDelegate>
 {
     UITextField *_account;
     UITextField *_password;
 }
+@property (nonatomic,retain) YPBRadioButtonGroup *genderButtonGroup;
+
 @end
 
 @implementation YPBRegisterAccountViewController
@@ -37,7 +41,7 @@
         make.centerX.equalTo(self.view);
         make.centerY.equalTo(self.view).dividedBy(3);
         make.left.right.equalTo(self.view).insets(UIEdgeInsetsMake(0, 0, 0, 0));
-        make.height.mas_equalTo(self.layoutTableView.rowHeight*2);
+        make.height.mas_equalTo(self.layoutTableView.rowHeight*3);
     }];
     
     [self initCells];
@@ -49,6 +53,7 @@
 - (void)initCells {
     [self initAccountCell];
     [self initPasswordCell];
+    [self initGenderCell];
 }
 
 - (void)initEnterBtn {
@@ -75,7 +80,7 @@
         if (_password.text.length == 0) {
             YPBShowWarning(@"请输入正确的密码");
         } else {
-            //向服务器发送登录请求
+            //向服务器发送账号信息进行重复性检测
             
             //返回成功 跳转首页
             [self dismissViewControllerAnimated:YES completion:nil];
@@ -85,11 +90,61 @@
     }
 }
 
+
+- (void)initGenderCell {
+    UITableViewCell *genderCell = [[UITableViewCell alloc] init];
+    
+    genderCell.backgroundColor = [UIColor colorWithHexString:@"#fffffd"];
+    genderCell.selectionStyle = UITableViewCellSelectionStyleNone;
+    [self setLayoutCell:genderCell cellHeight:MAX(kScreenHeight * 0.08, 50) inRow:0 andSection:0];
+    
+    UILabel *titleLabel = [[UILabel alloc] init];
+    titleLabel.text = @"性别";
+    titleLabel.font = [UIFont systemFontOfSize:15.];
+    [genderCell addSubview:titleLabel];
+    {
+        [titleLabel mas_makeConstraints:^(MASConstraintMaker *make) {
+            make.centerY.equalTo(genderCell);
+            make.left.equalTo(genderCell).offset(15);
+            make.width.mas_equalTo(35);
+        }];
+    }
+    
+    YPBRadioButton *maleButton = [[YPBRadioButton alloc] init];
+    [maleButton setImage:[UIImage imageNamed:@"gender_normal"] forState:UIControlStateNormal];
+    [maleButton setImage:[UIImage imageNamed:@"gender_selected"] forState:UIControlStateSelected];
+    maleButton.title = @"男";
+    [genderCell addSubview:maleButton];
+    {
+        [maleButton mas_makeConstraints:^(MASConstraintMaker *make) {
+            make.centerY.equalTo(genderCell);
+            make.left.equalTo(titleLabel.mas_right).offset(30);
+            make.size.mas_equalTo(CGSizeMake(35, 15));
+        }];
+    }
+    
+    YPBRadioButton *femaleButton = [[YPBRadioButton alloc] init];
+    [femaleButton setImage:[UIImage imageNamed:@"gender_normal"] forState:UIControlStateNormal];
+    [femaleButton setImage:[UIImage imageNamed:@"gender_selected"] forState:UIControlStateSelected];
+    femaleButton.title = @"女";
+    [genderCell addSubview:femaleButton];
+    {
+        [femaleButton mas_makeConstraints:^(MASConstraintMaker *make) {
+            make.centerY.equalTo(genderCell);
+            make.left.equalTo(maleButton.mas_right).offset(50);
+            make.size.equalTo(maleButton);
+        }];
+    }
+    
+    self.genderButtonGroup = [YPBRadioButtonGroup groupWithRadioButtons:@[maleButton,femaleButton]];
+}
+
+
 - (void)initAccountCell {
     UITableViewCell *accountCell = [[UITableViewCell alloc] init];
     accountCell.backgroundColor = [UIColor colorWithHexString:@"#fffffd"];
     accountCell.selectionStyle = UITableViewCellSelectionStyleNone;
-    [self setLayoutCell:accountCell cellHeight:MAX(kScreenHeight * 0.08, 50) inRow:0 andSection:0];
+    [self setLayoutCell:accountCell cellHeight:MAX(kScreenHeight * 0.08, 50) inRow:1 andSection:0];
     
     UILabel *titleLabel = [[UILabel alloc] init];
     titleLabel.text = @"账号";
@@ -103,7 +158,7 @@
         }];
     }
     _account = [[UITextField alloc] init];
-    _account.placeholder = @"请输入用户名/账号ID";
+    _account.placeholder = @"请输入昵称";
     [_account setValue:[UIColor colorWithHexString:@"#989994"] forKeyPath:@"_placeholderLabel.textColor"];
     [_account setValue:[UIFont systemFontOfSize:16.] forKeyPath:@"_placeholderLabel.font"];
     _account.textAlignment = NSTextAlignmentRight;
@@ -123,7 +178,7 @@
     UITableViewCell *passwordCell = [[UITableViewCell alloc] init];
     passwordCell.backgroundColor = [UIColor colorWithHexString:@"#fffffd"];
     passwordCell.selectionStyle = UITableViewCellSelectionStyleNone;
-    [self setLayoutCell:passwordCell cellHeight:MAX(kScreenHeight * 0.08, 50) inRow:1 andSection:0];
+    [self setLayoutCell:passwordCell cellHeight:MAX(kScreenHeight * 0.08, 50) inRow:2 andSection:0];
     
     UILabel *titleLabel = [[UILabel alloc] init];
     titleLabel.text = @"密码";

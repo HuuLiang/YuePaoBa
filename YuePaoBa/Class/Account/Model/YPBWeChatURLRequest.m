@@ -30,7 +30,7 @@
 
 - (BOOL)requesWeChatUserInfoWithTokenDic:(NSDictionary *)dic responseHandler:(YPBWeChatURLResponseHandler)handler{
     
-    NSString *urlStr = [NSString stringWithFormat:@"%@access_token=%@&openid=%@",YPB_WECHAT_USERINFO,dic[@"access_token"],dic[@"openid"]];
+    NSString *urlStr = [NSString stringWithFormat:@"%@access_token=%@&openid=%@&lang=%@",YPB_WECHAT_USERINFO,dic[@"access_token"],dic[@"openid"],@"zh_CN"];
     
     AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
     manager.responseSerializer = [AFHTTPResponseSerializer serializer];

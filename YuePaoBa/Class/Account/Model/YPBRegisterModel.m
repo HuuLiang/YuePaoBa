@@ -64,4 +64,18 @@
              @"heightArea":heightArea,
              @"ageArea":ageArea};
 }
+
+- (BOOL)requestRegisterAccount:(YPBUser *)user withCompletionHandler:(YPBCompletionHandler)handler {
+    NSDictionary *params = @{@"sex":user.sex,
+                             @"nickName":user.nickName,
+                             @"password":@"password"};
+    BOOL success = [self requestURLPath:@""
+                             withParams:params
+                        responseHandler:^(YPBURLResponseStatus respStatus, NSString *errorMessage)
+    {
+        
+    }];
+    return YES;
+}
+
 @end
