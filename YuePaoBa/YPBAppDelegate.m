@@ -12,8 +12,7 @@
 #import "YPBContactViewController.h"
 #import "YPBMineViewController.h"
 #import "YPBNeighborViewController.h"
-#import "YPBSettingViewController.h"
-#import "YPBLoginViewController.h"          
+#import "YPBSettingViewController.h"        
 #import "YPBAccountViewController.h"
 #import "YPBActivateModel.h"
 #import "YPBMessagePushModel.h"
@@ -170,9 +169,6 @@ DefineLazyPropertyInitialization(YPBWeChatPayQueryOrderRequest, wechatPayOrderQu
     if ([YPBUtil deviceRegisteredUserId]) {
         [self notifyUserLogin];
     } else {
-//        YPBLoginViewController *loginVC = [[YPBLoginViewController alloc] init];
-//        self.window.rootViewController = loginVC;
-//        [self.window makeKeyAndVisible];
         [self loginAccount];
     }
     

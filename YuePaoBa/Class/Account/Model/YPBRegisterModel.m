@@ -59,23 +59,39 @@
     return @{@"sex":user.sex,
              @"nickName":user.nickName,
              @"uuid":[YPBUtil activationId],
-             @"income":[NSNull null],
+             @"logoUrl":user.logoUrl ?: @"",
+             @"monthIncome":user.monthIncome,
+             @"password":user.password ?: @"",
+             @"height":user.height ?: @0,
+             @"profession":user.profession ?: @"",
+             @"city":user.city ?: @"",
+             @"province":user.province ?: @"",
+             @"openid":user.openid ?: @"",
+             @"unionid":user.unionid ?: @"",
              @"bust":bust ?: @"",
              @"heightArea":heightArea,
-             @"ageArea":ageArea};
+             @"ageArea":ageArea,
+             @"userType":user.password ? @2 : @3};
 }
 
-- (BOOL)requestRegisterAccount:(YPBUser *)user withCompletionHandler:(YPBCompletionHandler)handler {
-    NSDictionary *params = @{@"sex":user.sex,
-                             @"nickName":user.nickName,
-                             @"password":@"password"};
-    BOOL success = [self requestURLPath:@""
+- (BOOL)requestAccountInfoWithUser:(YPBUser *)user withCompletionHandler:(YPBAccountComplttionHandler)handler {
+    NSDictionary *params = @{@"userId":user.userId ?: @"",
+                             @"password":user.password ?: @"",
+                             @"userType":user.password ? @2 : @3,
+                             @"opoenid":user.openid ?: @"",
+                             @"unionid":user.unionid ?: @""};
+    BOOL success = [self requestURLPath:YPB_USER_LOGIN_URL
                              withParams:params
                         responseHandler:^(YPBURLResponseStatus respStatus, NSString *errorMessage)
-    {
-        
-    }];
-    return YES;
+                    {
+                        YPBRegisterResponse *resp = self.response;
+                        
+                        if (respStatus == YPBURLResponseSuccess) {
+                            handler(respStatus == YPBURLResponseSuccess,resp.userId,resp.sex);
+                        } else {
+                            handler(respStatus == YPBURLResponseSuccess,resp.userId,resp.sex);
+                        }
+                    }];
+    return success;
 }
-
 @end

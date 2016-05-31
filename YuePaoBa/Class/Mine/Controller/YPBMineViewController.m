@@ -467,7 +467,7 @@ DefineLazyPropertyInitialization(YPBUserPhotoDeleteModel, photoDeleteModel)
         return ;
     }
     
-    self.profileCell.name = [YPBUser currentUser].nickName;
+    self.profileCell.name = [NSString stringWithFormat:@"%@ ID:%@",[YPBUser currentUser].nickName,[YPBUser currentUser].userId];
     self.profileCell.avatarURL = [NSURL URLWithString:[YPBUser currentUser].logoUrl];
     
     self.profileCell.followedNumber = [YPBUser currentUser].unreadReceiveGreetCount;

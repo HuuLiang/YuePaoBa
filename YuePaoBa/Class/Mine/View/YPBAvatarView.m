@@ -81,12 +81,12 @@
     _avatarImageView.frame = CGRectMake(0, 0, imageSize, imageSize);
     _avatarImageView.layer.cornerRadius = imageSize / 2;
     
-    const CGFloat nameWidth = self.bounds.size.width * 2;
+    const CGFloat nameWidth = SCREEN_WIDTH;//self.bounds.size.width * 2;
     const CGFloat nameHeight = lround(self.bounds.size.height * 0.15);
-    const CGFloat nameX = (self.bounds.size.width-nameWidth)/2;
+    const CGFloat nameX = -SCREEN_WIDTH*3/8;//(self.bounds.size.width-nameWidth)/2;
     const CGFloat nameY = lround(CGRectGetMaxY(_avatarImageView.frame) + self.bounds.size.height*0.1);
     _nameLabel.frame = CGRectMake(nameX, nameY, nameWidth, nameHeight);
-    _nameLabel.font = [UIFont boldSystemFontOfSize:nameHeight];
+    _nameLabel.font = [UIFont boldSystemFontOfSize:nameHeight-1];
     
     const CGSize kVIPIconSize = {24,30};
     _vipImageView.frame = CGRectMake(CGRectGetMaxX(_avatarImageView.frame)-kVIPIconSize.width,

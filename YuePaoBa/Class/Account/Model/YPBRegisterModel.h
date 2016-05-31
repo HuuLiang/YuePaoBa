@@ -10,12 +10,14 @@
 
 @interface YPBRegisterResponse : YPBURLResponse
 @property (nonatomic) NSString *userId;
+@property (nonatomic) NSString *sex;
 @end
 
 @interface YPBRegisterModel : YPBEncryptedURLRequest
 
 - (BOOL)requestRegisterUser:(YPBUser *)user withCompletionHandler:(YPBCompletionHandler)handler;
 
-- (BOOL)requestRegisterAccount:(YPBUser *)user withCompletionHandler:(YPBCompletionHandler)handler;
+- (BOOL)requestAccountInfoWithUser:(YPBUser *)user withCompletionHandler:(YPBAccountComplttionHandler)handler;
+
 
 @end

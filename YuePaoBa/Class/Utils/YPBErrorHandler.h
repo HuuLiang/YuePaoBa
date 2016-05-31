@@ -18,3 +18,4 @@
 extern NSString *const kNetworkErrorNotification;
 extern NSString *const kNetworkErrorCodeKey;
 extern NSString *const kNetworkErrorMessageKey;
+extern NSString *const kNetworkErrorValueKey;

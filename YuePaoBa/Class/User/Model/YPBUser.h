@@ -76,6 +76,7 @@ typedef NS_ENUM(NSUInteger, YPBUserType) {
 @property (nonatomic) NSString *userId;
 @property (nonatomic) NSString *uuid; //激活码
 @property (nonatomic) NSString *nickName;
+@property (nonatomic) NSString *password;
 @property (nonatomic) NSString *logoUrl;
 @property (nonatomic) NSString *sex;
 @property (nonatomic) NSNumber *userType;
@@ -86,6 +87,10 @@ typedef NS_ENUM(NSUInteger, YPBUserType) {
 @property (nonatomic) NSString *monthIncome;
 @property (nonatomic) NSString *edu;
 @property (nonatomic) NSString *marry;
+@property (nonatomic) NSString *province;
+@property (nonatomic) NSString *city;
+@property (nonatomic) NSString *openid;
+@property (nonatomic) NSString *unionid;
 @property (nonatomic) NSString *note; // 兴趣
 @property (nonatomic) NSString *profession;
 @property (nonatomic) NSString *weixinNum;

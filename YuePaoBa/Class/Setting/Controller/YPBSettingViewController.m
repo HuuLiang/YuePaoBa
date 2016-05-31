@@ -13,7 +13,6 @@
 #import "YPBFeedbackModel.h"
 #import "YPBApplePay.h"
 #import "YPBBlacklistController.h"
-#import "YPBLoginViewController.h"
 #import "YPBAppDelegate.h"
 
 @interface YPBSettingViewController ()
@@ -115,8 +114,8 @@ DefineLazyPropertyInitialization(YPBFeedbackModel, feedbackModel)
             listVC.title = @"黑名单列表";
             [self.navigationController pushViewController:listVC animated:YES];
         } else if (cell == self ->_logoutCell) {
-            [UIAlertView bk_showAlertViewWithTitle:@"注意"
-                                           message:@"是否确认退出当前账号"
+            [UIAlertView bk_showAlertViewWithTitle:@"是否确认退出当前账号"
+                                           message:[NSString stringWithFormat:@"您可以使用ID%@重新登录",[WXApi isWXAppInstalled] ? @"或者微信":@""]
                                  cancelButtonTitle:@"取消"
                                  otherButtonTitles:@[@"确定"]
                                            handler:^(UIAlertView *alertView, NSInteger buttonIndex)
@@ -176,6 +175,7 @@ DefineLazyPropertyInitialization(YPBFeedbackModel, feedbackModel)
     
     [self setHeaderHeight:10 inSection:2];
     _logoutCell = [self cellWithCommonStylesAndTitle:@"退出当前账号"];
+    _logoutCell.titleLabel.textColor = [UIColor redColor];
     [self setLayoutCell:_logoutCell inRow:0 andSection:2];
 }
 

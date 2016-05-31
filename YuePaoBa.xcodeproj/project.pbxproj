@@ -60,8 +60,6 @@
 		BC2F46881C3E5E1C0084BD8A /* YPBPushedMessage.m in Sources */ = {isa = PBXBuildFile; fileRef = BC2F46871C3E5E1C0084BD8A /* YPBPushedMessage.m */; };
 		BC3006ED1C7F0F6C00F31216 /* YPBLiveVideoPlayer.m in Sources */ = {isa = PBXBuildFile; fileRef = BC3006EC1C7F0F6C00F31216 /* YPBLiveVideoPlayer.m */; };
 		BC303D8E1C1FE8F70091093B /* YPBMessageCenter.m in Sources */ = {isa = PBXBuildFile; fileRef = BC303D8D1C1FE8F70091093B /* YPBMessageCenter.m */; };
-		BC31B75B1C1B2F540043E7EB /* YPBRegisterFirstViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BC31B7581C1B2F540043E7EB /* YPBRegisterFirstViewController.m */; };
-		BC31B75C1C1B2F540043E7EB /* YPBReigsterSecondViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BC31B75A1C1B2F540043E7EB /* YPBReigsterSecondViewController.m */; };
 		BC31B7621C1BC2C20043E7EB /* YPBActionButton.m in Sources */ = {isa = PBXBuildFile; fileRef = BC31B7611C1BC2C20043E7EB /* YPBActionButton.m */; };
 		BC31B7651C1BD8560043E7EB /* YPBRadioButton.m in Sources */ = {isa = PBXBuildFile; fileRef = BC31B7641C1BD8560043E7EB /* YPBRadioButton.m */; };
 		BC31B7681C1BEC630043E7EB /* YPBRadioButtonGroup.m in Sources */ = {isa = PBXBuildFile; fileRef = BC31B7671C1BEC630043E7EB /* YPBRadioButtonGroup.m */; };
@@ -210,14 +208,13 @@
 		BCC5A3081C5F8289005672D6 /* YPBAutoReplyMessage.m in Sources */ = {isa = PBXBuildFile; fileRef = BCC5A3071C5F8289005672D6 /* YPBAutoReplyMessage.m */; };
 		BCCD69221C40DC9A005EA26B /* YPBWebViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BCCD69211C40DC9A005EA26B /* YPBWebViewController.m */; };
 		BCCD69261C40DEA7005EA26B /* YPBFeedbackModel.m in Sources */ = {isa = PBXBuildFile; fileRef = BCCD69251C40DEA7005EA26B /* YPBFeedbackModel.m */; };
-		BCCE6CBE1C5A109000095461 /* YPBLoginViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BCCE6CBD1C5A109000095461 /* YPBLoginViewController.m */; };
 		BCD15F141C103AB7002B6C5C /* YPBMineViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BCD15F131C103AB6002B6C5C /* YPBMineViewController.m */; };
 		BCD15F1B1C104B31002B6C5C /* RACEXTRuntimeExtensions.m in Sources */ = {isa = PBXBuildFile; fileRef = BCD15F181C104B31002B6C5C /* RACEXTRuntimeExtensions.m */; };
 		BCD15F1E1C104EAB002B6C5C /* YPBUtil.m in Sources */ = {isa = PBXBuildFile; fileRef = BCD15F1D1C104EAB002B6C5C /* YPBUtil.m */; };
 		BCFB2A6A1C3FC441003E327D /* YPBUserPhotoViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BCFB2A691C3FC441003E327D /* YPBUserPhotoViewController.m */; };
 		BCFB2A6D1C3FDD16003E327D /* YPBPhotoGridViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BCFB2A6C1C3FDD16003E327D /* YPBPhotoGridViewController.m */; };
 		EC2BFB371C9A889E00912302 /* YPBPayIntroduceView.m in Sources */ = {isa = PBXBuildFile; fileRef = EC2BFB361C9A889E00912302 /* YPBPayIntroduceView.m */; };
-		EC571AB51CF311E500F0F154 /* YPBLoginAccountViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EC571AB41CF311E500F0F154 /* YPBLoginAccountViewController.m */; };
+		EC3F87F21CFC075B008FCF7E /* YPBReigsterSecondViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EC3F87F11CFC075B008FCF7E /* YPBReigsterSecondViewController.m */; };
 		EC758E5C1CF4768400604C2C /* YPBAccountViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EC758E5B1CF4768400604C2C /* YPBAccountViewController.m */; };
 		EC7C84A11C982795005CB452 /* YPBPayCell.m in Sources */ = {isa = PBXBuildFile; fileRef = EC7C84A01C982795005CB452 /* YPBPayCell.m */; };
 		EC7C9BEF1CCE1D7000DC639A /* YPBReportViolationViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EC7C9BEE1CCE1D7000DC639A /* YPBReportViolationViewController.m */; };
@@ -475,10 +472,6 @@
 		BC303D8B1C1FE7110091093B /* YPBErrorDef.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = YPBErrorDef.h; sourceTree = "<group>"; };
 		BC303D8C1C1FE8F70091093B /* YPBMessageCenter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YPBMessageCenter.h; sourceTree = "<group>"; };
 		BC303D8D1C1FE8F70091093B /* YPBMessageCenter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YPBMessageCenter.m; sourceTree = "<group>"; };
-		BC31B7571C1B2F540043E7EB /* YPBRegisterFirstViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YPBRegisterFirstViewController.h; sourceTree = "<group>"; };
-		BC31B7581C1B2F540043E7EB /* YPBRegisterFirstViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YPBRegisterFirstViewController.m; sourceTree = "<group>"; };
-		BC31B7591C1B2F540043E7EB /* YPBReigsterSecondViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YPBReigsterSecondViewController.h; sourceTree = "<group>"; };
-		BC31B75A1C1B2F540043E7EB /* YPBReigsterSecondViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YPBReigsterSecondViewController.m; sourceTree = "<group>"; };
 		BC31B7601C1BC2C20043E7EB /* YPBActionButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YPBActionButton.h; sourceTree = "<group>"; };
 		BC31B7611C1BC2C20043E7EB /* YPBActionButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YPBActionButton.m; sourceTree = "<group>"; };
 		BC31B7631C1BD8560043E7EB /* YPBRadioButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YPBRadioButton.h; sourceTree = "<group>"; };
@@ -745,8 +738,6 @@
 		BCCD69211C40DC9A005EA26B /* YPBWebViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YPBWebViewController.m; sourceTree = "<group>"; };
 		BCCD69241C40DEA7005EA26B /* YPBFeedbackModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YPBFeedbackModel.h; sourceTree = "<group>"; };
 		BCCD69251C40DEA7005EA26B /* YPBFeedbackModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YPBFeedbackModel.m; sourceTree = "<group>"; };
-		BCCE6CBC1C5A109000095461 /* YPBLoginViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YPBLoginViewController.h; sourceTree = "<group>"; };
-		BCCE6CBD1C5A109000095461 /* YPBLoginViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YPBLoginViewController.m; sourceTree = "<group>"; };
 		BCD15F121C103AB6002B6C5C /* YPBMineViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YPBMineViewController.h; sourceTree = "<group>"; };
 		BCD15F131C103AB6002B6C5C /* YPBMineViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YPBMineViewController.m; sourceTree = "<group>"; };
 		BCD15F161C104B31002B6C5C /* RACEXTKeyPathCoding.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RACEXTKeyPathCoding.h; sourceTree = "<group>"; };
@@ -764,8 +755,8 @@
 		E8936D50656D3883FACFD246 /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		EC2BFB351C9A889E00912302 /* YPBPayIntroduceView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YPBPayIntroduceView.h; sourceTree = "<group>"; };
 		EC2BFB361C9A889E00912302 /* YPBPayIntroduceView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YPBPayIntroduceView.m; sourceTree = "<group>"; };
-		EC571AB31CF311E500F0F154 /* YPBLoginAccountViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YPBLoginAccountViewController.h; sourceTree = "<group>"; };
-		EC571AB41CF311E500F0F154 /* YPBLoginAccountViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YPBLoginAccountViewController.m; sourceTree = "<group>"; };
+		EC3F87F01CFC075B008FCF7E /* YPBReigsterSecondViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YPBReigsterSecondViewController.h; sourceTree = "<group>"; };
+		EC3F87F11CFC075B008FCF7E /* YPBReigsterSecondViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YPBReigsterSecondViewController.m; sourceTree = "<group>"; };
 		EC758E5A1CF4768400604C2C /* YPBAccountViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YPBAccountViewController.h; sourceTree = "<group>"; };
 		EC758E5B1CF4768400604C2C /* YPBAccountViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YPBAccountViewController.m; sourceTree = "<group>"; };
 		EC7C849F1C982795005CB452 /* YPBPayCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YPBPayCell.h; sourceTree = "<group>"; };
@@ -1370,18 +1361,12 @@
 		BC31B7561C1B2F540043E7EB /* Controller */ = {
 			isa = PBXGroup;
 			children = (
-				BCCE6CBC1C5A109000095461 /* YPBLoginViewController.h */,
-				BCCE6CBD1C5A109000095461 /* YPBLoginViewController.m */,
-				BC31B7571C1B2F540043E7EB /* YPBRegisterFirstViewController.h */,
-				BC31B7581C1B2F540043E7EB /* YPBRegisterFirstViewController.m */,
-				BC31B7591C1B2F540043E7EB /* YPBReigsterSecondViewController.h */,
-				BC31B75A1C1B2F540043E7EB /* YPBReigsterSecondViewController.m */,
-				EC571AB31CF311E500F0F154 /* YPBLoginAccountViewController.h */,
-				EC571AB41CF311E500F0F154 /* YPBLoginAccountViewController.m */,
 				EC758E5A1CF4768400604C2C /* YPBAccountViewController.h */,
 				EC758E5B1CF4768400604C2C /* YPBAccountViewController.m */,
 				ECB0F46E1CF57EA0004F6DB1 /* YPBRegisterAccountViewController.h */,
 				ECB0F46F1CF57EA0004F6DB1 /* YPBRegisterAccountViewController.m */,
+				EC3F87F01CFC075B008FCF7E /* YPBReigsterSecondViewController.h */,
+				EC3F87F11CFC075B008FCF7E /* YPBReigsterSecondViewController.m */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -2749,7 +2734,6 @@
 				BC85EC551C5CC72A00BA74B1 /* MWZoomingScrollView.m in Sources */,
 				BC6B74841C34FCEB0052777E /* YPBMineAccessViewController.m in Sources */,
 				BC53B9C31C3BBEEA004252B1 /* QBAssetsCollectionViewController.m in Sources */,
-				EC571AB51CF311E500F0F154 /* YPBLoginAccountViewController.m in Sources */,
 				BC2ED5AB1C33C5FF00BE00A2 /* YPBUserDetailUpdateModel.m in Sources */,
 				BC60774A1C7EF57500ACE4DF /* YPBFetchBarrageModel.m in Sources */,
 				ECEB98D71CD06E4A00F97DEB /* XHHTTPClient.m in Sources */,
@@ -2762,6 +2746,7 @@
 				BC67805E1C89B31500CF6F5F /* YPBVideoGiftPollingView.m in Sources */,
 				BC5704E01C45F74800DEFAB6 /* base64.m in Sources */,
 				BC53B9BF1C3BBEEA004252B1 /* QBAssetsCollectionFooterView.m in Sources */,
+				EC3F87F21CFC075B008FCF7E /* YPBReigsterSecondViewController.m in Sources */,
 				BC1B498F1C44F1F500ECB0BA /* WXUtil.mm in Sources */,
 				BC2742311C3A67C100C98E6F /* YPBPersistentManager.m in Sources */,
 				ECEB98C51CD06E4A00F97DEB /* UIImage+XHRounded.m in Sources */,
@@ -2885,7 +2870,6 @@
 				BC1B49A71C44F4B300ECB0BA /* YPBPaymentModel.m in Sources */,
 				EC7C84A11C982795005CB452 /* YPBPayCell.m in Sources */,
 				BC739D071C7C92F900D75AF0 /* YPBUserSentGiftsModel.m in Sources */,
-				BC31B75B1C1B2F540043E7EB /* YPBRegisterFirstViewController.m in Sources */,
 				BC593B031C817459000290A8 /* YPBVideoTitleView.m in Sources */,
 				BC5874721C281A6700A72274 /* YPBUserListModel.m in Sources */,
 				EC7C9C041CCF4ED000DC639A /* YPBBlacklistDetail.m in Sources */,
@@ -2909,7 +2893,6 @@
 				ECEB98D91CD06E4A00F97DEB /* XHMessageAvatarFactory.m in Sources */,
 				BC6B74991C3539F10052777E /* QiniuUploader.m in Sources */,
 				ECEB98E01CD06E4A00F97DEB /* XHEmotionManager.m in Sources */,
-				BC31B75C1C1B2F540043E7EB /* YPBReigsterSecondViewController.m in Sources */,
 				ECEB98CC1CD06E4A00F97DEB /* XHMessageBubbleHelper.m in Sources */,
 				BC85EC561C5CC72A00BA74B1 /* UIImage+MWPhotoBrowser.m in Sources */,
 				ECEB98F41CD06E4A00F97DEB /* SETextView.m in Sources */,
@@ -2917,7 +2900,6 @@
 				BC3BC5061C76E83900DE2FBF /* YPBPhotoBar.m in Sources */,
 				ECEB98D31CD06E4A00F97DEB /* XHDisplayTextViewController.m in Sources */,
 				BC67805B1C895C1E00CF6F5F /* YPBSendGiftModel.m in Sources */,
-				BCCE6CBE1C5A109000095461 /* YPBLoginViewController.m in Sources */,
 				BC5704E31C45F74800DEFAB6 /* MD5DataSigner.m in Sources */,
 				BC50CE191C2915A300CE88DD /* YPBHomeCell.m in Sources */,
 				BC50CE3B1C29552100CE88DD /* YPBURLRequest.m in Sources */,
@@ -3068,8 +3050,8 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
-				CODE_SIGN_IDENTITY = "iPhone Developer: Yanping Wu (Q5THSUD98X)";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Yanping Wu (Q5THSUD98X)";
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: Yanping Wu (BTTZYVST3G)";
 				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
@@ -3087,7 +3069,7 @@
 				ONLY_ACTIVE_ARCH = YES;
 				PRODUCT_BUNDLE_IDENTIFIER = com.iqu8.yuepaoba;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "98fadcdc-0300-442e-b298-9800c58f9110";
+				PROVISIONING_PROFILE = "70a67ff7-29c0-4518-96ea-a0e2f90ba3ac";
 				USER_HEADER_SEARCH_PATHS = "$(PODS_ROOT)/**";
 			};
 			name = Debug;
@@ -3098,8 +3080,8 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
-				CODE_SIGN_IDENTITY = "iPhone Developer: Yanping Wu (Q5THSUD98X)";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Yanping Wu (Q5THSUD98X)";
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: Yanping Wu (BTTZYVST3G)";
 				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
@@ -3117,7 +3099,7 @@
 				ONLY_ACTIVE_ARCH = YES;
 				PRODUCT_BUNDLE_IDENTIFIER = com.iqu8.yuepaoba;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "98fadcdc-0300-442e-b298-9800c58f9110";
+				PROVISIONING_PROFILE = "70a67ff7-29c0-4518-96ea-a0e2f90ba3ac";
 				USER_HEADER_SEARCH_PATHS = "$(PODS_ROOT)/**";
 			};
 			name = Release;

@@ -13,6 +13,9 @@
 #import "WXApi.h"
 #import "YPBAppDelegate.h"
 #import "YPBWeChatURLRequest.h"
+#import "YPBReigsterSecondViewController.h"
+#import "YPBRegisterModel.h"
+
 
 @interface YPBAccountViewController () <UITextFieldDelegate,checkRegisterWeChatDelegate,WXApiDelegate>
 {
@@ -32,11 +35,13 @@
     CAShapeLayer *_lineC;
     CAShapeLayer *_lineD;
 }
+@property (nonatomic,retain) YPBRegisterModel *registerModel;
 @property (nonatomic,retain) YPBWeChatURLRequest *request;
 @end
 @implementation YPBAccountViewController
 
 DefineLazyPropertyInitialization(YPBWeChatURLRequest, request)
+DefineLazyPropertyInitialization(YPBRegisterModel, registerModel)
 
 
 - (void)viewDidLoad {
@@ -59,8 +64,6 @@ DefineLazyPropertyInitialization(YPBWeChatURLRequest, request)
     [self initTitle];
     [self initAccount];
     [self initEnterBtn];
-    [self initOtherLogin];
-    
 }
 
 - (void)initTitle {
@@ -183,6 +186,7 @@ DefineLazyPropertyInitialization(YPBWeChatURLRequest, request)
 
 - (void)viewWillAppear:(BOOL)animated {
     self.navigationController.navigationBar.hidden = YES;
+    [self checkRegisterWeChat];
 }
 
 - (void)viewDidAppear:(BOOL)animated {
@@ -229,10 +233,20 @@ DefineLazyPropertyInitialization(YPBWeChatURLRequest, request)
                     YPBShowWarning(@"请输入正确的密码");
                 } else {
                     //向服务器发送登录请求
-                    //返回成功 跳转首页
-                    [self dismissViewControllerAnimated:YES completion:nil];
-                    [YPBUtil notifyRegisterSuccessfully];
-                    //返回失败 返回错误原因 用户名不存在 or 密码错误
+                    YPBUser *user = [[YPBUser alloc] init];
+                    user.userId = _account.text;
+                    user.password = _password.text;
+                    [self.registerModel requestAccountInfoWithUser:user withCompletionHandler:^(BOOL success, id obj1 ,id obj2) {
+                        if (success) {
+                            //返回成功 跳转首页
+                            user.userId = obj1;
+                            user.sex = obj2;
+                            [user saveAsCurrentUser];
+                            [self dismissViewControllerAnimated:YES completion:nil];
+                            [YPBUtil notifyRegisterSuccessfully];
+                        }
+                    }];
+                    
                 }
             }
 
@@ -301,7 +315,10 @@ DefineLazyPropertyInitialization(YPBWeChatURLRequest, request)
     wxImg.userInteractionEnabled = YES;
     [self.view addSubview:wxImg];
     {
+        @weakify(self);
         [wxImg bk_whenTapped:^{
+            @strongify(self);
+            [self.view beginLoading];
             SendAuthReq *req = [[SendAuthReq alloc] init];
             req.scope = @"snsapi_userinfo";
             req.state = @"123";
@@ -366,9 +383,36 @@ DefineLazyPropertyInitialization(YPBWeChatURLRequest, request)
            if (dic != nil) {
                [self.request requesWeChatUserInfoWithTokenDic:dic responseHandler:^(NSDictionary *userDic, NSError *error) {
                    DLog("%@ %@",userDic,error);
+                   YPBUser *user = [[YPBUser alloc] init];
+                   user.gender      = [userDic[@"sex"] unsignedIntegerValue];
+                   user.nickName = userDic[@"nickname"];
+                   user.logoUrl  = userDic[@"headimgurl"];
+                   user.city     = userDic[@"city"];
+                   user.province = userDic[@"province"];
+                   user.openid   = userDic[@"openid"];
+                   user.unionid  = userDic[@"unionid"];
+
+                   user.password = nil;
+                   //向服务器查询是否有这个账号 有 进入首页  无 进入资料编辑页面进行注册
+                   [self.registerModel requestAccountInfoWithUser:user withCompletionHandler:^(BOOL success, id obj1 , id obj2) {
+                       [self.view endLoading];
+                       if (success) {
+                           user.userId = obj1;
+                           user.sex = obj2;
+                           [user saveAsCurrentUser];
+                           [self dismissViewControllerAnimated:YES completion:nil];
+                           [YPBUtil notifyRegisterSuccessfully];
+                       } else {
+                           YPBReigsterSecondViewController *secondVC = [[YPBReigsterSecondViewController alloc] initWithYPBUser:user];
+                           [self.navigationController pushViewController:secondVC animated:YES];
+                       }
+                   }];
                }];
            }
        }];
+    } else {
+        [self.view endLoading];
+        YPBShowWarning(@"请求授权失败");
     }
 }
 

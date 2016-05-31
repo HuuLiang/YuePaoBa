@@ -43,11 +43,16 @@ return _##propertyName; \
 #define kUserIDKeyName                  @"yuepaoba_userid_keyname"
 #define kUserGenderKeyName              @"yuepaoba_usergender_keyname"
 #define kUserNicknameKeyName            @"yuepaoba_usernickname_keyname"
+#define KUserPasswordKeyName            @"yuepaoba_userpassword_keyname"
 #define kUserLogoKeyName                @"yuepaoba_userlogo_keyname"
 #define kUserAgeKeyName                 @"yuepaoba_userage_keyname"
 #define kUserHeightKeyName              @"yuepaoba_userheight_keyname"
 #define kUserFigureKeyName              @"yuepaoba_userfigure_keyname"
 #define kUserIncomeKeyName              @"yuepaoba_userincome_keyname"
+#define kUserProvinceName               @"yuepaoba_userprovince_keyname"
+#define kUserCityName                   @"yuepaoba_usercity_keyname"
+#define kUserOpenidKeyName              @"yuepaoba_useropenid_keyname"
+#define kUserUnionidKeyName             @"yuepaoba_userunionid_keyname"
 #define kUserInterestKeyName            @"yuepaoba_userinterest_keyname"
 #define kUserProfessionKeyName          @"yuepaoba_userprofession_keyname"
 #define kUserWeChatKeyName              @"yuepaoba_userwechat_keyname"
@@ -115,6 +120,7 @@ typedef NSArray YPBPair;
 
 typedef void (^YPBProgressHandler)(double progress);
 typedef void (^YPBCompletionHandler)(BOOL success, id obj);
+typedef void (^YPBAccountComplttionHandler)(BOOL success, id obj1 , id obj2);
 typedef void (^YPBAction)(id obj);
 typedef BOOL (^YPBStatusAction)(id obj);
 

@@ -178,6 +178,7 @@
 - (void)processResponseObject:(id)responseObject withResponseHandler:(YPBURLResponseHandler)responseHandler {
     YPBURLResponseStatus status = YPBURLResponseNone;
     NSString *errorMessage;
+    NSNumber *value = nil;
     if ([responseObject isKindOfClass:[NSDictionary class]]) {
         if ([self.response isKindOfClass:[YPBURLResponse class]]) {
             YPBURLResponse *urlResp = self.response;
@@ -185,6 +186,7 @@
             
             status = urlResp.success? YPBURLResponseSuccess : YPBURLResponseFailedByInterface;
             errorMessage = (status == YPBURLResponseSuccess) ? nil : [NSString stringWithFormat:@"ResultCode: %@", urlResp.message];
+            value = (status == YPBURLResponseSuccess) ? @100 : urlResp.code.value;
         } else {
             status = YPBURLResponseFailedByParsing;
             errorMessage = @"Parsing error: incorrect response class for JSON dictionary.\n";
@@ -221,7 +223,8 @@
                 [[NSNotificationCenter defaultCenter] postNotificationName:kNetworkErrorNotification
                                                                     object:self
                                                                   userInfo:@{kNetworkErrorCodeKey:@(status),
-                                                                             kNetworkErrorMessageKey:errorMessage}];
+                                                                             kNetworkErrorMessageKey:errorMessage,
+                                                                             kNetworkErrorValueKey:value}];
             }
             
         }

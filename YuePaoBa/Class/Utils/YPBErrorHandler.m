@@ -12,6 +12,7 @@
 NSString *const kNetworkErrorNotification = @"YPBNetworkErrorNotification";
 NSString *const kNetworkErrorCodeKey = @"YPBNetworkErrorCodeKey";
 NSString *const kNetworkErrorMessageKey = @"YPBNetworkErrorMessageKey";
+NSString *const kNetworkErrorValueKey   = @"YPBNetworkErrorValueKey";
 
 @implementation YPBErrorHandler
 
@@ -35,9 +36,17 @@ NSString *const kNetworkErrorMessageKey = @"YPBNetworkErrorMessageKey";
 - (void)onNetworkError:(NSNotification *)notification {
     NSDictionary *userInfo = notification.userInfo;
     YPBURLResponseStatus resp = (YPBURLResponseStatus)(((NSNumber *)userInfo[kNetworkErrorCodeKey]).unsignedIntegerValue);
-    
+    NSNumber *value = userInfo[kNetworkErrorValueKey];
     if (resp == YPBURLResponseFailedByInterface) {
-        YPBShowError(@"网络数据返回失败");
+        if ([value isEqualToNumber:@1009]) {
+            YPBShowWarning(@"用户不存在");
+        } else if ([value isEqualToNumber:@1016]) {
+            YPBShowWarning(@"密码不正确");
+        } else if ([value isEqualToNumber:@1015]) {
+            YPBShowWarning(@"获取授权失败");
+        } else {
+            YPBShowError(@"网络数据返回失败");
+        }
     } else if (resp == YPBURLResponseFailedByNetwork) {
         YPBShowError(@"网络错误，请检查网络连接");
     }

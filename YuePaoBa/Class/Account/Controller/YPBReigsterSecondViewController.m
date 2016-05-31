@@ -21,13 +21,14 @@
 @interface YPBReigsterSecondViewController () <UIImagePickerControllerDelegate,UINavigationControllerDelegate,UITextFieldDelegate,CLLocationManagerDelegate>
 {
     UIView *_view;
+    UIImageView *_imgV;
     UITableViewCell *_jobCell;
     UITextField *_jobTextField;
     UITableViewCell *_educationCell;
     UITableViewCell *_revenuesCell;
     UITableViewCell *_heightCell;
     UITableViewCell *_marriageCell;
-    CLLocationManager *_locationManager;
+//    CLLocationManager *_locationManager;
 }
 @property (nonatomic,retain) YPBUser *user;
 @property (nonatomic,retain) YPBRegisterModel *registerModel;
@@ -52,20 +53,21 @@ DefineLazyPropertyInitialization(YPBUserAvatarUpdateModel, avatarUpdateModel)
 - (void)viewDidLoad {
     [super viewDidLoad];
     //定位
+    
 //    [self locate];
     
-    UIImageView *bgImg = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"register_bgImg.jpg"]];
-    [self.view addSubview:bgImg];
-    [self.view sendSubviewToBack:bgImg];
-    {
-        [bgImg mas_makeConstraints:^(MASConstraintMaker *make) {
-            make.top.left.right.bottom.equalTo(self.view);
-        }];
-    }
-    
+//    UIImageView *bgImg = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"register_bgImg.jpg"]];
+//    [self.view addSubview:bgImg];
+//    [self.view sendSubviewToBack:bgImg];
+//    {
+//        [bgImg mas_makeConstraints:^(MASConstraintMaker *make) {
+//            make.top.left.right.bottom.equalTo(self.view);
+//        }];
+//    }
+
     
     // Do any additional setup after loading the view.
-    self.title = @"设置交友对象";
+    self.title = @"个人资料";
     self.edgesForExtendedLayout = UIRectEdgeNone;
     self.view.backgroundColor = [UIColor colorWithHexString:@"#f6f7ec"];
     
@@ -126,19 +128,8 @@ DefineLazyPropertyInitialization(YPBUserAvatarUpdateModel, avatarUpdateModel)
         }];
     }
     self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] bk_initWithTitle:@""
-                                                                                 style:UIBarButtonItemStylePlain
-                                                                               handler:nil];
-    //    //定位信息展示
-    //    UIImageView *locateView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"positioning"]];
-    //    locateView.backgroundColor = [UIColor grayColor];
-    //    [self.view addSubview:locateView];
-    //    {
-    //        [locateView mas_makeConstraints:^(MASConstraintMaker *make) {
-    //            make.centerX.equalTo(_view).offset(70);
-    //            make.centerY.equalTo(_view).offset(20);
-    //
-    //        }];
-    //    }
+                                                                                style:UIBarButtonItemStylePlain
+                                                                              handler:nil];
     
     {
         [_view bk_whenTapped:^{
@@ -168,23 +159,14 @@ DefineLazyPropertyInitialization(YPBUserAvatarUpdateModel, avatarUpdateModel)
                       @strongify(self);
                       [[YPBMessageCenter defaultCenter] hideProgress];
                       if (success) {
+                          self.user.logoUrl = obj;
                           [[YPBMessageCenter defaultCenter] showSuccessWithTitle:@"头像更新成功" inViewController:self];
-                          [YPBUser currentUser].logoUrl = obj;
                           
                           [_view.subviews makeObjectsPerformSelector:@selector(removeFromSuperview)];
-                          UIImageView *imgV = [[UIImageView alloc] init];
-                          [imgV sd_setImageWithURL:obj];
-                          imgV.userInteractionEnabled = YES;
-                          imgV.layer.cornerRadius = imgV.frame.size.width/2;
-                          [_view addSubview:imgV];
-                          {
-                              [imgV mas_makeConstraints:^(MASConstraintMaker *make) {
-                                  make.top.left.bottom.right.equalTo(_view);
-                              }];
-                          }
+                          [self setImgV:obj];
                       } else {
-                          [[YPBMessageCenter defaultCenter] showErrorWithTitle:@"头像更新失败" inViewController:self];
-                          [YPBUser currentUser].logoUrl = @"";
+                       [[YPBMessageCenter defaultCenter] showErrorWithTitle:@"头像更新失败" inViewController:self];
+                          self.user.logoUrl = @"";
                       }
                   }];
              }];
@@ -231,9 +213,12 @@ DefineLazyPropertyInitialization(YPBUserAvatarUpdateModel, avatarUpdateModel)
         if ([YPBUtil activationId].length == 0) {
             [self.activateModel requestActivationWithCompletionHandler:^(BOOL success, id obj) {
                 if (success) {
+                    self.user.uuid = obj;
+                    [YPBUtil setActivationId:obj];
                     RegisterBlock();
                 } else {
                     [self.view endLoading];
+                    YPBShowWarning(@"注册失败,请稍后再试");
                 }
             }];
         } else {
@@ -253,6 +238,31 @@ DefineLazyPropertyInitialization(YPBUserAvatarUpdateModel, avatarUpdateModel)
     }
     
     [self initLayoutCells];
+    
+    if (self.user.logoUrl.length > 0) {
+        [self setImgV:self.user.logoUrl];
+    }
+}
+
+- (void)viewWillAppear:(BOOL)animated {
+    self.navigationController.navigationBar.hidden = NO;
+}
+
+- (void)setImgV:(NSString *)imgUrl {
+    if (_imgV == nil) {
+        _imgV = [[UIImageView alloc] init];
+        _imgV.userInteractionEnabled = YES;
+        _imgV.layer.cornerRadius = _imgV.frame.size.width/2;
+        [_view addSubview:_imgV];
+        {
+            [_imgV mas_makeConstraints:^(MASConstraintMaker *make) {
+                make.top.left.bottom.right.equalTo(_view);
+            }];
+        }
+    }
+    
+    [_imgV sd_setImageWithURL:[NSURL URLWithString:imgUrl]];
+    
 }
 
 - (void)showImagePickerVCWithType:(UIImagePickerControllerSourceType)type {
@@ -312,17 +322,17 @@ DefineLazyPropertyInitialization(YPBUserAvatarUpdateModel, avatarUpdateModel)
             [_jobTextField becomeFirstResponder];
         }];
     }
+
     
-    
-    _educationCell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleValue1 reuseIdentifier:nil];
-    _educationCell.backgroundColor = [UIColor colorWithHexString:@"#fffffd"];
-    _educationCell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
-    _educationCell.textLabel.text = @"学历";
-    _educationCell.textLabel.font = [UIFont systemFontOfSize:15.];
-    self.user.selfEducation = YPBUserEducationE;
-    _user.edu = self.user.selfEducationDescription;
-    _educationCell.detailTextLabel.text = self.user.edu;
-    [self setLayoutCell:_educationCell inRow:1 andSection:0];
+//    _educationCell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleValue1 reuseIdentifier:nil];
+//    _educationCell.backgroundColor = [UIColor colorWithHexString:@"#fffffd"];
+//    _educationCell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
+//    _educationCell.textLabel.text = @"学历";
+//    _educationCell.textLabel.font = [UIFont systemFontOfSize:15.];
+//    self.user.selfEducation = YPBUserEducationE;
+//    _user.edu = self.user.selfEducationDescription;
+//    _educationCell.detailTextLabel.text = self.user.edu;
+//    [self setLayoutCell:_educationCell inRow:1 andSection:0];
     
     _revenuesCell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleValue1 reuseIdentifier:nil];
     _revenuesCell.backgroundColor = [UIColor colorWithHexString:@"#fffffd"];
@@ -331,7 +341,7 @@ DefineLazyPropertyInitialization(YPBUserAvatarUpdateModel, avatarUpdateModel)
     _revenuesCell.textLabel.font = [UIFont systemFontOfSize:15.];
     _revenuesCell.detailTextLabel.text = @"您的收入";
     _user.monthIncome = @"";
-    [self setLayoutCell:_revenuesCell inRow:2 andSection:0];
+    [self setLayoutCell:_revenuesCell inRow:1 andSection:0];
     
     _heightCell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleValue1 reuseIdentifier:nil];
     _heightCell.backgroundColor = [UIColor colorWithHexString:@"#fffffd"];
@@ -339,17 +349,17 @@ DefineLazyPropertyInitialization(YPBUserAvatarUpdateModel, avatarUpdateModel)
     _heightCell.textLabel.text = @"身高";
     _heightCell.textLabel.font = [UIFont systemFontOfSize:15.];
     _heightCell.detailTextLabel.text = @"您的身高";
-    [self setLayoutCell:_heightCell inRow:3 andSection:0];
+    [self setLayoutCell:_heightCell inRow:2 andSection:0];
     
-    _marriageCell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleValue1 reuseIdentifier:nil];
-    _marriageCell.backgroundColor = [UIColor colorWithHexString:@"#fffffd"];
-    _marriageCell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
-    _marriageCell.textLabel.text = @"婚姻";
-    _marriageCell.textLabel.font = [UIFont systemFontOfSize:15.];
-    self.user.selfMarriage = YPBUserMarriageA;
-    _user.marry = self.user.selfMarriageDescripiton;
-    _marriageCell.detailTextLabel.text = self.user.marry;
-    [self setLayoutCell:_marriageCell inRow:4 andSection:0];
+//    _marriageCell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleValue1 reuseIdentifier:nil];
+//    _marriageCell.backgroundColor = [UIColor colorWithHexString:@"#fffffd"];
+//    _marriageCell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
+//    _marriageCell.textLabel.text = @"婚姻";
+//    _marriageCell.textLabel.font = [UIFont systemFontOfSize:15.];
+//    self.user.selfMarriage = YPBUserMarriageA;
+//    _user.marry = self.user.selfMarriageDescripiton;
+//    _marriageCell.detailTextLabel.text = self.user.marry;
+//    [self setLayoutCell:_marriageCell inRow:4 andSection:0];
 }
 
 - (void)onRegisterSuccessfullyWithUserId:(NSString *)uid {
@@ -360,10 +370,6 @@ DefineLazyPropertyInitialization(YPBUserAvatarUpdateModel, avatarUpdateModel)
         @strongify(self);
         [[YPBMessageCenter defaultCenter] dismissMessageWithCompletion:^{
             self.user.userId = uid;
-            [YPBUser currentUser].userId = uid;
-            if ([YPBUser currentUser].logoUrl != nil) {
-                [self.avatarUpdateModel updateAvatarOfUser:[YPBUser currentUser].userId withURL:[YPBUser currentUser].logoUrl completionHandler:nil];
-            }
             [self.user saveAsCurrentUser];
             [self dismissViewControllerAnimated:YES completion:nil];
             [YPBUtil notifyRegisterSuccessfully];
@@ -380,20 +386,10 @@ DefineLazyPropertyInitialization(YPBUserAvatarUpdateModel, avatarUpdateModel)
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
     
-    @weakify(self);
+//    @weakify(self);
     if (indexPath.row == 0) {
         //不做处理
     } else if (indexPath.row == 1) {
-        [ActionSheetStringPicker showPickerWithTitle:@"请选择您的学历"
-                                                rows:[YPBUser allEducationsDescription]
-                                    initialSelection:self.user.valueIndexOfSelfEducation
-                                           doneBlock:^(ActionSheetStringPicker *picker, NSInteger selectedIndex, id selectedValue)
-         {
-             @strongify(self);
-             [self.user setSelfEducationWithString:selectedValue];
-             self->_educationCell.detailTextLabel.text = self.user.selfEducationDescription;
-         } cancelBlock:nil origin:self.view];
-    } else if (indexPath.row == 2) {
         NSArray *allIncomes = [YPBUser allIncomeStrings];
         NSUInteger index = self.user.incomeIndex;
         
@@ -407,8 +403,16 @@ DefineLazyPropertyInitialization(YPBUserAvatarUpdateModel, avatarUpdateModel)
              [self.user setIncomeWithIndex:selectedIndex];
              self->_revenuesCell.detailTextLabel.text = selectedValue;
          } cancelBlock:nil origin:self.view];
-        
-    } else if (indexPath.row == 3) {
+//        [ActionSheetStringPicker showPickerWithTitle:@"请选择您的学历"
+//                                                rows:[YPBUser allEducationsDescription]
+//                                    initialSelection:self.user.valueIndexOfSelfEducation
+//                                           doneBlock:^(ActionSheetStringPicker *picker, NSInteger selectedIndex, id selectedValue)
+//         {
+//             @strongify(self);
+//             [self.user setSelfEducationWithString:selectedValue];
+//             self->_educationCell.detailTextLabel.text = self.user.selfEducationDescription;
+//         } cancelBlock:nil origin:self.view];
+    } else if (indexPath.row == 2) {
         @weakify(self);
         NSArray *allHeights = [YPBUser allHeightStrings];
         NSUInteger index = self.user.heightIndex;
@@ -423,17 +427,18 @@ DefineLazyPropertyInitialization(YPBUserAvatarUpdateModel, avatarUpdateModel)
              [self.user setHeightWithIndex:selectedIndex];
              self->_heightCell.detailTextLabel.text = self.user.heightDescription;
          } cancelBlock:nil origin:self.view];
-        
+    } else if (indexPath.row == 3) {
+
     } else if (indexPath.row == 4) {
-        [ActionSheetStringPicker showPickerWithTitle:@"请设置您的近况"
-                                                rows:[YPBUser allMarriageDescription]
-                                    initialSelection:self.user.valueIndexOfSelfMarriage
-                                           doneBlock:^(ActionSheetStringPicker *picker, NSInteger selectedIndex, id selectedValue)
-         {
-             @strongify(self);
-             [self.user setSelfMarriageWithString:selectedValue];
-             self->_marriageCell.detailTextLabel.text = self.user.selfMarriageDescripiton;
-         } cancelBlock:nil origin:self.view];
+//        [ActionSheetStringPicker showPickerWithTitle:@"请设置您的近况"
+//                                                rows:[YPBUser allMarriageDescription]
+//                                    initialSelection:self.user.valueIndexOfSelfMarriage
+//                                           doneBlock:^(ActionSheetStringPicker *picker, NSInteger selectedIndex, id selectedValue)
+//         {
+//             @strongify(self);
+//             [self.user setSelfMarriageWithString:selectedValue];
+//             self->_marriageCell.detailTextLabel.text = self.user.selfMarriageDescripiton;
+//         } cancelBlock:nil origin:self.view];
     }
 }
 
@@ -475,13 +480,15 @@ DefineLazyPropertyInitialization(YPBUserAvatarUpdateModel, avatarUpdateModel)
     return NO;
 }
 
-#pragma mark - CLLocationManager
+//#pragma mark - CLLocationManager
 //- (void)locate {
 //    _locationManager = [[CLLocationManager alloc] init];
 //    _locationManager.delegate = self;
 //    _locationManager.desiredAccuracy = kCLLocationAccuracyBest;
 //    _locationManager.distanceFilter = kCLDistanceFilterNone;
-//    [_locationManager requestAlwaysAuthorization];
+//    if ([[[UIDevice currentDevice] systemVersion] floatValue] >= 8.0) {
+//        [_locationManager requestAlwaysAuthorization];
+//    }
 //    [_locationManager startUpdatingLocation];
 //    
 //}
@@ -499,5 +506,7 @@ DefineLazyPropertyInitialization(YPBUserAvatarUpdateModel, avatarUpdateModel)
 //        }
 //    }];
 //}
+
+
 
 @end

@@ -11,6 +11,7 @@
 #import "YPBWebViewController.h"
 #import "YPBRadioButton.h"
 #import "YPBRadioButtonGroup.h"
+#import "YPBReigsterSecondViewController.h"
 
 @interface YPBRegisterAccountViewController () <UITextFieldDelegate>
 {
@@ -18,10 +19,14 @@
     UITextField *_password;
 }
 @property (nonatomic,retain) YPBRadioButtonGroup *genderButtonGroup;
+@property (nonatomic) YPBUser *user;
+
 
 @end
 
 @implementation YPBRegisterAccountViewController
+
+DefineLazyPropertyInitialization(YPBUser, user)
 
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -58,7 +63,9 @@
 
 - (void)initEnterBtn {
     YPBActionButton *nextButton = [[YPBActionButton alloc] initWithTitle:@"确认注册" action:^(id sender) {
-        [self login];
+        self.user.gender = [self.genderButtonGroup.selectedButton.title isEqualToString:@"男"] ? YPBUserGenderMale : YPBUserGenderFemale;
+
+        [self registerUser];
     }];
     nextButton.backgroundColor = [UIColor colorWithHexString:@"#ee8838"];
     [self.view addSubview:nextButton];
@@ -71,23 +78,22 @@
     }
 }
 
-- (void)login {
-    //输入内容合法性判断  账号判断
-    if (_account.text.length == 0) {
-        YPBShowWarning(@"请输入正确的帐号");
-    } else {
-        //密码判断
-        if (_password.text.length == 0) {
-            YPBShowWarning(@"请输入正确的密码");
-        } else {
-            //向服务器发送账号信息进行重复性检测
-            
-            //返回成功 跳转首页
-            [self dismissViewControllerAnimated:YES completion:nil];
-            [YPBUtil notifyRegisterSuccessfully];
-            //返回失败 返回错误原因 用户名不存在 or 密码错误
-        }
+- (void)registerUser {
+    if (_account.text.length < 3) {
+        YPBShowWarning(@"昵称不能为空");
+        return;
     }
+    
+    if (_password.text.length < 3) {
+        YPBShowWarning(@"请设置密码");
+        return;
+    }
+    
+    self.user.nickName = _account.text;
+    self.user.password = _password.text;
+    
+    YPBReigsterSecondViewController *secondVC = [[YPBReigsterSecondViewController alloc] initWithYPBUser:self.user];
+    [self.navigationController pushViewController:secondVC animated:YES];
 }
 
 
@@ -147,7 +153,7 @@
     [self setLayoutCell:accountCell cellHeight:MAX(kScreenHeight * 0.08, 50) inRow:1 andSection:0];
     
     UILabel *titleLabel = [[UILabel alloc] init];
-    titleLabel.text = @"账号";
+    titleLabel.text = @"昵称";
     titleLabel.font = [UIFont systemFontOfSize:15.];
     [accountCell addSubview:titleLabel];
     {

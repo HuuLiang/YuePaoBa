@@ -37,6 +37,8 @@
 #define YPB_UPDATE_CID_URL              @"/mfwcenter/updateCId.json"
 #define YPB_SEND_MSG_URL                @"/mfwcenter/smsg.json"
 #define YPB_REPORT_URL                  @"/mfwcenter/report.json"
+#define YPB_USER_LOGIN_URL              @"/mfwcenter/userLogin.json"
+
 
 #define YPB_PAYMENT_COMMIT_URL          @"http://pay.iqu8.net/paycenter/qubaPr.json" //@"http://120.24.252.114:8084/paycenter/qubaPr.json" //
 #define YPB_ALIPAY_SCHEME               @"comyuepaobaappalipayschemeurl"
