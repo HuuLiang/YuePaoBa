@@ -15,7 +15,7 @@
 #import "YPBWeChatURLRequest.h"
 #import "YPBReigsterSecondViewController.h"
 #import "YPBRegisterModel.h"
-
+#import "YPBAccountCheck.h"
 
 @interface YPBAccountViewController () <UITextFieldDelegate,checkRegisterWeChatDelegate,WXApiDelegate>
 {
@@ -225,31 +225,24 @@ DefineLazyPropertyInitialization(YPBRegisterModel, registerModel)
     {
         [loginBtn bk_whenTapped:^{
             //输入内容合法性判断  账号判断
-            if (_account.text.length == 0) {
-                YPBShowWarning(@"请输入正确的帐号");
+            if ([YPBAccountCheck checkAcountInfoWithId:_account.text Password:_password.text]) {
+                //向服务器发送登录请求
+                YPBUser *user = [[YPBUser alloc] init];
+                user.userId = _account.text;
+                user.password = _password.text;
+                [self.registerModel requestAccountInfoWithUser:user withCompletionHandler:^(BOOL success, id obj1 ,id obj2) {
+                    if (success) {
+                        //返回成功 跳转首页
+                        user.userId = obj1;
+                        user.sex = obj2;
+                        [user saveAsCurrentUser];
+                        [self dismissViewControllerAnimated:YES completion:nil];
+                        [YPBUtil notifyRegisterSuccessfully];
+                    }
+                }];
             } else {
-                //密码判断
-                if (_password.text.length == 0) {
-                    YPBShowWarning(@"请输入正确的密码");
-                } else {
-                    //向服务器发送登录请求
-                    YPBUser *user = [[YPBUser alloc] init];
-                    user.userId = _account.text;
-                    user.password = _password.text;
-                    [self.registerModel requestAccountInfoWithUser:user withCompletionHandler:^(BOOL success, id obj1 ,id obj2) {
-                        if (success) {
-                            //返回成功 跳转首页
-                            user.userId = obj1;
-                            user.sex = obj2;
-                            [user saveAsCurrentUser];
-                            [self dismissViewControllerAnimated:YES completion:nil];
-                            [YPBUtil notifyRegisterSuccessfully];
-                        }
-                    }];
-                    
-                }
+                return ;
             }
-
         }];
     }
     

@@ -84,6 +84,12 @@
                              withParams:params
                         responseHandler:^(YPBURLResponseStatus respStatus, NSString *errorMessage)
                     {
+                        if ([errorMessage isEqualToString:@"ResultCode: 用户不存在"]) {
+                            if (![user.password isEqualToString:@""]) {
+                                YPBShowWarning(@"当前账号名未注册");
+                            }
+                        }
+                        
                         YPBRegisterResponse *resp = self.response;
                         
                         if (respStatus == YPBURLResponseSuccess) {

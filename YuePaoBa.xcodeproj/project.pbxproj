@@ -215,6 +215,7 @@
 		BCFB2A6D1C3FDD16003E327D /* YPBPhotoGridViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BCFB2A6C1C3FDD16003E327D /* YPBPhotoGridViewController.m */; };
 		EC2BFB371C9A889E00912302 /* YPBPayIntroduceView.m in Sources */ = {isa = PBXBuildFile; fileRef = EC2BFB361C9A889E00912302 /* YPBPayIntroduceView.m */; };
 		EC3F87F21CFC075B008FCF7E /* YPBReigsterSecondViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EC3F87F11CFC075B008FCF7E /* YPBReigsterSecondViewController.m */; };
+		EC3F87F71CFEC056008FCF7E /* YPBAccountCheck.m in Sources */ = {isa = PBXBuildFile; fileRef = EC3F87F61CFEC056008FCF7E /* YPBAccountCheck.m */; };
 		EC758E5C1CF4768400604C2C /* YPBAccountViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EC758E5B1CF4768400604C2C /* YPBAccountViewController.m */; };
 		EC7C84A11C982795005CB452 /* YPBPayCell.m in Sources */ = {isa = PBXBuildFile; fileRef = EC7C84A01C982795005CB452 /* YPBPayCell.m */; };
 		EC7C9BEF1CCE1D7000DC639A /* YPBReportViolationViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EC7C9BEE1CCE1D7000DC639A /* YPBReportViolationViewController.m */; };
@@ -757,6 +758,8 @@
 		EC2BFB361C9A889E00912302 /* YPBPayIntroduceView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YPBPayIntroduceView.m; sourceTree = "<group>"; };
 		EC3F87F01CFC075B008FCF7E /* YPBReigsterSecondViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YPBReigsterSecondViewController.h; sourceTree = "<group>"; };
 		EC3F87F11CFC075B008FCF7E /* YPBReigsterSecondViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YPBReigsterSecondViewController.m; sourceTree = "<group>"; };
+		EC3F87F51CFEC056008FCF7E /* YPBAccountCheck.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YPBAccountCheck.h; sourceTree = "<group>"; };
+		EC3F87F61CFEC056008FCF7E /* YPBAccountCheck.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YPBAccountCheck.m; sourceTree = "<group>"; };
 		EC758E5A1CF4768400604C2C /* YPBAccountViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YPBAccountViewController.h; sourceTree = "<group>"; };
 		EC758E5B1CF4768400604C2C /* YPBAccountViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YPBAccountViewController.m; sourceTree = "<group>"; };
 		EC7C849F1C982795005CB452 /* YPBPayCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YPBPayCell.h; sourceTree = "<group>"; };
@@ -1667,6 +1670,8 @@
 				BC58746A1C27CB8700A72274 /* YPBRegisterModel.m */,
 				ECB0F4741CF6ABD3004F6DB1 /* YPBWeChatURLRequest.h */,
 				ECB0F4751CF6ABD3004F6DB1 /* YPBWeChatURLRequest.m */,
+				EC3F87F51CFEC056008FCF7E /* YPBAccountCheck.h */,
+				EC3F87F61CFEC056008FCF7E /* YPBAccountCheck.m */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -2753,6 +2758,7 @@
 				ECEB98D51CD06E4A00F97DEB /* XHCacheManager.m in Sources */,
 				BC652B841C2BB9BA00951DEA /* YPBEditMineDetailViewController.m in Sources */,
 				EC87FEB01CABDFAD0049445C /* YPBLocalNotification.m in Sources */,
+				EC3F87F71CFEC056008FCF7E /* YPBAccountCheck.m in Sources */,
 				BC652B871C2BD5D800951DEA /* UITableView+Separator.m in Sources */,
 				BC22DE2D1C3D417500305F58 /* YPBContactCell.m in Sources */,
 				BC6B74961C3539F10052777E /* QiniuToken.m in Sources */,

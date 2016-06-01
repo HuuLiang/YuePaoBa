@@ -115,7 +115,7 @@ DefineLazyPropertyInitialization(YPBFeedbackModel, feedbackModel)
             [self.navigationController pushViewController:listVC animated:YES];
         } else if (cell == self ->_logoutCell) {
             [UIAlertView bk_showAlertViewWithTitle:@"是否确认退出当前账号"
-                                           message:[NSString stringWithFormat:@"您可以使用ID:%@%@重新登录",[YPBUser currentUser].userId ,[WXApi isWXAppInstalled] ? @"或者微信":@""]
+                                           message:[NSString stringWithFormat:@"您可以使用%@重新登录",[YPBUser currentUser].password ? [NSString stringWithFormat:@"ID:%@",[YPBUser currentUser].userId] : @"微信"]
                                  cancelButtonTitle:@"取消"
                                  otherButtonTitles:@[@"确定"]
                                            handler:^(UIAlertView *alertView, NSInteger buttonIndex)

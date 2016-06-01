@@ -12,6 +12,7 @@
 #import "YPBRadioButton.h"
 #import "YPBRadioButtonGroup.h"
 #import "YPBReigsterSecondViewController.h"
+#import "YPBAccountCheck.h"
 
 @interface YPBRegisterAccountViewController () <UITextFieldDelegate>
 {
@@ -59,13 +60,29 @@ DefineLazyPropertyInitialization(YPBUser, user)
     [self initAccountCell];
     [self initPasswordCell];
     [self initGenderCell];
+    
+    UILabel *label = [[UILabel alloc] init];
+    label.text = @"昵称:2-12任意字符 密码:6-16字符,支持数字密码和下划线";
+    label.textColor = [UIColor redColor];
+    label.textAlignment = NSTextAlignmentCenter;
+    label.font = [UIFont systemFontOfSize:10.];
+    [self.view addSubview:label];
+    {
+        [label mas_makeConstraints:^(MASConstraintMaker *make) {
+            make.top.equalTo(self.layoutTableView.mas_bottom).offset(1);
+            make.left.right.equalTo(self.view);
+            make.height.mas_equalTo(12);
+        }];
+    }
 }
 
 - (void)initEnterBtn {
     YPBActionButton *nextButton = [[YPBActionButton alloc] initWithTitle:@"确认注册" action:^(id sender) {
-        self.user.gender = [self.genderButtonGroup.selectedButton.title isEqualToString:@"男"] ? YPBUserGenderMale : YPBUserGenderFemale;
-
-        [self registerUser];
+        if ([YPBAccountCheck checkAccountInfoWithNickName:_account.text Password:_password.text]) {
+            [self registerUser];
+        } else {
+            return ;
+        }
     }];
     nextButton.backgroundColor = [UIColor colorWithHexString:@"#ee8838"];
     [self.view addSubview:nextButton];
@@ -79,21 +96,45 @@ DefineLazyPropertyInitialization(YPBUser, user)
 }
 
 - (void)registerUser {
-    if (_account.text.length < 2) {
-        YPBShowWarning(@"您输入的昵称太短了哦");
-        return;
-    }
-    
-    if (_password.text.length < 2) {
-        YPBShowWarning(@"您输入的密码太短了哦");
-        return;
-    }
-    
+
+    self.user.gender = [self.genderButtonGroup.selectedButton.title isEqualToString:@"男"] ? YPBUserGenderMale : YPBUserGenderFemale;
     self.user.nickName = _account.text;
     self.user.password = _password.text;
     
-    YPBReigsterSecondViewController *secondVC = [[YPBReigsterSecondViewController alloc] initWithYPBUser:self.user];
-    [self.navigationController pushViewController:secondVC animated:YES];
+    @weakify(self);
+    void (^ConfirmAction)(void) = ^{
+        @strongify(self);
+        YPBReigsterSecondViewController *secondVC = [[YPBReigsterSecondViewController alloc] initWithYPBUser:self.user];
+        [self.navigationController pushViewController:secondVC animated:YES];
+    };
+    
+    void (^CancelAction)(void) = ^{
+        @strongify(self);
+        [self->_account resignFirstResponder];
+        [self->_password resignFirstResponder];
+    };
+    
+    if (NSStringFromClass([UIAlertController class])) {
+        UIAlertController *alertController = [UIAlertController alertControllerWithTitle:@"信息确认" message:@"注册后，性别和昵称将无法修改。是否确认？" preferredStyle:UIAlertControllerStyleAlert];
+        [alertController addAction:[UIAlertAction actionWithTitle:@"取消" style:UIAlertActionStyleCancel handler:^(UIAlertAction * _Nonnull action) {
+            [alertController dismissViewControllerAnimated:YES completion:nil];
+            CancelAction();
+        }]];
+        [alertController addAction:[UIAlertAction actionWithTitle:@"确定" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+            [alertController dismissViewControllerAnimated:YES completion:nil];
+            ConfirmAction();
+        }]];
+        [self presentViewController:alertController animated:YES completion:nil];
+    } else {
+        UIAlertView *alertView = [[UIAlertView alloc] bk_initWithTitle:@"信息确认" message:@"注册后，性别和昵称将无法修改。是否确认？"];
+        [alertView bk_setCancelButtonWithTitle:@"取消" handler:^{
+            CancelAction();
+        }];
+        [alertView bk_addButtonWithTitle:@"确定" handler:^{
+            ConfirmAction();
+        }];
+        [alertView show];
+    }
 }
 
 
@@ -167,7 +208,8 @@ DefineLazyPropertyInitialization(YPBUser, user)
     _account.placeholder = @"请输入昵称";
     [_account setValue:[UIColor colorWithHexString:@"#989994"] forKeyPath:@"_placeholderLabel.textColor"];
     [_account setValue:[UIFont systemFontOfSize:16.] forKeyPath:@"_placeholderLabel.font"];
-    _account.textAlignment = NSTextAlignmentLeft;
+    [_account setValue:@(NSTextAlignmentRight) forKeyPath:@"_placeholderLabel.textAlignment"];
+    //_account.textAlignment = NSTextAlignmentLeft;
     _account.delegate = self;
     _account.returnKeyType = UIReturnKeyContinue;
     _account.clearButtonMode = UITextFieldViewModeWhileEditing;
