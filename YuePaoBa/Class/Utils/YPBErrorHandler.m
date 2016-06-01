@@ -39,7 +39,7 @@ NSString *const kNetworkErrorValueKey   = @"YPBNetworkErrorValueKey";
     NSNumber *value = userInfo[kNetworkErrorValueKey];
     if (resp == YPBURLResponseFailedByInterface) {
         if ([value isEqualToNumber:@1009]) {
-            YPBShowWarning(@"用户不存在");
+            YPBShowWarning(@"当前账号名未注册");
         } else if ([value isEqualToNumber:@1016]) {
             YPBShowWarning(@"密码不正确");
         } else if ([value isEqualToNumber:@1015]) {

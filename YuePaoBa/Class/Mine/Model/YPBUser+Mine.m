@@ -80,7 +80,7 @@ static const NSUInteger kDefaultHeight = 160;
 }
 
 + (NSArray<NSString *> *)allPurposeStrings {
-    return @[@"无所谓",@"E夜情",@"聊天交友",@"恋爱婚姻"];
+    return @[@"无所谓",@"聊天交友",@"恋爱婚姻"];
 }
 
 - (NSUInteger)assetsIndex {

@@ -93,11 +93,11 @@ DefineLazyPropertyInitialization(YPBRegisterModel, registerModel)
  
     _account = [[UITextField alloc] init];
     _account.backgroundColor = [UIColor clearColor];
+    _account.textAlignment = NSTextAlignmentLeft;
 //    _account.placeholder = @"请输入用户名/账号ID";
     _account.textColor = [UIColor whiteColor];
 //    [_account setValue:[UIColor colorWithHexString:@"#989994"] forKeyPath:@"_placeholderLabel.textColor"];
 //    [_account setValue:[UIFont systemFontOfSize:16.] forKeyPath:@"_placeholderLabel.font"];
-    _account.textAlignment = NSTextAlignmentRight;
     _account.delegate = self;
     _account.returnKeyType = UIReturnKeyContinue;
     _account.clearButtonMode = UITextFieldViewModeNever;
@@ -105,7 +105,7 @@ DefineLazyPropertyInitialization(YPBRegisterModel, registerModel)
     
     _closeBtnA = [UIButton buttonWithType:UIButtonTypeSystem];
     [_closeBtnA setBackgroundImage:[UIImage imageNamed:@"account_close"] forState:UIControlStateNormal];
-    _closeBtnA.layer.cornerRadius = 17.5;
+    _closeBtnA.layer.cornerRadius = 10;
     _closeBtnA.layer.masksToBounds = YES;
     [self.view addSubview:_closeBtnA];
     {
@@ -128,9 +128,9 @@ DefineLazyPropertyInitialization(YPBRegisterModel, registerModel)
         
         [_closeBtnA mas_makeConstraints:^(MASConstraintMaker *make) {
             make.left.equalTo(_account.mas_right).offset(5);
-            make.centerY.equalTo(_account);
+            make.centerY.equalTo(_account).offset(0);
             make.right.equalTo(self.view).offset(-20);
-            make.size.mas_equalTo(CGSizeMake(35, 35));
+            make.size.mas_equalTo(CGSizeMake(20, 20));
         }];
     }
     
@@ -142,11 +142,11 @@ DefineLazyPropertyInitialization(YPBRegisterModel, registerModel)
     
     _password = [[UITextField alloc] init];
     _password.backgroundColor = [UIColor clearColor];
+    _password.textAlignment = NSTextAlignmentLeft;
     _password.textColor = [UIColor whiteColor];
 //    _password.placeholder = @"请输入密码";
 //    [_password setValue:[UIColor colorWithHexString:@"#989994"] forKeyPath:@"_placeholderLabel.textColor"];
 //    [_password setValue:[UIFont systemFontOfSize:16.] forKeyPath:@"_placeholderLabel.font"];
-    _password.textAlignment = NSTextAlignmentRight;
     _password.delegate = self;
     _password.returnKeyType = UIReturnKeyGoogle;
     _password.clearButtonMode = UITextFieldViewModeNever;
@@ -154,7 +154,7 @@ DefineLazyPropertyInitialization(YPBRegisterModel, registerModel)
     
     _closeBtnB = [UIButton buttonWithType:UIButtonTypeSystem];
     [_closeBtnB setBackgroundImage:[UIImage imageNamed:@"account_close"] forState:UIControlStateNormal];
-    _closeBtnB.layer.cornerRadius = 17.5;
+    _closeBtnB.layer.cornerRadius = 10;
     _closeBtnB.layer.masksToBounds = YES;
     [self.view addSubview:_closeBtnB];
     {
@@ -177,9 +177,9 @@ DefineLazyPropertyInitialization(YPBRegisterModel, registerModel)
         
         [_closeBtnB mas_makeConstraints:^(MASConstraintMaker *make) {
             make.left.equalTo(_password.mas_right).offset(5);
-            make.centerY.equalTo(_password);
+            make.centerY.equalTo(_password).offset(0);
             make.right.equalTo(self.view).offset(-20);
-            make.size.mas_equalTo(CGSizeMake(35, 35));
+            make.size.mas_equalTo(CGSizeMake(20, 20));
         }];
     }
 }
@@ -196,8 +196,8 @@ DefineLazyPropertyInitialization(YPBRegisterModel, registerModel)
     [lineA setFillColor:[[UIColor clearColor] CGColor]];
     [lineA setStrokeColor:[[UIColor whiteColor] CGColor]];
     lineA.lineWidth = 0.5f;
-    CGPathMoveToPoint(linePathA, NULL, _accountLabel.frame.origin.x , _accountLabel.frame.origin.y + _accountLabel.frame.size.height + 5);
-    CGPathAddLineToPoint(linePathA, NULL, _closeBtnA.frame.origin.x + _closeBtnA.frame.size.width, _closeBtnA.frame.origin.y + _closeBtnA.frame.size.height + 10);
+    CGPathMoveToPoint(linePathA, NULL, _accountLabel.frame.origin.x , _accountLabel.frame.origin.y + _accountLabel.frame.size.height + 1);
+    CGPathAddLineToPoint(linePathA, NULL, _closeBtnA.frame.origin.x + _closeBtnA.frame.size.width, _closeBtnA.frame.origin.y + _closeBtnA.frame.size.height + 13.5);
     [lineA setPath:linePathA];
     CGPathRelease(linePathA);
     [self.view.layer addSublayer:lineA];
@@ -207,8 +207,8 @@ DefineLazyPropertyInitialization(YPBRegisterModel, registerModel)
     [lineB setFillColor:[[UIColor clearColor] CGColor]];
     [lineB setStrokeColor:[[UIColor whiteColor] CGColor]];
     lineB.lineWidth = 0.5f;
-    CGPathMoveToPoint(linePathB, NULL, _passwordLabel.frame.origin.x , _passwordLabel.frame.origin.y + _passwordLabel.frame.size.height + 5);
-    CGPathAddLineToPoint(linePathB, NULL, _closeBtnB.frame.origin.x + _closeBtnB.frame.size.width, _closeBtnB.frame.origin.y + _closeBtnB.frame.size.height + 10);
+    CGPathMoveToPoint(linePathB, NULL, _passwordLabel.frame.origin.x , _passwordLabel.frame.origin.y + _passwordLabel.frame.size.height + 1);
+    CGPathAddLineToPoint(linePathB, NULL, _closeBtnB.frame.origin.x + _closeBtnB.frame.size.width, _closeBtnB.frame.origin.y + _closeBtnB.frame.size.height + 13.5);
     [lineB setPath:linePathB];
     CGPathRelease(linePathB);
     [self.view.layer addSublayer:lineB];
@@ -254,12 +254,23 @@ DefineLazyPropertyInitialization(YPBRegisterModel, registerModel)
     }
     
     UILabel *label = [[UILabel alloc] init];
-    label.text = @"还没账号，立刻";
+    NSMutableAttributedString *labelText = [[NSMutableAttributedString alloc] initWithString:@"忘 记 密 码 ?"];
+    NSRange range = {0,labelText.length};
+    [labelText addAttribute:NSUnderlineStyleAttributeName value:[NSNumber numberWithInteger:NSUnderlineStyleSingle] range:range];
     label.textAlignment = NSTextAlignmentCenter;
-    label.textColor = [UIColor whiteColor];
-    label.font = [UIFont systemFontOfSize:12.];
+    label.textColor = [UIColor redColor];
+    label.font = [UIFont systemFontOfSize:13.];
     label.backgroundColor = [UIColor clearColor];
+    label.attributedText = labelText;
+    label.userInteractionEnabled = YES;
     [self.view addSubview:label];
+    {
+        [label bk_whenTapped:^{
+            [UIAlertView bk_showAlertViewWithTitle:@"咨询客服QQ:2686229951\n投诉客服QQ:3153715820" message:@"工作时间:每周一至周五10:00-18:00" cancelButtonTitle:@"确定" otherButtonTitles:nil handler:^(UIAlertView *alertView, NSInteger buttonIndex) {
+                
+            }];
+        }];
+    }
     
     _registerBtn = [UIButton buttonWithType:UIButtonTypeSystem];
     [_registerBtn setTitle:@"注册" forState:UIControlStateNormal];

@@ -79,13 +79,13 @@ DefineLazyPropertyInitialization(YPBUser, user)
 }
 
 - (void)registerUser {
-    if (_account.text.length < 3) {
-        YPBShowWarning(@"昵称不能为空");
+    if (_account.text.length < 2) {
+        YPBShowWarning(@"您输入的昵称太短了哦");
         return;
     }
     
-    if (_password.text.length < 3) {
-        YPBShowWarning(@"请设置密码");
+    if (_password.text.length < 2) {
+        YPBShowWarning(@"您输入的密码太短了哦");
         return;
     }
     
@@ -167,7 +167,7 @@ DefineLazyPropertyInitialization(YPBUser, user)
     _account.placeholder = @"请输入昵称";
     [_account setValue:[UIColor colorWithHexString:@"#989994"] forKeyPath:@"_placeholderLabel.textColor"];
     [_account setValue:[UIFont systemFontOfSize:16.] forKeyPath:@"_placeholderLabel.font"];
-    _account.textAlignment = NSTextAlignmentRight;
+    _account.textAlignment = NSTextAlignmentLeft;
     _account.delegate = self;
     _account.returnKeyType = UIReturnKeyContinue;
     _account.clearButtonMode = UITextFieldViewModeWhileEditing;
@@ -202,7 +202,7 @@ DefineLazyPropertyInitialization(YPBUser, user)
     _password.placeholder = @"请输入密码";
     [_password setValue:[UIColor colorWithHexString:@"#989994"] forKeyPath:@"_placeholderLabel.textColor"];
     [_password setValue:[UIFont systemFontOfSize:16.] forKeyPath:@"_placeholderLabel.font"];
-    _password.textAlignment = NSTextAlignmentRight;
+    _password.textAlignment = NSTextAlignmentLeft;
     _password.delegate = self;
     _password.returnKeyType = UIReturnKeyGoogle;
     _password.clearButtonMode = UITextFieldViewModeWhileEditing;
