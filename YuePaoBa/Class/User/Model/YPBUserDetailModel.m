@@ -39,7 +39,7 @@
         return NO;
     }
     BOOL success = [self requestURLPath:YPB_USER_DETAIL_URL
-                             withParams:@{@"userId":userId, @"currentUserId":byUserId}
+                             withParams:@{@"userId":userId, @"currentUserId":byUserId, @"channelNo":YPB_CHANNEL_NO}
                         responseHandler:^(YPBURLResponseStatus respStatus, NSString *errorMessage)
     {
         YPBUserDetailResponse *resp = self.response;

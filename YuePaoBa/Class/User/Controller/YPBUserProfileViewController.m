@@ -123,7 +123,7 @@
     assetsCell.selectionStyle = UITableViewCellSelectionStyleNone;
     [self setLayoutCell:assetsCell inRow:row++ andSection:detailInfoSection];
     
-    YPBTableViewCell *purposeCell = [[YPBTableViewCell alloc] initWithImage:[UIImage imageNamed:@"purpose_icon"] title:[NSString stringWithFormat:@"交友目的：%@", self.user.purpose]];
+    YPBTableViewCell *purposeCell = [[YPBTableViewCell alloc] initWithImage:[UIImage imageNamed:@"purpose_icon"] title:[NSString stringWithFormat:@"交友目的：%@", [self.user.purpose isEqualToString:@"E夜情"] ? @"无所谓" : self.user.purpose]];
     purposeCell.selectionStyle = UITableViewCellSelectionStyleNone;
     [self setLayoutCell:purposeCell inRow:row++ andSection:detailInfoSection];
 }

@@ -152,7 +152,7 @@ typedef NS_ENUM(NSUInteger, YPBUserProfileDetailCell) {
         
     } else if (indexPath.row == YPBUserProfileDetailCellTarget) {
         cell.imageView.image = [UIImage imageNamed:@"user_propose_icon"];
-        cell.textLabel.text = [NSString stringWithFormat:@"交友目的：%@", self.user.purpose ?: @"保密"];
+        cell.textLabel.text = [NSString stringWithFormat:@"交友目的：%@", [self.user.purpose isEqualToString:@"E夜情"] ? @"无所谓" : self.user.purpose];
         cell.textLabel.font = [UIFont systemFontOfSize:13.];
         cell.textLabel.textColor = [UIColor whiteColor];
     }

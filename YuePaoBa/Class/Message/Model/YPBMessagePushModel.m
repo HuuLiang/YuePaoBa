@@ -131,7 +131,8 @@
     NSDictionary *params = @{@"userId":userId,
                              @"loginSeq":@([YPBUtil loginFrequency]),
                              @"duration":@(duration),
-                             @"sex":[YPBUser currentUser].sex};
+                             @"sex":[YPBUser currentUser].sex,
+                             @"channelNo":YPB_CHANNEL_NO};
     BOOL ret = [self requestURLPath:YPB_USER_MESSAGE_PUSH_URL
                          withParams:params
                     responseHandler:^(YPBURLResponseStatus respStatus, NSString *errorMessage)
