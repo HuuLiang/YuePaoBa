@@ -219,15 +219,20 @@ DefineLazyPropertyInitialization(NSMutableArray, userNames);
             make.bottom.equalTo(self.view).offset(0);
         }];
     }
-    
-    _timer = [NSTimer scheduledTimerWithTimeInterval:0.8 target:self selector:@selector(checkCount) userInfo:nil repeats:YES];
-    if (_userNames.count > 0) {
-        [_timer setFireDate:[NSDate distantPast]];
-    }
 }
 
 - (void)viewWillDisappear:(BOOL)animated {
     [_timer setFireDate:[NSDate distantFuture]];
+}
+
+- (void)viewWillAppear:(BOOL)animated {
+    if (!_timer) {
+        _timer = [NSTimer scheduledTimerWithTimeInterval:0.8 target:self selector:@selector(checkCount) userInfo:nil repeats:YES];
+    }
+    
+    if (_userNames.count > 0) {
+        [_timer setFireDate:[NSDate distantPast]];
+    }
 }
 
 - (void)checkCount {

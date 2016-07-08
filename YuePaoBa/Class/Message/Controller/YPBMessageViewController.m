@@ -28,13 +28,14 @@ static NSString *const kNoUserInfoErrorMessage = @"无法获取用户详细信�
 
 @interface YPBMessageViewController ()
 {
-   
+    
 }
 @property (nonatomic,readonly) NSString *userId;
 @property (nonatomic,readonly) NSString *logoUrl;
 @property (nonatomic,readonly) NSString *nickName;
 @property (nonatomic,readonly) YPBUserType userType;
 @property (nonatomic,retain) NSMutableArray<YPBChatMessage *> *chatMessages;
+@property (nonatomic) YPBActivityPayView *payView;
 @end
 
 @implementation YPBMessageViewController
@@ -447,11 +448,17 @@ DefineLazyPropertyInitialization(NSMutableArray, chatMessages)
 - (void)popPayView {
     [self.view beginLoading];
     
-    YPBActivityPayView *view = [[YPBActivityPayView alloc] init];
-    [self.view addSubview:view];
+    _payView = [[YPBActivityPayView alloc] init];
+    [self.view addSubview:_payView];
+    @weakify(self);
+    _payView.closeBlock = ^(void) {
+        @strongify(self);
+        [self.view endLoading];
+        [self.payView removeFromSuperview];
+    };
     
     {
-        [view mas_makeConstraints:^(MASConstraintMaker *make) {
+        [_payView mas_makeConstraints:^(MASConstraintMaker *make) {
             make.centerX.equalTo(self.view);
             make.centerY.equalTo(self.view).offset(0);
             make.size.mas_equalTo(CGSizeMake(SCREEN_WIDTH*0.8, SCREEN_HEIGHT*0.6));

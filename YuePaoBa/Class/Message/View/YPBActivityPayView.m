@@ -40,7 +40,7 @@
 //    label.backgroundColor = [UIColor redColor];
     [cell addSubview:label];
 
-    UIButton *payBtn = [UIButton buttonWithType:UIButtonTypeSystem];
+    UIButton *payBtn = [UIButton buttonWithType:UIButtonTypeCustom];
     UIImage *image = [UIImage imageNamed:@"vip_payment_button_go_normal"];
     [payBtn setBackgroundImage:image forState:UIControlStateNormal];
     [payBtn setBackgroundImage:[UIImage imageNamed:@"vip_payment_button_go_highlight"] forState:UIControlStateSelected];
@@ -179,7 +179,8 @@
         _payConfig = [YPBSystemConfig sharedConfig];
         
         self.backgroundColor = [UIColor whiteColor];
-        self.layer.cornerRadius = 10;
+        self.layer.cornerRadius = 5;
+        self.layer.masksToBounds = YES;
         
         _bgImg = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"message_paybanner"]];
         [self addSubview:_bgImg];
@@ -189,8 +190,7 @@
         [self addSubview:_closeBtn];
         {
             [_closeBtn bk_whenTapped:^{
-                [self.superview endLoading];
-                [self removeFromSuperview];
+                _closeBlock();
             }];
         }
         
@@ -215,6 +215,7 @@
     return self;
 }
 
+
 - (void)payWithPaymentType:(YPBPaymentType)type {
     self.vipView = [[YPBVIPPriviledgeViewController alloc] initWithContentType:YPBPaymnetContentTypeActivity];
     NSInteger month = 1;
@@ -235,8 +236,8 @@
     }];
     
     [_closeBtn mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.centerX.equalTo(self.mas_right).offset(-8);
-        make.centerY.equalTo(self.mas_top).offset(4);
+        make.centerX.equalTo(self.mas_right).offset(-10);
+        make.centerY.equalTo(self.mas_top).offset(6);
         make.size.mas_equalTo(CGSizeMake(30, 30));
     }];
     
@@ -258,6 +259,14 @@
         
     }];
 
+}
+
+-(void)setImg:(UIImage *)img {
+    _bgImg.image = img;
+}
+
+- (void)setCloseBtnHidden:(BOOL)closeBtnHidden {
+    _closeBtn.hidden = closeBtnHidden;
 }
 
 @end

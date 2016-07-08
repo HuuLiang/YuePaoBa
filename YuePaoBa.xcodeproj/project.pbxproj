@@ -215,6 +215,7 @@
 		BCD15F1E1C104EAB002B6C5C /* YPBUtil.m in Sources */ = {isa = PBXBuildFile; fileRef = BCD15F1D1C104EAB002B6C5C /* YPBUtil.m */; };
 		BCFB2A6A1C3FC441003E327D /* YPBUserPhotoViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BCFB2A691C3FC441003E327D /* YPBUserPhotoViewController.m */; };
 		BCFB2A6D1C3FDD16003E327D /* YPBPhotoGridViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BCFB2A6C1C3FDD16003E327D /* YPBPhotoGridViewController.m */; };
+		EC1698EC1D2FB25B00E7BC68 /* vipcenter_banner.jpg in Resources */ = {isa = PBXBuildFile; fileRef = EC1698EB1D2FB25B00E7BC68 /* vipcenter_banner.jpg */; };
 		EC2BFB371C9A889E00912302 /* YPBPayIntroduceView.m in Sources */ = {isa = PBXBuildFile; fileRef = EC2BFB361C9A889E00912302 /* YPBPayIntroduceView.m */; };
 		EC61AB151CE470A600354EC0 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = EC61AB141CE470A600354EC0 /* Assets.xcassets */; };
 		EC729F061CE5805600F9A09B /* YPBRecommendCell.m in Sources */ = {isa = PBXBuildFile; fileRef = EC729F051CE5805600F9A09B /* YPBRecommendCell.m */; };
@@ -753,6 +754,7 @@
 		BCFB2A6C1C3FDD16003E327D /* YPBPhotoGridViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YPBPhotoGridViewController.m; sourceTree = "<group>"; };
 		C8725E9D86861D96A4FDD277 /* Pods.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.debug.xcconfig; path = "Pods/Target Support Files/Pods/Pods.debug.xcconfig"; sourceTree = "<group>"; };
 		E8936D50656D3883FACFD246 /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
+		EC1698EB1D2FB25B00E7BC68 /* vipcenter_banner.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = vipcenter_banner.jpg; sourceTree = "<group>"; };
 		EC2BFB351C9A889E00912302 /* YPBPayIntroduceView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YPBPayIntroduceView.h; sourceTree = "<group>"; };
 		EC2BFB361C9A889E00912302 /* YPBPayIntroduceView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YPBPayIntroduceView.m; sourceTree = "<group>"; };
 		EC61AB141CE470A600354EC0 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -1845,6 +1847,7 @@
 		BCCE6C5C1C5A0F4100095461 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				EC1698EB1D2FB25B00E7BC68 /* vipcenter_banner.jpg */,
 				EC884D0E1CE1C75200598E2D /* login.jpg */,
 				ECE00BCE1CEC4041001047C0 /* register_bgImg.jpg */,
 				EC950A281CE6CB0800051BC9 /* bannerImg.jpg */,
@@ -2399,7 +2402,7 @@
 				TargetAttributes = {
 					BC1A2D7C1C0EF909003D9138 = {
 						CreatedOnToolsVersion = 7.1.1;
-						DevelopmentTeam = RW6TY4K97U;
+						DevelopmentTeam = S954G7B2DA;
 						SystemCapabilities = {
 							com.apple.BackgroundModes = {
 								enabled = 1;
@@ -2506,6 +2509,7 @@
 				BC85EC2F1C5CC72A00BA74B1 /* ImageSelectedOff.png in Resources */,
 				ECE00BBF1CE99403001047C0 /* SECoreTextView.bundle in Resources */,
 				BC85EC2E1C5CC72A00BA74B1 /* ImageError@3x.png in Resources */,
+				EC1698EC1D2FB25B00E7BC68 /* vipcenter_banner.jpg in Resources */,
 				BC85EC441C5CC72A00BA74B1 /* UIBarButtonItemArrowRight.png in Resources */,
 				BC85EC421C5CC72A00BA74B1 /* UIBarButtonItemArrowLeft@2x.png in Resources */,
 				ECE00BA21CE99403001047C0 /* MessageDisplayKitString.strings in Resources */,
@@ -2978,8 +2982,8 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
-				CODE_SIGN_IDENTITY = "iPhone Developer: yu xie (2U88YJ8R27)";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: yu xie (2U88YJ8R27)";
+				CODE_SIGN_IDENTITY = "iPhone Distribution: Shandong Huali Motor Group Co., Ltd.";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: Shandong Huali Motor Group Co., Ltd.";
 				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
@@ -2996,7 +3000,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.yuepaoba.app;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "7ea96983-74be-4ab2-bc04-34b2d7e574dd";
+				PROVISIONING_PROFILE = "f33efcd9-2a1f-4aff-8ec5-a0777435e56a";
 				USER_HEADER_SEARCH_PATHS = "$(PODS_ROOT)/**";
 			};
 			name = Debug;
@@ -3007,8 +3011,8 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
-				CODE_SIGN_IDENTITY = "iPhone Developer: yu xie (2U88YJ8R27)";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: yu xie (2U88YJ8R27)";
+				CODE_SIGN_IDENTITY = "iPhone Distribution: Shandong Huali Motor Group Co., Ltd.";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: Shandong Huali Motor Group Co., Ltd.";
 				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
@@ -3026,7 +3030,7 @@
 				ONLY_ACTIVE_ARCH = YES;
 				PRODUCT_BUNDLE_IDENTIFIER = com.yuepaoba.app;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "7ea96983-74be-4ab2-bc04-34b2d7e574dd";
+				PROVISIONING_PROFILE = "f33efcd9-2a1f-4aff-8ec5-a0777435e56a";
 				USER_HEADER_SEARCH_PATHS = "$(PODS_ROOT)/**";
 			};
 			name = Release;

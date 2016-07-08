@@ -8,6 +8,14 @@
 
 #import <UIKit/UIKit.h>
 
+typedef void(^closePayView)(void);
+
 @interface YPBActivityPayView : UIView
+
+@property (nonatomic) closePayView closeBlock;
+
+@property (nonatomic) UIImage *img;
+
+@property (nonatomic) BOOL closeBtnHidden;
 
 @end

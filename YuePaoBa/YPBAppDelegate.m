@@ -56,11 +56,11 @@ DefineLazyPropertyInitialization(YPBWeChatPayQueryOrderRequest, wechatPayOrderQu
                                                        image:[UIImage imageNamed:@"tabbar_home_normal_icon"]
                                                selectedImage:[UIImage imageNamed:@"tabbar_home_selected_icon"]];
 
-    YPBVIPCenterViewController *vipCenterVC = [[YPBVIPCenterViewController alloc] initWithTitle:@"视频认证"];
+    YPBVIPCenterViewController *vipCenterVC = [[YPBVIPCenterViewController alloc] initWithTitle:@"VIP服务区"];
     UINavigationController *vipCenterNav = [[UINavigationController alloc] initWithRootViewController:vipCenterVC];
     vipCenterNav.tabBarItem = [[UITabBarItem alloc] initWithTitle:vipCenterVC.title
-                                                            image:[UIImage imageNamed:@"tabbar_video_normal_icon"]
-                                                    selectedImage:[UIImage imageNamed:@"tabbar_video_selected_icon"]];
+                                                            image:[UIImage imageNamed:@"tabbar_vip_normal_icon"]
+                                                    selectedImage:[UIImage imageNamed:@"tabbar_vip_selected_icon"]];
     
     YPBContactViewController *contactVC = [[YPBContactViewController alloc] initWithTitle:@"消息"];
     UINavigationController *contactNav = [[UINavigationController alloc] initWithRootViewController:contactVC];
@@ -236,13 +236,13 @@ DefineLazyPropertyInitialization(YPBWeChatPayQueryOrderRequest, wechatPayOrderQu
                 if ([trade_state isEqualToString:@"SUCCESS"]) {
                     [[YPBPaymentManager sharedManager] notifyPaymentResult:PAYRESULT_SUCCESS withPaymentInfo:paymentInfo];
                 } else {
-                    //[[YPBPaymentManager sharedManager] notifyPaymentResult:PAYRESULT_FAIL withPaymentInfo:paymentInfo];
+                    [[YPBPaymentManager sharedManager] notifyPaymentResult:PAYRESULT_FAIL withPaymentInfo:paymentInfo];
                 }
             }];
         } else {
-//            paymentInfo.paymentResult = @(PAYRESULT_FAIL);
-//            paymentInfo.paymentStatus = @(YPBPaymentStatusNotProcessed);
-//            [paymentInfo save];
+            paymentInfo.paymentResult = @(PAYRESULT_FAIL);
+            paymentInfo.paymentStatus = @(YPBPaymentStatusNotProcessed);
+            [paymentInfo save];
 //            [[NSNotificationCenter defaultCenter] postNotificationName:kVIPUpgradingNotification object:paymentInfo];
         }
     }];

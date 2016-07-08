@@ -15,6 +15,7 @@
 #import "YPBContact.h"
 #import "YPBVIPEntranceView.h"
 #import "YPBVIPPriviledgeViewController.h"
+#import "YPBActivityPayView.h"
 
 static NSString *const kVIPCellReusableIdentifier = @"VIPCellReusableIdentifier";
 
@@ -24,7 +25,7 @@ static NSString *const kVIPCellReusableIdentifier = @"VIPCellReusableIdentifier"
 }
 @property (nonatomic,retain) YPBUserListModel *userListModel;
 @property (nonatomic,retain) NSMutableArray<YPBUser *> *users;
-
+@property (nonatomic) YPBActivityPayView *payView;
 @property (nonatomic,retain) YPBUserAccessModel *userAccessModel;
 @end
 
@@ -72,17 +73,42 @@ DefineLazyPropertyInitialization(YPBUserAccessModel, userAccessModel)
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(onVIPUpgradeSuccessNotification) name:kVIPUpgradeSuccessNotification object:nil];
 }
 
-//- (void)viewDidAppear:(BOOL)animated {
-//    [super viewDidAppear:animated];
-//    if (![YPBUtil isVIP]) {
-//        @weakify(self);
-//        [YPBVIPEntranceView showVIPEntranceInView:self.view canClose:NO withEnterAction:^(id obj) {
-//            @strongify(self);
-//            YPBVIPPriviledgeViewController *vipVC = [[YPBVIPPriviledgeViewController alloc] init];
-//            [self.navigationController pushViewController:vipVC animated:YES];
-//        }];
-//    }
-//}
+- (void)viewDidAppear:(BOOL)animated {
+    [super viewDidAppear:animated];
+    @weakify(self);
+    if (![YPBUtil isVIP]) {
+        @strongify(self);
+        [self.view beginLoading];
+        if (!self.payView) {
+            _payView = [[YPBActivityPayView alloc] init];
+            [self.view addSubview:_payView];
+            self.payView.img = [UIImage imageNamed:@"vipcenter_banner.jpg"];
+            self.payView.closeBtnHidden = YES;
+            self.payView.closeBlock = ^(void) {
+                
+            };
+            
+            {
+                [_payView mas_makeConstraints:^(MASConstraintMaker *make) {
+                    make.centerX.equalTo(self.view);
+                    make.centerY.equalTo(self.view).offset(0);
+                    make.size.mas_equalTo(CGSizeMake(SCREEN_WIDTH*0.8, SCREEN_HEIGHT*0.6));
+                }];
+            }
+        } else {
+            self.payView.hidden = NO;
+        }
+
+    } else {
+        [self.view endLoading];
+    }
+}
+
+- (void)viewWillDisappear:(BOOL)animated {
+    if (self.payView) {
+        self.payView.hidden = YES;
+    }
+}
 
 - (void)loadDataWithRefresh:(BOOL)isRefresh {
     @weakify(self);

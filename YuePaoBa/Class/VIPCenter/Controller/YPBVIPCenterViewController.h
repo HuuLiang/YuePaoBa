@@ -8,6 +8,10 @@
 
 #import "YPBBaseViewController.h"
 
+
+
 @interface YPBVIPCenterViewController : YPBBaseViewController
+
+
 
 @end
