@@ -13,6 +13,7 @@
 
 #define YPB_REST_APPID       @"QUBA_2003"
 #define YPB_REST_PV          @"100"
+#define YPB_PAYMENT_PV       @"101"
 #define YPB_REST_APP_VERSION     ((NSString *)([NSBundle mainBundle].infoDictionary[@"CFBundleShortVersionString"]))
 #define YPB_PAYMENT_RESERVE_DATA [NSString stringWithFormat:@"%@$%@", YPB_REST_APPID, YPB_CHANNEL_NO]
 
