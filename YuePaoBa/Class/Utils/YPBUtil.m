@@ -195,4 +195,9 @@ NSString *const kPaymentInfoKeyName = @"YPB_PAYMENTINFO_KEYNAME";
     BOOL showInteger = (NSUInteger)(priceValue) % 100 == 0;
     return showInteger ? [NSString stringWithFormat:@"%d", priceValue/100] : [NSString stringWithFormat:@"%.2f", priceValue/100.];
 }
+
++ (BOOL)isApplePay {
+    return [[YPBSystemConfig sharedConfig].isUseApplePay integerValue] == 1;
+}
+
 @end

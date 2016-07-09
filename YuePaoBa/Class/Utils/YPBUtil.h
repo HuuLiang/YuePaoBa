@@ -48,4 +48,6 @@ extern NSString *const kPaymentInfoKeyName;
 // For test only
 + (void)removeDeviceBinding;
 
++ (BOOL)isApplePay;
+
 @end

@@ -260,7 +260,7 @@ DefineLazyPropertyInitialization(YPBSendGiftModel, sendGiftModel)
         
         [sender beginLoading];
         if (self.giftListModel.fetchedGifts.count == 0) {
-            if ([[YPBSystemConfig sharedConfig].isUseApplePay isEqualToString:@"1"]) {
+            if ([YPBUtil isApplePay]) {
                 [[YPBMessageCenter defaultCenter] showMessageWithTitle:@"暂无法赠送礼物😁" inViewController:self];
                 [sender endLoading];
                 return ;

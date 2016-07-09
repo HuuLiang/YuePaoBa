@@ -46,7 +46,7 @@
         _backgroundImage.image = [UIImage imageNamed:@"pay_153-1"];
         _priceLabel.text = @"3个月";
         _detailLabel.text = @"限时特惠:买3送3";
-        if ([[YPBSystemConfig sharedConfig].isUseApplePay isEqualToString:@"1"]) {
+        if ([YPBUtil isApplePay]) {
             _detailLabel.text = @"限时特惠:优惠50%";
         }
     }

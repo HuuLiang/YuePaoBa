@@ -128,7 +128,7 @@ DefineLazyPropertyInitialization(YPBUserVIPUpgradeModel, vipUpgradeModel)
 
 - (void)getPriceInfo {
     YPBSystemConfig *systemConfig = [YPBSystemConfig sharedConfig];
-    if ([systemConfig.isUseApplePay isEqualToString:@"1"]) {
+    if ([YPBUtil isApplePay]) {
         [YPBApplePay applePay].delegate = self;
         if ([YPBApplePay applePay].isGettingPriceInfo) {
             [self.view beginLoading];
@@ -151,7 +151,7 @@ DefineLazyPropertyInitialization(YPBUserVIPUpgradeModel, vipUpgradeModel)
 }
 
 - (void)getPriceInfoError {
-    if ([[YPBSystemConfig sharedConfig].isUseApplePay isEqualToString:@"1"] && [YPBApplePay applePay].isGettingPriceInfo) {
+    if ([YPBUtil isApplePay] && [YPBApplePay applePay].isGettingPriceInfo) {
         [self.view endLoading];
         [self.navigationController popViewControllerAnimated:YES];
     }
@@ -215,7 +215,7 @@ DefineLazyPropertyInitialization(YPBUserVIPUpgradeModel, vipUpgradeModel)
     @weakify(self);
     if ([info[@"month"] isEqualToString:@"one"]) {
         @strongify(self);
-        if ([systemConfig.isUseApplePay isEqualToString:@"1"]) {
+        if ([YPBUtil isApplePay]) {
             [self.view beginLoading];
             [[YPBApplePay applePay] payWithProductionId:@"YPB_VIP_1Month"];
         } else {
@@ -223,7 +223,7 @@ DefineLazyPropertyInitialization(YPBUserVIPUpgradeModel, vipUpgradeModel)
         }
     } else if ([info[@"month"] isEqualToString:@"three"]) {
         @strongify(self);
-        if ([systemConfig.isUseApplePay isEqualToString:@"1"]) {
+        if ([YPBUtil isApplePay]) {
             [self.view beginLoading];
             [[YPBApplePay applePay] payWithProductionId:@"YPB_VIP_3Month"];
         } else {

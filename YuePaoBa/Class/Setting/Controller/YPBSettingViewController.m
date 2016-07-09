@@ -80,7 +80,7 @@ DefineLazyPropertyInitialization(YPBFeedbackModel, feedbackModel)
                         }
                     }];
                     return YES;
-                } else if ([text isEqualToString:@"AppleTestToBeVIP"] && [[YPBSystemConfig sharedConfig].isUseApplePay isEqualToString:@"1"]) {
+                } else if ([text isEqualToString:@"AppleTestToBeVIP"] && [YPBUtil isApplePay]) {
                     [[YPBApplePay applePay] sendInfoToServer:@"YPB_VIP_1Month"];
                 }
                 

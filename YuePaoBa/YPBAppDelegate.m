@@ -183,7 +183,7 @@ DefineLazyPropertyInitialization(YPBWeChatPayQueryOrderRequest, wechatPayOrderQu
     [[YPBSystemConfigModel sharedModel] fetchSystemConfigWithCompletionHandler:^(BOOL success, id obj) {
         YPBSystemConfig *systemConfig = obj;
         [systemConfig persist];
-        if ([systemConfig.isUseApplePay isEqualToString:@"1"]) {
+        if ([YPBUtil isApplePay]) {
             [[YPBApplePay applePay] getProductionInfos];
             [YPBApplePay applePay].isGettingPriceInfo = YES;
         }

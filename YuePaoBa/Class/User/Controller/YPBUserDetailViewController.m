@@ -248,7 +248,7 @@ DefineLazyPropertyInitialization(YPBUserAccessModel, userAccessModel)
         [[YPBMessageCenter defaultCenter] showErrorWithTitle:@"无法获取用户信息" inViewController:self];
         return ;
     }
-    if ([[YPBSystemConfig sharedConfig].isUseApplePay isEqualToString:@"1"]) {
+    if ([YPBUtil isApplePay]) {
         [[YPBMessageCenter defaultCenter] showMessageWithTitle:@"暂无法赠送礼物😁" inViewController:self];
         return;
     }

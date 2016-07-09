@@ -122,7 +122,7 @@ DefineLazyPropertyInitialization(YPBFeedbackModel, feedbackModel)
 - (void)onPaymentCell {
     @weakify(self);
     NSArray *rows = @[@"支付宝",@"微信客户端支付"];
-    if ([[YPBSystemConfig sharedConfig].isUseApplePay isEqualToString:@"1"]) {
+    if ([YPBUtil isApplePay]) {
         rows = @[@"",@"苹果内购"];
     }
     NSUInteger index = [rows indexOfObject:_paymentTypeCell.subtitleLabel.text];

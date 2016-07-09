@@ -100,7 +100,7 @@ DefineLazyPropertyInitialization(YPBUserVIPUpgradeModel, vipUpgradeModel)
     if (result == PAYRESULT_SUCCESS) {
         NSUInteger month = paymentInfo.monthsPaid.unsignedIntegerValue;
         NSString *vipExpireTime = [YPBUtil renewVIPByMonths:month];
-        if (![[YPBSystemConfig sharedConfig].isUseApplePay isEqualToString:@"1"] && month == 3) {
+        if (![YPBUtil isApplePay] && month == 3) {
             vipExpireTime = [YPBUtil renewVIPByMonths:month*2];
         }
         [self.vipUpgradeModel upgradeToVIPWithExpireTime:vipExpireTime completionHandler:nil];
