@@ -116,6 +116,7 @@ DefineLazyPropertyInitialization(NSMutableArray, contacts);
         robotContact.userType = [NSNumber numberWithInteger:[YPBROBOTID integerValue]];
         robotContact.recentMessage = @"欢迎来到心动速配";
         robotContact.recentTime = [YPBUtil stringFromDate:[NSDate date]];
+        robotContact.unreadMessages = @(1);
         [robotContact persist];
         [self.contacts addObject:robotContact];
         

@@ -110,7 +110,10 @@ DefineLazyPropertyInitialization(YPBUserAccessQueryModel, accessQueryModel)
                 }
             }];
         }
+    } else {
+        [self performSelector:@selector(checkAccess) withObject:self afterDelay:20];
     }
+
     
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(onVIPUpgradeSuccessNotification:) name:kVIPUpgradeSuccessNotification object:nil];
     
@@ -306,13 +309,16 @@ DefineLazyPropertyInitialization(YPBUserAccessQueryModel, accessQueryModel)
                     //通知红娘小助手
                     self.contacts = [NSMutableArray arrayWithArray:[YPBContact allContacts]];
                     
-                    __block NSUInteger unreadMessages = 0;
                     [self.contacts enumerateObjectsUsingBlock:^(YPBContact * _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
-                        unreadMessages += obj.unreadMessages.unsignedIntegerValue;
                         if ([obj.userType isEqualToNumber:[NSNumber numberWithInteger:[YPBROBOTID integerValue]]]) {
+                            [obj beginUpdate];
+                            obj.unreadMessages = @(obj.unreadMessages.unsignedIntegerValue + 1);
+                            [obj endUpdate];
                             _isHaveRobot = YES;
                         }
                     }];
+                    
+                    
                     //添加红娘小助手
                     if (!_isHaveRobot) {
                         YPBContact *robotContact = [[YPBContact alloc] init];
@@ -323,6 +329,7 @@ DefineLazyPropertyInitialization(YPBUserAccessQueryModel, accessQueryModel)
                         robotContact.userType = [NSNumber numberWithInteger:[YPBROBOTID integerValue]];
                         robotContact.recentMessage = @"欢迎来到心动速配";
                         robotContact.recentTime = [YPBUtil stringFromDate:[NSDate date]];
+                        robotContact.unreadMessages = @(1);
                         [robotContact endUpdate];
                         [self.contacts addObject:robotContact];
                         
