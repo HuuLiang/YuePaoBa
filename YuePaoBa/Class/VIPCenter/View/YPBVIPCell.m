@@ -61,7 +61,7 @@
         
         _verifyLabel = [[UILabel alloc] init];
         _verifyLabel.textColor = [UIColor redColor];
-        _verifyLabel.text = @"直播已认证";
+        _verifyLabel.text = @"视频已认证";
         [_containerView addSubview:_verifyLabel];
         
         _verifyImageView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"fire_icon"]];

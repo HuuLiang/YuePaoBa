@@ -97,13 +97,18 @@ DefineLazyPropertyInitialization(NSMutableArray, contacts);
 - (void)reloadContactsWithUIReload:(BOOL)reloadUI {
     self.contacts = [NSMutableArray arrayWithArray:[YPBContact allContacts]];
     
+    //排序
+    [self sortContacts];
+    
     __block NSUInteger unreadMessages = 0;
     [self.contacts enumerateObjectsUsingBlock:^(YPBContact * _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
         unreadMessages += obj.unreadMessages.unsignedIntegerValue;
-        if ([obj.userType isEqualToNumber:[NSNumber numberWithInteger:76839]]) {
+        if ([obj.userId isEqual:YPBROBOTID]) {
             isHaveRobot = YES;
             if ([self.contacts indexOfObject:obj] != 0) {
-                [self.contacts exchangeObjectAtIndex:0 withObjectAtIndex:[self.contacts indexOfObject:obj]];
+                [self.contacts removeObject:obj];
+                [self.contacts insertObject:obj atIndex:0];
+//                [self.contacts exchangeObjectAtIndex:0 withObjectAtIndex:[self.contacts indexOfObject:obj]];
             }
         }
     }];
@@ -136,8 +141,17 @@ DefineLazyPropertyInitialization(NSMutableArray, contacts);
     }
     
     if (reloadUI) {
+        
         [_layoutTableView reloadData];
     }
+}
+
+- (void)sortContacts {
+    NSArray *array = [[NSArray alloc] initWithArray:self.contacts];
+    [self.contacts removeAllObjects];
+    NSSortDescriptor *sortDesc = [[NSSortDescriptor alloc] initWithKey:@"recentTime" ascending:NO];
+    NSArray *sortArr = [[NSArray alloc] initWithObjects:&sortDesc count:1];
+    [self.contacts addObjectsFromArray:[array sortedArrayUsingDescriptors:sortArr]];
 }
 
 - (void)onMessagePushNotification:(NSNotification *)notification {
