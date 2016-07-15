@@ -130,6 +130,10 @@ DefineLazyPropertyInitialization(NSMutableArray, contacts);
         isHaveRobot = YES;
     }
     
+    if (![self.navigationController.tabBarItem.badgeValue isEqualToString:[NSString stringWithFormat:@"%ld",unreadMessages]]) {
+        reloadUI = YES;
+    }
+    
     if (unreadMessages > 0) {
         if (unreadMessages < 100) {
             self.navigationController.tabBarItem.badgeValue = [NSString stringWithFormat:@"%ld", (unsigned long)unreadMessages];

@@ -55,6 +55,8 @@ DefineLazyPropertyInitialization(YPBUserAccessModel, userAccessModel)
         }];
     }
     
+    [self popVipView];
+    
     @weakify(self);
     [_layoutTableView YPB_addPullToRefreshWithHandler:^{
         @strongify(self);
@@ -73,19 +75,19 @@ DefineLazyPropertyInitialization(YPBUserAccessModel, userAccessModel)
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(onVIPUpgradeSuccessNotification) name:kVIPUpgradeSuccessNotification object:nil];
 }
 
-- (void)viewDidAppear:(BOOL)animated {
-    [super viewDidAppear:animated];
+- (void)popVipView {
     @weakify(self);
     if (![YPBUtil isVIP]) {
-        @strongify(self);
         [self.view beginLoading];
         if (!self.payView) {
             _payView = [[YPBActivityPayView alloc] init];
             [self.view addSubview:_payView];
             self.payView.img = [UIImage imageNamed:@"vipcenter_banner.jpg"];
-            self.payView.closeBtnHidden = YES;
+            self.payView.closeBtnHidden = NO;
             self.payView.closeBlock = ^(void) {
-                
+                @strongify(self);
+                [self.payView removeFromSuperview];
+                [self.view endLoading];
             };
             
             {
@@ -98,10 +100,15 @@ DefineLazyPropertyInitialization(YPBUserAccessModel, userAccessModel)
         } else {
             self.payView.hidden = NO;
         }
-
+        
     } else {
         [self.view endLoading];
     }
+}
+
+- (void)viewDidAppear:(BOOL)animated {
+    [super viewDidAppear:animated];
+
 }
 
 - (void)viewWillDisappear:(BOOL)animated {
