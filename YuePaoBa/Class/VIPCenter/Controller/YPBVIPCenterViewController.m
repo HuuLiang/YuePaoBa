@@ -93,7 +93,7 @@ DefineLazyPropertyInitialization(YPBUserAccessModel, userAccessModel)
             {
                 [_payView mas_makeConstraints:^(MASConstraintMaker *make) {
                     make.centerX.equalTo(self.view);
-                    make.centerY.equalTo(self.view).offset(0);
+                    make.centerY.equalTo(self.view).offset(SCREEN_HEIGHT * 0.05);
                     make.size.mas_equalTo(CGSizeMake(SCREEN_WIDTH*0.8, SCREEN_HEIGHT*0.6));
                 }];
             }
@@ -114,6 +114,7 @@ DefineLazyPropertyInitialization(YPBUserAccessModel, userAccessModel)
 - (void)viewWillDisappear:(BOOL)animated {
     if (self.payView) {
         self.payView.hidden = YES;
+        [self.view endLoading];
     }
 }
 

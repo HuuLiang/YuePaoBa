@@ -15,7 +15,8 @@
 #import "YPBPaymentModel.h"
 #import "AlipayManager.h"
 #import "YPBPaymentIssueReportViewController.h"
-#import "YPBPayCell.h"
+//#import "YPBPayCell.h"
+#import "YPBVIPPayView.h"
 #import "YPBPayIntroduceView.h"
 
 
@@ -24,8 +25,8 @@
     UIImageView *_backgroundImageView;
     UIButton *_feedbackButton;
     YPBPayIntroduceView *_introduceView;
-    NSMutableArray *_dataSource;
-    UITableView *_payTableView;
+//    NSMutableArray *_dataSource;
+//    UITableView *_payTableView;
     UIView *_labelView;
     NSInteger _count;
     NSTimer *_timer;
@@ -58,11 +59,11 @@ DefineLazyPropertyInitialization(NSMutableArray, userNames);
     self.view.backgroundColor = [UIColor colorWithHexString:@"#f6f7ec"];
     self.edgesForExtendedLayout = UIRectEdgeNone;
     
-    _dataSource = [[NSMutableArray alloc] init];
-    NSString *oneMonth = @"one";
-    NSString *threeMonth = @"three";
-    [_dataSource addObject:threeMonth];
-    [_dataSource addObject:oneMonth];
+//    _dataSource = [[NSMutableArray alloc] init];
+//    NSString *oneMonth = @"one";
+//    NSString *threeMonth = @"three";
+//    [_dataSource addObject:threeMonth];
+//    [_dataSource addObject:oneMonth];
 
     UILabel *notiLabel = [[UILabel alloc] init];
     notiLabel.text = @"开通VIP可24小时无限制聊天";
@@ -104,43 +105,63 @@ DefineLazyPropertyInitialization(NSMutableArray, userNames);
     
     
     //购买选项
-    _payTableView = [[UITableView alloc] init];
+    YPBVIPPayView *payView = [[YPBVIPPayView alloc] init];
+    @weakify(self);
+    payView.payWithInfoBlock = ^(NSUInteger price ,NSUInteger months) {
+        @strongify(self);
+        [self popPaymentViewWithPrice:price forMonths:months];
+    };
+    [self.view addSubview:payView];
     
-    _payTableView.hasRowSeparator = YES;
-    _payTableView.hasSectionBorder = YES;
-    [_payTableView setSeparatorColor:[UIColor colorWithWhite:0.95 alpha:1]];
-    
-    _payTableView.scrollEnabled = NO;
-    _payTableView.delegate = self;
-    _payTableView.dataSource = self;
-    [_payTableView registerClass:[YPBPayCell class] forCellReuseIdentifier:@"cellID"];
-    
-    UIView *payHearderView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, 19)];
-    payHearderView.backgroundColor = [UIColor colorWithHexString:@"#f6f7ec"];
-    UILabel *paylabel = [[UILabel alloc] init];
-    paylabel.textColor = [UIColor grayColor];
-    paylabel.backgroundColor = [UIColor colorWithHexString:@"fffffd"];
-    paylabel.text = @"   选择钻石VIP套餐";
-    paylabel.font = [UIFont systemFontOfSize:13.];
-    [payHearderView addSubview:paylabel];
-    _payTableView.tableHeaderView = payHearderView;
-    [self.view addSubview:_payTableView];
-    {
-        [paylabel mas_makeConstraints:^(MASConstraintMaker *make) {
-            make.left.right.equalTo(payHearderView);
-            make.centerY.equalTo(payHearderView.mas_centerY).offset(-0.5);
-            make.height.equalTo(@(18));
-        }];
-    }
+//    _payTableView = [[UITableView alloc] init];
+//    
+//    _payTableView.hasRowSeparator = YES;
+//    _payTableView.hasSectionBorder = YES;
+//    [_payTableView setSeparatorColor:[UIColor colorWithWhite:0.95 alpha:1]];
+//    
+//    _payTableView.scrollEnabled = NO;
+//    _payTableView.delegate = self;
+//    _payTableView.dataSource = self;
+//    [_payTableView registerClass:[YPBPayCell class] forCellReuseIdentifier:@"cellID"];
+//    
+//    UIView *payHearderView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, 19)];
+//    payHearderView.backgroundColor = [UIColor colorWithHexString:@"#f6f7ec"];
+//    
+//    UIView *lineView = [[UIView alloc] init];
+//    lineView.backgroundColor = [UIColor colorWithHexString:@"#ff6633"];
+//    [payHearderView addSubview:lineView];
+//    
+//    UILabel *paylabel = [[UILabel alloc] init];
+//    paylabel.textColor = [UIColor colorWithHexString:@"#333333"];
+//    paylabel.backgroundColor = [UIColor colorWithHexString:@"fffffd"];
+//    paylabel.text = @"  选择钻石VIP套餐";
+//    paylabel.font = [UIFont systemFontOfSize:kScreenHeight * 24 / 1334.];
+//    [payHearderView addSubview:paylabel];
+//    
+//    _payTableView.tableHeaderView = payHearderView;
+//    [self.view addSubview:_payTableView];
+//    {
+//        [lineView mas_makeConstraints:^(MASConstraintMaker *make) {
+//            make.left.equalTo(payHearderView).offset(kScreenWidth * 10 / 750.);
+//            make.centerY.equalTo(payHearderView.mas_centerY);
+//            make.size.mas_equalTo(CGSizeMake(kScreenWidth * 4 / 750., kScreenHeight * 30 / 1334.));
+//        }];
+//        
+//        [paylabel mas_makeConstraints:^(MASConstraintMaker *make) {
+//            make.left.equalTo(lineView.mas_right).offset(2);
+//            make.right.equalTo(payHearderView);
+//            make.centerY.equalTo(lineView.mas_centerY);
+//            make.height.equalTo(@(kScreenHeight * 30 / 1334.));
+//        }];
+//    }
     
     //会员特权说明
-    _introduceView = [[YPBPayIntroduceView alloc] initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, 100)];
+    _introduceView = [[YPBPayIntroduceView alloc] initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, 130)];
     [self.view addSubview:_introduceView];
 
     
     _labelView = [[UIView alloc] init];
     _labelView.backgroundColor = [UIColor colorWithHexString:@"fffffd"];
-//    _labelView.backgroundColor = [UIColor cyanColor];
     [self.view addSubview:_labelView];
     _userNames = [NSMutableArray arrayWithArray:[YPBSystemConfig sharedConfig].userNames];
     _count = 0;
@@ -201,16 +222,16 @@ DefineLazyPropertyInitialization(NSMutableArray, userNames);
             make.height.equalTo(@(SCREEN_WIDTH/4+10));
         }];
         
-        [_payTableView mas_makeConstraints:^(MASConstraintMaker *make) {
+        [payView mas_makeConstraints:^(MASConstraintMaker *make) {
             make.left.right.equalTo(self.view);
             make.top.equalTo(_backgroundImageView.mas_bottom).offset(5);
-            make.height.equalTo(@(SCREEN_HEIGHT*2/11+18));
+            make.height.equalTo(@(SCREEN_HEIGHT*3/14+kScreenHeight * 30 / 1334.));
         }];
         
         [_introduceView mas_makeConstraints:^(MASConstraintMaker *make) {
             make.left.right.equalTo(self.view);
-            make.top.equalTo(_payTableView.mas_bottom).offset(5);
-            make.height.equalTo(@(100));
+            make.top.equalTo(payView.mas_bottom).offset(5);
+            make.height.equalTo(@(kScreenHeight * 30 / 1334. + 105));
         }];
         
         [_labelView mas_makeConstraints:^(MASConstraintMaker *make) {
@@ -262,25 +283,14 @@ DefineLazyPropertyInitialization(NSMutableArray, userNames);
     vipLabel.attributedText = attributedStr;
     vipLabel.frame = CGRectMake(5, _labelView.frame.size.height, SCREEN_WIDTH, 15);
     [_labelView addSubview:vipLabel];
-//    {
-//        [vipLabel mas_makeConstraints:^(MASConstraintMaker *make) {
-//            make.left.equalTo(_labelView).offset(5);
-//            make.top.equalTo(_labelView.mas_bottom);
-//            make.size.mas_equalTo(CGSizeMake(SCREEN_WIDTH, 15));
-//        }];
-//    }
-    
-//    DLog("%@ \n %@",NSStringFromCGRect(_labelView.frame),NSStringFromCGRect(vipLabel.frame));
+
     
     [UIView animateWithDuration:4.5 delay:0 options:UIViewAnimationOptionCurveLinear
                      animations:^{
                          vipLabel.transform = CGAffineTransformMakeTranslation(0, -kLabelViewHeight);
-//                         vipLabel.frame = CGRectMake(5, 0, SCREEN_WIDTH, 15);
-
                      } completion:^(BOOL finished) {
                          [UIView animateWithDuration:0.2 delay:0 options:UIViewAnimationOptionCurveLinear
                                           animations:^{
-//                                              vipLabel.frame = CGRectMake(5, 0, SCREEN_WIDTH, 15);
                                               vipLabel.transform = CGAffineTransformMakeTranslation(0, -kLabelViewHeight);
                                               vipLabel.alpha = 0.1;
                                           } completion:^(BOOL finished) {
@@ -363,29 +373,29 @@ DefineLazyPropertyInitialization(NSMutableArray, userNames);
     }
 }
 
-#pragma mark - UITableViewDelegate
-
-- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    return _dataSource.count;
-}
-
-- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    YPBPayCell *cell = [tableView dequeueReusableCellWithIdentifier:@"cellID" forIndexPath:indexPath];
-    [cell setCellInfoWithMonth:_dataSource[indexPath.row]];
-    [cell.payButton bk_addEventHandler:^(id sender) {
-        [self payWithInfo:_dataSource[indexPath.row]];
-    } forControlEvents:UIControlEventTouchUpInside];
-    cell.selectionStyle = UITableViewCellSelectionStyleNone;
-    return cell;
-}
-
-- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
-    [self payWithInfo:_dataSource[indexPath.row]];
-}
-
-- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
-    return SCREEN_HEIGHT*1/11;
-}
+//#pragma mark - UITableViewDelegate
+//
+//- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
+//    return _dataSource.count;
+//}
+//
+//- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
+//    YPBPayCell *cell = [tableView dequeueReusableCellWithIdentifier:@"cellID" forIndexPath:indexPath];
+//    [cell setCellInfoWithMonth:_dataSource[indexPath.row]];
+//    [cell.payButton bk_addEventHandler:^(id sender) {
+//        [self payWithInfo:_dataSource[indexPath.row]];
+//    } forControlEvents:UIControlEventTouchUpInside];
+//    cell.selectionStyle = UITableViewCellSelectionStyleNone;
+//    return cell;
+//}
+//
+//- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
+//    [self payWithInfo:_dataSource[indexPath.row]];
+//}
+//
+//- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
+//    return SCREEN_HEIGHT*1/11;
+//}
 
 - (void)onVIPUpgradeSuccessNotification {
     [self.navigationController popToRootViewControllerAnimated:YES];

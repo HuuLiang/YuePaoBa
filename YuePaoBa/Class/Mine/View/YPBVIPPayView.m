@@ -1,153 +1,125 @@
 //
-//  YPBActivityPayView.m
+//  YPBVIPPayView.m
 //  YuePaoBa
 //
-//  Created by Liang on 16/5/14.
+//  Created by Liang on 16/7/16.
 //  Copyright © 2016年 iqu8. All rights reserved.
 //
 
-#import "YPBActivityPayView.h"
-#import "YPBPaymentModel.h"
-#import "YPBVIPPriviledgeViewController.h"
+#import "YPBVIPPayView.h"
 #import "YPBSystemConfig.h"
 
-@interface YPBActivityPayView ()
+@interface YPBVIPPayView ()
 {
-    UIButton        *_closeBtn;
-    UIImageView     *_bgImg;
-    
     UITableViewCell *_payYearCell;
     UITableViewCell *_payMonthsCell;
-    
-    UITableViewCell *_wxPayCell;
-    UITableViewCell *_aliPayCell;
     
     UIButton        *_monthBtn;
     UIButton        *_seasonBtn;
     UIButton        *_yearBtn;
     
     NSInteger        price;
+    
+    NSUInteger       _month;
 }
-@property (nonatomic,retain) YPBVIPPriviledgeViewController *vipView;
 @property (nonatomic,retain) YPBSystemConfig *payConfig;
 @end
 
-@implementation YPBActivityPayView
-
-//DefineLazyPropertyInitialization(YPBVIPPriviledgeViewController, vipView);
+@implementation YPBVIPPayView
+DefineLazyPropertyInitialization(YPBSystemConfig, payConfig)
 
 - (instancetype)init
 {
     self = [super init];
     if (self) {
+        self.backgroundColor = [UIColor colorWithHexString:@"#f6f7ec"];
         
-        _payConfig = [YPBSystemConfig sharedConfig];
+        self.payConfig = [YPBSystemConfig sharedConfig];
         
-        self.backgroundColor = [UIColor whiteColor];
-        self.layer.cornerRadius = 5;
-        self.layer.masksToBounds = YES;
-        self.layer.borderColor = [UIColor clearColor].CGColor;
-        self.layer.borderWidth = 0.5f;
+        UIView *lineView = [[UIView alloc] init];
+        lineView.backgroundColor = [UIColor colorWithHexString:@"#ff6633"];
+        [self addSubview:lineView];
         
-        _bgImg = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"vipcenter_banner.jpg"]];
-        [self addSubview:_bgImg];
-        
-        _closeBtn = [[UIButton alloc] init];
-        [_closeBtn setBackgroundImage:[UIImage imageNamed:@"vip_payview_close"] forState:UIControlStateNormal];
-        [self addSubview:_closeBtn];
-        {
-            [_closeBtn bk_whenTapped:^{
-                _closeBlock();
-            }];
-        }
-        
+        UILabel *paylabel = [[UILabel alloc] init];
+        paylabel.textColor = [UIColor colorWithHexString:@"#333333"];
+        paylabel.backgroundColor = [UIColor colorWithHexString:@"fffffd"];
+        paylabel.text = @"  选择钻石VIP套餐";
+        paylabel.font = [UIFont systemFontOfSize:kScreenHeight * 24 / 1334.];
+        [self addSubview:paylabel];
         
         [self initPayYearCell];
         
         [self initPayMonthsCell];
+        
+        UIView *view = [[UIView alloc] init];
+        view.backgroundColor = [UIColor colorWithHexString:@"#fffffd"];
+        [self addSubview:view];
+        
+        UIButton *payBtn = [UIButton buttonWithType:UIButtonTypeCustom];
+        UIImage *image = [UIImage imageNamed:[YPBUtil isVIP] ? @"vip_payment_button_isvip" :@"vip_payment_button_pay"];
+        [payBtn setBackgroundImage:image forState:UIControlStateNormal];
+        [payBtn setBackgroundImage:image forState:UIControlStateSelected];
+        [view addSubview:payBtn];
+        
+        {
+            [lineView mas_makeConstraints:^(MASConstraintMaker *make) {
+                make.left.equalTo(self).offset(kScreenWidth * 10 / 750.);
+                make.top.equalTo(self).offset(2);
+                make.size.mas_equalTo(CGSizeMake(kScreenWidth * 4 / 750., kScreenHeight * 30 / 1334.));
+            }];
+            
+            [paylabel mas_makeConstraints:^(MASConstraintMaker *make) {
+                make.left.equalTo(lineView.mas_right).offset(2);
+                make.right.equalTo(self);
+                make.centerY.equalTo(lineView.mas_centerY);
+                make.height.equalTo(@(kScreenHeight * 30 / 1334.));
+            }];
+            
+            [_payYearCell mas_makeConstraints:^(MASConstraintMaker *make) {
+                make.top.equalTo(lineView.mas_bottom);
+                make.left.right.equalTo(self);
+                make.height.equalTo(@(SCREEN_HEIGHT/14));
+            }];
+            
+            [_payMonthsCell mas_makeConstraints:^(MASConstraintMaker *make) {
+                make.top.equalTo(_payYearCell.mas_bottom).offset(-1);
+                make.left.right.equalTo(self);
+                make.height.equalTo(@(SCREEN_HEIGHT/14));
+            }];
+            
+            [view mas_makeConstraints:^(MASConstraintMaker *make) {
+                make.top.equalTo(_payMonthsCell.mas_bottom);
+                make.left.right.bottom.equalTo(self);
+            }];
+            
+            [payBtn mas_makeConstraints:^(MASConstraintMaker *make) {
+                make.center.mas_equalTo(view);
+                make.height.equalTo(@(SCREEN_HEIGHT/14*0.7));
+                make.width.equalTo(payBtn.mas_height).multipliedBy(image.size.width/image.size.height);
+            }];
+            
+        }
         
         _yearBtn.selected = YES;
         _seasonBtn.selected = NO;
         _monthBtn.selected = NO;
         
         price = [_payConfig.vipPointDictionary[@"12"] integerValue];
+        _month = 12;
         
-        _wxPayCell = [[UITableViewCell alloc] init];
-        _wxPayCell.layer.borderWidth = 0.5;
-        _wxPayCell.layer.borderColor = [UIColor lightGrayColor].CGColor;
-        _wxPayCell.layer.masksToBounds = YES;
-        [self addSubview:_wxPayCell];
-        [self initCell:_wxPayCell WithImage:@"vip_wechat_icon" Title:@"微信支付"];
         
-        _aliPayCell = [[UITableViewCell alloc] init];
-        _aliPayCell.layer.borderWidth = 0.5;
-        _aliPayCell.layer.borderColor = [UIColor lightGrayColor].CGColor;
-        _aliPayCell.layer.cornerRadius = 10;
-        [self addSubview:_aliPayCell];
-        [self initCell:_aliPayCell WithImage:@"vip_alipay_icon" Title:@"支付宝支付"];
-        
-        [_bgImg mas_makeConstraints:^(MASConstraintMaker *make) {
-            make.left.top.right.equalTo(self);
-            make.height.equalTo(@(SCREEN_WIDTH*0.8*0.55));
-        }];
-        
-        [_closeBtn mas_makeConstraints:^(MASConstraintMaker *make) {
-            make.right.equalTo(self.mas_right).offset(10);
-            make.top.equalTo(self.mas_top).offset(-10);
-            make.size.mas_equalTo(CGSizeMake(40, 40));
-        }];
-        
-        [_payYearCell mas_makeConstraints:^(MASConstraintMaker *make) {
-            make.top.equalTo(_bgImg.mas_bottom);
-            make.left.right.equalTo(self);
-            make.height.equalTo(@((SCREEN_HEIGHT*0.6-SCREEN_WIDTH*0.8*0.55)/4 - 5));
-        }];
-        
-        [_payMonthsCell mas_makeConstraints:^(MASConstraintMaker *make) {
-            make.top.equalTo(_payYearCell.mas_bottom);
-            make.left.right.equalTo(self);
-            make.height.equalTo(@((SCREEN_HEIGHT*0.6-SCREEN_WIDTH*0.8*0.55)/4-5 - 5));
-        }];
-        
-        [_wxPayCell mas_makeConstraints:^(MASConstraintMaker *make) {
-            make.top.equalTo(_payMonthsCell.mas_bottom);
-            make.left.right.equalTo(self);
-            make.height.mas_equalTo(@((SCREEN_HEIGHT*0.6-SCREEN_WIDTH*0.8*0.55)/4 + 5));
-        }];
-        
-        [_aliPayCell mas_makeConstraints:^(MASConstraintMaker *make) {
-            make.top.equalTo(_wxPayCell.mas_bottom);
-            make.left.right.bottom.equalTo(self);
-            make.height.mas_equalTo(@((SCREEN_HEIGHT*0.6-SCREEN_WIDTH*0.8*0.55)/4 + 5));
-            
-        }];
+        [payBtn bk_addEventHandler:^(id sender) {
+            _payWithInfoBlock(price,_month);
+        } forControlEvents:UIControlEventTouchUpInside];
         
     }
     return self;
 }
 
-- (void)payWithPaymentType:(YPBPaymentType)type {
-    self.vipView = [[YPBVIPPriviledgeViewController alloc] initWithContentType:YPBPaymnetContentTypeActivity];
-    NSInteger month = 1;
-    if (_yearBtn.selected) {
-        month = 12;
-    } else if (_seasonBtn.selected) {
-        month = 3;
-    } else if (_monthBtn.selected) {
-        month = 1;
-    }
-    
-#if DEBUG
-    price = 1;
-#endif
-    [self.vipView payWithPrice:price paymentType:type forMonths:month];
-}
-
-
 - (void)initPayYearCell {
     _payYearCell = [[UITableViewCell alloc] init];
-    _payYearCell.layer.borderWidth = 0.5;
-    _payYearCell.layer.borderColor = [UIColor lightGrayColor].CGColor;
+    _payYearCell.layer.borderWidth = 1.0f;
+    _payYearCell.layer.borderColor = [UIColor colorWithHexString:@"#f6f7ec"].CGColor;
     [self addSubview:_payYearCell];
     _payYearCell.backgroundColor = [UIColor colorWithHexString:@"#fffffd"];
     _payYearCell.selectionStyle = UITableViewCellSelectionStyleNone;
@@ -168,7 +140,7 @@
     NSRange yearRangge = [yearString rangeOfString:[NSString stringWithFormat:@"返100元话费!!!"]];
     if (yearRangge.location != NSNotFound) {
         [yearAttributedStr addAttribute:NSForegroundColorAttributeName
-                                   value:[UIColor redColor] range:yearRangge];
+                                  value:[UIColor redColor] range:yearRangge];
     }
     yearLabel.attributedText = yearAttributedStr;
     [_payYearCell addSubview:yearLabel];
@@ -181,6 +153,7 @@
             _seasonBtn.selected = NO;
             _monthBtn.selected = NO;
             price = [_payConfig.vipPointDictionary[@"12"] integerValue];
+            _month = 12;
         }
     }];
     
@@ -204,8 +177,8 @@
 - (void)initPayMonthsCell {
     _payMonthsCell = [[UITableViewCell alloc] init];
     [self addSubview:_payMonthsCell];
-    _payMonthsCell.layer.borderWidth = 0.5f;
-    _payMonthsCell.layer.borderColor = [UIColor lightGrayColor].CGColor;
+    _payMonthsCell.layer.borderWidth = 1.0f;
+    _payMonthsCell.layer.borderColor = [UIColor colorWithHexString:@"#f6f7ec"].CGColor;
     _payMonthsCell.backgroundColor = [UIColor colorWithHexString:@"#fffffd"];
     _payMonthsCell.selectionStyle = UITableViewCellSelectionStyleNone;
     
@@ -233,6 +206,7 @@
             _seasonBtn.selected = YES;
             _monthBtn.selected = NO;
             price = [_payConfig.vipPointDictionary[@"3"] integerValue];
+            _month = 3;
         }
     }];
     
@@ -243,6 +217,7 @@
             _seasonBtn.selected = NO;
             _monthBtn.selected = YES;
             price = [_payConfig.vipPointDictionary[@"1"] integerValue];
+            _month = 1;
         }
     }];
     
@@ -256,7 +231,7 @@
     NSRange seasonRangge = [seasonString rangeOfString:[NSString stringWithFormat:@"返20元话费"]];
     if (seasonRangge.location != NSNotFound) {
         [seasonAttributedStr addAttributes:@{NSForegroundColorAttributeName:[UIColor colorWithHexString:@"#666666"],
-                                            NSFontAttributeName:[UIFont systemFontOfSize:kScreenWidth * 24 / 750.]} range:seasonRangge
+                                             NSFontAttributeName:[UIFont systemFontOfSize:kScreenWidth * 24 / 750.]} range:seasonRangge
          ];
     }
     seasonLabel.attributedText = seasonAttributedStr;
@@ -272,7 +247,7 @@
     NSRange monthRangge = [monthString rangeOfString:[NSString stringWithFormat:@"返10元话费"]];
     if (monthRangge.location != NSNotFound) {
         [monthAttributedStr addAttribute:NSFontAttributeName
-                              value:[UIFont systemFontOfSize:kScreenWidth * 24 / 750.] range:monthRangge];
+                                   value:[UIFont systemFontOfSize:kScreenWidth * 24 / 750.] range:monthRangge];
     }
     monthLabel.attributedText = monthAttributedStr;
     [_payMonthsCell addSubview:monthLabel];
@@ -306,68 +281,5 @@
     
 }
 
-- (void)initCell:(UITableViewCell *)cell WithImage:(NSString *)imageName Title:(NSString *)title {
-    UIImageView *imgV = [[UIImageView alloc] initWithImage:[UIImage imageNamed:imageName]];
-    [cell addSubview:imgV];
-    
-    UILabel * label = [[UILabel alloc] init];
-    label.text = title;
-    label.font = [UIFont systemFontOfSize:13.];
-    //    label.backgroundColor = [UIColor redColor];
-    [cell addSubview:label];
-    
-    UIButton *payBtn = [UIButton buttonWithType:UIButtonTypeCustom];
-    UIImage *image = [UIImage imageNamed:@"vip_payment_button_pay"];
-    [payBtn setBackgroundImage:image forState:UIControlStateNormal];
-    [payBtn setBackgroundImage:[UIImage imageNamed:@"vip_payment_button_pay"] forState:UIControlStateSelected];
-    [cell addSubview:payBtn];
-    
-    [cell bk_whenTapped:^{
-        if (cell == _wxPayCell) {
-            [self payWithPaymentType:YPBPaymentTypeWeChatPay];
-        } else if (cell == _aliPayCell) {
-            [self payWithPaymentType:YPBPaymentTypeAlipay];
-        }
-    }];
-    
-    [payBtn bk_whenTapped:^{
-        if (cell == _wxPayCell) {
-            [self payWithPaymentType:YPBPaymentTypeWeChatPay];
-        } else if (cell == _aliPayCell) {
-            [self payWithPaymentType:YPBPaymentTypeAlipay];
-        }
-    }];
-    
-    {
-        [imgV mas_makeConstraints:^(MASConstraintMaker *make) {
-            make.centerY.equalTo(cell);
-            make.left.equalTo(cell).offset(cell.frame.size.width/20.);
-            make.size.mas_equalTo(CGSizeMake(cell.frame.size.height*0.9, cell.frame.size.height*0.9));
-        }];
-        
-        [label mas_makeConstraints:^(MASConstraintMaker *make) {
-            make.centerY.equalTo(cell);
-            make.left.equalTo(imgV.mas_right).offset(10);
-            make.size.mas_equalTo(CGSizeMake(80, cell.frame.size.height*0.8));
-        }];
-        
-        [payBtn mas_makeConstraints:^(MASConstraintMaker *make) {
-            make.centerY.equalTo(cell);
-            make.right.equalTo(cell).offset(-cell.frame.size.width/20.);
-            make.height.equalTo(@(cell.frame.size.height*0.9/1.5));
-            make.width.equalTo(payBtn.mas_height).multipliedBy(image.size.width/image.size.height);
-        }];
-    }
-}
-
-
-
--(void)setImg:(UIImage *)img {
-    _bgImg.image = img;
-}
-
-- (void)setCloseBtnHidden:(BOOL)closeBtnHidden {
-    _closeBtn.hidden = closeBtnHidden;
-}
 
 @end

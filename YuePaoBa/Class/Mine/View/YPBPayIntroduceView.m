@@ -25,61 +25,67 @@
 
 - (UIView *)createViewWithImage:(UIImage *)image string:(NSString *)str {
     UIView *view = [[UIView alloc] init];
-    
-    UIView *serveView = [[UIView alloc] init];
-    serveView.userInteractionEnabled = YES;
-    serveView.layer.cornerRadius = 23;
-    serveView.layer.borderWidth = 0;
-    serveView.layer.borderColor = [UIColor lightGrayColor].CGColor;
-    serveView.layer.masksToBounds = YES;
-    [view addSubview:serveView];
+    view.backgroundColor = [UIColor colorWithHexString:@"#fffffd"];
+//    UIView *serveView = [[UIView alloc] init];
+//    serveView.userInteractionEnabled = YES;
+//    serveView.layer.cornerRadius = 23;
+//    serveView.layer.borderWidth = 0;
+//    serveView.layer.borderColor = [UIColor lightGrayColor].CGColor;
+//    serveView.layer.masksToBounds = YES;
+//    [view addSubview:serveView];
     
     UIImageView *serveImg = [[UIImageView alloc] initWithImage:image];
     serveImg.transform = CGAffineTransformMakeScale(1.0, 1.0);
-    [serveView addSubview:serveImg];
+    [view addSubview:serveImg];
     
     UILabel *label = [[UILabel alloc] init];
     label.font = [UIFont systemFontOfSize:9.];
-    label.textAlignment = NSTextAlignmentCenter;
+    label.textAlignment = NSTextAlignmentLeft;
     label.text = str;
+    label.numberOfLines = 0;
     [view addSubview:label];
     
     {
-        [serveView mas_makeConstraints:^(MASConstraintMaker *make) {
-            make.centerX.equalTo(view);
-            make.centerY.equalTo(view).offset(-10);
-            make.size.mas_equalTo(CGSizeMake(46, 46));
-        }];
-        
         [serveImg mas_makeConstraints:^(MASConstraintMaker *make) {
-            make.center.equalTo(serveView);
+            make.centerY.equalTo(view);
+            make.left.equalTo(view).offset(10);
+            make.size.mas_equalTo(CGSizeMake(30, 30));
         }];
         
         [label mas_makeConstraints:^(MASConstraintMaker *make) {
-            make.centerX.equalTo(serveView);
-            make.top.equalTo(serveView.mas_bottom).offset(5);
-            make.size.mas_equalTo(CGSizeMake(100, 15));
+            make.centerY.equalTo(view);
+            make.left.equalTo(serveImg.mas_right).offset(10);
+            make.size.mas_equalTo(CGSizeMake(SCREEN_WIDTH/2 - 70, 30));
         }];
     }
     return view;
 }
 
 - (void)layoutIntroduceView {
+    UIView *lineView = [[UIView alloc] init];
+    lineView.backgroundColor = [UIColor colorWithHexString:@"#ff6633"];
+    [self addSubview:lineView];
+    
     UILabel *notiLabel = [[UILabel alloc] init];
-    notiLabel.text = @"   钻石VIP特权";
-    notiLabel.textColor = [UIColor grayColor];
-    notiLabel.font = [UIFont systemFontOfSize:13.];
+    notiLabel.text = @"  钻石VIP特权";
+    notiLabel.textColor = [UIColor colorWithHexString:@"#333333"];
+    notiLabel.font = [UIFont systemFontOfSize:kScreenHeight * 24 / 1334.];
     notiLabel.backgroundColor = [UIColor colorWithHexString:@"#fffffd"];
     [self addSubview:notiLabel];
     
     UIView * view = [[UIView alloc] init];
-    view.backgroundColor = [UIColor colorWithHexString:@"#fffffd"];
+//    view.backgroundColor = [UIColor colorWithHexString:@"#fffffd"];
     [self addSubview:view];
     
-    UIView *viewA = [self createViewWithImage:[UIImage imageNamed:@"vip_payment_A"] string:@"免费查看用户相册"];
-    UIView *viewB = [self createViewWithImage:[UIImage imageNamed:@"vip_payment_B"] string:@"免费查看用户视频"];
-    UIView *viewC = [self createViewWithImage:[UIImage imageNamed:@"vip_payment_C"] string:@"24小时与用户聊天"];
-    UIView *viewD = [self createViewWithImage:[UIImage imageNamed:@"vip_payment_D"] string:@"免费查看联系方式"];
+    UIView *viewA = [self createViewWithImage:[UIImage imageNamed:@"vip_payment_A"] string:@"私密照片全部解锁"];
+    UIView *viewB = [self createViewWithImage:[UIImage imageNamed:@"vip_payment_B"] string:@"私房视频即时观看"];
+    
+    UIView *smallline = [[UIView alloc] init];
+    smallline.backgroundColor = [UIColor colorWithHexString:@"#f6f7ec"];
+    [view addSubview:smallline];
+    
+    UIView *viewC = [self createViewWithImage:[UIImage imageNamed:@"vip_payment_C"] string:@"24小时全时段聊天"];
+    UIView *viewD = [self createViewWithImage:[UIImage imageNamed:@"vip_payment_D"] string:@"手机、微信、QQ联系方式一个不落"];
     [view addSubview:viewA];
     [view addSubview:viewB];
     [view addSubview:viewC];
@@ -87,41 +93,49 @@
     
 
     {
-        [notiLabel mas_makeConstraints:^(MASConstraintMaker *make) {
-            make.left.equalTo(self);
+        [lineView mas_makeConstraints:^(MASConstraintMaker *make) {
+            make.left.equalTo(self).offset(kScreenWidth * 10 / 750.);
             make.top.equalTo(self).offset(2);
-            make.size.mas_equalTo(CGSizeMake(self.frame.size.width, 18));
+            make.size.mas_equalTo(CGSizeMake(kScreenWidth * 4 / 750., kScreenHeight * 30 / 1334.));
+        }];
+        
+        [notiLabel mas_makeConstraints:^(MASConstraintMaker *make) {
+            make.left.equalTo(lineView.mas_right).offset(2);
+            make.centerY.equalTo(lineView.mas_centerY);
+            make.size.mas_equalTo(CGSizeMake(self.frame.size.width, kScreenHeight * 30 / 1334.));
         }];
         
         [view mas_makeConstraints:^(MASConstraintMaker *make) {
-            make.left.right.equalTo(self);
-            make.top.equalTo(notiLabel.mas_bottom).offset(1);
-            make.bottom.equalTo(self.mas_bottom);
+            make.left.right.bottom.equalTo(self);
+            make.top.equalTo(lineView.mas_bottom).offset(2);
         }];
     }
     
     {
         [viewA mas_makeConstraints:^(MASConstraintMaker *make) {
-            make.left.top.bottom.equalTo(view);
-            make.width.equalTo(@(SCREEN_WIDTH/4));
+            make.left.top.equalTo(view);
+            make.size.mas_equalTo(CGSizeMake(kScreenWidth / 2., 50));
         }];
         
         [viewB mas_makeConstraints:^(MASConstraintMaker *make) {
-            make.left.equalTo(viewA.mas_right);
-            make.top.bottom.equalTo(view);
-            make.width.equalTo(@(SCREEN_WIDTH/4));
+            make.top.right.equalTo(view);
+            make.size.mas_equalTo(CGSizeMake(kScreenWidth / 2., 50));
+        }];
+        
+        [smallline mas_makeConstraints:^(MASConstraintMaker *make) {
+            make.centerY.equalTo(view);
+            make.left.right.equalTo(view);
+            make.height.mas_equalTo(1);
         }];
         
         [viewC mas_makeConstraints:^(MASConstraintMaker *make) {
-            make.left.equalTo(viewB.mas_right);
-            make.top.bottom.equalTo(view);
-            make.width.equalTo(@(SCREEN_WIDTH/4));
+            make.left.bottom.equalTo(view);
+            make.size.mas_equalTo(CGSizeMake(kScreenWidth / 2., 50));
         }];
         
         [viewD mas_makeConstraints:^(MASConstraintMaker *make) {
-            make.left.equalTo(viewC.mas_right);
-            make.top.bottom.equalTo(view);
-            make.width.equalTo(@(SCREEN_WIDTH/4));
+            make.right.bottom.equalTo(view);
+            make.size.mas_equalTo(CGSizeMake(kScreenWidth / 2., 50));
         }];
     }
 

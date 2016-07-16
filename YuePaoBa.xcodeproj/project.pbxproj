@@ -223,7 +223,8 @@
 		EC884D0B1CE188F700598E2D /* YPBActivityViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EC884D0A1CE188F700598E2D /* YPBActivityViewController.m */; };
 		EC884D0F1CE1C75200598E2D /* login.jpg in Resources */ = {isa = PBXBuildFile; fileRef = EC884D0E1CE1C75200598E2D /* login.jpg */; };
 		EC950A291CE6CB0800051BC9 /* bannerImg.jpg in Resources */ = {isa = PBXBuildFile; fileRef = EC950A281CE6CB0800051BC9 /* bannerImg.jpg */; };
-		EC950A2F1CE7114B00051BC9 /* YPBActivityPayView.m in Sources */ = {isa = PBXBuildFile; fileRef = EC950A2E1CE7114B00051BC9 /* YPBActivityPayView.m */; };
+		ECA5D14A1D3A1FC000A7353A /* YPBActivityPayView.m in Sources */ = {isa = PBXBuildFile; fileRef = ECA5D1491D3A1FC000A7353A /* YPBActivityPayView.m */; };
+		ECA5D14D1D3A40DF00A7353A /* YPBVIPPayView.m in Sources */ = {isa = PBXBuildFile; fileRef = ECA5D14C1D3A40DF00A7353A /* YPBVIPPayView.m */; };
 		ECBBBDEA1CD9BC7700D80B14 /* YPBSegmentViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = ECBBBDE91CD9BC7700D80B14 /* YPBSegmentViewController.m */; };
 		ECBBBDED1CD9C6C800D80B14 /* YPBCommonCityViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = ECBBBDEC1CD9C6C800D80B14 /* YPBCommonCityViewController.m */; };
 		ECE00B5E1CE99403001047C0 /* NSString+MessageInputView.m in Sources */ = {isa = PBXBuildFile; fileRef = ECE00A8F1CE99403001047C0 /* NSString+MessageInputView.m */; };
@@ -767,7 +768,9 @@
 		EC884D0E1CE1C75200598E2D /* login.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = login.jpg; sourceTree = "<group>"; };
 		EC950A281CE6CB0800051BC9 /* bannerImg.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = bannerImg.jpg; sourceTree = "<group>"; };
 		EC950A2D1CE7114B00051BC9 /* YPBActivityPayView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YPBActivityPayView.h; sourceTree = "<group>"; };
-		EC950A2E1CE7114B00051BC9 /* YPBActivityPayView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YPBActivityPayView.m; sourceTree = "<group>"; };
+		ECA5D1491D3A1FC000A7353A /* YPBActivityPayView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YPBActivityPayView.m; sourceTree = "<group>"; };
+		ECA5D14B1D3A40DF00A7353A /* YPBVIPPayView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YPBVIPPayView.h; sourceTree = "<group>"; };
+		ECA5D14C1D3A40DF00A7353A /* YPBVIPPayView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YPBVIPPayView.m; sourceTree = "<group>"; };
 		ECBBBDE81CD9BC7700D80B14 /* YPBSegmentViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YPBSegmentViewController.h; sourceTree = "<group>"; };
 		ECBBBDE91CD9BC7700D80B14 /* YPBSegmentViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YPBSegmentViewController.m; sourceTree = "<group>"; };
 		ECBBBDEB1CD9C6C800D80B14 /* YPBCommonCityViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YPBCommonCityViewController.h; sourceTree = "<group>"; };
@@ -1088,6 +1091,8 @@
 				EC7C84A01C982795005CB452 /* YPBPayCell.m */,
 				EC2BFB351C9A889E00912302 /* YPBPayIntroduceView.h */,
 				EC2BFB361C9A889E00912302 /* YPBPayIntroduceView.m */,
+				ECA5D14B1D3A40DF00A7353A /* YPBVIPPayView.h */,
+				ECA5D14C1D3A40DF00A7353A /* YPBVIPPayView.m */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -1278,7 +1283,7 @@
 				BC5555051C50DCD300412F7F /* YPBMessageOptionPanel.h */,
 				BC5555061C50DCD300412F7F /* YPBMessageOptionPanel.m */,
 				EC950A2D1CE7114B00051BC9 /* YPBActivityPayView.h */,
-				EC950A2E1CE7114B00051BC9 /* YPBActivityPayView.m */,
+				ECA5D1491D3A1FC000A7353A /* YPBActivityPayView.m */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -2643,6 +2648,7 @@
 				ECE00BA01CE99403001047C0 /* XHShareMenuView.m in Sources */,
 				ECE00B911CE99403001047C0 /* SETextSelection.m in Sources */,
 				BC593B061C817A2D000290A8 /* YPBVideoMessagePollingCell.m in Sources */,
+				ECA5D14A1D3A1FC000A7353A /* YPBActivityPayView.m in Sources */,
 				ECE00B9A1CE99403001047C0 /* XHMessageTextView.m in Sources */,
 				BC22DE261C3D2ECF00305F58 /* YPBContactViewController.m in Sources */,
 				BC739CF21C7C45F300D75AF0 /* YPBPaymentManager.m in Sources */,
@@ -2708,7 +2714,6 @@
 				BCC5A2F31C5F37FC005672D6 /* UIBarButtonItem+Badge.m in Sources */,
 				BC5704E51C45F74800DEFAB6 /* openssl_wrapper.m in Sources */,
 				BC1B498E1C44F1F500ECB0BA /* WeChatPayManager.m in Sources */,
-				EC950A2F1CE7114B00051BC9 /* YPBActivityPayView.m in Sources */,
 				BC6B747E1C34F9840052777E /* YPBUserGreet.m in Sources */,
 				BC7114AE1C1AD3DB00C5001A /* NSMutableDictionary+Safety.m in Sources */,
 				ECE00B881CE99403001047C0 /* SELinkText.m in Sources */,
@@ -2724,6 +2729,7 @@
 				BC1654BA1C25290200AB1F33 /* NSDictionary+YPBSign.m in Sources */,
 				BC53B9C01C3BBEEA004252B1 /* QBAssetsCollectionOverlayView.m in Sources */,
 				BC1A2D821C0EF909003D9138 /* main.m in Sources */,
+				ECA5D14D1D3A40DF00A7353A /* YPBVIPPayView.m in Sources */,
 				ECE00B851CE99403001047C0 /* SECompatibility.m in Sources */,
 				BC1F28211C2A404B00C2B476 /* YPBTableViewCell.m in Sources */,
 				ECE00B8F1CE99403001047C0 /* SETextMagnifierCaret.m in Sources */,
@@ -3000,7 +3006,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.yuepaoba.channel;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "ab1047ca-d118-4759-a854-7569588a4843";
+				PROVISIONING_PROFILE = "181cbfcb-8d7e-41f8-a50e-36d27bae473c";
 				USER_HEADER_SEARCH_PATHS = "$(PODS_ROOT)/**";
 			};
 			name = Debug;
@@ -3030,7 +3036,7 @@
 				ONLY_ACTIVE_ARCH = YES;
 				PRODUCT_BUNDLE_IDENTIFIER = com.yuepaoba.channel;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "ab1047ca-d118-4759-a854-7569588a4843";
+				PROVISIONING_PROFILE = "181cbfcb-8d7e-41f8-a50e-36d27bae473c";
 				USER_HEADER_SEARCH_PATHS = "$(PODS_ROOT)/**";
 			};
 			name = Release;
