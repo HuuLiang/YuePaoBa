@@ -1,398 +1,919 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
-<array>
-	<string>跟父母住还是独居呢喜欢性欲强的女生吗解锁了所有姿势，喜欢吗</string>
-	<string>喜欢性欲强的女生吗</string>
-	<string>想问一下，你挑选对象会特别注重感觉吗？</string>
-	<string>不管你是不是对我有感觉，反正我对你挺感兴趣的，能加QQ聊吗？</string>
-	<string>要不要立刻见个面？哈哈，来一次说见就见的约会咋样？</string>
-	<string>感觉还不错~ 有空多交流一下呗~你哪的？</string>
-	<string>不介意的话，我们可以相互认识一下、了解一下</string>
-	<string>你哪里人？跟我近不近啊？</string>
-	<string>好想谈恋爱啊，你现在要是没有合适的人选，咱们就处处看？加我Q呗</string>
-	<string>你是哪里人啊？城里的吗？</string>
-	<string>你平常喜欢什么运动啊？喜欢爬山吗？</string>
-	<string>好累呀，你在干嘛呀，你都怎么打发周末的？</string>
-	<string>很高兴获得你的青睐，有没有微信或者QQ?</string>
-	<string>我是正儿八经找老公的，你呢？</string>
-	<string>你怎么过周末的</string>
-	<string>你有微信，吗？这里不能发照片</string>
-	<string>现在有空一起吃饭吗？哈哈哈，是不是觉得我疯了</string>
-	<string>做什么呢？</string>
-	<string>打我电话吧，正好无聊？(*^__^*) 啊哈哈哈</string>
-	<string>前我们好像还聊过？</string>
-	<string>为什么来这里交朋友啊？现实生活很寂寞吗？</string>
-	<string>老乡啊？真是巧啊！交给朋友呗</string>
-	<string>我猜你一定很年轻？O(∩_∩)O</string>
-	<string>你喜欢什么类型的对象，我符合吗？</string>
-	<string>让我猜猜你多大！27？</string>
-	<string>搞搞啊 小哥哥</string>
-	<string>QQ加一个呗</string>
-	<string>来，先卖个萌😄</string>
-	<string>:哈 喜欢吗 要不要一起睡觉</string>
-	<string>嗯 小帅锅</string>
-	<string>小弟弟，跟我走吧</string>
-	<string>hi 大兄弟</string>
-	<string>水多，喜欢吗</string>
-	<string>我只想单纯的和你做朋友，可以吗？</string>
-	<string>😳嗨～</string>
-	<string>我喜欢蓝色，留个QQ呗</string>
-	<string>撩q?</string>
-	<string>我们离的挺近的呢，你具体在哪？</string>
-	<string>我来啦，我在啦，你呢？还在吗？</string>
-	<string>表示可以加Q吗？哈哈哈哈哈哈</string>
-	<string>南方人，不介意基可以处下吧友？</string>
-	<string>都在干什么呢</string>
-	<string>嗯嗯嗯嗯</string>
-	<string>小哥哥我喜欢你的好吃的😄</string>
-	<string>身高160个子不高，超级喜欢动物，喜欢就加Q？</string>
-	<string>来啊 ，加Q，互相伤害啊😄</string>
-	<string>身高163，就我这个身高，腿也不长，我家有个柴犬，想来一场说走就走的旅行，但也没有行动过，标准的吃货，唱歌也还行。撩你。</string>
-	<string>捕捉小鲜肉一枚，多大？</string>
-	<string>我不经常玩，方便的话留个微信和电话认识一下</string>
-	<string>我的咪咪这么大，你双手握得过来吗</string>
-	<string>想寻找一份真爱</string>
-	<string>夜深人静的时候，真的好寂寞难耐</string>
-	<string>老公长期不在家，你来陪我吧</string>
-	<string>喜欢热情大方的男人，沉默寡言的请绕道。</string>
-	<string>想要我的微信号吗？</string>
-	<string>先有性，还是先有爱</string>
-	<string>你好， 你在哪个城市？</string>
-	<string>有个美女老婆，有安全感吗？</string>
-	<string>在吗在吗？还在吗?</string>
-	<string>我来啦嘻嘻嘻，你在干嘛呀</string>
-	<string>觉得我们的条件匹配吗？ 如果觉得合适的话，就回复一下哈</string>
-	<string>嘿，你好啊~你现在是单身吗？有空聊聊</string>
-	<string>你好，要是觉得我还不错吗？</string>
-	<string>才注册就有人理我，真的假的？</string>
-	<string>感觉跟你很有缘哦</string>
-	<string>想多了解你一下，看看彼此是不是合适，微信有吗？加我一下</string>
-	<string>如果可以，你愿不愿意跟我相处看看？</string>
-	<string>如果你对我感兴趣的话，麻烦给我回复一下</string>
-	<string>想问一下，如果你喜欢对方，你会主动联系吗?</string>
-	<string>能给个机会认识一下不？</string>
-	<string>你平常喜欢什么运动啊？喜欢爬山吗？</string>
-	<string>你觉得前戏多少分钟合适</string>
-	<string>寂寞的时候，只能用按摩棒，好难熬</string>
-	<string>尝试过多人，sm，换妻，换夫等新花样吗</string>
-	<string>陪我跳艳舞吧</string>
-	<string>喜欢鸳鸯浴吗</string>
-	<string>我的另一半，你在这儿吗</string>
-	<string>想找个老公</string>
-	<string>有带我一起好好相爱的吗</string>
-	<string>我也要相亲</string>
-	<string>愿意娶有故事的女人吗</string>
-	<string>你怎么看待口交</string>
-	<string>你最常用的体位是什么</string>
-	<string>解锁了所有姿势，喜欢吗</string>
-	<string>你能接受一晚上三次以上吗？</string>
-	<string>被包养过，是不是就再也找不到真爱了</string>
-	<string>一个人的孤单，不如两个人的狂欢！</string>
-	<string>女朋友着装暴露，你能接受吗？</string>
-	<string>接受差多大的姐弟恋？</string>
-	<string>看见美女是不是都会有反应？</string>
-	<string>遇到过几个活好的？</string>
-	<string>我们聊两句好么？你是哪里人？</string>
-	<string>没谈过恋爱，想找人试试</string>
-	<string>好无聊，想出去玩</string>
-	<string>你猜我的胸有多大？</string>
-	<string>你下面有多长？小于12cm就不要回复我了。</string>
-	<string>有点寂寞，想找个男人玩玩，诚心的带照片。</string>
-	<string>我的妹妹紧紧的，你喜欢吗？</string>
-	<string>你猜我怎么解决寂寞？</string>
-	<string>你猜我怎么解决寂寞？</string>
-	<string>好无聊，找个哥哥陪陪妹妹吧</string>
-	<string>约炮过吗？</string>
-	<string>想去酒吧玩，一起吗？</string>
-	<string>妹妹很寂寞，帮我解闷的哥哥在哪里</string>
-	<string>有QQ吗？进一步了解下呗</string>
-	<string>平时无聊的时候都在做什么？</string>
-	<string>平时无聊的时候都在做什么？</string>
-	<string>男神结婚了，好难过，求安慰</string>
-	<string>我美吗？给我的颜值打几分？</string>
-	<string>我下面给你吃啊</string>
-	<string>帅哥，约吗</string>
-	<string>帅哥，约吗</string>
-	<string>帅哥，约吗</string>
-	<string>不带套更舒服吧？</string>
-	<string>我老公这个月出差，一个人在家有点无聊</string>
-	<string>你好你好哈哈哈，你叫什么呀？哪里人？</string>
-	<string>在干嘛呢？</string>
-	<string>干嘛呢</string>
-	<string>无聊啊</string>
-	<string>你好啊，认识你很高兴，你能告诉我你叫什么吗？</string>
-	<string>hi，在做什么哦</string>
-	<string>认识你一下吧
+<dict>
+	<key>day</key>
+	<array>
+		<string>可以给我你的电话号码吗？ 
+  额！你是干嘛啊？ 
+  嗨 我在上班呢   你呢？ 
+  上班无聊啊，有没有什么好听的歌啊？ 
+  那个谁  你是哪里的呀？ 
+  #NAME? 
+  额额！你是哪里人啊？ 
+  我在上班呢  你没上班么？ 
+  嗨！你是做什么工作的呀 
+  正好无聊，聊会？ 
+  上班？休息？ 
+  你是？来交友？聊天？ 
+  我上班了,你上班了没? 
+  我现在有点事，回头聊！ 
+  我室友叫我陪去逛商场，一会聊！ 
+  我看会电视，等等啊 
+  我要下车了，到家和你说 
+  我要去逛街了，回来我们再聊 
+  好无聊，我下楼逛逛。 
+  我打牌了，回头再说吧 
+  我要出门了，88 
+  我的电视剧来了。不聊了 
+  我朋友来了，等下再聊 
+  嗨，你在干嘛呢 
+  你好 
+  跟父母住还是独居呢 
+  你好你好哈哈哈，你叫什么呀？哪里人？ 
+  在干嘛呢？ 
+  干嘛呢 
+  无聊啊 
+  你好啊，认识你很高兴，你能告诉我你叫什么吗？ 
+  hi，在做什么哦 
+  认识你一下吧 
+  你好，我刚分手，心情不好，能陪我聊会么？ 
+  hi 
+  陪我说说话嘛 
+  还在吗？ 
+  我很喜欢看电影，你喜欢干嘛啊 
+  在干嘛呢？也不回我 
+  在？加个QQ聊吧，你QQ多少，微信也行 
+  你是来这找女朋友的吗？，加个QQ吧！ 
+  你还在线吗？ 
+  你下了吗？回来留言给我，我对你蛮有感觉的！ 
+  很高兴认识你 
+  你好！认识你真高兴，你叫什么名字？ 
+  hi 你好！！！！！！！ 
+  你好！ 
+  看到你很高兴!  
+  在干嘛吗? 
+  怎么不说话了？你QQ多少，我加你的QQ 
+  还在不在呀？你在哪，加个微信，以后了解一下吧，你微信多少？ 
+  喂，还在不在啊 
+  ^_^ 
+  你好，能认识你很高兴 
+  能问下你是什么性格的人不？ 
+  你好 
+  你好，你是好男人吗？ 
+  你好~！ 
+  弱弱的问句！你谈过几个？ 
+  你是哪的人，加个微信吧！ 
+  你平时喜欢用微信还是QQ？ 
+  你有其它联系方式吗？ 
+  我也要相亲&gt;&lt; 
+  解锁了所有姿势，喜欢吗 
+  喜欢性欲强的女生吗 
+  女朋友着装暴露，你能接受吗？ 
+  接受差多大的姐弟恋？ 
+  想问一下，你挑选对象会特别注重感觉吗？ 
+  不管你是不是对我有感觉，反正我对你挺感兴趣的，能加QQ聊吗？ 
+  要不要立刻见个面？哈哈，来一次说见就见的约会咋样？ 
+  感觉还不错~ 有空多交流一下呗~你哪的？ 
+  不介意的话，我们可以相互认识一下、了解一下 
+  你哪里人？跟我近不近啊？ 
+  好想谈恋爱啊，你现在要是没有合适的人选，咱们就处处看？加我Q呗 
+  你是哪里人啊？城里的吗？ 
+  你平常喜欢什么运动啊？喜欢爬山吗？ 
+  好累呀，你在干嘛呀，你都怎么打发周末的？ 
+  很高兴获得你的青睐，有没有微信或者QQ? 
+  我是正儿八经找老公的，你呢？ 
+  你怎么过周末的 
+  你有微信，吗？这里不能发照片 
+  现在有空一起吃饭吗？哈哈哈，是不是觉得我疯了 
+  做什么呢？ 
+  打我电话吧，正好无聊？(*^__^*) 啊哈哈哈 
+  以前我们好像还聊过？ 
+  为什么来这里交朋友啊？现实生活很寂寞吗？ 
+  老乡啊？真是巧啊！交给朋友呗 
+  我猜你一定很年轻？O(∩_∩)O 
+  你喜欢什么类型的对象，我符合吗？ 
+  让我猜猜你多大！27？ 
+  搞搞啊 小哥哥 
+  QQ加一个呗 
+  来，先卖个萌😄 
+  嗯 小帅锅 
+  小弟弟，跟我走吧 
+  hi 大兄弟 
+  水多，喜欢吗 
+  我只想单纯的和你做朋友，可以吗？ 
+  😳嗨～ 
+  我喜欢蓝色，留个QQ呗 
+  撩q? 
+  我们离的挺近的呢，你具体在哪？ 
+  我来啦，我在啦，你呢？还在吗？ 
+  表示可以加Q吗？哈哈哈哈哈哈 
+  南方人，不介意基可以处下吧友？ 
+  都在干什么呢 
+  嗯嗯嗯嗯 
+  身高160个子不高，超级喜欢动物，喜欢就加Q？ 
+  来啊 ，加Q，互相伤害啊😄 
+  身高163，就我这个身高，腿也不长，我家有个柴犬，想来一场说走就走的旅行，但也没有行动过，标准的吃货，唱歌也还行。撩你。 
+  捕捉小鲜肉一枚，多大？ 
+  有QQ吗？进一步了解下呗 
+  平时无聊的时候都在做什么？ 
+  平时无聊的时候都在做什么？ 
+  男神结婚了，好难过，求安慰 
+  我不经常玩，方便的话留个微信和电话认识一下 
+  想寻找一份真爱 
+  喜欢热情大方的男人，沉默寡言的请绕道。 
+  想要我的微信号吗？ 
+  你好， 你在哪个城市？ 
+  有个美女老婆，有安全感吗？ 
+  在吗在吗？还在吗? 
+  我来啦嘻嘻嘻，你在干嘛呀 
+  觉得我们的条件匹配吗？ 如果觉得合适的话，就回复一下哈 
+  嘿，你好啊~你现在是单身吗？有空聊聊 
+  你好，要是觉得我还不错吗？ 
+  才注册就有人理我，真的假的？ 
+  感觉跟你很有缘哦 
+  想多了解你一下，看看彼此是不是合适，微信有吗？加我一下 
+  如果可以，你愿不愿意跟我相处看看？ 
+  如果你对我感兴趣的话，麻烦给我回复一下 
+  想问一下，如果你喜欢对方，你会主动联系吗? 
+  能给个机会认识一下不？ 
+  你平常喜欢什么运动啊？喜欢爬山吗？ 
+  我们聊两句好么？你是哪里人？ 
+  认识你很高兴 
+  在？ 
+  Hello 
+  哈喽，你是做什么的呀 
+  嘿，你好啊~ 
+  嗨！很高兴认识你 
+  你好啊！ 
+  呵呵 
+  你好！请自我介绍一下吧！ 
+  你好，我刚分手，心情不好，能陪我聊会么？  
+  你好，认识一下？你哪里的 
+  哈喽 
+  嗨，你喜欢开放的女生吗？ 
+  我在了！ 
+  你好，我现在很无聊，你在干嘛呢？ 
+  Hi~我们聊聊天吧！ 
+  嘿，认识一下吧！ 
+  你好，我们先认识一下吧，你叫什么？ 
+  现在在做什么，你老家是哪儿的？ 
+  心情不好，想找个人聊聊天 
+  谢谢你来信，你自我介绍一下吧！ 
+  好无聊哦，陪我说说话 
+  第一次玩 你呢 
+  你好，认识你很高兴，你单身多久了？ 
+  你好，我现在只想找一个聊天的异性，你有QQ吗？ 
+  我好无聊，陪我说说话好吗 
+  Hi 陪我聊聊好吗？ 
+  你好，看上我了？ 
+  很无聊哦，陪我说说话 
+  你好，认识一下？你哪里的 
+  哈喽 
+  这里聊着不方便，你给个微信号吧！ 
+  你住哪的，你微信号是多少？ 
+  我们加QQ聊吧！ 
+  你现在在哪？ 
+  我在了！加微信吧，把你的发过来！ 
+  加微信吧，把你的发过来！ 
+  你QQ多少？ 
+  你是哪里的 
+  加QQ视频看看你，你QQ多少？ 
+  能问你一个问题不？ 
+  你是处男吗？ 
+  还在么？你有QQ吗？我们QQ聊吧 
+  能收到我的消息吗，加个微信吧！ 
+  想和我视频吗？想的话就回个QQ过来! 
+  在干嘛呢？我想看看你！能QQ视频吗? 
+  我们微信语音聊吧，打字太累了，你微信多少？ 
+  还在不，问你一个私人问题，你现在还是处男吗？ 
+  还在不，我们可以先加微信了解一下，你有微信吗? 
+  怎么不说话了？没收到我的消息吗？留个电话可以吗？ 
+  在忙吗？来了把你的QQ告诉我吧，我们QQ语音吧 
+  你回答我一个问题，我告诉你我的QQ！ 
+  你好，我现在很无聊，你在干嘛呢？ 
+  Hi~我们聊聊天吧！ 
+  嘿，认识一下吧！ 
+  你好，我们先认识一下吧，你叫什么？ 
+  现在在做什么，你老家是哪儿的？ 
+  心情不好，想找个人聊聊天 
+  谢谢你来信，你自我介绍一下吧！ 
+  你有微信么？加微信吧！ 
+  好无聊哦，陪我说说话 
+  嗨，你喜欢开放的女生吗？ 
+  第一次玩 你呢 
+  你好，认识你很高兴，你单身多久了？ 
+  你好，我现在只想找一个聊天的异性，你有QQ吗？ 
+  我好无聊，陪我说说话好吗 
+  Hi 陪我聊聊好吗？ 
+  你好，看上我了？ 
+  很无聊哦，陪我说说话 
+  在干嘛呢？ 
+  干嘛呢 
+  无聊啊 
+  你好啊，认识你很高兴，你能告诉我你叫什么吗？ 
+  给个微信吧，这里聊不方便 
+  你有微信吗？加个微信吧！ 
+  怎么打个招呼就没人了？你用微信吗？我们微信语音聊吧！ 
+  。。。。。。 
+  人呢？ 
+  哎，不理我，敲你 
+  在么？陪我聊聊天嘛，我好无聊啊 
+  怎么不说话啊 
+  怎么了？ 
+  在？我们可以先了解一下! 
+  什么事让你这么久不回我消息？ 
+  哎哎哎，再不说话不理你了 
+  下线了？下次来留个QQ吧! 
+  我想找一个男朋友，我们可以先了解一下！ 
+  还在吗？要不我们QQ视频聊吧！ 
+  hi，在做什么哦 
+  认识你一下吧 
+  今天分手了，心里很失落，你能陪我聊聊吗？ 
+  今天心情不好，陪我聊会，可以不。要不加个微信吧，哈哈 
+  加个QQ聊吧，你QQ多少呢？ 
+  不理我了么？ 
+  你好！请自我介绍一下吧！ 
+  我不常在这里，给个你的QQ号吧！ 
+  呵呵 
+  你好啊！ 
+  嗨！很高兴认识你 
+  嘿，你好啊~ 
+  哈喽，你是做什么的呀 
+  Hello 
+  在？ 
+  认识你很高兴 
+  你好 
+  嗨，你在干嘛呢 
+  第一次玩这个软件，不太上，有事直接加我qq吧 
+  太气人了 
+  你昵称有什么意思么？ 
+  看我的眼神忧伤不忧伤 
+  我现在很悲伤不想说话 
+  人生若只如初见 
+  尴尬 
+  你在干嘛  
+  你的性格是什么？能说说么？ 
+  你喜欢听音乐还是读书？ 
+  寻找有缘人……可以从朋友做起  
+  hi，给你打了声招呼，看到了么？ 
+  欣赏你！你看上去很靠谱  
+  冒昧问声，你好  
+  你好🐷🐷，认识下吧 
+  认识一下吧，我不差钱，只是单纯聊聊 
+  鼓起很大勇气才给你发消息。。。。求被鸟 
+  我在上海哦~感觉你很不错，你是哪里的 
+  未婚妹子。收入不高，想找个肩膀依靠  
+  我想找的是结婚对象哦。。。非诚勿扰 
+  看下我照片，如果合适就联系下我吧 
+  Hi~ o(*￣▽￣*)ブ，你好 
+  你好，不知道能认识下嘛 
+  哈罗，可以聊聊么 
+  嘻嘻，在吗 
+  hello，认识一下吧 
+  看了你资料，感觉还不错呢 
+  你好，我对你第一印象还不错哦，有空认识一下吗？ 
+  嗯哼～  
+  你好，能否认识了解一下 
+  你照片怎么没有 
+  嘻嘻  
+  最近好烦。。 
+  ╮(╯_╰)╭  
+  (*^__^*)   
+  伱好像是我喜欢的类型哇  
+  天了噜~好无聊  
+  啧啧。。。  
+  你要帮我脱单啊  
+  傻眼  
+  加微信聊咯  
+  我男朋友在边上。迟点聊。。  
+  汪汪汪  
+  有意思哦  
+  装傻ing  
+  直接一点直接一点 
+  在别人看来的我很无知，平时见人都没自信，只有在这些app上敢了 
+  天哪。。。竟然还在  
+  喜不喜欢，合不合适，直接说呗 
+  看皂片说话，不传照片不回复了哦~ 
+  身材控～～～有身材照片上传看看么 
+  窝说话比较直接的欧～伤害你要不要我负责的哇，小怕怕 
+  嘿嘿 
+  你好哇 
+  bi bibs 
+  (づ｡◕‿‿◕｡)づ 
+  敢不敢加微信私聊……只要你不是微商就好！ 
+  喜欢我才加我？ 
+  最近好不开心哦 
+  最近能单纯交朋友的人好少哦 
+  嘻嘻嘻 
+  boom 
+  。。。。。。 
+  轻易得到我是不是会让你不重视我呀。。。害怕状 
+  其实我照片p过的哦。。。见面你会不会报警呀，怕怕…… 
+  加我微信让我视频看看你，怕你拿别人照片骗我 
+  假正经~ 
+  讨厌啦 
+  大~坏~蛋 
+  哈 
+  你信不信我就算主动了我们也不会有故事 
+  你也是寂寞的人吧 
+  我慢熟、、、、你是不是不会搭理我了 
+  ????????? 
+  直接甩扣聊不来删聊的来处 
+  你不是vip吗？不能直接说话？ 
+  好吧 
+  没想到你是这样的人 
+  我只想说，我这么美，你要的起么 
+  你有给我照片留言么？ 
+  hi～ 
+  呼呼 
+  平时喜欢瑜伽，健身等运动，你呢？ 
+  周末在家都做什么呢？喜欢自己下厨做点吃的吗？ 
+  前男友可坏了~分手这么久还是好难受~ 
+  今年的七夕不想再一个人过，有缘人，你在哪？ 
+  性格又开朗又文静，想了解下你是什么性格的人 
+  爱聊天，爱游戏，爱交友！回复可带照片 
+  平时喜欢瑜伽，健身等运动，你呢？ 
+  周末在家都做什么呢？喜欢自己下厨做点吃的吗？ 
+  我的要求不高，一眼就看中了你，能给我聊聊吗？ 
+  好有眼缘，想认识你哦~ 
+  一心想结婚，做个贤妻良母，很高兴认识你 
+  我是学生，单身未婚，求缘分与你相遇 
+  想嫁人了，对你好有眼缘 
+  我在宁波生活，有宁波的吗？约起啊 
+  你找对象的要求是什么 可以聊天吗 你QQ多少 可以加你吗 留个电话了解下可以吗 
+  真诚期待与你做个朋友。能否认识下？先留个微信号交流下吧：） 
+  我只是想和你交往，你会拒绝我吗？ 
+  一生就这么一次，谈一场以结婚为目的的恋爱吧！不和别人，就和你！ 
+  我是一个阳光,低调的人 。 
+  　一个偶然的机会,一次偶然的活动,关注到这个交友平台.希望能和身边的朋友一样,在这里找到一个的可靠真诚的男孩 
+  你好！看了你资料感觉还不错，我们留个联系方式吧 
+  你是我欣赏的类型，真心希望能与你交个朋友。 
+  你好，很想与你相识，期待你的回信。。 
+  你好啊，我在杭州西湖区工作，你呢？ 
+  确实是诚心找对象的，工作忙，希望能开门见山，节约大家时间。 
+  不美但暖只要你来 
+  交朋友，求勾搭。 我在江苏你在哪？ 进来聊聊可好！处一波 
+  巨蟹 爱旅行爱泡吧 头像即本人 ，每天在无聊中度过 ，求交往，求带走。 
+  没什么好说的了，你喜欢萝莉吗 
+  对象喜欢污点的 朋友一点点污 妹妹喜欢纯纯的 
+  刚休假！在家好无聊！来我们聊5毛钱的 
+  东北女 173 ，是我撩你还是你撩我呢？ 
+  只要被撩到，一起走回家 
+  老女人了还会有人喜欢的么 
+    要求不高就想找个陪我聊天 看着顺眼的 就能带走。陪我陪我陪我🌝 
+   四川， 自带逗逼属性 小污 当然看人 坐等被撩 撩你也行 你确定不来吗 
+  属于温暖气质开朗型的一个女生,不想认识认识么。 
+  女 25 DJ一枚 不糜烂性格直爽 喜交友 从来都不会好好照相 因为我颜值高 
+  北方女，逗逼一枚 
+  时而萌萌哒，时而污女一枚，扮的了单纯，演得了女王。装的了可爱，其实很暴力，来交友吧 
+  陪聊交友 漫漫长假 多点真诚少点套路 
+  天气这么热都在干什么出来冒个泡 嘎嘎 
+  纯交友 不往对象方面发展 喜欢就来 东北女孩 
+  期待已久的假期还有5天就来了，我在这里，你要到哪里去？处一波小伙伴，假期里聊天各种的。 
+  有木有人聊聊，微我看标题 
+  坐标重庆 金牛座 偶尔有点小脾气快来呀小伙伴~ 
+  射手 喜欢交友 你不主动怎么可能有故事 喜欢旅游 
+  毕业了想来一场旅游，想交些朋友有吗 
+  处什么关系你说了算，只要是暖男就好 
+  我又不高冷 我很暖的 你撩的动我么 
+  快来快来 快来眼熟 一起唠唠 聊得来的可深交 
+  找男朋友，幼师 
+  我的眼睛很好看，你发现了没？ 
+  真诚交友，求带走！ 
+  长得再美，没人理睬也是一种浪费！ 
+  深圳ts法拉联系方式看回复 
+  北方女  性格直 手控 身高标准168 体重95斤不胖不瘦 爱好睡觉听音乐 是个吃货 有志同道合的朋友进来处处关系呗 啥关系都行 		
+  无敌就是寂寞 今天你寂寞了嘛？ 
+  难道男生都喜欢胸大的？ 
+  要找25到40岁之内男人，网上骗子很多，信则来，不信则勿扰 
+  生于南方，喜冷厌热，有点呆萌还是路痴 
+  处个无话不谈的宝贝，网恋，闺蜜，反正关系随意。希望你不要高冷不要一副高高在上的样子。我有点污希望你不要介意。是敌是友别是狗！求真心不求感情骗子。。。你长得什么样子我都敢接关键我不外协。。。。。 
+  关系你说，我各种缺，甩扣 2947653217 
+  狮子座，可污可认真！可以私聊联系方式 
+  男女都可以 你真心 我实意 ，外貌协会也可以。 
+  来到这里不是来交友的吗😂😂我也不例外哈哈哈 
+  暑假都在干嘛啊，处一波好闺蜜聊聊天呀 
+  慢热 熟了逗成狗 重庆 双鱼女 
+  闲来无事，一起来玩玩呗，资深腐女，cos爱好者，古风爱好者，有共同爱好的吗？我们可以来聊聊啊，不管男的女的都可以啊 
+  宝宝大一，下半年大二，会做饭洗衣，可污会打LO 
+  交个朋友好嘛 我可以唱歌给你听喔嘿嘿 
+  生于北方?单身可撩?怀抱不大不暖但我心真?来了就别走 因为我念旧呐?你主动就会有故事?你愿意来么？? 
+  我不喜欢太瘦的，喜欢胖一点的，有木有啊 
+  别克制，处个对象，不处对象的也可处Q友，91年大姐姐别嫌弃，坐标上海，武汉人，来撩吗？别克制 
+  空有一身撩妹技能，可惜宝宝是个女的，来处个闺蜜，男闺蜜女闺蜜都行没有的话待会我再问一遍。 
+  好久没来，反馈不知道咋样，我就来混个脸熟 
+  人丑可撩。 南方软妹。 
+  百变造型，摆什么姿势你说了算！ 
+  凌晨一点半，有人吗？陪小妹妹聊天呗 
+  本人喜欢广交好友人很随和，听说不爆照没人来 
+  想找个知心仍有说说心里话 
+  太阳姐姐每天晒我，还不给宝宝往出晒一个男盆友 
+  不美不美，但是会卖萌其实我不是高冷 
+  交呀么，交呀么，交朋友，想要交个男朋友，聊聊骚，谈谈心，做彼此的倾听者，有意者可以私我哦！求带走，求打包，求发货，求牵手！ 
+  放假好几天了 在家里都快发霉了 要是再没人聊天就真的狗带了 
+  周末无聊，想找人聊天，吃饭看电影 
+  列表的人越来越少，处一波好友，来了你别走，你主动我们就有故事 
+  非常喜欢爱打篮球的 男女无畏 本人处女 属于半高冷半逗比跟我玩久了会发现我很污 那么你们看着办啦QQ 1839996240 
+  想找个，可以天天给我聊天的人，留微信我加你 
+  微信接龙有没有啊有没有 
+可以给我你的电话号码吗？ </string>
+		<string>额！你是干嘛啊？</string>
+		<string>嗨 我在上班呢   你呢？ </string>
+		<string>上班无聊啊，有没有什么好听的歌啊？</string>
+		<string>那个谁  你是哪里的呀？</string>
+		<string>#NAME? </string>
+		<string>额额！你是哪里人啊？ </string>
+		<string>我在上班呢  你没上班么？</string>
+		<string>嗨！你是做什么工作的呀 </string>
+		<string>正好无聊，聊会？</string>
+		<string>上班？休息？ </string>
+		<string>你是？来交友？聊天？</string>
+		<string>我上班了,你上班了没? </string>
+		<string>我现在有点事，回头聊！</string>
+		<string>我室友叫我陪去逛商场，一会聊！ </string>
+		<string>我看会电视，等等啊 </string>
+		<string>我要下车了，到家和你说 </string>
+		<string>我要去逛街了，回来我们再聊</string>
+		<string>好无聊，我下楼逛逛。 </string>
+		<string>我打牌了，回头再说吧 </string>
+		<string>我要出门了，88</string>
+		<string>我的电视剧来了。不聊了 </string>
+		<string>我朋友来了，等下再聊 </string>
+		<string>嗨，你在干嘛呢</string>
+		<string>你好</string>
+		<string>跟父母住还是独居呢</string>
+		<string>你好你好哈哈哈，你叫什么呀？哪里人？ </string>
+		<string>在干嘛呢？ </string>
+		<string>干嘛呢 </string>
+		<string>无聊啊 </string>
+		<string>你好啊，认识你很高兴，你能告诉我你叫什么吗？</string>
+		<string>hi，在做什么哦 </string>
+		<string>认识你一下吧 </string>
+		<string>你好，我刚分手，心情不好，能陪我聊会么？ </string>
+		<string>hi </string>
+		<string>陪我说说话嘛 </string>
+		<string>还在吗？ </string>
+		<string>我很喜欢看电影，你喜欢干嘛啊</string>
+		<string>在干嘛呢？也不回我</string>
+		<string>在？加个QQ聊吧，你QQ多少，微信也行 </string>
+		<string>你是来这找女朋友的吗？，加个QQ吧！</string>
+		<string>你还在线吗？ </string>
+		<string>你下了吗？回来留言给我，我对你蛮有感觉的！ </string>
+		<string>很高兴认识你 </string>
+		<string>你好！认识你真高兴，你叫什么名字？ </string>
+		<string>hi 你好！！！！！！！</string>
+		<string>你好！认识你真高兴，你叫什么名字？ </string>
+		<string>看到你很高兴!  </string>
+		<string>在干嘛吗? </string>
+		<string>怎么不说话了？你QQ多少，我加你的QQ</string>
+		<string>还在不在呀？你在哪，加个微信，以后了解一下吧，你微信多少？ </string>
+		<string>喂，还在不在啊</string>
+		<string>^_^ </string>
+		<string>你好，能认识你很高兴 </string>
+		<string>能问下你是什么性格的人不？</string>
+		<string>你好 哇</string>
+		<string>你好~！ </string>
+		<string>弱弱的问句！你谈过几个？</string>
+		<string>你是哪的人，加个微信吧！ </string>
+		<string>你平时喜欢用微信还是QQ？</string>
+		<string>你有其它联系方式吗？</string>
+		<string>我也要相亲&gt;&lt; </string>
+		<string>  接受差多大的姐弟恋？ </string>
+		<string>想问一下，你挑选对象会特别注重感觉吗？ </string>
+		<string>不管你是不是对我有感觉，反正我对你挺感兴趣的，能加QQ聊吗？ </string>
+		<string>要不要立刻见个面？哈哈，来一次说见就见的约会咋样？</string>
+		<string>感觉还不错~ 有空多交流一下呗~你哪的？</string>
+		<string>你好，你是好男人吗？ </string>
+		<string>不介意的话，我们可以相互认识一下、了解一下 </string>
+		<string>你哪里人？跟我近不近啊？ </string>
+		<string>好想谈恋爱啊，你现在要是没有合适的人选，咱们就处处看？加我Q呗</string>
+		<string>你是哪里人啊？城里的吗？ </string>
+		<string>你平常喜欢什么运动啊？喜欢爬山吗？ </string>
+		<string>好累呀，你在干嘛呀，你都怎么打发周末的？</string>
+		<string>很高兴获得你的青睐，有没有微信或者QQ? </string>
+		<string>我是正儿八经找老公的，你呢？</string>
+		<string>你怎么过周末的 </string>
+		<string>你有微信，吗？这里不能发照片 </string>
+		<string>现在有空一起吃饭吗？哈哈哈，是不是觉得我疯了</string>
+		<string>做什么呢？</string>
+		<string>打我电话吧，正好无聊？(*^__^*) 啊哈哈哈 </string>
+		<string>以前我们好像还聊过？ </string>
+		<string>为什么来这里交朋友啊？现实生活很寂寞吗？</string>
+		<string>老乡啊？真是巧啊！交给朋友呗 </string>
+		<string>我猜你一定很年轻？O(∩_∩)O </string>
+		<string>你喜欢什么类型的对象，我符合吗？ </string>
+		<string>让我猜猜你多大！27？ </string>
+		<string>搞搞啊 小哥哥 </string>
+		<string>QQ加一个呗</string>
+		<string> 来，先卖个萌😄</string>
+		<string>嗯 小帅锅 </string>
+		<string>小弟弟，跟我走吧 </string>
+		<string>hi 大兄弟 </string>
+		<string>我只想单纯的和你做朋友，可以吗？</string>
+		<string> 😳嗨～</string>
+		<string>我喜欢蓝色，留个QQ呗 </string>
+		<string>撩q? </string>
+		<string>我们离的挺近的呢，你具体在哪？</string>
+		<string>我来啦，我在啦，你呢？还在吗？</string>
+		<string>表示可以加Q吗？哈哈哈哈哈哈</string>
+		<string>南方人，不介意基可以处下吧友？</string>
+		<string>都在干什么呢 </string>
+		<string>嗯嗯嗯嗯 </string>
+		<string>身高160个子不高，超级喜欢动物，喜欢就加Q？</string>
+		<string>来啊 ，加Q，互相伤害啊😄 </string>
+		<string>身高163，就我这个身高，腿也不长，我家有个柴犬，想来一场说走就走的旅行，但也没有行动过，标准的吃货，唱歌也还行。撩你。 </string>
+		<string>捕捉小鲜肉一枚，多大？</string>
+		<string>有QQ吗？进一步了解下呗 </string>
+		<string>平时无聊的时候都在做什么？</string>
+		<string>无聊。。</string>
+		<string>男神结婚了，好难过，求安慰 </string>
+		<string>我不经常玩，方便的话留个微信和电话认识一下</string>
+		<string>想寻找一份真爱</string>
+		<string>喜欢热情大方的男人，沉默寡言的请绕道。 </string>
+		<string>想要我的微信号吗？ </string>
+		<string>你好， 你在哪个城市？</string>
+		<string>有个美女老婆，有安全感吗？</string>
+		<string>在吗在吗？还在吗? </string>
+		<string>我来啦嘻嘻嘻，你在干嘛呀 </string>
+		<string>觉得我们的条件匹配吗？ 如果觉得合适的话，就回复一下哈 </string>
+		<string> 嘿，你好啊~你现在是单身吗？有空聊聊</string>
+		<string>你好，要是觉得我还不错吗？ </string>
+		<string>才注册就有人理我，真的假的？ </string>
+		<string>感觉跟你很有缘哦</string>
+		<string>想多了解你一下，看看彼此是不是合适，微信有吗？加我一下</string>
+		<string>如果可以，你愿不愿意跟我相处看看？</string>
+		<string>如果你对我感兴趣的话，麻烦给我回复一下 </string>
+		<string>想问一下，如果你喜欢对方，你会主动联系吗? </string>
+		<string>能给个机会认识一下不？</string>
+		<string>你平常喜欢什么运动啊？喜欢爬山吗？</string>
+		<string>我们聊两句吧，你是哪里人？ </string>
+		<string>认识你很高兴 </string>
+		<string>在？加个QQ聊吧，你QQ多少，微信也行 </string>
+		<string>Hello </string>
+		<string>哈喽，你是做什么的呀 </string>
+		<string>嘿，你好啊~ </string>
+		<string>你好啊！</string>
+		<string>呵呵</string>
+		<string>你好！请自我介绍一下吧！</string>
+		<string>你好，我刚分手，心情不好，能陪我聊会么？  </string>
+		<string>你好，认识一下？你哪里的</string>
+		<string>哈喽 </string>
+		<string>嗨，你喜欢开放的女生吗？</string>
+		<string>我在了</string>
+		<string>你好，我现在很无聊，你在干嘛呢？ </string>
+		<string>你好！！！！！</string>
+		<string>Hi~我们聊聊天吧！</string>
+		<string>嘿，认识一下吧！ </string>
+		<string>你好，我们先认识一下吧，你叫什么？ </string>
+		<string>现在在做什么，你老家是哪儿的？</string>
+		<string>心情不好，想找个人聊聊天 </string>
+		<string>谢谢，你自我介绍一下吧！ </string>
+		<string>好无聊哦，陪我说说话 </string>
+		<string>第一次玩 你呢 </string>
+		<string>你好，认识你很高兴，你单身多久了？</string>
+		<string>你好，我现在只想找一个聊天的异性，你有QQ吗？ </string>
+		<string>我好无聊，陪我说说话好吗 </string>
+		<string>Hi 陪我聊聊好吗？</string>
+		<string>你好，看上我了？</string>
+		<string>很无聊哦，陪我说说话 </string>
+		<string>你好，认识一下？你哪里的 </string>
+		<string>哈喽 </string>
+		<string>这里聊着不方便，你给个微信号吧！</string>
+		<string>你住哪的，你微信号是多少？</string>
+		<string>我们加QQ聊吧！</string>
+		<string>你现在在哪？ </string>
+		<string>我在了！加微信吧，把你的发过来！</string>
+		<string>加微信吧，把你的发过来！</string>
+		<string>你QQ多少？</string>
+		<string>你是哪里的 </string>
+		<string>加QQ视频看看你，你QQ多少？</string>
+		<string>能问你一个问题不？</string>
+		<string>还在么？你有QQ吗？我们QQ聊吧 </string>
+		<string>能收到我的消息吗，加个微信吧！ </string>
+		<string>想和我视频吗？想的话就回个QQ过来! </string>
+		<string>在干嘛呢？我想看看你！能QQ视频吗?</string>
+		<string>我们微信语音聊吧，打字太累了，你微信多少？</string>
+		<string>还在不，我们可以先加微信了解一下，你有微信吗? </string>
+		<string>能收到我的消息吗？留个电话可以吗？ </string>
+		<string>在忙吗？来了把你的QQ告诉我吧，我们QQ语音吧 </string>
+		<string>你回答我一个问题，我告诉你我的QQ！ </string>
+		<string>你好，我现在很无聊，你在干嘛呢？</string>
+		<string>Hi~我们聊聊天吧！</string>
+		<string>嘿，认识一下吧！ </string>
+		<string>你好，我们先认识一下吧，你叫什么？ </string>
+		<string>现在在做什么，你老家是哪儿的？</string>
+		<string>心情不好，想找个人聊聊天</string>
+		<string>谢谢你来信，你自我介绍一下吧！</string>
+		<string>你有微信么？加微信吧！</string>
+		<string>好无聊哦，陪我说说话 </string>
+		<string>嗨，你喜欢开放的女生吗？ </string>
+		<string>第一次玩 你呢</string>
+		<string>你好，认识你很高兴，你单身多久了？</string>
+		<string>你好，我现在只想找一个聊天的异性，你有QQ吗？</string>
+		<string>我好无聊，陪我说说话好吗</string>
+		<string> Hi 陪我聊聊好吗？</string>
+		<string>你好，看上我了？</string>
+		<string>很无聊哦，说说话吧 </string>
+		<string>在干嘛呢？</string>
+		<string>干嘛呢 </string>
+		<string>无聊啊</string>
+		<string>你好啊，认识你很高兴，你能告诉我你叫什么吗？ </string>
+		<string>给个微信吧，这里聊不方便 </string>
+		<string>你有微信吗？加个微信吧！</string>
+		<string>怎么打个招呼就没人了？你用微信吗？我们微信语音聊吧！</string>
+		<string>。。。。。。 </string>
+		<string>人呢？ </string>
+		<string>哎，不理我，敲你</string>
+		<string>在么？陪我聊聊天嘛，我好无聊啊 </string>
+		<string>怎么不说话啊 </string>
+		<string>怎么了？</string>
+		<string>在？我们可以先了解一下! </string>
+		<string>在干嘛呢。。。。。。为什么不理我</string>
+		<string>哎哎哎，说句话呗。。</string>
+		<string>下线了？下次来留个QQ吧! </string>
+		<string>我想找一个男朋友，我们可以先了解一下！</string>
+		<string>还在吗？要不我们QQ视频聊吧！</string>
+		<string>hi，在做什么哦 </string>
+		<string> 认识你一下吧</string>
+		<string>今天分手了，心里很失落，你能陪我聊聊吗？</string>
+		<string>今天心情不好，陪我聊会，可以不。要不加个微信吧，哈哈</string>
+		<string>加个QQ聊吧，你QQ多少呢？</string>
+		<string>不理我了么？</string>
+		<string>你好！请自我介绍一下吧！ </string>
+		<string>我不常在这里，给个你的QQ号吧！</string>
+		<string>呵呵 </string>
+		<string>你好啊！</string>
+		<string>嗨！很高兴认识你 </string>
+		<string>嘿，你好啊~ </string>
+		<string>哈喽，你是做什么的呀 </string>
+		<string>Hello </string>
+		<string>在？ </string>
+		<string>认识你很高兴 </string>
+		<string>你好 </string>
+		<string>嗨，你在干嘛呢 </string>
+		<string>第一次玩这个软件，不太上，有事直接加我qq吧 </string>
+		<string>你昵称有什么意思么？ </string>
+		<string> 看我的眼神忧伤不忧伤 </string>
+		<string>我现在很悲伤不想说话 </string>
+		<string>人生若只如初见 </string>
+		<string>尴尬</string>
+		<string>你在干嘛 </string>
+		<string>你的性格是什么？能说说么？</string>
+		<string>你喜欢听音乐还是读书？</string>
+		<string>寻找有缘人……可以从朋友做起  </string>
+		<string>hi，给你打了声招呼，看到了么？ </string>
+		<string>欣赏你！你看上去很靠谱</string>
+		<string>冒昧问声，你好</string>
+		<string>你好🐷🐷，认识下吧</string>
+		<string>认识一下吧，我不差钱，只是单纯聊聊 </string>
+		<string> 鼓起很大勇气才给你发消息。。。。求被鸟 </string>
+		<string>我在上海哦~感觉你很不错，你是哪里的</string>
+		<string>未婚妹子。收入不高，想找个肩膀依靠</string>
+		<string>我想找的是结婚对象哦。。。非诚勿扰 </string>
+		<string>看下我照片，如果合适就联系下我吧 </string>
+		<string> Hi~ o(*￣▽￣*)ブ，你好</string>
+		<string>你好，不知道能认识下嘛 </string>
+		<string>哈罗，可以聊聊么 </string>
+		<string>嘻嘻，在吗</string>
+		<string>hello，认识一下吧 </string>
+		<string>看了你资料，感觉还不错呢</string>
+		<string>你好，我对你第一印象还不错哦，有空认识一下吗？</string>
+		<string> 嗯哼～  </string>
+		<string>你好，能否认识了解一下</string>
+		<string>你照片怎么没有 </string>
+		<string>  嘻嘻  </string>
+		<string>最近好烦。。</string>
+		<string>╮(╯_╰)╭</string>
+		<string>(*^__^*)</string>
+		<string>天了噜~好无聊</string>
+		<string>伱好像是我喜欢的类型哇</string>
+		<string>啧啧。。。</string>
+		<string>你要帮我脱单啊</string>
+		<string>傻眼</string>
+		<string> 加微信聊咯</string>
+		<string>我男朋友在边上。迟点聊。。</string>
+		<string>汪汪汪 </string>
+		<string>有意思哦</string>
+		<string>装傻ing</string>
+		<string>直接一点直接一点</string>
+		<string>在别人看来的我很无知，平时见人都没自信，只有在这些app上敢了 </string>
+		<string> 天哪。。。竟然有人理我</string>
+		<string>喜不喜欢，合不合适，直接说呗 
 </string>
-	<string>你好，我刚分手，心情不好，能陪我聊会么？</string>
-	<string>hi</string>
-	<string>陪我说说话嘛</string>
-	<string>还在吗？</string>
-	<string>我很喜欢看电影，你喜欢干嘛啊</string>
-	<string>在干嘛呢？也不回我</string>
-	<string>在？加个QQ聊吧，你QQ多少，微信也行</string>
-	<string>你是来这找女朋友的吗？，加个QQ吧！</string>
-	<string>你还在线吗？
-</string>
-	<string>你下了吗？回来留言给我，我对你蛮有感觉的！</string>
-	<string>很高兴认识你</string>
-	<string>你好！认识你真高兴，你叫什么名字？</string>
-	<string>hi 你好！！！！！！！</string>
-	<string>你好！
-</string>
-	<string>看到你很高兴! </string>
-	<string>在干嘛吗?</string>
-	<string>怎么不说话了？你QQ多少，我加你的QQ</string>
-	<string>还在不在呀？你在哪，加个微信，以后了解一下吧，你微信多少？</string>
-	<string>喂，还在不在啊</string>
-	<string>^_^</string>
-	<string>你好，能认识你很高兴</string>
-	<string>能问下你是什么性格的人不？</string>
-	<string>你好</string>
-	<string>你好，你是好男人吗？</string>
-	<string>你好~！</string>
-	<string>弱弱的问句！你谈过几个？</string>
-	<string>你是哪的人，加个微信吧！</string>
-	<string>你平时喜欢用微信还是QQ？</string>
-	<string>你有其它联系方式吗？</string>
-	<string>我想知道你有裸睡的习惯吗？</string>
-	<string>可以给我你的电话号码吗？</string>
-	<string>额！你是干嘛啊？</string>
-	<string>嗨 我在上班呢   你呢？</string>
-	<string>上班无聊啊，有没有什么好听的歌啊？</string>
-	<string>那个谁  你是哪里的呀？</string>
-	<string>#NAME?</string>
-	<string>额额！你是哪里人啊？</string>
-	<string>我在上班呢  你没上班么？</string>
-	<string>嗨！你是做什么工作的呀</string>
-	<string>正好无聊，聊会？</string>
-	<string>上班？休息？
-</string>
-	<string>你是？来交友？聊天？</string>
-	<string>我上班了,你上班了没?</string>
-	<string>我现在有点事，回头聊！</string>
-	<string>我室友叫我陪去逛商场，一会聊！</string>
-	<string>我看会电视，等等啊</string>
-	<string>我要下车了，到家和你说</string>
-	<string>我要去逛街了，回来我们再聊</string>
-	<string>好无聊，我下楼逛逛。</string>
-	<string>我打牌了，回头再说吧</string>
-	<string>我要出门了，88
-</string>
-	<string>我的电视剧来了。不聊了</string>
-	<string>我朋友来了，等下再聊</string>
-	<string>嗨，你在干嘛呢</string>
-	<string>你好</string>
-	<string>认识你很高兴</string>
-	<string>在？</string>
-	<string>Hello</string>
-	<string>哈喽，你是做什么的呀</string>
-	<string>嘿，你好啊~</string>
-	<string>嗨！很高兴认识你</string>
-	<string>你好啊！</string>
-	<string>呵呵</string>
-	<string>你好！请自我介绍一下吧！</string>
-	<string>你好，我刚分手，心情不好，能陪我聊会么？ </string>
-	<string>你好，认识一下？你哪里的</string>
-	<string>哈喽</string>
-	<string>嗨，你喜欢开放的女生吗？</string>
-	<string>我在了！</string>
-	<string>你好，我现在很无聊，你在干嘛呢？</string>
-	<string>Hi~我们聊聊天吧！</string>
-	<string>嘿，认识一下吧！</string>
-	<string>你好，我们先认识一下吧，你叫什么？</string>
-	<string>现在在做什么，你老家是哪儿的？</string>
-	<string>心情不好，想找个人聊聊天</string>
-	<string>谢谢你来信，你自我介绍一下吧！</string>
-	<string>好无聊哦，陪我说说话</string>
-	<string>第一次玩 你呢
-</string>
-	<string>你好，认识你很高兴，你单身多久了？</string>
-	<string>你好，我现在只想找一个聊天的异性，你有QQ吗？</string>
-	<string>我好无聊，陪我说说话好吗</string>
-	<string>Hi 陪我聊聊好吗？</string>
-	<string>你好，看上我了？</string>
-	<string>很无聊哦，陪我说说话</string>
-	<string>你好，认识一下？你哪里的</string>
-	<string>哈喽</string>
-	<string>这里聊着不方便，你给个微信号吧！</string>
-	<string>你住哪的，你微信号是多少？</string>
-	<string>我们加QQ聊吧！</string>
-	<string>你介意不是处女吗？</string>
-	<string>你现在在哪？</string>
-	<string>我在了！
-加微信吧，把你的发过来！</string>
-	<string>加微信吧，把你的发过来！
-</string>
-	<string>你QQ多少？</string>
-	<string>你是哪里的</string>
-	<string>加QQ视频看看你，你QQ多少？</string>
-	<string>能问你一个问题不？</string>
-	<string>你是处男吗？</string>
-	<string>还在么？你有QQ吗？我们QQ聊吧</string>
-	<string>怎么不说话？收不到我的消息吗，加个微信吧！</string>
-	<string>想和我视频吗？想的话就回个QQ过来!</string>
-	<string>在干嘛呢？我想看看你！能QQ视频吗?</string>
-	<string>我们微信语音聊吧，打字太累了，你微信多少？</string>
-	<string>还在不，问你一个私人问题，你现在还是处男吗？</string>
-	<string>还在不，我们可以先加微信了解一下，你有微信吗?</string>
-	<string>怎么不说话了？没收到我的消息吗？留个电话可以吗？</string>
-	<string>在忙吗？来了把你的QQ告诉我吧，我们QQ语音吧</string>
-	<string>你回答我一个问题，我告诉你我的QQ！</string>
-	<string>你好，我现在很无聊，你在干嘛呢？</string>
-	<string>Hi~我们聊聊天吧！</string>
-	<string>嘿，认识一下吧！</string>
-	<string>你是不是处男啊？</string>
-	<string>你好，我们先认识一下吧，你叫什么？</string>
-	<string>现在在做什么，你老家是哪儿的？</string>
-	<string>心情不好，想找个人聊聊天</string>
-	<string>谢谢你来信，你自我介绍一下吧！</string>
-	<string>你有微信么？加微信吧！</string>
-	<string>好无聊哦，陪我说说话</string>
-	<string>嗨，你喜欢开放的女生吗？</string>
-	<string>第一次玩 你呢</string>
-	<string>你好，认识你很高兴，你单身多久了？</string>
-	<string>你好，我现在只想找一个聊天的异性，你有QQ吗？</string>
-	<string>我好无聊，陪我说说话好吗</string>
-	<string>Hi 陪我聊聊好吗？</string>
-	<string>你好，看上我了？</string>
-	<string>很无聊哦，陪我说说话</string>
-	<string>在干嘛呢？</string>
-	<string>干嘛呢
-</string>
-	<string>无聊啊</string>
-	<string>你好啊，认识你很高兴，你能告诉我你叫什么吗？</string>
-	<string>给个微信吧，这里聊不方便</string>
-	<string>你想婚前同居吗？</string>
-	<string>你有微信吗？加个微信吧！</string>
-	<string>怎么打个招呼就没人了？你用微信吗？我们微信语音聊吧！</string>
-	<string>。。。。。。</string>
-	<string>人呢？</string>
-	<string>哎，不理我，敲你</string>
-	<string>在么？陪我聊聊天嘛，我好无聊啊</string>
-	<string>怎么不说话啊</string>
-	<string>怎么了？</string>
-	<string>在？我们可以先了解一下!</string>
-	<string>什么事让你这么久不回我消息？</string>
-	<string>哎哎哎，再不说话不理你了</string>
-	<string>下线了？下次来留个QQ吧!</string>
-	<string>我想找一个男朋友，我们可以先了解一下！</string>
-	<string>还在吗？要不我们QQ视频聊吧！</string>
-	<string>hi，在做什么哦</string>
-	<string>认识你一下吧</string>
-	<string>今天分手了，心里很失落，你能陪我聊聊吗？</string>
-	<string>今天心情不好，陪我聊会，可以不。要不加个微信吧，哈哈</string>
-	<string>加个QQ聊吧，你QQ多少呢？</string>
-	<string>不理我了么？</string>
-	<string>你好！请自我介绍一下吧！</string>
-	<string>我不常在这里，给个你的QQ号吧！</string>
-	<string>呵呵</string>
-	<string>你好啊！</string>
-	<string>嗨！很高兴认识你</string>
-	<string>嘿，你好啊~</string>
-	<string>哈喽，你是做什么的呀</string>
-	<string>Hello</string>
-	<string>在？</string>
-	<string>认识你很高兴</string>
-	<string>你好</string>
-	<string>嗨，你在干嘛呢
-嗨，你在干嘛呢
-</string>
-	<string>讨厌这个世界，你们都是为了我的外表</string>
-	<string>第一次玩这个软件，不太上，有事直接加我qq吧</string>
-	<string>太气人了</string>
-	<string>你昵称有什么意思么？</string>
-	<string>看我的眼神忧伤不忧伤</string>
-	<string>我现在很悲伤不想说话</string>
-	<string>人生若只如初见</string>
-	<string>尴尬</string>
-	<string>你在干嘛 </string>
-	<string>你的性格是什么？能说说么？</string>
-	<string>你喜欢听音乐还是读书？</string>
-	<string>寻找有缘人……可以从朋友做起 </string>
-	<string>hi，给你打了声招呼，看到了么？</string>
-	<string>欣赏你！你看上去很靠谱 </string>
-	<string>冒昧问声，你好 </string>
-	<string>你好🐷🐷，认识下吧</string>
-	<string>认识一下吧，我不差钱，只是单纯聊聊</string>
-	<string>鼓起很大勇气才给你发消息。。。。求被鸟</string>
-	<string>我在上海哦~感觉你很不错，你是哪里的</string>
-	<string>未婚妹子。收入不高，想找个肩膀依靠 </string>
-	<string>我想找的是结婚对象哦。。。非诚勿扰</string>
-	<string>看下我照片，如果合适就联系下我吧</string>
-	<string>Hi~ o(*￣▽￣*)ブ，你好</string>
-	<string>你好，不知道能认识下嘛</string>
-	<string>哈罗，可以聊聊么</string>
-	<string>我是工作狂……为了工作忽视了很多东西，所以现在很寂寞</string>
-	<string>嘻嘻，在吗</string>
-	<string>hello，认识一下吧</string>
-	<string>看了你资料，感觉还不错呢</string>
-	<string>你好，我对你第一印象还不错哦，有空认识一下吗？</string>
-	<string>嗯哼～ </string>
-	<string>你好，能否认识了解一下</string>
-	<string>你照片怎么没有</string>
-	<string>嘻嘻 </string>
-	<string>最近好烦。。</string>
-	<string>╮(╯_╰)╭ </string>
-	<string>(*^__^*)  </string>
-	<string>伱好像是我喜欢的类型哇 </string>
-	<string>天了噜~好无聊 </string>
-	<string>啧啧。。。 </string>
-	<string>你要帮我脱单啊 </string>
-	<string>我、有。老公，你害怕了没呀 </string>
-	<string>傻眼 </string>
-	<string>加微信聊咯 </string>
-	<string>我男朋友在边上。迟点聊。。 </string>
-	<string>汪汪汪 </string>
-	<string>有意思哦 </string>
-	<string>装傻ing </string>
-	<string>我要结婚了。。你信么？结婚倒计时9天……但是突然不想嫁人</string>
-	<string>直接一点直接一点</string>
-	<string>在别人看来的我很无知，平时见人都没自信，只有在这些app上敢了</string>
-	<string>天哪。。。竟然还在 </string>
-	<string>喜不喜欢，合不合适，直接说呗</string>
-	<string>看皂片说话，不传照片不回复了哦~</string>
-	<string>身材控～～～有身材照片上传看看么</string>
-	<string>姨妈中……悲惨。。。</string>
-	<string>窝说话比较直接的欧～伤害你要不要我负责的哇，小怕怕</string>
-	<string>困困嗒。。说两个笑话先呗</string>
-	<string>嘿嘿</string>
-	<string>你好哇</string>
-	<string>bi bibs</string>
-	<string>(づ｡◕‿‿◕｡)づ</string>
-	<string>敢不敢加微信私聊……只要你不是微商就好！</string>
-	<string>喜欢我才加我？</string>
-	<string>最近好不开心哦</string>
-	<string>最近能单纯交朋友的人好少哦</string>
-	<string>嘻嘻嘻</string>
-	<string>boom</string>
-	<string>我已经有喜欢的人了，所以真心不可能，只有身体的话看颜值</string>
-	<string>。。。。。。</string>
-	<string>轻易得到我是不是会让你不重视我呀。。。害怕状</string>
-	<string>其实我照片p过的哦。。。见面你会不会报警呀，怕怕……</string>
-	<string>只能文。。love。。(*^__^*) 嘻嘻…</string>
-	<string>加我微信让我视频看看你，怕你拿别人照片骗我</string>
-	<string>伱要比我主动才可以哦。</string>
-	<string>假正经~</string>
-	<string>讨厌啦</string>
-	<string>大~坏~蛋</string>
-	<string>小弟弟，要叫我姐姐哦</string>
-	<string>哈</string>
-	<string>你信不信我就算主动了我们也不会有故事</string>
-	<string>你也是寂寞的人吧</string>
-	<string>我慢熟、、、、你是不是不会搭理我了</string>
-	<string>?????????</string>
-	<string>直接甩扣聊不来删聊的来处</string>
-	<string>你不是vip吗？不能直接说话？</string>
-	<string>好吧</string>
-	<string>没想到你是这样的人</string>
-	<string>我只想说，我这么美，你要的起么</string>
-	<string>你有给我照片留言么？</string>
-	<string>十八岁以下不要来昂，不喜欢未成年！</string>
-	<string>本人走身不走心，到时候别太作，ok？</string>
-	<string>hi～</string>
-	<string>呼呼</string>
-	<string>好冷啊</string>
-</array>
+		<string>看皂片说话，不传照片不回复了哦~</string>
+		<string>身材控～～～有身材照片上传看看么</string>
+		<string>窝说话比较直接的欧～伤害你要不要我负责的哇，小怕怕</string>
+		<string>嘿嘿 </string>
+		<string> 你好哇</string>
+		<string>(づ｡◕‿‿◕｡)づ 你是我的宝宝吗</string>
+		<string>敢不敢加微信私聊……只要你不是微商就好！</string>
+		<string>喜欢我才加我？</string>
+		<string>最近好不开心哦</string>
+		<string>最近能单纯交朋友的人好少哦</string>
+		<string>嘻嘻嘻</string>
+		<string>boom </string>
+		<string>。。。。。。 </string>
+		<string>轻易得到我是不是会让你不重视我呀。。。害怕状 </string>
+		<string>其实我照片p过的哦。。。见面你会不会报警呀，怕怕…… </string>
+		<string>加我微信让我视频看看你，怕你拿别人照片骗我</string>
+		<string>假正经~</string>
+		<string> 讨厌啦</string>
+		<string>大~坏~蛋 </string>
+		<string>哈喽 </string>
+		<string>你信不信我就算主动了我们也不会有故事 </string>
+		<string>你也是寂寞的人吧</string>
+		<string>我慢熟、、、、你是不是不会搭理我了 </string>
+		<string>????????? </string>
+		<string>直接甩扣聊不来删聊的来处 </string>
+		<string>你不是vip吗？不能直接说话？</string>
+		<string>好吧</string>
+		<string>没想到你是这样的人</string>
+		<string>我只想说，我这么美，你要的起么</string>
+		<string>你有给我照片留言么？</string>
+		<string> hi～ 
+hi！~</string>
+		<string> 呼呼 </string>
+		<string>平时喜欢瑜伽，健身等运动，你呢？ </string>
+		<string>周末在家都做什么呢？喜欢自己下厨做点吃的吗？</string>
+		<string>今年的七夕不想再一个人过了</string>
+		<string>性格又开朗又文静，想了解下你是什么性格的人</string>
+		<string>爱聊天，爱游戏，爱交友！回复可带照片 </string>
+		<string>周末在家都做什么呢？喜欢自己下厨做点吃的吗？ </string>
+		<string>我的要求不高，一眼就看中了你，能给我聊聊吗？ </string>
+		<string> 好有眼缘，想认识你哦~ </string>
+		<string>一心想结婚，做个贤妻良母，很高兴认识你 </string>
+		<string>我是学生，单身未婚，求缘分与你相遇 </string>
+		<string>想嫁人了，对你好有眼缘 </string>
+		<string>我在宁波生活，有宁波的吗？约起啊 </string>
+		<string>你找对象的要求是什么 可以聊天吗 你QQ多少 可以加你吗 留个电话了解下可以吗</string>
+		<string>真诚期待与你做个朋友。能否认识下？先留个微信号交流下吧：）</string>
+		<string>我只是想和你交往，你会拒绝我吗？</string>
+		<string>一生就这么一次，谈一场以结婚为目的的恋爱吧！不和别人，就和你</string>
+		<string>我是一个阳光,低调的人 。 </string>
+		<string>一个偶然的机会,一次偶然的活动,关注到这个交友平台.希望能和身边的朋友一样,在这里找到一个的可靠真诚的男孩</string>
+		<string>你好！看了你资料感觉还不错，我们留个联系方式吧 </string>
+		<string>你是我欣赏的类型，真心希望能与你交个朋友。 </string>
+		<string>你好，很想与你相识，期待你的回信。。</string>
+		<string>你好啊，我在杭州西湖区工作，你呢？</string>
+		<string>确实是诚心找对象的，工作忙，希望能开门见山，节约大家时间。</string>
+		<string>不美但暖只要你来</string>
+		<string>交朋友，求勾搭。 我在江苏你在哪？ 进来聊聊可好！处一波 </string>
+		<string>巨蟹 爱旅行爱泡吧 头像即本人 ，每天在无聊中度过 ，求交往，求带走。</string>
+		<string>没什么好说的了，你喜欢萝莉吗 </string>
+		<string>对象喜欢污点的 朋友一点点污 妹妹喜欢纯纯的</string>
+		<string>刚休假！在家好无聊！来我们聊5毛钱的</string>
+		<string>东北女 173 ，是我撩你还是你撩我呢？</string>
+		<string>只要被撩到，一起走回家</string>
+		<string>老女人了还会有人喜欢的么</string>
+		<string>要求不高就想找个陪我聊天 看着顺眼的 就能带走。陪我陪我陪我🌝</string>
+		<string> 四川， 自带逗逼属性 小污 当然看人 坐等被撩 撩你也行 你确定不来吗 </string>
+		<string>属于温暖气质开朗型的一个女生,不想认识认识么。</string>
+		<string>女 25 DJ一枚 不糜烂性格直爽 喜交友 从来都不会好好照相 因为我颜值高 </string>
+		<string>北方女，逗逼一枚 </string>
+		<string>时而萌萌哒，时而污女一枚，扮的了单纯，演得了女王。装的了可爱，其实很暴力，来交友吧</string>
+		<string>陪聊交友 漫漫长假 多点真诚少点套路</string>
+		<string>天气这么热都在干什么出来冒个泡 嘎嘎 </string>
+		<string>纯交友 不往对象方面发展 喜欢就来 东北女孩 
+纯交友 不往对象方面发展 喜欢就来 东北女孩 </string>
+		<string>期待已久的假期还有5天就来了，我在这里，你要到哪里去？处一波小伙伴，假期里聊天各种的。</string>
+		<string>有木有人聊聊，微我看标题 </string>
+		<string>坐标重庆 金牛座 偶尔有点小脾气快来呀小伙伴~ </string>
+		<string>射手 喜欢交友 你不主动怎么可能有故事 喜欢旅游 </string>
+		<string>毕业了想来一场旅游，想交些朋友有吗</string>
+		<string> 处什么关系你说了算，只要是暖男就好 </string>
+		<string> 我又不高冷 我很暖的 你撩的动我么</string>
+		<string>快来快来 快来眼熟 一起唠唠 聊得来的可深交</string>
+		<string>找男朋友，幼师</string>
+		<string>我的眼睛很好看，你发现了没？ </string>
+		<string>真诚交友，求带走！ </string>
+		<string>长得再美，没人理睬也是一种浪费！ </string>
+		<string>深圳ts法拉联系方式看回复 </string>
+		<string>北方女  性格直 手控 身高标准168 体重95斤不胖不瘦 爱好睡觉听音乐 是个吃货 有志同道合的朋友进来处处关系呗 啥关系都行</string>
+		<string>无敌就是寂寞 今天你寂寞了嘛？</string>
+		<string> 难道男生都喜欢胸大的？ </string>
+		<string>要找25到40岁之内男人，网上骗子很多，信则来，不信则勿扰 </string>
+		<string>生于南方，喜冷厌热，有点呆萌还是路痴 </string>
+		<string>处个无话不谈的宝贝，网恋，闺蜜，反正关系随意。希望你不要高冷不要一副高高在上的样子。我有点污希望你不要介意。是敌是友别是狗！求真心不求感情骗子。。。你长得什么样子我都敢接关键我不外协。。。。。 </string>
+		<string>关系你说，我各种缺，甩扣</string>
+		<string>狮子座，可污可认真！可以私聊联系方式 </string>
+		<string>男女都可以 你真心 我实意 ，外貌协会也可以。 </string>
+		<string>来到这里不是来交友的吗😂😂我也不例外哈哈哈 </string>
+		<string>暑假都在干嘛啊，处一波好闺蜜聊聊天呀</string>
+		<string>慢热 熟了逗成狗 重庆 双鱼女 </string>
+		<string>闲来无事，一起来玩玩呗，资深腐女，cos爱好者，古风爱好者，有共同爱好的吗？我们可以来聊聊啊，不管男的女的都可以啊 </string>
+		<string>宝宝大一，下半年大二，会做饭洗衣，可污会打LO </string>
+		<string>交个朋友好嘛 我可以唱歌给你听喔嘿嘿</string>
+		<string>生于北方?单身可撩?怀抱不大不暖但我心真?来了就别走 因为我念旧呐?你主动就会有故事?你愿意来么？? </string>
+		<string>我不喜欢太瘦的，喜欢胖一点的，你是不是呀</string>
+		<string>别克制，处个对象，不处对象的也可处Q友，91年大姐姐别嫌弃，坐标上海，武汉人，来撩吗？别克制 </string>
+		<string>空有一身撩妹技能，可惜宝宝是个女的，来处个闺蜜，男闺蜜女闺蜜都行没有的话待会我再问一遍。</string>
+		<string> 好久没来，反馈不知道咋样，我就来混个脸熟 </string>
+		<string>人丑可撩。 南方软妹。 </string>
+		<string>百变造型，摆什么姿势你说了算！</string>
+		<string>本人喜欢广交好友人很随和，听说不爆照没人来 </string>
+		<string>想找个知心仍有说说心里话</string>
+		<string>太阳姐姐每天晒我，还不给宝宝往出晒一个男盆友 </string>
+		<string>不美不美，但是会卖萌其实我不是高冷 </string>
+		<string> 交呀么，交呀么，交朋友，想要交个男朋友，聊聊骚，谈谈心，做彼此的倾听者，有意者可以私我哦！求带走，求打包，求发货，求牵手！</string>
+		<string>放假好几天了 在家里都快发霉了 要是再没人聊天就真的狗带了 </string>
+		<string>周末无聊，想找人聊天，吃饭看电影 </string>
+		<string>列表的人越来越少，处一波好友，来了你别走，你主动我们就有故事 </string>
+		<string> 非常喜欢爱打篮球的 男女无畏 本人处女 属于半高冷半逗比跟我玩久了会发现我很污 你着办啦QQ</string>
+		<string> 想找个，可以天天给我聊天的人，留微信我加你 </string>
+	</array>
+	<key>night</key>
+	<array>
+		<string>:哈 喜欢吗 要不要一起睡觉 </string>
+		<string>我要结婚了。。你信么？结婚倒计时9天……但是突然不想嫁人 </string>
+		<string>我是工作狂……为了工作忽视了很多东西，所以现在很寂寞 </string>
+		<string>小哥哥我喜欢你的好吃的😄 </string>
+		<string>好冷啊 </string>
+		<string>小弟弟，要叫我姐姐哦 </string>
+		<string>困困嗒。。说两个笑话先呗 </string>
+		<string>十八岁以下不要来昂，不喜欢未成年！</string>
+		<string>本人走身不走心，到时候别太作，ok？</string>
+		<string>我已经有喜欢的人了，所以真心不可能，只有身体的话看颜值</string>
+		<string>解锁了所有姿势，喜欢吗 </string>
+		<string>喜欢性欲强的女生吗</string>
+		<string>女朋友着装暴露，你能接受吗？ </string>
+		<string>  水多，喜欢吗 </string>
+		<string>你是处男吗？ </string>
+		<string>还在不，问你一个私人问题，你现在还是处男吗？ </string>
+		<string>前男友可坏了~分手这么久还是好难受~ </string>
+		<string>凌晨一点半，有人吗？陪小妹妹聊天呗 </string>
+		<string>姨妈中……悲惨。。。</string>
+		<string>我、有。老公，你害怕了没呀</string>
+		<string>我的咪咪这么大，你双手握得过来吗 </string>
+		<string>夜深人静的时候，真的好寂寞难耐</string>
+		<string>老公长期不在家，你来陪我吧 </string>
+		<string>伱要比我主动才可以哦。 </string>
+		<string> 先有性，还是先有爱 </string>
+		<string>只能文。。love。。(*^__^*) 嘻嘻… </string>
+		<string>你觉得前戏多少分钟合适 </string>
+		<string>寂寞的时候，只能用按摩棒，好难熬</string>
+		<string>尝试过多人，sm，换妻，换夫等新花样吗 </string>
+		<string>陪我跳艳舞吧 </string>
+		<string>喜欢鸳鸯浴吗 </string>
+		<string>我的另一半，你在这儿吗</string>
+		<string>想找个老公 </string>
+		<string>有带我一起好好相爱的吗 </string>
+		<string>喜欢性欲强的女生吗</string>
+		<string>愿意娶有故事的女人吗 </string>
+		<string>特别特别想爱爱</string>
+		<string>你怎么看待口交 </string>
+		<string>你最常用的体位是什么</string>
+		<string>你能接受一晚上三次以上吗？ </string>
+		<string>被包养过，是不是就再也找不到真爱了 </string>
+		<string> 一个人的孤单，不如两个人的狂欢！ </string>
+		<string>看见美女是不是都会有反应？ </string>
+		<string>遇到过几个活好的？</string>
+		<string>没谈过恋爱，想找人试试 </string>
+		<string>好无聊，想出去玩</string>
+		<string>你猜我的胸有多大？ </string>
+		<string>你下面有多长？小于12cm就不要回复我了。 </string>
+		<string>有点寂寞，想找个男人玩玩，诚心的带照片。</string>
+		<string>我的妹妹紧紧的，你喜欢吗？</string>
+		<string>你猜我怎么解决寂寞？ </string>
+		<string>敢不敢玩真心话大冒险？ </string>
+		<string>好无聊，哥哥陪陪妹妹吧</string>
+		<string>约炮过吗？</string>
+		<string>想去酒吧玩，一起吗？ </string>
+		<string>我美吗？给我的颜值打几分？ </string>
+		<string>我下面给你吃啊 ，嘻嘻</string>
+		<string>帅哥，约吗</string>
+		<string>不带套更舒服吧？ </string>
+		<string>曾经相处过一个40岁的老男人，让我遍体凌伤</string>
+		<string>我老公这个月出差，一个人在家有点无聊 ，你在哪</string>
+		<string>妹妹睡不着很寂寞，帮我解闷的哥哥在哪里</string>
+		<string>我想知道你有裸睡的习惯吗？ </string>
+		<string>你是不是处男啊？ </string>
+		<string>你介意不是处女吗？</string>
+		<string>你想婚前同居吗？ </string>
+		<string>我整个大学都在不断换男友，哈哈，同学都不知道我咋那里厉害。。</string>
+		<string>讨厌这个世界，你们都是为了我的外表</string>
+		<string>我有故事和烈酒，你要不要跟我走 </string>
+		<string>男人多长时间才合理？有人能帮助我解答这个疑惑吗？ </string>
+		<string>直奔主题，有胆来吗</string>
+		<string>喜欢大尺寸的，你有没有？</string>
+		<string>想体验下一夜情 </string>
+		<string>丑吗？不丑的话可约</string>
+		<string>寂寞，求深交。。</string>
+		<string>撩骚的吗？</string>
+		<string>大学生交友～22岁，身体熟透~求深交！</string>
+		<string>你跟父母住还是独居呢 </string>
+		<string>你好你好哈哈哈，你叫什么呀？哪里人？ </string>
+		<string>正好寂寞，要不要视频？</string>
+		<string>也还没睡觉吗？为什么呢？</string>
+		<string>这么晚还上来？想干嘛呢</string>
+		<string>这个点还有人，活人？</string>
+		<string>你在哪？</string>
+		<string>你也没睡呢。这么巧呢</string>
+		<string>呵呵，这么晚才来约啊？我考虑下</string>
+		<string>开心哦。这么晚都有人在</string>
+		<string>还不睡觉？是不是一个人睡不着呀哈哈哈</string>
+		<string>你没老婆啊？还交友？还是单纯想约？</string>
+		<string>叔叔，我们只交心，不约不约。</string>
+	</array>
+</dict>
 </plist>
