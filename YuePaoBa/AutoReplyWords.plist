@@ -2,6 +2,72 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
+	<key>man</key>
+	<array>
+        <string>你好 </string>
+        <string>你好啊 </string>
+        <string>在吗 </string>
+        <string>你单身么 </string>
+        <string>你怎么都没资料呢 </string>
+        <string>遇到你只是开始，今天遇到你感觉很幸运 </string>
+        <string>你好，希望能交给朋友 </string>
+        <string>嗨，有空聊聊吗 </string>
+        <string>我白羊座的，你呢？ </string>
+        <string>妹子？ </string>
+        <string>有照片／男／29岁／希望2年内结婚，有兴趣？ </string>
+        <string>可否保持联系？ </string>
+        <string>你照片很美 </string>
+        <string>嘻嘻，在吗 </string>
+        <string>hello，认识一下吧 </string>
+        <string>你结婚了吗 </string>
+        <string>看了你的资料，能聊聊吗 </string>
+        <string>你好，我是一个质朴、善良、阳光直爽的靠谱男生，出身于教师家庭，独生子、已购房，事业有发展空间，不知道可不可以有机会跟你聊聊 </string>
+        <string>你好，我对你第一感觉很好，能否回应一下，给予一些认识的机会？ </string>
+        <string>你好，能了解下吗 </string>
+        <string>哈罗，聊聊吗 </string>
+        <string>你好，能否认识一下你呢？ </string>
+        <string>hi，我想找可以结婚的对象，你呢？ </string>
+        <string>鼓起很大勇气发的信息，给个面子回下？ </string>
+        <string>注册了，但是不常上，要不要加个微信？ </string>
+        <string>认识下吧 </string>
+        <string>约吗 </string>
+        <string>冒昧问声好，盼复 </string>
+        <string>hi，很高兴认识你 </string>
+        <string>你好，美女，看了你资料觉得蛮好，能加个好友吗 </string>
+        <string>来打声招呼咯 </string>
+        <string>可约？ </string>
+        <string>你的性格是怎么样的，能说说嘛 </string>
+        <string>我看你都没怎么写资料？能聊聊你是什么样的人么 </string>
+        <string>哇，我看到公主了！ </string>
+        <string>希望能交个朋友 </string>
+        <string>你好，交给朋友吧，有兴趣就回复下，不感冒也给我发个好人卡吧^_^ </string>
+        <string>你是学生还是？ </string>
+        <string>学生党飘过。。 </string>
+        <string>姐姐？ </string>
+        <string>诚意征婚 </string>
+        <string>很高兴今天遇到你 </string>
+        <string>你好呀，你是什么工作的 </string>
+        <string>你现在租房还是自己的房子？ </string>
+        <string>周末看电影去不去？ </string>
+        <string>可以接受姐弟恋么 </string>
+        <string>婚前性行为能接受么？ </string>
+        <string>第一次约会，带你去酒吧你ok？ </string>
+        <string>约会你会穿裙子么 </string>
+        <string>你愿意和我在这里先交个朋友么？ </string>
+        <string>随便聊聊？ </string>
+        <string>你喝酒么 </string>
+        <string>你多高呀 </string>
+        <string>可以接受open marriage吗？ </string>
+        <string>喜欢大叔还是小鲜肉？ </string>
+        <string>哈罗哈罗在吗？ </string>
+        <string>你在哪个城市啊 </string>
+        <string>你觉得约会聊什么话题比较好 </string>
+        <string>我长得是你喜欢的类型吗 </string>
+        <string>第一次约会牵你手，你会觉得我很过分么 </string>
+        <string>要不要一起旅游？ </string>
+        <string>你喜欢徒步吗 </string>
+        <string>如果我真人没照片好看，你愿意聊么？愿意就回复，不愿意就算啦 </string>
+	</array>
 	<key>day</key>
 	<array>
 		<string>可以给我你的电话号码吗？ 
@@ -824,6 +890,75 @@ hi！~</string>
 	</array>
 	<key>night</key>
 	<array>
+		<string>妹妹我，在等个哥哥 </string>
+		<string>在家好无聊，找找点事做做，有没有喜欢我的 </string>
+		<string>都在忙什么呢。好想污 </string>
+		<string>处对象，来了就宠你。暖你啊 喜欢巧克力 不外协，有点小声控⊙▽⊙ 喜欢比我大点的，然后最好是真心的，因为可以奔现诶。 </string>
+		<string>来聊，在线等你湿湿哒 </string>
+		<string>说说你多久没有约了？ </string>
+		<string>是男人的来找我 </string>
+		<string>平时喜欢吃喜欢玩  </string>
+		<string>好像要吃大香蕉了，给我吃好么。 </string>
+		<string>29916784 求带走 </string>
+		<string>和我聊天呗 我可会逗人玩了 </string>
+		<string>既然进来了就不要走了，来来来让我撩下～。  </string>
+		<string>首先自我介绍下，大一在校生，想处个现实～可连麦可视频的那种，你可以不帅但一定要对我好，..可以交换QQ密码，爱你就对你毫无保留 </string>
+		<string>是不是我还小，没有人搭讪呢？ </string>
+		<string>想结交更多朋友 真心交友 </string>
+		<string>找到一个坏哥哥 </string>
+		<string>我很坏。你受的了吗？ </string>
+		<string>不单纯，处什么都行 </string>
+		<string>现实中小透明的我没什么聊得来的朋友，想在这里交一些真心聊得来的朋友，在我伤心难过的时候，听我倾诉、排忧解难；孤独无聊的时候，陪我东聊西扯，打发时间。你愿意吗？非诚心勿扰 </string>
+		<string>呜呜，怎么都没人理我的 </string>
+		<string>主动了又说浪…… </string>
+		<string>为什么都能找到男朋友就我找不到不开心找男朋友 </string>
+		<string>cpy 对眼加v </string>
+		<string>一个人真的好无聊呢 </string>
+		<string>本人女，喜欢加好友，但不喜欢那种乱聊的，嘿嘿，交朋友加扣： </string>
+		<string>撩？ </string>
+		<string>希望交到更多的朋友 性格以后慢慢会了解 还有我是单身 </string>
+		<string>我最亲爱的，进来聊聊吧，聊什么都可以，我很主动 </string>
+		<string>真心处友，有真心的吗？ </string>
+		<string>90后，坐等被撩！ </string>
+		<string>想谈恋爱了。喜欢贾乃亮。特别喜欢，交个朋友吧。看有机会能否处处 </string>
+		<string>圈子不大 朋友不多你来了就是唯一❤️眼熟 </string>
+		<string>一年 有没有 兴趣 聊换妻 </string>
+		<string>90后的姑娘，朋友少，想扩大圈子，大家都来吧 </string>
+		<string>我们不是情侣但我们每天都会有一句问候一个拥抱一个 </string>
+		<string>想要交朋友的留QQ我加你，仅限88年到92年的哦 </string>
+		<string> 备注小可爱~ 交友嘛~留下qq~ </string>
+		<string>南方女 双子座 有些傲娇 有些慢热 想找一个可以聊梦想 说过往 谈心事的人 这样的人会有吗 </string>
+		<string>语文视寂寞污聊浪 </string>
+		<string>哥哥，来陪我吧 </string>
+		<string>想找男闺蜜吼吼吼 女闺密吼吼吼 聊聊天什么的 </string>
+		<string>交个朋友聊天。 </string>
+		<string>晚上无聊的朋友来聊天 </string>
+		<string>不白不瘦不美这样的我有人处朋友吗？ </string>
+		<string>裸聊的一根妹子，应该还在上大学，想玩的私聊我给你截图。  </string>
+		<string>23号朋友过生日，找个诸暨汉子做闺蜜一起玩，是你吗？处好了各种玩耍 </string>
+		<string>本人长相还可以，希望找一个威武雄壮的男友 </string>
+		<string>有人吗，先说我自己的情况我是一个大学生，现在在湖北上大学 </string>
+		<string>我有故事，你慢慢听我说，感动了你 是否愿意带我走！ </string>
+		<string>楼楼是个萌哒哒，喜欢吃零食逛街交朋友，有一起玩的吗？闺蜜或者蓝颜啦啦啦 </string>
+		<string>敢不敢加我 </string>
+		<string>无聊了 ，就晒晒自己 ，好让你们的记得住我 </string>
+		<string>找男友 。。。。。。喜欢的加我qq </string>
+		<string>生于北方 喜秋厌冬喜笑厌背叛喜热闹不喜孤独  庆幸你来自远方不清楚我的过往 . </string>
+		<string>放假在家太无聊了，想交个朋友聊聊天 </string>
+		<string>多说无益来了闲聊留下你们的QQ </string>
+		<string>单身大学生妹子一枚 求带走 扣 八五一思思7壹壹6 非诚勿扰 </string>
+		<string>撩一下我吧 好无聊 好像被qj </string>
+		<string>男女不论咯。重要是真心的。本人有些内向，最好是能自来熟的。 </string>
+		<string>不单纯别克制，做最真实的自己 </string>
+		<string>还没有没睡的，出来聊个五毛钱的呗！ </string>
+		<string>好无聊 找qy 有没有  </string>
+		<string>留下你的联系方式呗 </string>
+		<string>男朋友跟别的女人跑了，抛弃我了，现在不想谈恋爱了，处一波好友吧 </string>
+		<string>这日子 无聊得没谁了 要发霉了 </string>
+		<string>不怎么会说话！！天蝎女！想找个QQ好友聊聊天！ </string>
+		<string>看剧找我好么，宝宝需要你们 </string>
+		<string>处对象 喜欢比我大的干净的男生 外协控 不要太高冷 命里缺个你 看上的私聊我 爆照！ </string>
+		<string>伤心的时候能找个人倾诉，开心的时候能给朋友分享 </string>
 		<string>:哈 喜欢吗 要不要一起睡觉 </string>
 		<string>我要结婚了。。你信么？结婚倒计时9天……但是突然不想嫁人 </string>
 		<string>我是工作狂……为了工作忽视了很多东西，所以现在很寂寞 </string>

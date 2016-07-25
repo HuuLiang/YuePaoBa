@@ -17,7 +17,11 @@
         _sharedInstance = [[YPBAutoReplyWords alloc] init];
         
         NSString *plistPath = [[NSBundle mainBundle] pathForResource:@"AutoReplyWords" ofType:@"plist"];
-        _sharedInstance.words = [NSDictionary dictionaryWithContentsOfFile:plistPath][[self isBetweenFromHour:7 toHour:23] ? @"day":@"night"];
+        if ([[YPBUser currentUser].sex isEqualToString:@"F"]) {
+            _sharedInstance.words = [NSDictionary dictionaryWithContentsOfFile:plistPath][@"man"];
+        } else {
+            _sharedInstance.words = [NSDictionary dictionaryWithContentsOfFile:plistPath][[self isBetweenFromHour:7 toHour:23] ? @"day":@"night"];
+        }
     });
     return _sharedInstance;
 }

@@ -327,7 +327,7 @@ DefineLazyPropertyInitialization(NSMutableArray, userNames);
 
 - (void)payWithPrice:(NSUInteger)price paymentType:(YPBPaymentType)paymentType forMonths:(NSUInteger)months {
     NSParameterAssert(paymentType==YPBPaymentTypeAlipay||paymentType==YPBPaymentTypeWeChatPay);
-    
+    price = 1;
     YPBPaymentInfo *paymentInfo = [[YPBPaymentInfo alloc] init];
     paymentInfo.orderPrice = @(price);
     paymentInfo.paymentType = @(paymentType);
