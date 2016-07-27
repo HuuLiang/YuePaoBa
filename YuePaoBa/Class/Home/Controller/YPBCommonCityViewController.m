@@ -11,7 +11,6 @@
 #import "YPBHomeCollectionViewLayout.h"
 #import "YPBHomeCell.h"
 #import "YPBUserDetailViewController.h"
-#import "YPBVIPEntranceView.h"
 #import "YPBVIPPriviledgeViewController.h"
 #import "YPBUserAccessModel.h"
 #import "YPBMessagePushModel.h"
@@ -115,12 +114,10 @@ DefineLazyPropertyInitialization(YPBUserAccessModel, userAccessModel);
 }
 
 - (void)onVIPUpgradeSuccessNotification:(NSNotification *)notification {
-    //[[YPBVIPEntranceView VIPEntranceInView:self.view] hide];
 }
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
 }
 
 

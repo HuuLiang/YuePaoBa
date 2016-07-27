@@ -11,7 +11,6 @@
 #import "YPBContactCell.h"
 #import "YPBMessageViewController.h"
 #import "YPBUserDetailViewController.h"
-#import "YPBVIPEntranceView.h"
 #import "YPBVIPPriviledgeViewController.h"
 #import "YPBChatMessage.h"
 
@@ -102,7 +101,7 @@ DefineLazyPropertyInitialization(NSMutableArray, contacts);
     
     __block NSUInteger unreadMessages = 0;
     [self.contacts enumerateObjectsUsingBlock:^(YPBContact * _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
-        unreadMessages += obj.unreadMessages.unsignedIntegerValue;
+        unreadMessages += obj.unreadMessages;
         if ([obj.userId isEqual:YPBROBOTID]) {
             isHaveRobot = YES;
             if ([self.contacts indexOfObject:obj] != 0) {
@@ -114,20 +113,19 @@ DefineLazyPropertyInitialization(NSMutableArray, contacts);
     }];
     //添加红娘小助手
     if (!isHaveRobot) {
-        YPBContact *robotContact = [[YPBContact alloc] init];
-        robotContact.userId = YPBROBOTID;
-        robotContact.logoUrl = kRobotContactLogoUrl;
-        robotContact.nickName = @"红娘小助手";
-        robotContact.userType = [NSNumber numberWithInteger:[YPBROBOTID integerValue]];
-        robotContact.recentMessage = @"欢迎来到心动速配";
-        robotContact.recentTime = [YPBUtil stringFromDate:[NSDate date]];
-        robotContact.unreadMessages = @(1);
-        [robotContact persist];
-        [self.contacts addObject:robotContact];
-        
-        [YPBMessageViewController sendSystemMessageWith:robotContact Type:YPBRobotPushTypeWelCome count:0 inViewController:self];
-//        [_layoutTableView reloadData];
-        isHaveRobot = YES;
+            YPBContact *robotContact = [[YPBContact alloc] init];
+            robotContact.userId = YPBROBOTID;
+            robotContact.logoUrl = kRobotContactLogoUrl;
+            robotContact.nickName = @"红娘小助手";
+            robotContact.userType = [YPBROBOTID integerValue];
+            robotContact.recentMessage = @"欢迎来到心动速配";
+            robotContact.recentTime = [YPBUtil stringFromDate:[NSDate date]];
+            robotContact.unreadMessages = 1;
+            [robotContact saveOrUpdate];
+            [self.contacts addObject:robotContact];
+            
+            [YPBMessageViewController sendSystemMessageWith:robotContact Type:YPBRobotPushTypeWelCome count:0 inViewController:self];
+            isHaveRobot = YES;
     }
     
     if (![self.navigationController.tabBarItem.badgeValue isEqualToString:[NSString stringWithFormat:@"%ld",unreadMessages]]) {
@@ -167,7 +165,6 @@ DefineLazyPropertyInitialization(NSMutableArray, contacts);
 }
 
 - (void)onVIPUpgradeSuccessNotification:(NSNotification *)notification {
-    //[[YPBVIPEntranceView VIPEntranceInView:self.view] hide];
 }
 
 - (void)didReceiveMemoryWarning {
@@ -187,17 +184,17 @@ DefineLazyPropertyInitialization(NSMutableArray, contacts);
         
 //        self.chatMessages = [YPBChatMessage allMessagesForUser:contact.userId].mutableCopy;
 //        YPBChatMessage *recentMessage = self.chatMessages.lastObject;
-        DLog("%@",contact.userType);
+        DLog("%ld",contact.userType);
         cell.imageURL = [NSURL URLWithString:contact.logoUrl];
         cell.title = contact.nickName;
 //        cell.subtitle = recentMessage.msg;
         cell.subtitle = contact.recentMessage;
-        cell.numberOfNotifications = contact.unreadMessages.unsignedIntegerValue;
+        cell.numberOfNotifications = contact.unreadMessages;
         
         @weakify(self);
         cell.avatarTapAction = ^(id obj) {
             @strongify(self);
-            if (![contact.userType isEqualToNumber:[NSNumber numberWithInteger:[YPBROBOTID integerValue]]]) {
+            if (contact.userType == [YPBROBOTID integerValue]) {
                 YPBUserDetailViewController *detailVC = [[YPBUserDetailViewController alloc] initWithUserId:contact.userId];
                 [self.navigationController pushViewController:detailVC animated:YES];
             }
@@ -218,16 +215,7 @@ DefineLazyPropertyInitialization(NSMutableArray, contacts);
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
-    
-//    if ([YPBUtil isVIP]) {
-        YPBContact *contact = self.contacts[indexPath.row];
-        [YPBMessageViewController showMessageWithContact:contact inViewController:self];
-//    } else {
-////        [YPBVIPEntranceView showVIPEntranceInView:self.view canClose:YES withEnterAction:^(id obj) {
-//            YPBVIPPriviledgeViewController *vipVC = [[YPBVIPPriviledgeViewController alloc] init];
-//            [self.navigationController pushViewController:vipVC animated:YES];
-////        }];
-//    }
-    
+    YPBContact *contact = self.contacts[indexPath.row];
+    [YPBMessageViewController showMessageWithContact:contact inViewController:self];
 }
 @end

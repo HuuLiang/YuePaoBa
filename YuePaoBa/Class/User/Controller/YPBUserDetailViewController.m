@@ -193,9 +193,11 @@ DefineLazyPropertyInitialization(YPBUserAccessModel, userAccessModel)
             self.user.isGreet = YES;
             self.user.receiveGreetCount = @(self.user.receiveGreetCount.unsignedIntegerValue+1);
             [[YPBMessageCenter defaultCenter] showSuccessWithTitle:@"打招呼成功" inViewController:self];
-            if ([YPBContact refreshContactRecentTimeWithUser:self.user]) {
-                [YPBMessageViewController sendGreetMessageWith:self.user inViewController:self];
-            }
+            dispatch_async(dispatch_get_global_queue(0, 0), ^{
+                if ([YPBContact refreshContactRecentTimeWithUser:self.user]) {
+                    [YPBMessageViewController sendGreetMessageWith:self.user inViewController:self];
+                }
+            });
         }
     }];
 }
@@ -215,10 +217,12 @@ DefineLazyPropertyInitialization(YPBUserAccessModel, userAccessModel)
         [[YPBMessageCenter defaultCenter] showErrorWithTitle:@"无法获取用户信息" inViewController:self];
         return ;
     }
-    
-    if ([YPBContact refreshContactRecentTimeWithUser:self.user]) {
-        [YPBMessageViewController showMessageWithUser:self.user inViewController:self];
-    }
+    dispatch_async(dispatch_get_global_queue(0, 0), ^{
+        if ([YPBContact refreshContactRecentTimeWithUser:self.user]) {
+            [YPBMessageViewController showMessageWithUser:self.user inViewController:self];
+        }
+    });
+
     
     [YPBStatistics logEvent:kLogUserDateEvent fromUser:[YPBUser currentUser].userId toUser:self.userId];
 }

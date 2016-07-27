@@ -79,7 +79,6 @@
                 [self stopMessagePushPolling];
             }
         } repeats:YES];
-        //[self.pollingTimer fire];
     } else {
         NSUInteger seconds = [YPBUtil secondsSinceRegister];
         [self fetchMessageWithSeconds:seconds];
@@ -108,10 +107,6 @@
                completionHandler:^(BOOL success, id obj)
      {
          if (success && obj) {
-//             NSArray *messages = obj;
-//             if (messages.count > 0) {
-//                 [[YPBMessageCenter defaultCenter] showSuccessWithTitle:[NSString stringWithFormat:@"您有%ld条新消息！", messages.count] inViewController:nil];
-//             }
              [[NSNotificationCenter defaultCenter] postNotificationName:kUnreadMessageChangeNotification object:nil];
              [[NSNotificationCenter defaultCenter] postNotificationName:kMessagePushNotification object:obj];
          }
@@ -155,15 +150,16 @@
         [pushedMessages enumerateObjectsUsingBlock:^(YPBPushedMessage * _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
             YPBContact *contact = [YPBContact contactWithPushedMessage:obj];
             
-            [contact beginUpdate];
-            contact.unreadMessages = @(contact.unreadMessages.unsignedIntegerValue+1);
-            contact.recentMessage = obj.proDesc;
-            contact.recentTime = [YPBUtil currentDateString];
-            [contact endUpdate];
+            dispatch_async(dispatch_get_global_queue(0, 0), ^{
+                contact.unreadMessages = contact.unreadMessages+1;
+                contact.recentMessage = obj.proDesc;
+                contact.recentTime = [YPBUtil currentDateString];
+                [contact saveOrUpdate];
+            });
             
             YPBChatMessage *chatMessage = [YPBChatMessage chatMessageFromPushedMessage:obj];
             if (chatMessage) {
-                [chatMessage persist];
+                [chatMessage saveOrUpdate];
                 [chatMessages addObject:chatMessage];
             }
         }];

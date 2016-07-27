@@ -22,7 +22,6 @@
 		BC1AED561C0F59B6003A0C63 /* YPBVIPCenterViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BC1AED551C0F59B6003A0C63 /* YPBVIPCenterViewController.m */; };
 		BC1AED5B1C0F5A43003A0C63 /* YPBMessageViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BC1AED5A1C0F5A43003A0C63 /* YPBMessageViewController.m */; };
 		BC1AED601C0F5A8B003A0C63 /* YPBSettingViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BC1AED5F1C0F5A8B003A0C63 /* YPBSettingViewController.m */; };
-		BC1B497F1C44AFD300ECB0BA /* YPBVIPEntranceView.m in Sources */ = {isa = PBXBuildFile; fileRef = BC1B497E1C44AFD300ECB0BA /* YPBVIPEntranceView.m */; };
 		BC1B49821C44C5AE00ECB0BA /* UIView+YPBMask.m in Sources */ = {isa = PBXBuildFile; fileRef = BC1B49811C44C5AE00ECB0BA /* UIView+YPBMask.m */; };
 		BC1B498C1C44F1F500ECB0BA /* ApiXml.mm in Sources */ = {isa = PBXBuildFile; fileRef = BC1B49851C44F1F500ECB0BA /* ApiXml.mm */; };
 		BC1B498D1C44F1F500ECB0BA /* payRequsestHandler.mm in Sources */ = {isa = PBXBuildFile; fileRef = BC1B49871C44F1F500ECB0BA /* payRequsestHandler.mm */; };
@@ -49,8 +48,6 @@
 		BC2676811C54FBDF006BE769 /* libMobClickLibrary.a in Frameworks */ = {isa = PBXBuildFile; fileRef = BC26767E1C54FBDF006BE769 /* libMobClickLibrary.a */; };
 		BC2676871C550106006BE769 /* NSDate+Utilities.m in Sources */ = {isa = PBXBuildFile; fileRef = BC2676861C550106006BE769 /* NSDate+Utilities.m */; };
 		BC27422A1C3A631A00C98E6F /* YPBChatMessage.m in Sources */ = {isa = PBXBuildFile; fileRef = BC2742291C3A631A00C98E6F /* YPBChatMessage.m */; };
-		BC27422E1C3A65C700C98E6F /* YPBPersistentObject.m in Sources */ = {isa = PBXBuildFile; fileRef = BC27422D1C3A65C700C98E6F /* YPBPersistentObject.m */; };
-		BC2742311C3A67C100C98E6F /* YPBPersistentManager.m in Sources */ = {isa = PBXBuildFile; fileRef = BC2742301C3A67C100C98E6F /* YPBPersistentManager.m */; };
 		BC2742341C3A791800C98E6F /* YPBMessagePushModel.m in Sources */ = {isa = PBXBuildFile; fileRef = BC2742331C3A791800C98E6F /* YPBMessagePushModel.m */; };
 		BC2742761C3A8EC600C98E6F /* YPBMineAccessCell.m in Sources */ = {isa = PBXBuildFile; fileRef = BC2742751C3A8EC600C98E6F /* YPBMineAccessCell.m */; };
 		BC2ED5AB1C33C5FF00BE00A2 /* YPBUserDetailUpdateModel.m in Sources */ = {isa = PBXBuildFile; fileRef = BC2ED5AA1C33C5FF00BE00A2 /* YPBUserDetailUpdateModel.m */; };
@@ -402,8 +399,6 @@
 		BC1AED5A1C0F5A43003A0C63 /* YPBMessageViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YPBMessageViewController.m; sourceTree = "<group>"; };
 		BC1AED5E1C0F5A8B003A0C63 /* YPBSettingViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YPBSettingViewController.h; sourceTree = "<group>"; };
 		BC1AED5F1C0F5A8B003A0C63 /* YPBSettingViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YPBSettingViewController.m; sourceTree = "<group>"; };
-		BC1B497D1C44AFD300ECB0BA /* YPBVIPEntranceView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YPBVIPEntranceView.h; sourceTree = "<group>"; };
-		BC1B497E1C44AFD300ECB0BA /* YPBVIPEntranceView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YPBVIPEntranceView.m; sourceTree = "<group>"; };
 		BC1B49801C44C5AE00ECB0BA /* UIView+YPBMask.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIView+YPBMask.h"; sourceTree = "<group>"; };
 		BC1B49811C44C5AE00ECB0BA /* UIView+YPBMask.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIView+YPBMask.m"; sourceTree = "<group>"; };
 		BC1B49841C44F1F500ECB0BA /* ApiXml.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ApiXml.h; sourceTree = "<group>"; };
@@ -456,10 +451,6 @@
 		BC2676861C550106006BE769 /* NSDate+Utilities.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSDate+Utilities.m"; sourceTree = "<group>"; };
 		BC2742281C3A631A00C98E6F /* YPBChatMessage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YPBChatMessage.h; sourceTree = "<group>"; };
 		BC2742291C3A631A00C98E6F /* YPBChatMessage.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YPBChatMessage.m; sourceTree = "<group>"; };
-		BC27422C1C3A65C700C98E6F /* YPBPersistentObject.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YPBPersistentObject.h; sourceTree = "<group>"; };
-		BC27422D1C3A65C700C98E6F /* YPBPersistentObject.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YPBPersistentObject.m; sourceTree = "<group>"; };
-		BC27422F1C3A67C100C98E6F /* YPBPersistentManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YPBPersistentManager.h; sourceTree = "<group>"; };
-		BC2742301C3A67C100C98E6F /* YPBPersistentManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YPBPersistentManager.m; sourceTree = "<group>"; };
 		BC2742321C3A791800C98E6F /* YPBMessagePushModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YPBMessagePushModel.h; sourceTree = "<group>"; };
 		BC2742331C3A791800C98E6F /* YPBMessagePushModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YPBMessagePushModel.m; sourceTree = "<group>"; };
 		BC2742741C3A8EC600C98E6F /* YPBMineAccessCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YPBMineAccessCell.h; sourceTree = "<group>"; };
@@ -1154,7 +1145,6 @@
 			isa = PBXGroup;
 			children = (
 				BC1B49831C44F1F500ECB0BA /* WeChatPay */,
-				BC27422B1C3A65AF00C98E6F /* Persistence */,
 				BCD15F151C104B31002B6C5C /* rac_extobjc */,
 				BC1AED461C0F35DD003A0C63 /* Extensions */,
 				BCD15F1C1C104EAB002B6C5C /* YPBUtil.h */,
@@ -1321,8 +1311,6 @@
 			children = (
 				BC23FB301C35ABD80055D68F /* YPBVIPCell.h */,
 				BC23FB311C35ABD80055D68F /* YPBVIPCell.m */,
-				BC1B497D1C44AFD300ECB0BA /* YPBVIPEntranceView.h */,
-				BC1B497E1C44AFD300ECB0BA /* YPBVIPEntranceView.m */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -1354,17 +1342,6 @@
 				BCC5A3041C5F8252005672D6 /* YPBAutoReplyMessagePool.m */,
 			);
 			path = Model;
-			sourceTree = "<group>";
-		};
-		BC27422B1C3A65AF00C98E6F /* Persistence */ = {
-			isa = PBXGroup;
-			children = (
-				BC27422C1C3A65C700C98E6F /* YPBPersistentObject.h */,
-				BC27422D1C3A65C700C98E6F /* YPBPersistentObject.m */,
-				BC27422F1C3A67C100C98E6F /* YPBPersistentManager.h */,
-				BC2742301C3A67C100C98E6F /* YPBPersistentManager.m */,
-			);
-			path = Persistence;
 			sourceTree = "<group>";
 		};
 		BC31B7551C1B2F540043E7EB /* Account */ = {
@@ -2684,7 +2661,6 @@
 				BC3BC50C1C770FE000DE2FBF /* YPBTickCell.m in Sources */,
 				ECE00BCD1CE9B4AF001047C0 /* YPBRobotTableViewCell.m in Sources */,
 				ECD536021D485C690015FAB4 /* FMDatabasePool.m in Sources */,
-				BC1B497F1C44AFD300ECB0BA /* YPBVIPEntranceView.m in Sources */,
 				BC53B9C51C3BBEEA004252B1 /* QBImagePickerController.m in Sources */,
 				BC1B49B11C44FB2100ECB0BA /* YPBWeChatPayQueryOrderRequest.m in Sources */,
 				BC50CE441C29565400CE88DD /* YPBUserProfileCell.m in Sources */,
@@ -2703,7 +2679,6 @@
 				BC739CF21C7C45F300D75AF0 /* YPBPaymentManager.m in Sources */,
 				ECE00B681CE99403001047C0 /* XHCaptureHelper.m in Sources */,
 				BC5555071C50DCD300412F7F /* YPBMessageOptionPanel.m in Sources */,
-				BC27422E1C3A65C700C98E6F /* YPBPersistentObject.m in Sources */,
 				BC31B7651C1BD8560043E7EB /* YPBRadioButton.m in Sources */,
 				ECE00B921CE99403001047C0 /* SETextSelectionView.m in Sources */,
 				BC5704E21C45F74800DEFAB6 /* DataVerifier.m in Sources */,
@@ -2727,7 +2702,6 @@
 				ECD536011D485C690015FAB4 /* FMDatabaseAdditions.m in Sources */,
 				BC53B9BF1C3BBEEA004252B1 /* QBAssetsCollectionFooterView.m in Sources */,
 				BC1B498F1C44F1F500ECB0BA /* WXUtil.mm in Sources */,
-				BC2742311C3A67C100C98E6F /* YPBPersistentManager.m in Sources */,
 				ECE00B611CE99403001047C0 /* UIImage+Resize.m in Sources */,
 				BC652B841C2BB9BA00951DEA /* YPBEditMineDetailViewController.m in Sources */,
 				ECE00B991CE99403001047C0 /* XHMessageInputView.m in Sources */,
@@ -3060,7 +3034,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.yuepaoba.channel;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "ab1047ca-d118-4759-a854-7569588a4843";
+				PROVISIONING_PROFILE = "181cbfcb-8d7e-41f8-a50e-36d27bae473c";
 				USER_HEADER_SEARCH_PATHS = "$(PODS_ROOT)/**";
 			};
 			name = Debug;
@@ -3090,7 +3064,7 @@
 				ONLY_ACTIVE_ARCH = YES;
 				PRODUCT_BUNDLE_IDENTIFIER = com.yuepaoba.channel;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "ab1047ca-d118-4759-a854-7569588a4843";
+				PROVISIONING_PROFILE = "181cbfcb-8d7e-41f8-a50e-36d27bae473c";
 				USER_HEADER_SEARCH_PATHS = "$(PODS_ROOT)/**";
 			};
 			name = Release;

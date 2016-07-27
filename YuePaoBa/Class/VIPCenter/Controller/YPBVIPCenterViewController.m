@@ -13,7 +13,6 @@
 #import "YPBUserDetailViewController.h"
 #import "YPBMessageViewController.h"
 #import "YPBContact.h"
-#import "YPBVIPEntranceView.h"
 #import "YPBVIPPriviledgeViewController.h"
 #import "YPBActivityPayView.h"
 
@@ -150,8 +149,6 @@ DefineLazyPropertyInitialization(YPBUserAccessModel, userAccessModel)
 }
 
 - (void)onVIPUpgradeSuccessNotification {
-    YPBVIPEntranceView *entranceView = [YPBVIPEntranceView VIPEntranceInView:self.view];
-    [entranceView hide];
 }
 
 - (void)didReceiveMemoryWarning {

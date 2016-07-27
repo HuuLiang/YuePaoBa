@@ -7,20 +7,20 @@
 //
 
 #import <Foundation/Foundation.h>
-#import "YPBPersistentObject.h"
+#import "JKDBModel.h"
 
 @class YPBPushedMessage;
 
-@interface YPBContact : YPBPersistentObject
+@interface YPBContact : JKDBModel
 
 @property (nonatomic) NSString *userId;
 @property (nonatomic) NSString *logoUrl;
 @property (nonatomic) NSString *nickName;
-@property (nonatomic) NSNumber<RLMInt> *userType; // Added in DB version:1
+@property (nonatomic) NSInteger userType; // Added in DB version:1
 
 @property (nonatomic) NSString *recentMessage;
 @property (nonatomic) NSString *recentTime;
-@property (nonatomic) NSNumber<RLMInt> *unreadMessages;
+@property (nonatomic) NSInteger unreadMessages;
 
 + (instancetype)contactWithUser:(YPBUser *)user;
 + (instancetype)contactWithPushedMessage:(YPBPushedMessage *)message;
@@ -30,5 +30,3 @@
 + (BOOL)refreshContactRecentTimeWithUser:(YPBUser *)user;
 
 @end
-
-RLM_ARRAY_TYPE(YPBContact)

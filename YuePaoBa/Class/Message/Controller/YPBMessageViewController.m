@@ -9,7 +9,6 @@
 #import "YPBMessageViewController.h"
 #import "YPBContact.h"
 #import "YPBUserDetailViewController.h"
-#import "YPBVIPEntranceView.h"
 #import "YPBVIPPriviledgeViewController.h"
 #import "YPBMessagePushModel.h"
 #import "YPBAutoReplyMessagePool.h"
@@ -140,7 +139,7 @@ DefineLazyPropertyInitialization(NSMutableArray, chatMessages)
 }
 
 - (YPBUserType)userType {
-    return _user ? _user.userType.unsignedIntegerValue : _contact.userType.unsignedIntegerValue;
+    return _user ? [_user.userType integerValue] : _contact.userType;
 }
 
 - (void)viewDidLoad {
@@ -171,7 +170,7 @@ DefineLazyPropertyInitialization(NSMutableArray, chatMessages)
     
     NSMutableArray<XHMessage *> *messages = [NSMutableArray array];
     [self.chatMessages enumerateObjectsUsingBlock:^(YPBChatMessage * _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
-        XHMessage *message = [[XHMessage alloc] initWithText:obj.msg type:obj.msgType sender:obj.sendUserId timestamp:[YPBUtil dateFromString:obj.msgTime]];
+        XHMessage *message = [[XHMessage alloc] initWithText:obj.msg type:@(obj.msgType) sender:obj.sendUserId timestamp:[YPBUtil dateFromString:obj.msgTime]];
         if ([obj.sendUserId isEqualToString:[YPBUser currentUser].userId]) {
             message.bubbleMessageType = XHBubbleMessageTypeSending;
         } else {
@@ -190,12 +189,8 @@ DefineLazyPropertyInitialization(NSMutableArray, chatMessages)
 - (void)viewDidAppear:(BOOL)animated {
     [super viewDidAppear:animated];
     
-//    if ([YPBVIPEntranceView VIPEntranceInView:self.view]) {
-//        return ;
-//    }
-    
     YPBChatMessage *lastMessage = self.chatMessages.lastObject;
-    if (lastMessage.msgType.unsignedIntegerValue == YPBChatMessageTypeOption) {
+    if (lastMessage.msgType == YPBChatMessageTypeOption) {
         @weakify(self);
         [self showOptionsWithChatMessage:lastMessage completion:^(NSUInteger idx, NSString *selection) {
             @strongify(self);
@@ -221,7 +216,7 @@ DefineLazyPropertyInitialization(NSMutableArray, chatMessages)
     
     YPBChatMessage *recentChatMessage = self.chatMessages.lastObject;
     YPBContact *contact = [YPBContact existingContactWithUserId:self.userId];
-    [contact beginUpdate];
+    [contact saveOrUpdate];
     
     if (![contact.recentTime isEqualToString:recentChatMessage.msgTime]
         || ![contact.recentMessage isEqualToString:recentChatMessage.msg]) {
@@ -236,8 +231,8 @@ DefineLazyPropertyInitialization(NSMutableArray, chatMessages)
         }
     }
     
-    contact.unreadMessages = @(0);
-    [contact endUpdate];
+    contact.unreadMessages = 0;
+    [contact saveOrUpdate];
     
     [[NSNotificationCenter defaultCenter] postNotificationName:kUnreadMessageChangeNotification object:nil];
 }
@@ -285,11 +280,11 @@ DefineLazyPropertyInitialization(NSMutableArray, chatMessages)
     YPBChatMessage *chatMessage = [YPBChatMessage chatMessage];
     chatMessage.sendUserId = sender;
     chatMessage.receiveUserId = receiver;
-    chatMessage.msgType = @(YPBChatMessageTypeWord);
+    chatMessage.msgType = YPBChatMessageTypeWord;
     chatMessage.msg = message;
     chatMessage.msgTime = dateTime;
     if ([chatMessage.sendUserId isEqualToString:YPBROBOTID]) {
-        chatMessage.msgType = @(YPBChatMessageTypeRobotPush);
+        chatMessage.msgType = YPBChatMessageTypeRobotPush;
     }
 
     [self addChatMessage:chatMessage];
@@ -300,12 +295,12 @@ DefineLazyPropertyInitialization(NSMutableArray, chatMessages)
 }
 
 - (void)addChatMessage:(YPBChatMessage *)chatMessage {
-    [chatMessage persist];
+    [chatMessage saveOrUpdate];
     [self.chatMessages addObject:chatMessage];
     
     if (self.isViewLoaded) {
         XHMessage *xhMsg = [[XHMessage alloc] initWithText:chatMessage.msg
-                                                      type:chatMessage.msgType
+                                                      type:@(chatMessage.msgType)
                                                     sender:chatMessage.sendUserId
                                                  timestamp:[YPBUtil dateFromString:chatMessage.msgTime]];
         if ([chatMessage.sendUserId isEqualToString:[YPBUser currentUser].userId]) {
@@ -335,11 +330,6 @@ DefineLazyPropertyInitialization(NSMutableArray, chatMessages)
         [self addTextMessage:text withSender:sender receiver:self.userId dateTime:[YPBUtil stringFromDate:date]];
         [self finishSendMessageWithBubbleMessageType:XHBubbleMessageMediaTypeText];
     } else {
-//        [YPBVIPEntranceView showVIPEntranceInView:self.view canClose:YES withEnterAction:^(id obj) {
-//            YPBVIPPriviledgeViewController *vipVC = [[YPBVIPPriviledgeViewController alloc] initWithContentType:YPBPaymentContentTypeMessage];
-//            [self.navigationController pushViewController:vipVC animated:YES];
-//        }];
-        //弹出付费窗口
         [self popPayView];
         
         [self.messageInputView.inputTextView resignFirstResponder];
@@ -400,7 +390,7 @@ DefineLazyPropertyInitialization(NSMutableArray, chatMessages)
     [cell.subviews makeObjectsPerformSelector:@selector(removeFromSuperview)];
     cell.userInteractionEnabled = YES;
     cell.selectionStyle = UITableViewCellSelectionStyleNone;
-    if ([message.msgType isEqual:@(YPBChatMessageTypeRobotPush)]) {
+    if (message.msgType == YPBChatMessageTypeRobotPush) {
         if ([message.msg isEqualToString:kRobotPushWelcomeIdentifier]) {
             [cell layoutWelcomeSubviewsWithInfo:self.contact.logoUrl];
             cell.editCell.userInteractionEnabled = YES;

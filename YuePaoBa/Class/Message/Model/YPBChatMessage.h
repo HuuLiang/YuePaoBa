@@ -7,7 +7,7 @@
 //
 
 #import <Foundation/Foundation.h>
-#import "YPBPersistentObject.h"
+#import "JKDBModel.h"
 
 typedef NS_ENUM(NSUInteger, YPBChatMessageType) {
     YPBChatMessageTypeUnknown,
@@ -27,13 +27,13 @@ typedef NS_ENUM(NSUInteger ,YPBRobotPushType) {
 
 @class YPBPushedMessage;
 
-@interface YPBChatMessage : YPBPersistentObject
+@interface YPBChatMessage : JKDBModel
 
 @property (nonatomic) NSString *msgId;
 @property (nonatomic) NSString *sendUserId;
 @property (nonatomic) NSString *receiveUserId;
 
-@property (nonatomic) NSNumber<RLMInt> *msgType;
+@property (nonatomic) NSInteger msgType;
 @property (nonatomic) NSString *msg;
 @property (nonatomic) NSString *msgTime;
 
@@ -41,9 +41,6 @@ typedef NS_ENUM(NSUInteger ,YPBRobotPushType) {
 
 + (instancetype)chatMessage;
 + (NSArray<YPBChatMessage *> *)allMessagesForUser:(NSString *)userId;
-//+ (instancetype)lastMessageForUser:(NSString *)userId;
 
 + (instancetype)chatMessageFromPushedMessage:(YPBPushedMessage *)message;
 @end
-
-RLM_ARRAY_TYPE(YPBChatMessage)

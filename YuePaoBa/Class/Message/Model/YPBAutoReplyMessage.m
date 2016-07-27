@@ -19,13 +19,11 @@
 }
 
 + (NSArray<YPBAutoReplyMessage *> *)allMessages {
-    return [self objectsFromPersistence];
+    return [self findAll];
 }
 
 + (NSArray<YPBAutoReplyMessage *> *)allUnrepliedMessages {
-
-    RLMResults *results = [self objectsInRealm:[[self class] classRealm] where:@"status==%ld", YPBAutoReplyStatusUnreplied];
-    return [self objectsFromResults:results];
+    return [self findByCriteria:[NSString stringWithFormat:@"WHERE status==%ld",YPBAutoReplyStatusUnreplied]];
 }
 
 + (instancetype)replyMessage {

@@ -55,28 +55,32 @@ static const NSUInteger kReplyingTimeInterval = 60 * 5;
                     if ([contact.userId isEqualToString:YPBROBOTID]) {
                         return ;
                     }
-                    
-                    [contact beginUpdate];
-                    contact.unreadMessages = @(contact.unreadMessages.unsignedIntegerValue+1);
-                    contact.recentMessage = message;
-                    contact.recentTime = msgTime;
-                    [contact endUpdate];
-                    
-                    YPBChatMessage *replyMessage = [YPBChatMessage chatMessage];
-                    replyMessage.sendUserId = sender;
-                    replyMessage.receiveUserId = [YPBUser currentUser].userId;
-                    replyMessage.msgType = @(YPBChatMessageTypeAutoReply);
-                    replyMessage.msg = message;
-                    replyMessage.msgTime = msgTime;
-                    [replyMessage persist];
-                    
-                    [[NSNotificationCenter defaultCenter] postNotificationName:kUnreadMessageChangeNotification object:nil];
-                    [[NSNotificationCenter defaultCenter] postNotificationName:kMessagePushNotification object:@[replyMessage]];
+                    dispatch_async(dispatch_get_global_queue(0, 0), ^{
+                        contact.unreadMessages = contact.unreadMessages+1;
+                        contact.userType = YPBUserTypeRobot;
+                        contact.recentMessage = message;
+                        contact.recentTime = msgTime;
+                        [contact saveOrUpdate];
+                        
+                        YPBChatMessage *replyMessage = [YPBChatMessage chatMessage];
+                        replyMessage.sendUserId = sender;
+                        replyMessage.receiveUserId = [YPBUser currentUser].userId;
+                        replyMessage.msgType = YPBChatMessageTypeAutoReply;
+                        replyMessage.msg = message;
+                        replyMessage.msgTime = msgTime;
+                        [replyMessage saveOrUpdate];
+                        
+                        [[NSNotificationCenter defaultCenter] postNotificationName:kUnreadMessageChangeNotification object:nil];
+                        [[NSNotificationCenter defaultCenter] postNotificationName:kMessagePushNotification object:@[replyMessage]];
+
+                    });
                 });
                 
-                [obj beginUpdate];
-                obj.status = @(YPBAutoReplyStatusReplied);
-                [obj endUpdate];
+                dispatch_async(dispatch_get_global_queue(0, 0), ^{
+                    obj.status = YPBAutoReplyStatusReplied;
+                    [obj saveOrUpdate];
+                });
+ 
             } else {
                 NSTimeInterval messageInterval = [[YPBUtil dateFromString:obj.replyTime] timeIntervalSinceNow];
                 if (messageInterval < latestMessageInterval) {
@@ -125,12 +129,14 @@ static const NSUInteger kReplyingTimeInterval = 60 * 5;
             return ;
         }
         
-        YPBAutoReplyMessage *replyMessage = [YPBAutoReplyMessage replyMessage];
-        replyMessage.userId = userId;
-        replyMessage.replyTime = [YPBUtil stringFromDate:[NSDate dateWithTimeIntervalSinceNow:10+arc4random_uniform(kReplyingTimeInterval)]];
-        replyMessage.replyMessage = replyWord;
-        replyMessage.status = @(YPBAutoReplyStatusUnreplied);
-        [replyMessage persist];
+        dispatch_async(dispatch_get_global_queue(0, 0), ^{
+            YPBAutoReplyMessage *replyMessage = [YPBAutoReplyMessage replyMessage];
+            replyMessage.userId = userId;
+            replyMessage.replyTime = [YPBUtil stringFromDate:[NSDate dateWithTimeIntervalSinceNow:10+arc4random_uniform(kReplyingTimeInterval)]];
+            replyMessage.replyMessage = replyWord;
+            replyMessage.status = YPBAutoReplyStatusUnreplied;
+            [replyMessage saveOrUpdate];
+        });
     });
     
 }

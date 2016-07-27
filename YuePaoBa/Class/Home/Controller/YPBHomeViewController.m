@@ -11,7 +11,6 @@
 #import "YPBHomeCollectionViewLayout.h"
 #import "YPBHomeCell.h"
 #import "YPBUserDetailViewController.h"
-#import "YPBVIPEntranceView.h"
 #import "YPBVIPPriviledgeViewController.h"
 #import "YPBUserAccessModel.h"
 #import "YPBMessagePushModel.h"
@@ -166,7 +165,6 @@ DefineLazyPropertyInitialization(YPBUserAccessQueryModel, accessQueryModel)
 }
 
 - (void)onVIPUpgradeSuccessNotification:(NSNotification *)notification {
-    //[[YPBVIPEntranceView VIPEntranceInView:self.view] hide];
 }
 
 - (void)didReceiveMemoryWarning {
@@ -222,9 +220,11 @@ DefineLazyPropertyInitialization(YPBUserAccessQueryModel, accessQueryModel)
                     if (success) {
                         user.receiveGreetCount = @(user.receiveGreetCount.unsignedIntegerValue+1);
                         user.isGreet = YES;
-                        if ([YPBContact refreshContactRecentTimeWithUser:user]) {
-                            [YPBMessageViewController sendGreetMessageWith:user inViewController:self];
-                        }
+                        dispatch_async(dispatch_get_global_queue(0, 0), ^{
+                            if ([YPBContact refreshContactRecentTimeWithUser:user]) {
+                                [YPBMessageViewController sendGreetMessageWith:user inViewController:self];
+                            }
+                        });
                     }
                 }];
             }
@@ -310,10 +310,9 @@ DefineLazyPropertyInitialization(YPBUserAccessQueryModel, accessQueryModel)
                     self.contacts = [NSMutableArray arrayWithArray:[YPBContact allContacts]];
                     
                     [self.contacts enumerateObjectsUsingBlock:^(YPBContact * _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
-                        if ([obj.userType isEqualToNumber:[NSNumber numberWithInteger:[YPBROBOTID integerValue]]]) {
-                            [obj beginUpdate];
-                            obj.unreadMessages = @(obj.unreadMessages.unsignedIntegerValue + 1);
-                            [obj endUpdate];
+                        if (obj.userType == [YPBROBOTID integerValue]) {
+                            obj.unreadMessages = obj.unreadMessages + 1;
+                            [obj saveOrUpdate];
                             _isHaveRobot = YES;
                         }
                     }];
@@ -322,15 +321,14 @@ DefineLazyPropertyInitialization(YPBUserAccessQueryModel, accessQueryModel)
                     //添加红娘小助手
                     if (!_isHaveRobot) {
                         YPBContact *robotContact = [[YPBContact alloc] init];
-                        [robotContact beginUpdate];
                         robotContact.userId = YPBROBOTID;
                         robotContact.logoUrl = kRobotContactLogoUrl;
                         robotContact.nickName = @"红娘小助手";
-                        robotContact.userType = [NSNumber numberWithInteger:[YPBROBOTID integerValue]];
+                        robotContact.userType =[YPBROBOTID integerValue];
                         robotContact.recentMessage = @"欢迎来到心动速配";
                         robotContact.recentTime = [YPBUtil stringFromDate:[NSDate date]];
-                        robotContact.unreadMessages = @(1);
-                        [robotContact endUpdate];
+                        robotContact.unreadMessages = 1;
+                        [robotContact saveOrUpdate];
                         [self.contacts addObject:robotContact];
                         
                         [YPBMessageViewController sendSystemMessageWith:robotContact Type:YPBRobotPushTypeWelCome count:0 inViewController:self];
@@ -338,7 +336,7 @@ DefineLazyPropertyInitialization(YPBUserAccessQueryModel, accessQueryModel)
                         
                     } else {
                         for (YPBContact *contact in self.contacts) {
-                            if ([contact.userType isEqualToNumber:[NSNumber numberWithInteger:[YPBROBOTID integerValue]]]) {
+                            if (contact.userType  == [YPBROBOTID integerValue]) {
                                 [YPBMessageViewController sendSystemMessageWith:contact Type:YPBRobotPushTypeGreet count:array.count-array.count%5 inViewController:self];
                             }
                         }

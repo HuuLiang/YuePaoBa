@@ -6,7 +6,6 @@
 //  Copyright © 2016年 iqu8. All rights reserved.
 //
 
-#import "YPBPersistentObject.h"
 #import "JKDBModel.h"
 
 @interface YPBLiveShowRoom : JKDBModel

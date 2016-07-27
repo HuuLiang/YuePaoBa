@@ -14,7 +14,6 @@ target 'YuePaoBa' do
     pod 'SFHFKeychainUtils', '~> 0.0.1'
     pod 'MJRefresh', '~> 2.4.12'
     pod 'UITextView+Placeholder', '~> 1.1.0'
-    pod 'Realm', '~> 0.98.5'
     pod 'MBProgressHUD', '~> 0.9.2'
     pod 'GPUImage', '~> 0.1.7'
     pod 'HMSegmentedControl', '~> 1.5.2'

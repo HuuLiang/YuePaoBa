@@ -7,9 +7,7 @@
 //
 
 #import "YPBContact.h"
-#import "YPBPersistentManager.h"
 #import "YPBPushedMessage.h"
-#import <Realm/RLMResults.h>
 
 @implementation YPBContact
 
@@ -22,17 +20,11 @@
 }
 
 + (NSArray<YPBContact *> *)allContacts {
-    RLMResults *results = [self allObjectsInRealm:[self classRealm]];
-    if (results.count == 0) {
-        return nil;
-    }
-    
-    results = [results sortedResultsUsingProperty:@"recentTime" ascending:NO];
-    return [self objectsFromResults:results];
+    return [self findByCriteria:[NSString stringWithFormat:@"order by recentTime desc"]];
 }
 
 + (instancetype)existingContactWithUserId:(NSString *)userId {
-    return [self objectInRealm:[self classRealm] forPrimaryKey:userId];
+    return [self findFirstByCriteria:[NSString stringWithFormat:@"WHERE userId=%@",userId]];
 }
 
 + (instancetype)contactWithUser:(YPBUser *)user {
@@ -40,13 +32,13 @@
         return nil;
     }
     
-    YPBContact *contact = [self objectInRealm:[self classRealm] forPrimaryKey:user.userId];
+    YPBContact *contact = [self findFirstByCriteria:[NSString stringWithFormat:@"WHERE userId=%@",user.userId]];
     if (!contact) {
         contact = [[self alloc] init];
         contact.userId = user.userId;
         contact.logoUrl = user.logoUrl;
         contact.nickName = user.nickName;
-        contact.userType = user.userType;
+        contact.userType = [user.userType integerValue];
     }
     
     return contact;
@@ -57,13 +49,13 @@
         return nil;
     }
     
-    YPBContact *contact = [self objectInRealm:[self classRealm] forPrimaryKey:message.userId];
+    YPBContact *contact = [self findFirstByCriteria:[NSString stringWithFormat:@"WHERE userId=%@",message.userId]];
     if (!contact) {
         contact = [[self alloc] init];
         contact.userId = message.userId;
         contact.logoUrl = message.logoUrl;
         contact.nickName = message.nickName;
-        contact.userType = @(YPBUserTypeRobot);
+        contact.userType = YPBUserTypeRobot;
     }
     
     return contact;
@@ -71,10 +63,8 @@
 
 + (BOOL)refreshContactRecentTimeWithUser:(YPBUser *)user {
     YPBContact *contact = [self contactWithUser:user];
-    
-    [contact beginUpdate];
     contact.recentTime = [YPBUtil currentDateString];
-    return [contact endUpdate] == nil;
+    return [contact saveOrUpdate];
 }
 
 + (NSDictionary<NSString *,NSNumber *> *)newPropertiesForMigration {

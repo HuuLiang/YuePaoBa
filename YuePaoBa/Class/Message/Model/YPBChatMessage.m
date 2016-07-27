@@ -22,9 +22,7 @@
 }
 
 + (NSArray<YPBChatMessage *> *)allMessagesForUser:(NSString *)userId {
-    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"sendUserId=%@ or receiveUserId=%@", userId, userId];
-    RLMResults *results = [self objectsInRealm:[self classRealm] withPredicate:predicate];
-    return [self objectsFromResults:results];
+    return [self findByCriteria:[NSString stringWithFormat:@"WHERE sendUserId=%@ or receiveUserId=%@",userId,userId]];
 }
 
 + (instancetype)lastMessageForUser:(NSString *)userId {
@@ -45,7 +43,7 @@
     YPBChatMessage *chatMessage = [self chatMessage];
     chatMessage.sendUserId = sendUserId;
     chatMessage.receiveUserId = receiveUserId;
-    chatMessage.msgType = @(YPBChatMessageTypeOption);
+    chatMessage.msgType = YPBChatMessageTypeOption;
     chatMessage.msg = message.proDesc;
     chatMessage.options = message.options;
     chatMessage.msgTime = message.msgTime;
