@@ -18,18 +18,21 @@
     return kUserLiveShowRoomPersistenceNamespace;
 }
 
-+ (instancetype)roomWithId:(NSUInteger)roomId {
++ (instancetype)roomWithId:(NSInteger)roomId {
     NSDate *date = [NSDate date];
     
     YPBLiveShowRoom *room = [[self alloc] init];
-    room.roomId = @(roomId);
-    room.accumulatedAudiences = @(arc4random_uniform(date.hour>12?1000:100));
-    room.currentAudiences = @(arc4random_uniform((u_int32_t)(room.accumulatedAudiences.unsignedIntegerValue)));
-    room.popularity = @(arc4random_uniform(date.hour>12?1000:100));
+    room.roomId = roomId;
+    room.accumulatedAudiences = arc4random_uniform(date.hour>12?1000:100);
+    room.currentAudiences = arc4random_uniform((u_int32_t)(room.accumulatedAudiences));
+    room.popularity = arc4random_uniform(date.hour>12?1000:100);
     return room;
 }
 
-+ (instancetype)existingRoomWithId:(NSUInteger)roomId {
-    return [self objectInRealm:[self classRealm] forPrimaryKey:@(roomId)];
++ (instancetype)existingRoomWithId:(NSInteger)roomId {
+    [self createTable];
+    int i = [[NSNumber numberWithUnsignedInteger:roomId] intValue];
+    
+    return [self findByPK:i];
 }
 @end

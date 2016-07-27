@@ -7,15 +7,16 @@
 //
 
 #import "YPBPersistentObject.h"
+#import "JKDBModel.h"
 
-@interface YPBLiveShowRoom : YPBPersistentObject
+@interface YPBLiveShowRoom : JKDBModel
 
-@property (nonatomic) NSNumber<RLMInt> *roomId;
-@property (nonatomic) NSNumber<RLMInt> *accumulatedAudiences;
-@property (nonatomic) NSNumber<RLMInt> *currentAudiences;
-@property (nonatomic) NSNumber<RLMInt> *popularity;
+@property (nonatomic) NSInteger roomId;
+@property (nonatomic) NSInteger accumulatedAudiences;
+@property (nonatomic) NSInteger currentAudiences;
+@property (nonatomic) NSInteger popularity;
 
-+ (instancetype)roomWithId:(NSUInteger)roomId;
-+ (instancetype)existingRoomWithId:(NSUInteger)roomId;
++ (instancetype)roomWithId:(NSInteger)roomId;
++ (instancetype)existingRoomWithId:(NSInteger)roomId;
 
 @end

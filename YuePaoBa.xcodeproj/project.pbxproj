@@ -7,7 +7,6 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		59857A216703255343501785 /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = E8936D50656D3883FACFD246 /* libPods.a */; };
 		BC1654B71C25285F00AB1F33 /* NSObject+Properties.m in Sources */ = {isa = PBXBuildFile; fileRef = BC1654B61C25285F00AB1F33 /* NSObject+Properties.m */; };
 		BC1654BA1C25290200AB1F33 /* NSDictionary+YPBSign.m in Sources */ = {isa = PBXBuildFile; fileRef = BC1654B91C25290200AB1F33 /* NSDictionary+YPBSign.m */; };
 		BC1654BD1C25293B00AB1F33 /* NSString+crypt.m in Sources */ = {isa = PBXBuildFile; fileRef = BC1654BC1C25293B00AB1F33 /* NSString+crypt.m */; };
@@ -46,7 +45,6 @@
 		BC22DE291C3D337100305F58 /* YPBContact.m in Sources */ = {isa = PBXBuildFile; fileRef = BC22DE281C3D337100305F58 /* YPBContact.m */; };
 		BC22DE2D1C3D417500305F58 /* YPBContactCell.m in Sources */ = {isa = PBXBuildFile; fileRef = BC22DE2C1C3D417500305F58 /* YPBContactCell.m */; };
 		BC23FB321C35ABD80055D68F /* YPBVIPCell.m in Sources */ = {isa = PBXBuildFile; fileRef = BC23FB311C35ABD80055D68F /* YPBVIPCell.m */; };
-		BC25EA351C4642B8003F8CD7 /* YPBVipUpgradeInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = BC25EA341C4642B8003F8CD7 /* YPBVipUpgradeInfo.m */; };
 		BC264AE91C3C252E009FBCB8 /* YPBUserPhotoAddModel.m in Sources */ = {isa = PBXBuildFile; fileRef = BC264AE81C3C252E009FBCB8 /* YPBUserPhotoAddModel.m */; };
 		BC2676811C54FBDF006BE769 /* libMobClickLibrary.a in Frameworks */ = {isa = PBXBuildFile; fileRef = BC26767E1C54FBDF006BE769 /* libMobClickLibrary.a */; };
 		BC2676871C550106006BE769 /* NSDate+Utilities.m in Sources */ = {isa = PBXBuildFile; fileRef = BC2676861C550106006BE769 /* NSDate+Utilities.m */; };
@@ -215,6 +213,7 @@
 		BCD15F1E1C104EAB002B6C5C /* YPBUtil.m in Sources */ = {isa = PBXBuildFile; fileRef = BCD15F1D1C104EAB002B6C5C /* YPBUtil.m */; };
 		BCFB2A6A1C3FC441003E327D /* YPBUserPhotoViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BCFB2A691C3FC441003E327D /* YPBUserPhotoViewController.m */; };
 		BCFB2A6D1C3FDD16003E327D /* YPBPhotoGridViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BCFB2A6C1C3FDD16003E327D /* YPBPhotoGridViewController.m */; };
+		D6988435EF480C4F113AA709 /* libPods-YuePaoBa.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 7A38F0EE90C58F6C50923338 /* libPods-YuePaoBa.a */; };
 		EC1698EC1D2FB25B00E7BC68 /* vipcenter_banner.jpg in Resources */ = {isa = PBXBuildFile; fileRef = EC1698EB1D2FB25B00E7BC68 /* vipcenter_banner.jpg */; };
 		EC2BFB371C9A889E00912302 /* YPBPayIntroduceView.m in Sources */ = {isa = PBXBuildFile; fileRef = EC2BFB361C9A889E00912302 /* YPBPayIntroduceView.m */; };
 		EC61AB151CE470A600354EC0 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = EC61AB141CE470A600354EC0 /* Assets.xcassets */; };
@@ -227,6 +226,13 @@
 		ECA5D14D1D3A40DF00A7353A /* YPBVIPPayView.m in Sources */ = {isa = PBXBuildFile; fileRef = ECA5D14C1D3A40DF00A7353A /* YPBVIPPayView.m */; };
 		ECBBBDEA1CD9BC7700D80B14 /* YPBSegmentViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = ECBBBDE91CD9BC7700D80B14 /* YPBSegmentViewController.m */; };
 		ECBBBDED1CD9C6C800D80B14 /* YPBCommonCityViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = ECBBBDEC1CD9C6C800D80B14 /* YPBCommonCityViewController.m */; };
+		ECD535FE1D485C690015FAB4 /* JKDBHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = ECD535EF1D485C690015FAB4 /* JKDBHelper.m */; };
+		ECD535FF1D485C690015FAB4 /* JKDBModel.m in Sources */ = {isa = PBXBuildFile; fileRef = ECD535F11D485C690015FAB4 /* JKDBModel.m */; };
+		ECD536001D485C690015FAB4 /* FMDatabase.m in Sources */ = {isa = PBXBuildFile; fileRef = ECD535F41D485C690015FAB4 /* FMDatabase.m */; };
+		ECD536011D485C690015FAB4 /* FMDatabaseAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = ECD535F61D485C690015FAB4 /* FMDatabaseAdditions.m */; };
+		ECD536021D485C690015FAB4 /* FMDatabasePool.m in Sources */ = {isa = PBXBuildFile; fileRef = ECD535F81D485C690015FAB4 /* FMDatabasePool.m */; };
+		ECD536031D485C690015FAB4 /* FMDatabaseQueue.m in Sources */ = {isa = PBXBuildFile; fileRef = ECD535FA1D485C690015FAB4 /* FMDatabaseQueue.m */; };
+		ECD536041D485C690015FAB4 /* FMResultSet.m in Sources */ = {isa = PBXBuildFile; fileRef = ECD535FD1D485C690015FAB4 /* FMResultSet.m */; };
 		ECE00B5E1CE99403001047C0 /* NSString+MessageInputView.m in Sources */ = {isa = PBXBuildFile; fileRef = ECE00A8F1CE99403001047C0 /* NSString+MessageInputView.m */; };
 		ECE00B5F1CE99403001047C0 /* NSString+XHMD5.m in Sources */ = {isa = PBXBuildFile; fileRef = ECE00A911CE99403001047C0 /* NSString+XHMD5.m */; };
 		ECE00B601CE99403001047C0 /* UIImage+Alpha.m in Sources */ = {isa = PBXBuildFile; fileRef = ECE00A941CE99403001047C0 /* UIImage+Alpha.m */; };
@@ -358,7 +364,8 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		4F2CAD2F163D89DC2E23A9C6 /* Pods.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.release.xcconfig; path = "Pods/Target Support Files/Pods/Pods.release.xcconfig"; sourceTree = "<group>"; };
+		7A38F0EE90C58F6C50923338 /* libPods-YuePaoBa.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-YuePaoBa.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		99B1DCCC29E556CA3A98DF2F /* Pods-YuePaoBa.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-YuePaoBa.debug.xcconfig"; path = "Pods/Target Support Files/Pods-YuePaoBa/Pods-YuePaoBa.debug.xcconfig"; sourceTree = "<group>"; };
 		BC1654B51C25285F00AB1F33 /* NSObject+Properties.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSObject+Properties.h"; sourceTree = "<group>"; };
 		BC1654B61C25285F00AB1F33 /* NSObject+Properties.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSObject+Properties.m"; sourceTree = "<group>"; };
 		BC1654B81C25290200AB1F33 /* NSDictionary+YPBSign.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSDictionary+YPBSign.h"; sourceTree = "<group>"; };
@@ -440,8 +447,6 @@
 		BC22DE2C1C3D417500305F58 /* YPBContactCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YPBContactCell.m; sourceTree = "<group>"; };
 		BC23FB301C35ABD80055D68F /* YPBVIPCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YPBVIPCell.h; sourceTree = "<group>"; };
 		BC23FB311C35ABD80055D68F /* YPBVIPCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YPBVIPCell.m; sourceTree = "<group>"; };
-		BC25EA331C4642B8003F8CD7 /* YPBVipUpgradeInfo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YPBVipUpgradeInfo.h; sourceTree = "<group>"; };
-		BC25EA341C4642B8003F8CD7 /* YPBVipUpgradeInfo.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YPBVipUpgradeInfo.m; sourceTree = "<group>"; };
 		BC264AE71C3C252E009FBCB8 /* YPBUserPhotoAddModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YPBUserPhotoAddModel.h; sourceTree = "<group>"; };
 		BC264AE81C3C252E009FBCB8 /* YPBUserPhotoAddModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YPBUserPhotoAddModel.m; sourceTree = "<group>"; };
 		BC26767E1C54FBDF006BE769 /* libMobClickLibrary.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libMobClickLibrary.a; sourceTree = "<group>"; };
@@ -753,8 +758,6 @@
 		BCFB2A691C3FC441003E327D /* YPBUserPhotoViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YPBUserPhotoViewController.m; sourceTree = "<group>"; };
 		BCFB2A6B1C3FDD16003E327D /* YPBPhotoGridViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YPBPhotoGridViewController.h; sourceTree = "<group>"; };
 		BCFB2A6C1C3FDD16003E327D /* YPBPhotoGridViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YPBPhotoGridViewController.m; sourceTree = "<group>"; };
-		C8725E9D86861D96A4FDD277 /* Pods.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.debug.xcconfig; path = "Pods/Target Support Files/Pods/Pods.debug.xcconfig"; sourceTree = "<group>"; };
-		E8936D50656D3883FACFD246 /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		EC1698EB1D2FB25B00E7BC68 /* vipcenter_banner.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = vipcenter_banner.jpg; sourceTree = "<group>"; };
 		EC2BFB351C9A889E00912302 /* YPBPayIntroduceView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YPBPayIntroduceView.h; sourceTree = "<group>"; };
 		EC2BFB361C9A889E00912302 /* YPBPayIntroduceView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YPBPayIntroduceView.m; sourceTree = "<group>"; };
@@ -775,6 +778,21 @@
 		ECBBBDE91CD9BC7700D80B14 /* YPBSegmentViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YPBSegmentViewController.m; sourceTree = "<group>"; };
 		ECBBBDEB1CD9C6C800D80B14 /* YPBCommonCityViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YPBCommonCityViewController.h; sourceTree = "<group>"; };
 		ECBBBDEC1CD9C6C800D80B14 /* YPBCommonCityViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YPBCommonCityViewController.m; sourceTree = "<group>"; };
+		ECD535EE1D485C690015FAB4 /* JKDBHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JKDBHelper.h; sourceTree = "<group>"; };
+		ECD535EF1D485C690015FAB4 /* JKDBHelper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JKDBHelper.m; sourceTree = "<group>"; };
+		ECD535F01D485C690015FAB4 /* JKDBModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JKDBModel.h; sourceTree = "<group>"; };
+		ECD535F11D485C690015FAB4 /* JKDBModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JKDBModel.m; sourceTree = "<group>"; };
+		ECD535F31D485C690015FAB4 /* FMDatabase.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FMDatabase.h; sourceTree = "<group>"; };
+		ECD535F41D485C690015FAB4 /* FMDatabase.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FMDatabase.m; sourceTree = "<group>"; };
+		ECD535F51D485C690015FAB4 /* FMDatabaseAdditions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FMDatabaseAdditions.h; sourceTree = "<group>"; };
+		ECD535F61D485C690015FAB4 /* FMDatabaseAdditions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FMDatabaseAdditions.m; sourceTree = "<group>"; };
+		ECD535F71D485C690015FAB4 /* FMDatabasePool.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FMDatabasePool.h; sourceTree = "<group>"; };
+		ECD535F81D485C690015FAB4 /* FMDatabasePool.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FMDatabasePool.m; sourceTree = "<group>"; };
+		ECD535F91D485C690015FAB4 /* FMDatabaseQueue.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FMDatabaseQueue.h; sourceTree = "<group>"; };
+		ECD535FA1D485C690015FAB4 /* FMDatabaseQueue.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FMDatabaseQueue.m; sourceTree = "<group>"; };
+		ECD535FB1D485C690015FAB4 /* FMDB.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FMDB.h; sourceTree = "<group>"; };
+		ECD535FC1D485C690015FAB4 /* FMResultSet.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FMResultSet.h; sourceTree = "<group>"; };
+		ECD535FD1D485C690015FAB4 /* FMResultSet.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FMResultSet.m; sourceTree = "<group>"; };
 		ECE00A8E1CE99403001047C0 /* NSString+MessageInputView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSString+MessageInputView.h"; sourceTree = "<group>"; };
 		ECE00A8F1CE99403001047C0 /* NSString+MessageInputView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSString+MessageInputView.m"; sourceTree = "<group>"; };
 		ECE00A901CE99403001047C0 /* NSString+XHMD5.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSString+XHMD5.h"; sourceTree = "<group>"; };
@@ -959,6 +977,7 @@
 		ECE00BCB1CE9B4AF001047C0 /* YPBRobotTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YPBRobotTableViewCell.h; sourceTree = "<group>"; };
 		ECE00BCC1CE9B4AF001047C0 /* YPBRobotTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YPBRobotTableViewCell.m; sourceTree = "<group>"; };
 		ECE00BCE1CEC4041001047C0 /* register_bgImg.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = register_bgImg.jpg; sourceTree = "<group>"; };
+		F45712BE92EEF10D6B4A033E /* Pods-YuePaoBa.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-YuePaoBa.release.xcconfig"; path = "Pods/Target Support Files/Pods-YuePaoBa/Pods-YuePaoBa.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -973,8 +992,8 @@
 				BC1B49971C44F30000ECB0BA /* CoreTelephony.framework in Frameworks */,
 				BC1B49951C44F21900ECB0BA /* libWeChatSDK.a in Frameworks */,
 				BC85EBC41C5C8A7A00BA74B1 /* KSCrash.framework in Frameworks */,
-				59857A216703255343501785 /* libPods.a in Frameworks */,
 				BC5704DE1C45F74800DEFAB6 /* AlipaySDK.framework in Frameworks */,
+				D6988435EF480C4F113AA709 /* libPods-YuePaoBa.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1002,9 +1021,18 @@
 				BC1B499A1C44F32B00ECB0BA /* libsqlite3.tbd */,
 				BC1B49981C44F32100ECB0BA /* libz.tbd */,
 				BC1B49961C44F30000ECB0BA /* CoreTelephony.framework */,
-				E8936D50656D3883FACFD246 /* libPods.a */,
+				7A38F0EE90C58F6C50923338 /* libPods-YuePaoBa.a */,
 			);
 			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		B8D1CE2E71CF53DD29EC1913 /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				99B1DCCC29E556CA3A98DF2F /* Pods-YuePaoBa.debug.xcconfig */,
+				F45712BE92EEF10D6B4A033E /* Pods-YuePaoBa.release.xcconfig */,
+			);
+			name = Pods;
 			sourceTree = "<group>";
 		};
 		BC1A2D741C0EF909003D9138 = {
@@ -1014,8 +1042,8 @@
 				BC1A2D991C0EF909003D9138 /* YuePaoBaTests */,
 				BC1A2DA41C0EF909003D9138 /* YuePaoBaUITests */,
 				BC1A2D7E1C0EF909003D9138 /* Products */,
-				FABA1AE34E8532B321D86B4B /* Pods */,
 				8626A978049611A8C827E9A9 /* Frameworks */,
+				B8D1CE2E71CF53DD29EC1913 /* Pods */,
 			);
 			sourceTree = "<group>";
 		};
@@ -1538,8 +1566,6 @@
 				BC5CF5791C4F69C400A6CE41 /* YPBUserPhotoDeleteModel.m */,
 				BC1B49A91C44F6B900ECB0BA /* YPBUserVIPUpgradeModel.h */,
 				BC1B49AA1C44F6B900ECB0BA /* YPBUserVIPUpgradeModel.m */,
-				BC25EA331C4642B8003F8CD7 /* YPBVipUpgradeInfo.h */,
-				BC25EA341C4642B8003F8CD7 /* YPBVipUpgradeInfo.m */,
 				BC6AEF8B1C7D61350031A063 /* YPBUserGiftsDataSource.h */,
 				BC739D021C7C92EA00D75AF0 /* YPBUserReceivedGiftsModel.h */,
 				BC739D031C7C92EA00D75AF0 /* YPBUserReceivedGiftsModel.m */,
@@ -1612,6 +1638,8 @@
 		BC6B748B1C3539B40052777E /* Vendor */ = {
 			isa = PBXGroup;
 			children = (
+				ECD535ED1D485C690015FAB4 /* DBModel */,
+				ECD535F21D485C690015FAB4 /* FMDB */,
 				ECE00A8A1CE99403001047C0 /* MessageDisplayKit */,
 				BC5704C21C45F74800DEFAB6 /* Alipay */,
 				BC1B49901C44F21900ECB0BA /* WeChatSDK */,
@@ -1905,6 +1933,35 @@
 				BCD15F1A1C104B31002B6C5C /* RACmetamacros.h */,
 			);
 			path = rac_extobjc;
+			sourceTree = "<group>";
+		};
+		ECD535ED1D485C690015FAB4 /* DBModel */ = {
+			isa = PBXGroup;
+			children = (
+				ECD535EE1D485C690015FAB4 /* JKDBHelper.h */,
+				ECD535EF1D485C690015FAB4 /* JKDBHelper.m */,
+				ECD535F01D485C690015FAB4 /* JKDBModel.h */,
+				ECD535F11D485C690015FAB4 /* JKDBModel.m */,
+			);
+			path = DBModel;
+			sourceTree = "<group>";
+		};
+		ECD535F21D485C690015FAB4 /* FMDB */ = {
+			isa = PBXGroup;
+			children = (
+				ECD535F31D485C690015FAB4 /* FMDatabase.h */,
+				ECD535F41D485C690015FAB4 /* FMDatabase.m */,
+				ECD535F51D485C690015FAB4 /* FMDatabaseAdditions.h */,
+				ECD535F61D485C690015FAB4 /* FMDatabaseAdditions.m */,
+				ECD535F71D485C690015FAB4 /* FMDatabasePool.h */,
+				ECD535F81D485C690015FAB4 /* FMDatabasePool.m */,
+				ECD535F91D485C690015FAB4 /* FMDatabaseQueue.h */,
+				ECD535FA1D485C690015FAB4 /* FMDatabaseQueue.m */,
+				ECD535FB1D485C690015FAB4 /* FMDB.h */,
+				ECD535FC1D485C690015FAB4 /* FMResultSet.h */,
+				ECD535FD1D485C690015FAB4 /* FMResultSet.m */,
+			);
+			path = FMDB;
 			sourceTree = "<group>";
 		};
 		ECE00A8A1CE99403001047C0 /* MessageDisplayKit */ = {
@@ -2328,15 +2385,6 @@
 			path = Resources;
 			sourceTree = "<group>";
 		};
-		FABA1AE34E8532B321D86B4B /* Pods */ = {
-			isa = PBXGroup;
-			children = (
-				C8725E9D86861D96A4FDD277 /* Pods.debug.xcconfig */,
-				4F2CAD2F163D89DC2E23A9C6 /* Pods.release.xcconfig */,
-			);
-			name = Pods;
-			sourceTree = "<group>";
-		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -2344,12 +2392,12 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = BC1A2DAA1C0EF909003D9138 /* Build configuration list for PBXNativeTarget "YuePaoBa" */;
 			buildPhases = (
-				110FC76E00B3DCBA70C86604 /* Check Pods Manifest.lock */,
+				8E0A5F828708A4CCF2C30569 /* [CP] Check Pods Manifest.lock */,
 				BC1A2D791C0EF909003D9138 /* Sources */,
 				BC1A2D7A1C0EF909003D9138 /* Frameworks */,
 				BC1A2D7B1C0EF909003D9138 /* Resources */,
-				FCAD3CAF94BB3E959D049522 /* Embed Pods Frameworks */,
-				9096A1D2164BF650C51C0C7D /* Copy Pods Resources */,
+				8B0C67ADB17338365A8C46E8 /* [CP] Embed Pods Frameworks */,
+				89B1EF2A799FE335B10E6F71 /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -2556,49 +2604,49 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
-		110FC76E00B3DCBA70C86604 /* Check Pods Manifest.lock */ = {
+		89B1EF2A799FE335B10E6F71 /* [CP] Copy Pods Resources */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 			);
 			inputPaths = (
 			);
-			name = "Check Pods Manifest.lock";
+			name = "[CP] Copy Pods Resources";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-YuePaoBa/Pods-YuePaoBa-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		8B0C67ADB17338365A8C46E8 /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-YuePaoBa/Pods-YuePaoBa-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		8E0A5F828708A4CCF2C30569 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Check Pods Manifest.lock";
 			outputPaths = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [[ $? != 0 ]] ; then\n    cat << EOM\nerror: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\nEOM\n    exit 1\nfi\n";
-			showEnvVarsInLog = 0;
-		};
-		9096A1D2164BF650C51C0C7D /* Copy Pods Resources */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			name = "Copy Pods Resources";
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods/Pods-resources.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
-		FCAD3CAF94BB3E959D049522 /* Embed Pods Frameworks */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			name = "Embed Pods Frameworks";
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods/Pods-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 /* End PBXShellScriptBuildPhase section */
@@ -2635,6 +2683,7 @@
 				BC264AE91C3C252E009FBCB8 /* YPBUserPhotoAddModel.m in Sources */,
 				BC3BC50C1C770FE000DE2FBF /* YPBTickCell.m in Sources */,
 				ECE00BCD1CE9B4AF001047C0 /* YPBRobotTableViewCell.m in Sources */,
+				ECD536021D485C690015FAB4 /* FMDatabasePool.m in Sources */,
 				BC1B497F1C44AFD300ECB0BA /* YPBVIPEntranceView.m in Sources */,
 				BC53B9C51C3BBEEA004252B1 /* QBImagePickerController.m in Sources */,
 				BC1B49B11C44FB2100ECB0BA /* YPBWeChatPayQueryOrderRequest.m in Sources */,
@@ -2670,11 +2719,12 @@
 				BC60774A1C7EF57500ACE4DF /* YPBFetchBarrageModel.m in Sources */,
 				BC1AED491C0F360D003A0C63 /* UIColor+hexColor.m in Sources */,
 				ECE00B841CE99403001047C0 /* LKBadgeView.m in Sources */,
-				BC25EA351C4642B8003F8CD7 /* YPBVipUpgradeInfo.m in Sources */,
+				ECD536001D485C690015FAB4 /* FMDatabase.m in Sources */,
 				BC2742761C3A8EC600C98E6F /* YPBMineAccessCell.m in Sources */,
 				BC739D041C7C92EA00D75AF0 /* YPBUserReceivedGiftsModel.m in Sources */,
 				BC67805E1C89B31500CF6F5F /* YPBVideoGiftPollingView.m in Sources */,
 				BC5704E01C45F74800DEFAB6 /* base64.m in Sources */,
+				ECD536011D485C690015FAB4 /* FMDatabaseAdditions.m in Sources */,
 				BC53B9BF1C3BBEEA004252B1 /* QBAssetsCollectionFooterView.m in Sources */,
 				BC1B498F1C44F1F500ECB0BA /* WXUtil.mm in Sources */,
 				BC2742311C3A67C100C98E6F /* YPBPersistentManager.m in Sources */,
@@ -2715,6 +2765,7 @@
 				BC5704E51C45F74800DEFAB6 /* openssl_wrapper.m in Sources */,
 				BC1B498E1C44F1F500ECB0BA /* WeChatPayManager.m in Sources */,
 				BC6B747E1C34F9840052777E /* YPBUserGreet.m in Sources */,
+				ECD536041D485C690015FAB4 /* FMResultSet.m in Sources */,
 				BC7114AE1C1AD3DB00C5001A /* NSMutableDictionary+Safety.m in Sources */,
 				ECE00B881CE99403001047C0 /* SELinkText.m in Sources */,
 				BC1AED601C0F5A8B003A0C63 /* YPBSettingViewController.m in Sources */,
@@ -2765,9 +2816,12 @@
 				ECE00B931CE99403001047C0 /* SETextView.m in Sources */,
 				ECE00B7B1CE99403001047C0 /* XHMessageVoiceFactory.m in Sources */,
 				BC23FB321C35ABD80055D68F /* YPBVIPCell.m in Sources */,
+				ECD535FF1D485C690015FAB4 /* JKDBModel.m in Sources */,
+				ECD536031D485C690015FAB4 /* FMDatabaseQueue.m in Sources */,
 				ECE00B671CE99403001047C0 /* XHAudioPlayerHelper.m in Sources */,
 				BC1654CD1C252E9E00AB1F33 /* YPBActivateModel.m in Sources */,
 				ECE00B641CE99403001047C0 /* UIImage+XHRounded.m in Sources */,
+				ECD535FE1D485C690015FAB4 /* JKDBHelper.m in Sources */,
 				ECE00B821CE99403001047C0 /* FLAnimatedImage.m in Sources */,
 				BC53B9C21C3BBEEA004252B1 /* QBAssetsCollectionViewCell.m in Sources */,
 				BC7114BC1C1AE87100C5001A /* YPBLayoutViewController.m in Sources */,
@@ -2984,7 +3038,7 @@
 		};
 		BC1A2DAB1C0EF909003D9138 /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = C8725E9D86861D96A4FDD277 /* Pods.debug.xcconfig */;
+			baseConfigurationReference = 99B1DCCC29E556CA3A98DF2F /* Pods-YuePaoBa.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
@@ -3006,14 +3060,14 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.yuepaoba.channel;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "181cbfcb-8d7e-41f8-a50e-36d27bae473c";
+				PROVISIONING_PROFILE = "ab1047ca-d118-4759-a854-7569588a4843";
 				USER_HEADER_SEARCH_PATHS = "$(PODS_ROOT)/**";
 			};
 			name = Debug;
 		};
 		BC1A2DAC1C0EF909003D9138 /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 4F2CAD2F163D89DC2E23A9C6 /* Pods.release.xcconfig */;
+			baseConfigurationReference = F45712BE92EEF10D6B4A033E /* Pods-YuePaoBa.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
@@ -3036,7 +3090,7 @@
 				ONLY_ACTIVE_ARCH = YES;
 				PRODUCT_BUNDLE_IDENTIFIER = com.yuepaoba.channel;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "181cbfcb-8d7e-41f8-a50e-36d27bae473c";
+				PROVISIONING_PROFILE = "ab1047ca-d118-4759-a854-7569588a4843";
 				USER_HEADER_SEARCH_PATHS = "$(PODS_ROOT)/**";
 			};
 			name = Release;

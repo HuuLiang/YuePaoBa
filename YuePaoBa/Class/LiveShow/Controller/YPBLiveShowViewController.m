@@ -75,10 +75,10 @@ DefineLazyPropertyInitialization(YPBSendGiftModel, sendGiftModel)
         _user = user;
         
         if (user.userVideo.id) {
-            _room = [YPBLiveShowRoom existingRoomWithId:user.userVideo.id.unsignedIntegerValue];
-            if (!_room || _room.accumulatedAudiences.unsignedIntegerValue > 5000) {
-                _room = [YPBLiveShowRoom roomWithId:user.userVideo.id.unsignedIntegerValue];
-                [_room persist];
+            _room = [YPBLiveShowRoom existingRoomWithId:user.userVideo.id.integerValue];
+            if (!_room || _room.accumulatedAudiences > 5000) {
+                _room = [YPBLiveShowRoom roomWithId:user.userVideo.id.integerValue];
+                [_room saveOrUpdate];
             }
         }
     }
@@ -86,7 +86,7 @@ DefineLazyPropertyInitialization(YPBSendGiftModel, sendGiftModel)
 }
 
 - (NSString *)audienceTitle {
-    return [NSString stringWithFormat:@"%@人/目前%@人", _room.accumulatedAudiences, _room.currentAudiences];
+    return [NSString stringWithFormat:@"%ld人/目前%ld人", _room.accumulatedAudiences, _room.currentAudiences];
 }
 
 - (void)viewDidLoad {
@@ -138,14 +138,17 @@ DefineLazyPropertyInitialization(YPBSendGiftModel, sendGiftModel)
             if (!self) {
                 return ;
             }
-            
-            [self.room beginUpdate];
-            u_int32_t accumulation = arc4random_uniform(5);
-            self.room.accumulatedAudiences = @(self.room.accumulatedAudiences.unsignedIntegerValue+accumulation);
-            self.room.currentAudiences = @(self.room.currentAudiences.unsignedIntegerValue+arc4random_uniform(accumulation));
-            [self.room endUpdate];
-            
-            self->_titleView.detail = self.audienceTitle;
+            dispatch_async(dispatch_get_global_queue(0, 0), ^{
+                u_int32_t accumulation = arc4random_uniform(5);
+                
+                self.room.accumulatedAudiences = self.room.accumulatedAudiences+accumulation;
+                self.room.currentAudiences = self.room.currentAudiences+arc4random_uniform(accumulation);
+                DLog(@"%d %ld %ld",accumulation,self.room.accumulatedAudiences,self.room.currentAudiences);
+                [self.room saveOrUpdate];
+                dispatch_async(dispatch_get_main_queue(), ^{
+                    self->_titleView.detail = self.audienceTitle;
+                });
+            });
         } repeats:YES];
     };
     _videoPlayer.playEndAction = ^(id obj) {
@@ -173,7 +176,7 @@ DefineLazyPropertyInitialization(YPBSendGiftModel, sendGiftModel)
     {
         [_titleView mas_makeConstraints:^(MASConstraintMaker *make) {
             make.left.equalTo(self.view).offset(15);
-            make.top.equalTo(self.view).offset(30);
+            make.top.equalTo(self.view).offset(20);
             make.size.mas_equalTo(CGSizeMake(MIN(kScreenWidth*0.6, 200), MIN(50,kScreenHeight*0.1)));
         }];
     }

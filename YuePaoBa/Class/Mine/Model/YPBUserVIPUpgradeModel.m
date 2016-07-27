@@ -7,7 +7,6 @@
 //
 
 #import "YPBUserVIPUpgradeModel.h"
-#import "YPBVipUpgradeInfo.h"
 
 static const NSTimeInterval kRetryingTimeInterval = 180;
 
