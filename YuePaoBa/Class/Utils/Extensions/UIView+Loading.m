@@ -80,9 +80,9 @@ static const void *kUIMessageViewAssociatedKey = &kUIMessageViewAssociatedKey;
 }
 
 - (void)endLoading {
-    if ([self.subviews containsObject:self.ypb_loadingView]) {
+//    if ([self.subviews containsObject:self.ypb_loadingView]) {
         [self.ypb_loadingView removeFromSuperview];
-    }
+//    }
 }
 
 - (void)beginProgressingWithTitle:(NSString *)title subtitle:(NSString *)subtitle {

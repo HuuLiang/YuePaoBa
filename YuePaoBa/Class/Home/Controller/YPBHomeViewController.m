@@ -220,11 +220,9 @@ DefineLazyPropertyInitialization(YPBUserAccessQueryModel, accessQueryModel)
                     if (success) {
                         user.receiveGreetCount = @(user.receiveGreetCount.unsignedIntegerValue+1);
                         user.isGreet = YES;
-                        dispatch_async(dispatch_get_global_queue(0, 0), ^{
-                            if ([YPBContact refreshContactRecentTimeWithUser:user]) {
+                        if ([YPBContact refreshContactRecentTimeWithUser:user]) {
                                 [YPBMessageViewController sendGreetMessageWith:user inViewController:self];
-                            }
-                        });
+                        }
                     }
                 }];
             }
