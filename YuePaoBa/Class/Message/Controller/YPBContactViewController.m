@@ -13,6 +13,8 @@
 #import "YPBUserDetailViewController.h"
 #import "YPBVIPPriviledgeViewController.h"
 #import "YPBChatMessage.h"
+#import "YPBImageViewController.h"
+
 
 static NSString *const kContactCellReusableIdentifier = @"ContactCellReusableIdentifier";
 
@@ -195,6 +197,10 @@ DefineLazyPropertyInitialization(NSMutableArray, contacts);
         cell.avatarTapAction = ^(id obj) {
             @strongify(self);
             if (contact.userType == [YPBROBOTID integerValue]) {
+                YPBImageViewController *imgVC = [[YPBImageViewController alloc] initWithImageUrl:YPB_ROBOT_URL];
+                imgVC.title = @"红娘助手";
+                [self.navigationController pushViewController:imgVC animated:YES];
+            } else {
                 YPBUserDetailViewController *detailVC = [[YPBUserDetailViewController alloc] initWithUserId:contact.userId];
                 [self.navigationController pushViewController:detailVC animated:YES];
             }

@@ -12,7 +12,7 @@
 #import "YPBVIPPriviledgeViewController.h"
 #import "YPBMessagePushModel.h"
 #import "YPBAutoReplyMessagePool.h"
-
+#import "YPBImageViewController.h"
 #import "YPBActivityPayView.h"
 #import "YPBEditMineDetailViewController.h"
 #import "YPBMineAccessViewController.h"
@@ -390,6 +390,13 @@ DefineLazyPropertyInitialization(NSMutableArray, chatMessages)
     [cell.subviews makeObjectsPerformSelector:@selector(removeFromSuperview)];
     cell.userInteractionEnabled = YES;
     cell.selectionStyle = UITableViewCellSelectionStyleNone;
+    
+    cell.robotPushAction = ^(id obj) {
+        YPBImageViewController *imgVC = [[YPBImageViewController alloc] initWithImageUrl:YPB_ROBOT_URL];
+        imgVC.title = @"红娘助手";
+        [self.navigationController pushViewController:imgVC animated:YES];
+    };
+
     if (message.msgType == YPBChatMessageTypeRobotPush) {
         if ([message.msg isEqualToString:kRobotPushWelcomeIdentifier]) {
             [cell layoutWelcomeSubviewsWithInfo:self.contact.logoUrl];

@@ -18,6 +18,8 @@
 
 @property (nonatomic) YPBTableViewCell *editCell;
 
+@property (nonatomic) YPBAction robotPushAction;
+
 - (instancetype)initWithReuseIdentifier:(NSString *)reuseIdentifier;
 
 - (void)layoutWelcomeSubviewsWithInfo:(NSString *)imageUrl;

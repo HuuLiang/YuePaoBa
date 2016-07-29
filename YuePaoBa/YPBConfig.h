@@ -54,6 +54,9 @@
 
 #define YPB_DEFAULT_PHOTOSERVER_URL     @"http://7xpobi.com2.z0.glb.qiniucdn.com"
 
+//#define YPB_ROBOT_URL                   @"http://7xomw1.com1.z0.glb.clouddn.com/mfw/mfwhnzs.html"
+#define YPB_ROBOT_URL                   @"http://img.gulu365.com/wysy/mfw/logo/mfwhnzs.jpg"
+
 #define YPB_UMENG_APP_ID                @"569f30e6e0f55a0373002331"
 #define YPB_KSCRASH_APP_ID              @"5261ad83f35a0ba21f4bec18e6ef6b31"
 

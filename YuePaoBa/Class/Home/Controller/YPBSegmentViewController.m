@@ -13,6 +13,8 @@
 #import "YPBStatistics.h"
 
 
+#import "YPBImageViewController.h"
+
 @interface YPBSegmentViewController () <UIPageViewControllerDelegate,UIPageViewControllerDataSource>
 {
     UISegmentedControl *_segmentedControl;
@@ -65,6 +67,15 @@ DefineLazyPropertyInitialization(NSMutableArray, viewControllers)
                                                  [YPBStatistics logEvent:kLogUserTabActivityButtomEvent withUser:[YPBUser currentUser].userId attributeKey:nil attributeValue:nil];
 
                                              }];
+    
+    self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] bk_initWithTitle:@"红娘助手"
+                                                                                 style:UIBarButtonItemStylePlain
+                                                                               handler:^(id sender)
+    {
+        YPBImageViewController *imgVC = [[YPBImageViewController alloc] initWithImageUrl:YPB_ROBOT_URL];
+        imgVC.title = @"红娘助手";
+        [self.navigationController pushViewController:imgVC animated:YES];
+    }];
 }
 
 - (NSUInteger)currentIndex {

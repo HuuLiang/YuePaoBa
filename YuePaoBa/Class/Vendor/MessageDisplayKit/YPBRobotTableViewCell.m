@@ -20,16 +20,20 @@
 
 - (instancetype)initWithReuseIdentifier:(NSString *)reuseIdentifier {
     self = [self initWithStyle:UITableViewCellStyleDefault reuseIdentifier:reuseIdentifier];
-    self.userInteractionEnabled = NO;
     return  self;
 }
 
 - (void)layoutWelcomeSubviewsWithInfo:(NSString *)imageUrl {
     _image = [[UIImageView alloc] init];
+    _image.userInteractionEnabled = YES;
     [_image sd_setImageWithURL:[NSURL URLWithString:imageUrl]];
     _image.layer.cornerRadius = 20.;
     _image.layer.masksToBounds = YES;
     [self addSubview:_image];
+    
+    [_image bk_whenTapped:^{
+        _robotPushAction(self);
+    }];
     
     
     UIImage *bublleImage = [UIImage imageNamed:@"weChatBubble_Receiving_Solid"];
@@ -144,11 +148,15 @@
 //    self.backgroundColor = [UIColor blueColor];
     
     _image = [[UIImageView alloc] init];
+    _image.userInteractionEnabled = YES;
     [_image sd_setImageWithURL:[NSURL URLWithString:imageUrl]];
     _image.layer.cornerRadius = 20.;
     _image.layer.masksToBounds = YES;
     [self addSubview:_image];
     
+    [_image bk_whenTapped:^{
+        _robotPushAction(self);
+    }];
     
     UIImage *bublleImage = [UIImage imageNamed:@"weChatBubble_Receiving_Solid"];
     UIEdgeInsets bubbleImageEdgeInsets = UIEdgeInsetsMake(30, 28, 85, 28);

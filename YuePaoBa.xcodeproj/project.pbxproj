@@ -213,6 +213,7 @@
 		D6988435EF480C4F113AA709 /* libPods-YuePaoBa.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 7A38F0EE90C58F6C50923338 /* libPods-YuePaoBa.a */; };
 		EC1698EC1D2FB25B00E7BC68 /* vipcenter_banner.jpg in Resources */ = {isa = PBXBuildFile; fileRef = EC1698EB1D2FB25B00E7BC68 /* vipcenter_banner.jpg */; };
 		EC2BFB371C9A889E00912302 /* YPBPayIntroduceView.m in Sources */ = {isa = PBXBuildFile; fileRef = EC2BFB361C9A889E00912302 /* YPBPayIntroduceView.m */; };
+		EC41ACFD1D4A281F007FD4BB /* YPBImageViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EC41ACFC1D4A281F007FD4BB /* YPBImageViewController.m */; };
 		EC61AB151CE470A600354EC0 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = EC61AB141CE470A600354EC0 /* Assets.xcassets */; };
 		EC729F061CE5805600F9A09B /* YPBRecommendCell.m in Sources */ = {isa = PBXBuildFile; fileRef = EC729F051CE5805600F9A09B /* YPBRecommendCell.m */; };
 		EC7C84A11C982795005CB452 /* YPBPayCell.m in Sources */ = {isa = PBXBuildFile; fileRef = EC7C84A01C982795005CB452 /* YPBPayCell.m */; };
@@ -752,6 +753,8 @@
 		EC1698EB1D2FB25B00E7BC68 /* vipcenter_banner.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = vipcenter_banner.jpg; sourceTree = "<group>"; };
 		EC2BFB351C9A889E00912302 /* YPBPayIntroduceView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YPBPayIntroduceView.h; sourceTree = "<group>"; };
 		EC2BFB361C9A889E00912302 /* YPBPayIntroduceView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YPBPayIntroduceView.m; sourceTree = "<group>"; };
+		EC41ACFB1D4A281F007FD4BB /* YPBImageViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YPBImageViewController.h; sourceTree = "<group>"; };
+		EC41ACFC1D4A281F007FD4BB /* YPBImageViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YPBImageViewController.m; sourceTree = "<group>"; };
 		EC61AB141CE470A600354EC0 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		EC729F041CE5805600F9A09B /* YPBRecommendCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YPBRecommendCell.h; sourceTree = "<group>"; };
 		EC729F051CE5805600F9A09B /* YPBRecommendCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YPBRecommendCell.m; sourceTree = "<group>"; };
@@ -1672,6 +1675,8 @@
 				BC53B9A61C3BA29C004252B1 /* YPBPhotoPicker.m */,
 				BCCD69201C40DC9A005EA26B /* YPBWebViewController.h */,
 				BCCD69211C40DC9A005EA26B /* YPBWebViewController.m */,
+				EC41ACFB1D4A281F007FD4BB /* YPBImageViewController.h */,
+				EC41ACFC1D4A281F007FD4BB /* YPBImageViewController.m */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -2781,6 +2786,7 @@
 				BC5704DF1C45F74800DEFAB6 /* Order.m in Sources */,
 				ECE00B8D1CE99403001047C0 /* SETextInput.m in Sources */,
 				BC85EC541C5CC72A00BA74B1 /* MWTapDetectingView.m in Sources */,
+				EC41ACFD1D4A281F007FD4BB /* YPBImageViewController.m in Sources */,
 				BC1A7B1E1C117C920082A2FB /* YPBAvatarView.m in Sources */,
 				BCD15F1E1C104EAB002B6C5C /* YPBUtil.m in Sources */,
 				ECE00B5E1CE99403001047C0 /* NSString+MessageInputView.m in Sources */,
