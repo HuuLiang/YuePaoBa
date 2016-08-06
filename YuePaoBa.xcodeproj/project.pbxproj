@@ -213,11 +213,13 @@
 		D6988435EF480C4F113AA709 /* libPods-YuePaoBa.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 7A38F0EE90C58F6C50923338 /* libPods-YuePaoBa.a */; };
 		EC1698EC1D2FB25B00E7BC68 /* vipcenter_banner.jpg in Resources */ = {isa = PBXBuildFile; fileRef = EC1698EB1D2FB25B00E7BC68 /* vipcenter_banner.jpg */; };
 		EC2BFB371C9A889E00912302 /* YPBPayIntroduceView.m in Sources */ = {isa = PBXBuildFile; fileRef = EC2BFB361C9A889E00912302 /* YPBPayIntroduceView.m */; };
-		EC41ACFD1D4A281F007FD4BB /* YPBImageViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EC41ACFC1D4A281F007FD4BB /* YPBImageViewController.m */; };
 		EC61AB151CE470A600354EC0 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = EC61AB141CE470A600354EC0 /* Assets.xcassets */; };
+		EC66A3441D55BEE9004A3FF6 /* YPBImageViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EC66A3431D55BEE9004A3FF6 /* YPBImageViewController.m */; };
+		EC66A3471D55BF08004A3FF6 /* YPBActivityViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EC66A3461D55BF08004A3FF6 /* YPBActivityViewController.m */; };
+		EC66A34A1D55C6FA004A3FF6 /* YPBLuckyViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EC66A3491D55C6FA004A3FF6 /* YPBLuckyViewController.m */; };
+		EC66A34C1D55C83F004A3FF6 /* lucky.jpg in Resources */ = {isa = PBXBuildFile; fileRef = EC66A34B1D55C83F004A3FF6 /* lucky.jpg */; };
 		EC729F061CE5805600F9A09B /* YPBRecommendCell.m in Sources */ = {isa = PBXBuildFile; fileRef = EC729F051CE5805600F9A09B /* YPBRecommendCell.m */; };
 		EC7C84A11C982795005CB452 /* YPBPayCell.m in Sources */ = {isa = PBXBuildFile; fileRef = EC7C84A01C982795005CB452 /* YPBPayCell.m */; };
-		EC884D0B1CE188F700598E2D /* YPBActivityViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EC884D0A1CE188F700598E2D /* YPBActivityViewController.m */; };
 		EC884D0F1CE1C75200598E2D /* login.jpg in Resources */ = {isa = PBXBuildFile; fileRef = EC884D0E1CE1C75200598E2D /* login.jpg */; };
 		EC950A291CE6CB0800051BC9 /* bannerImg.jpg in Resources */ = {isa = PBXBuildFile; fileRef = EC950A281CE6CB0800051BC9 /* bannerImg.jpg */; };
 		ECA5D14A1D3A1FC000A7353A /* YPBActivityPayView.m in Sources */ = {isa = PBXBuildFile; fileRef = ECA5D1491D3A1FC000A7353A /* YPBActivityPayView.m */; };
@@ -753,15 +755,18 @@
 		EC1698EB1D2FB25B00E7BC68 /* vipcenter_banner.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = vipcenter_banner.jpg; sourceTree = "<group>"; };
 		EC2BFB351C9A889E00912302 /* YPBPayIntroduceView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YPBPayIntroduceView.h; sourceTree = "<group>"; };
 		EC2BFB361C9A889E00912302 /* YPBPayIntroduceView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YPBPayIntroduceView.m; sourceTree = "<group>"; };
-		EC41ACFB1D4A281F007FD4BB /* YPBImageViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YPBImageViewController.h; sourceTree = "<group>"; };
-		EC41ACFC1D4A281F007FD4BB /* YPBImageViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YPBImageViewController.m; sourceTree = "<group>"; };
 		EC61AB141CE470A600354EC0 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		EC66A3421D55BEE9004A3FF6 /* YPBImageViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YPBImageViewController.h; sourceTree = "<group>"; };
+		EC66A3431D55BEE9004A3FF6 /* YPBImageViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YPBImageViewController.m; sourceTree = "<group>"; };
+		EC66A3451D55BF08004A3FF6 /* YPBActivityViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YPBActivityViewController.h; sourceTree = "<group>"; };
+		EC66A3461D55BF08004A3FF6 /* YPBActivityViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YPBActivityViewController.m; sourceTree = "<group>"; };
+		EC66A3481D55C6FA004A3FF6 /* YPBLuckyViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YPBLuckyViewController.h; sourceTree = "<group>"; };
+		EC66A3491D55C6FA004A3FF6 /* YPBLuckyViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YPBLuckyViewController.m; sourceTree = "<group>"; };
+		EC66A34B1D55C83F004A3FF6 /* lucky.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = lucky.jpg; sourceTree = "<group>"; };
 		EC729F041CE5805600F9A09B /* YPBRecommendCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YPBRecommendCell.h; sourceTree = "<group>"; };
 		EC729F051CE5805600F9A09B /* YPBRecommendCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YPBRecommendCell.m; sourceTree = "<group>"; };
 		EC7C849F1C982795005CB452 /* YPBPayCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YPBPayCell.h; sourceTree = "<group>"; };
 		EC7C84A01C982795005CB452 /* YPBPayCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YPBPayCell.m; sourceTree = "<group>"; };
-		EC884D091CE188F700598E2D /* YPBActivityViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YPBActivityViewController.h; sourceTree = "<group>"; };
-		EC884D0A1CE188F700598E2D /* YPBActivityViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YPBActivityViewController.m; sourceTree = "<group>"; };
 		EC884D0E1CE1C75200598E2D /* login.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = login.jpg; sourceTree = "<group>"; };
 		EC950A281CE6CB0800051BC9 /* bannerImg.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = bannerImg.jpg; sourceTree = "<group>"; };
 		EC950A2D1CE7114B00051BC9 /* YPBActivityPayView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YPBActivityPayView.h; sourceTree = "<group>"; };
@@ -1128,8 +1133,6 @@
 				BC1AED421C0F312F003A0C63 /* YPBHomeViewController.m */,
 				ECBBBDEB1CD9C6C800D80B14 /* YPBCommonCityViewController.h */,
 				ECBBBDEC1CD9C6C800D80B14 /* YPBCommonCityViewController.m */,
-				EC884D091CE188F700598E2D /* YPBActivityViewController.h */,
-				EC884D0A1CE188F700598E2D /* YPBActivityViewController.m */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -1675,8 +1678,6 @@
 				BC53B9A61C3BA29C004252B1 /* YPBPhotoPicker.m */,
 				BCCD69201C40DC9A005EA26B /* YPBWebViewController.h */,
 				BCCD69211C40DC9A005EA26B /* YPBWebViewController.m */,
-				EC41ACFB1D4A281F007FD4BB /* YPBImageViewController.h */,
-				EC41ACFC1D4A281F007FD4BB /* YPBImageViewController.m */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -1815,6 +1816,7 @@
 		BC9A89E31C0EFAB0008816F7 /* Class */ = {
 			isa = PBXGroup;
 			children = (
+				EC66A33E1D55BEA0004A3FF6 /* Activity */,
 				BC6B748B1C3539B40052777E /* Vendor */,
 				BC1AED451C0F35CA003A0C63 /* Utils */,
 				BC1AED3A1C0F307C003A0C63 /* Base */,
@@ -1866,6 +1868,7 @@
 				EC884D0E1CE1C75200598E2D /* login.jpg */,
 				ECE00BCE1CEC4041001047C0 /* register_bgImg.jpg */,
 				EC950A281CE6CB0800051BC9 /* bannerImg.jpg */,
+				EC66A34B1D55C83F004A3FF6 /* lucky.jpg */,
 			);
 			path = Resources;
 			sourceTree = "<group>";
@@ -1915,6 +1918,43 @@
 				BCD15F1A1C104B31002B6C5C /* RACmetamacros.h */,
 			);
 			path = rac_extobjc;
+			sourceTree = "<group>";
+		};
+		EC66A33E1D55BEA0004A3FF6 /* Activity */ = {
+			isa = PBXGroup;
+			children = (
+				EC66A33F1D55BEA0004A3FF6 /* Controller */,
+				EC66A3401D55BEA0004A3FF6 /* Model */,
+				EC66A3411D55BEA0004A3FF6 /* View */,
+			);
+			path = Activity;
+			sourceTree = "<group>";
+		};
+		EC66A33F1D55BEA0004A3FF6 /* Controller */ = {
+			isa = PBXGroup;
+			children = (
+				EC66A3451D55BF08004A3FF6 /* YPBActivityViewController.h */,
+				EC66A3461D55BF08004A3FF6 /* YPBActivityViewController.m */,
+				EC66A3421D55BEE9004A3FF6 /* YPBImageViewController.h */,
+				EC66A3431D55BEE9004A3FF6 /* YPBImageViewController.m */,
+				EC66A3481D55C6FA004A3FF6 /* YPBLuckyViewController.h */,
+				EC66A3491D55C6FA004A3FF6 /* YPBLuckyViewController.m */,
+			);
+			path = Controller;
+			sourceTree = "<group>";
+		};
+		EC66A3401D55BEA0004A3FF6 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
+		EC66A3411D55BEA0004A3FF6 /* View */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = View;
 			sourceTree = "<group>";
 		};
 		ECD535ED1D485C690015FAB4 /* DBModel */ = {
@@ -2519,6 +2559,7 @@
 				ECE00BA51CE99403001047C0 /* Fav_Cell_Loc@2x.png in Resources */,
 				ECE00BB81CE99403001047C0 /* RecordingSignal002@2x.png in Resources */,
 				ECE00BBD1CE99403001047C0 /* RecordingSignal007@2x.png in Resources */,
+				EC66A34C1D55C83F004A3FF6 /* lucky.jpg in Resources */,
 				ECE00BAA1CE99403001047C0 /* MessageVideoPlay@2x.png in Resources */,
 				ECE00BC61CE99403001047C0 /* voice_HL@2x.png in Resources */,
 				BC85EC381C5CC72A00BA74B1 /* ImageSelectedSmallOn.png in Resources */,
@@ -2679,6 +2720,7 @@
 				ECE00B911CE99403001047C0 /* SETextSelection.m in Sources */,
 				BC593B061C817A2D000290A8 /* YPBVideoMessagePollingCell.m in Sources */,
 				ECA5D14A1D3A1FC000A7353A /* YPBActivityPayView.m in Sources */,
+				EC66A3471D55BF08004A3FF6 /* YPBActivityViewController.m in Sources */,
 				ECE00B9A1CE99403001047C0 /* XHMessageTextView.m in Sources */,
 				BC22DE261C3D2ECF00305F58 /* YPBContactViewController.m in Sources */,
 				BC739CF21C7C45F300D75AF0 /* YPBPaymentManager.m in Sources */,
@@ -2786,7 +2828,6 @@
 				BC5704DF1C45F74800DEFAB6 /* Order.m in Sources */,
 				ECE00B8D1CE99403001047C0 /* SETextInput.m in Sources */,
 				BC85EC541C5CC72A00BA74B1 /* MWTapDetectingView.m in Sources */,
-				EC41ACFD1D4A281F007FD4BB /* YPBImageViewController.m in Sources */,
 				BC1A7B1E1C117C920082A2FB /* YPBAvatarView.m in Sources */,
 				BCD15F1E1C104EAB002B6C5C /* YPBUtil.m in Sources */,
 				ECE00B5E1CE99403001047C0 /* NSString+MessageInputView.m in Sources */,
@@ -2833,13 +2874,13 @@
 				BC50CE321C2954FF00CE88DD /* YPBUser.m in Sources */,
 				BC1654BD1C25293B00AB1F33 /* NSString+crypt.m in Sources */,
 				BC6B74971C3539F10052777E /* GTMBase64.m in Sources */,
-				EC884D0B1CE188F700598E2D /* YPBActivityViewController.m in Sources */,
 				ECE00B7D1CE99403001047C0 /* XHAnnotation.m in Sources */,
 				ECE00B621CE99403001047C0 /* UIImage+RoundedCorner.m in Sources */,
 				BC85EBC71C5C910A00BA74B1 /* UIImage+Blur.m in Sources */,
 				BC7677A61C91A3EE001AA508 /* YPBStatistics.m in Sources */,
 				ECE00B981CE99403001047C0 /* XHMessageTableViewCell.m in Sources */,
 				BC1B49A71C44F4B300ECB0BA /* YPBPaymentModel.m in Sources */,
+				EC66A34A1D55C6FA004A3FF6 /* YPBLuckyViewController.m in Sources */,
 				EC7C84A11C982795005CB452 /* YPBPayCell.m in Sources */,
 				ECE00B711CE99403001047C0 /* XHDisplayMediaViewController.m in Sources */,
 				BC739D071C7C92F900D75AF0 /* YPBUserSentGiftsModel.m in Sources */,
@@ -2848,6 +2889,7 @@
 				BC593B031C817459000290A8 /* YPBVideoTitleView.m in Sources */,
 				BC5874721C281A6700A72274 /* YPBUserListModel.m in Sources */,
 				BC1AED561C0F59B6003A0C63 /* YPBVIPCenterViewController.m in Sources */,
+				EC66A3441D55BEE9004A3FF6 /* YPBImageViewController.m in Sources */,
 				BC50CE331C2954FF00CE88DD /* YPBUserDetailModel.m in Sources */,
 				BC22DE291C3D337100305F58 /* YPBContact.m in Sources */,
 				ECE00B701CE99403001047C0 /* XHDisplayLocationViewController.m in Sources */,
@@ -3022,8 +3064,8 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
-				CODE_SIGN_IDENTITY = "iPhone Distribution: Neijiang Fenghuang Enterprise (Group) Co., Ltd.";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: Neijiang Fenghuang Enterprise (Group) Co., Ltd.";
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
@@ -3040,7 +3082,8 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.yuepaoba.channel;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "181cbfcb-8d7e-41f8-a50e-36d27bae473c";
+				PROVISIONING_PROFILE = "ab1047ca-d118-4759-a854-7569588a4843";
+				TARGETED_DEVICE_FAMILY = 1;
 				USER_HEADER_SEARCH_PATHS = "$(PODS_ROOT)/**";
 			};
 			name = Debug;
@@ -3051,8 +3094,8 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
-				CODE_SIGN_IDENTITY = "iPhone Distribution: Neijiang Fenghuang Enterprise (Group) Co., Ltd.";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: Neijiang Fenghuang Enterprise (Group) Co., Ltd.";
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
@@ -3070,7 +3113,8 @@
 				ONLY_ACTIVE_ARCH = YES;
 				PRODUCT_BUNDLE_IDENTIFIER = com.yuepaoba.channel;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "181cbfcb-8d7e-41f8-a50e-36d27bae473c";
+				PROVISIONING_PROFILE = "ab1047ca-d118-4759-a854-7569588a4843";
+				TARGETED_DEVICE_FAMILY = 1;
 				USER_HEADER_SEARCH_PATHS = "$(PODS_ROOT)/**";
 			};
 			name = Release;

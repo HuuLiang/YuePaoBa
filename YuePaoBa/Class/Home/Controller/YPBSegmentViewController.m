@@ -11,7 +11,7 @@
 #import "YPBCommonCityViewController.h"
 #import "YPBActivityViewController.h"
 #import "YPBStatistics.h"
-
+#import "YPBLuckyViewController.h"
 
 #import "YPBImageViewController.h"
 
@@ -76,6 +76,25 @@ DefineLazyPropertyInitialization(NSMutableArray, viewControllers)
         imgVC.title = @"红娘助手";
         [self.navigationController pushViewController:imgVC animated:YES];
     }];
+    
+    UIImageView * imageView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@""]];
+    imageView.userInteractionEnabled = YES;
+    imageView.backgroundColor = [UIColor redColor];
+    [self.view addSubview:imageView];
+    {
+        [imageView mas_makeConstraints:^(MASConstraintMaker *make) {
+            make.right.equalTo(self.view).offset(-kWidth(20));
+            make.bottom.equalTo(self.view).offset(-kWidth(30));
+            make.size.mas_equalTo(CGSizeMake(kWidth(100), kWidth(100)));
+        }];
+    }
+    @weakify(self);
+    [imageView bk_whenTapped:^{
+        @strongify(self);
+        YPBLuckyViewController *luckyVC = [[YPBLuckyViewController alloc] initWithTitle:@"奥运大转盘"];
+        [self.navigationController pushViewController:luckyVC animated:YES];
+    }];
+    
 }
 
 - (NSUInteger)currentIndex {

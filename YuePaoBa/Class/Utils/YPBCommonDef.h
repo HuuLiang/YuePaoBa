@@ -103,10 +103,16 @@ return _##propertyName; \
 
 #define SCREEN_WIDTH        [[UIScreen mainScreen]bounds].size.width
 #define SCREEN_HEIGHT       [[UIScreen mainScreen]bounds].size.height
+#define kWidth(width)   kScreenWidth  * width  / 750
+#define kHeight(height) kScreenHeight * height / 1334.
 
 #define YPBROBOTID          (@"76839")
 
 #define kRobotContactLogoUrl  (@"http://7xpobi.com2.z0.glb.qiniucdn.com/8201605162225467_20160516153450_avatar.jpg")
+
+#define KActivityDialCount @"yuepaoba_activity_dialCount"
+#define dialCount [[[NSUserDefaults standardUserDefaults] objectForKey:KActivityDialCount] integerValue]
+#define setDialCount(count) [[NSUserDefaults standardUserDefaults] setObject:@(count) forKey:KActivityDialCount]
 
 typedef struct _YPBIntRange {
     NSInteger min;
