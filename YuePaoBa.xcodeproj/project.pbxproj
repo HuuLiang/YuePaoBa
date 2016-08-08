@@ -213,6 +213,10 @@
 		D6988435EF480C4F113AA709 /* libPods-YuePaoBa.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 7A38F0EE90C58F6C50923338 /* libPods-YuePaoBa.a */; };
 		EC1698EC1D2FB25B00E7BC68 /* vipcenter_banner.jpg in Resources */ = {isa = PBXBuildFile; fileRef = EC1698EB1D2FB25B00E7BC68 /* vipcenter_banner.jpg */; };
 		EC2BFB371C9A889E00912302 /* YPBPayIntroduceView.m in Sources */ = {isa = PBXBuildFile; fileRef = EC2BFB361C9A889E00912302 /* YPBPayIntroduceView.m */; };
+		EC2C5A161D583130004E74CF /* YPBLuckyNoticeView.m in Sources */ = {isa = PBXBuildFile; fileRef = EC2C5A151D583130004E74CF /* YPBLuckyNoticeView.m */; };
+		EC2C5A191D585E19004E74CF /* YPBWinnerView.m in Sources */ = {isa = PBXBuildFile; fileRef = EC2C5A181D585E19004E74CF /* YPBWinnerView.m */; };
+		EC2C5A1E1D587C3F004E74CF /* luckyAd-1.jp2 in Resources */ = {isa = PBXBuildFile; fileRef = EC2C5A1C1D587C3F004E74CF /* luckyAd-1.jp2 */; };
+		EC2C5A1F1D587C3F004E74CF /* luckyAd-2.jp2 in Resources */ = {isa = PBXBuildFile; fileRef = EC2C5A1D1D587C3F004E74CF /* luckyAd-2.jp2 */; };
 		EC61AB151CE470A600354EC0 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = EC61AB141CE470A600354EC0 /* Assets.xcassets */; };
 		EC66A3441D55BEE9004A3FF6 /* YPBImageViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EC66A3431D55BEE9004A3FF6 /* YPBImageViewController.m */; };
 		EC66A3471D55BF08004A3FF6 /* YPBActivityViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EC66A3461D55BF08004A3FF6 /* YPBActivityViewController.m */; };
@@ -755,6 +759,12 @@
 		EC1698EB1D2FB25B00E7BC68 /* vipcenter_banner.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = vipcenter_banner.jpg; sourceTree = "<group>"; };
 		EC2BFB351C9A889E00912302 /* YPBPayIntroduceView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YPBPayIntroduceView.h; sourceTree = "<group>"; };
 		EC2BFB361C9A889E00912302 /* YPBPayIntroduceView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YPBPayIntroduceView.m; sourceTree = "<group>"; };
+		EC2C5A141D583130004E74CF /* YPBLuckyNoticeView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YPBLuckyNoticeView.h; sourceTree = "<group>"; };
+		EC2C5A151D583130004E74CF /* YPBLuckyNoticeView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YPBLuckyNoticeView.m; sourceTree = "<group>"; };
+		EC2C5A171D585E19004E74CF /* YPBWinnerView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YPBWinnerView.h; sourceTree = "<group>"; };
+		EC2C5A181D585E19004E74CF /* YPBWinnerView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YPBWinnerView.m; sourceTree = "<group>"; };
+		EC2C5A1C1D587C3F004E74CF /* luckyAd-1.jp2 */ = {isa = PBXFileReference; lastKnownFileType = file; path = "luckyAd-1.jp2"; sourceTree = "<group>"; };
+		EC2C5A1D1D587C3F004E74CF /* luckyAd-2.jp2 */ = {isa = PBXFileReference; lastKnownFileType = file; path = "luckyAd-2.jp2"; sourceTree = "<group>"; };
 		EC61AB141CE470A600354EC0 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		EC66A3421D55BEE9004A3FF6 /* YPBImageViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YPBImageViewController.h; sourceTree = "<group>"; };
 		EC66A3431D55BEE9004A3FF6 /* YPBImageViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YPBImageViewController.m; sourceTree = "<group>"; };
@@ -1866,6 +1876,8 @@
 			children = (
 				EC1698EB1D2FB25B00E7BC68 /* vipcenter_banner.jpg */,
 				EC884D0E1CE1C75200598E2D /* login.jpg */,
+				EC2C5A1C1D587C3F004E74CF /* luckyAd-1.jp2 */,
+				EC2C5A1D1D587C3F004E74CF /* luckyAd-2.jp2 */,
 				ECE00BCE1CEC4041001047C0 /* register_bgImg.jpg */,
 				EC950A281CE6CB0800051BC9 /* bannerImg.jpg */,
 				EC66A34B1D55C83F004A3FF6 /* lucky.jpg */,
@@ -1953,6 +1965,10 @@
 		EC66A3411D55BEA0004A3FF6 /* View */ = {
 			isa = PBXGroup;
 			children = (
+				EC2C5A141D583130004E74CF /* YPBLuckyNoticeView.h */,
+				EC2C5A151D583130004E74CF /* YPBLuckyNoticeView.m */,
+				EC2C5A171D585E19004E74CF /* YPBWinnerView.h */,
+				EC2C5A181D585E19004E74CF /* YPBWinnerView.m */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -2550,6 +2566,7 @@
 				EC884D0F1CE1C75200598E2D /* login.jpg in Resources */,
 				ECE00BCF1CEC4041001047C0 /* register_bgImg.jpg in Resources */,
 				BC85EC3E1C5CC72A00BA74B1 /* PlayButtonOverlayLargeTap.png in Resources */,
+				EC2C5A1F1D587C3F004E74CF /* luckyAd-2.jp2 in Resources */,
 				ECE00BB71CE99403001047C0 /* RecordingSignal001@2x.png in Resources */,
 				ECE00BBC1CE99403001047C0 /* RecordingSignal006@2x.png in Resources */,
 				ECE00BB11CE99403001047C0 /* ReceiverVoiceNodePlaying001@2x.png in Resources */,
@@ -2564,6 +2581,7 @@
 				ECE00BC61CE99403001047C0 /* voice_HL@2x.png in Resources */,
 				BC85EC381C5CC72A00BA74B1 /* ImageSelectedSmallOn.png in Resources */,
 				ECE00BB61CE99403001047C0 /* RecordingBkg@2x.png in Resources */,
+				EC2C5A1E1D587C3F004E74CF /* luckyAd-1.jp2 in Resources */,
 				BC85EC351C5CC72A00BA74B1 /* ImageSelectedSmallOff.png in Resources */,
 				ECE00BB21CE99403001047C0 /* ReceiverVoiceNodePlaying002@2x.png in Resources */,
 				BC85EC3C1C5CC72A00BA74B1 /* PlayButtonOverlayLarge@2x.png in Resources */,
@@ -2740,6 +2758,7 @@
 				BC2ED5AB1C33C5FF00BE00A2 /* YPBUserDetailUpdateModel.m in Sources */,
 				BC60774A1C7EF57500ACE4DF /* YPBFetchBarrageModel.m in Sources */,
 				BC1AED491C0F360D003A0C63 /* UIColor+hexColor.m in Sources */,
+				EC2C5A161D583130004E74CF /* YPBLuckyNoticeView.m in Sources */,
 				ECE00B841CE99403001047C0 /* LKBadgeView.m in Sources */,
 				ECD536001D485C690015FAB4 /* FMDatabase.m in Sources */,
 				BC2742761C3A8EC600C98E6F /* YPBMineAccessCell.m in Sources */,
@@ -2905,6 +2924,7 @@
 				BC6B74991C3539F10052777E /* QiniuUploader.m in Sources */,
 				ECE00B9D1CE99403001047C0 /* XHEmotionCollectionViewFlowLayout.m in Sources */,
 				BC31B75C1C1B2F540043E7EB /* YPBReigsterSecondViewController.m in Sources */,
+				EC2C5A191D585E19004E74CF /* YPBWinnerView.m in Sources */,
 				BC85EC561C5CC72A00BA74B1 /* UIImage+MWPhotoBrowser.m in Sources */,
 				BC27422A1C3A631A00C98E6F /* YPBChatMessage.m in Sources */,
 				BC3BC5061C76E83900DE2FBF /* YPBPhotoBar.m in Sources */,
@@ -3082,7 +3102,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.yuepaoba.channel;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "ab1047ca-d118-4759-a854-7569588a4843";
+				PROVISIONING_PROFILE = "181cbfcb-8d7e-41f8-a50e-36d27bae473c";
 				TARGETED_DEVICE_FAMILY = 1;
 				USER_HEADER_SEARCH_PATHS = "$(PODS_ROOT)/**";
 			};
@@ -3113,7 +3133,7 @@
 				ONLY_ACTIVE_ARCH = YES;
 				PRODUCT_BUNDLE_IDENTIFIER = com.yuepaoba.channel;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "ab1047ca-d118-4759-a854-7569588a4843";
+				PROVISIONING_PROFILE = "181cbfcb-8d7e-41f8-a50e-36d27bae473c";
 				TARGETED_DEVICE_FAMILY = 1;
 				USER_HEADER_SEARCH_PATHS = "$(PODS_ROOT)/**";
 			};

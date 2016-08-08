@@ -8,6 +8,10 @@
 
 #import "YPBLuckyViewController.h"
 #import "YPBWebViewController.h"
+#import "YPBLuckyNoticeView.h"
+#import "YPBVIPPriviledgeViewController.h"
+#import "YPBWinnerView.h"
+#import "YPBUserVIPUpgradeModel.h"
 
 const static CGFloat ANIM_TIME = 5.0; // 动画时间
 const static CGFloat ROTATION_EXTEND = 20; // 旋转圈数延长 // 2 * M_PI = 1圈
@@ -28,18 +32,19 @@ const static NSInteger ITEM_COUNT = 8; // 转盘等比分割
 }
 @property (nonatomic) NSMutableArray *userNames;
 @property (nonatomic) NSArray *prizeTitles;
+@property (nonatomic) YPBUserVIPUpgradeModel *VipUpdateModel;
 @end
 
 @implementation YPBLuckyViewController
-
+DefineLazyPropertyInitialization(YPBUserVIPUpgradeModel, VipUpdateModel)
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    
-    setDialCount(10);
+
     _count = 0;
     _userNames = [[NSMutableArray alloc] initWithArray:[YPBSystemConfig sharedConfig].userNames];
     _prizeTitles = @[@"一个月会员卡",@"一季度会员卡",@"一年会员卡",@"ipad Mini",@"iphone",@"10元话费",@"50元话费",@"100元话费"];
+    
     
     self.layoutTableView.hasRowSeparator = NO;
     self.layoutTableView.hasSectionBorder = NO;
@@ -67,7 +72,7 @@ const static NSInteger ITEM_COUNT = 8; // 转盘等比分割
     self.layoutTableViewAction = ^(NSIndexPath *indexPath, UITableViewCell *cell) {
         @strongify(self);
         if (cell == self->_protocolCell) {
-            YPBWebViewController *webVC = [[YPBWebViewController alloc] initWithURL:[NSURL URLWithString:@""]];
+            YPBWebViewController *webVC = [[YPBWebViewController alloc] initWithURL:[NSURL URLWithString:KactivityProtocolUrl]];
             [self.navigationController pushViewController:webVC animated:YES];
         }
     };
@@ -75,7 +80,13 @@ const static NSInteger ITEM_COUNT = 8; // 转盘等比分割
 
 - (void)viewWillAppear:(BOOL)animated {
     if (!_timer) {
-        _timer = [NSTimer scheduledTimerWithTimeInterval:0.6 target:self selector:@selector(checkCount) userInfo:nil repeats:YES];
+        /**
+         *  import
+         *  默认状态下定时器会在视图滚动暂停 so 用下面的方法创建定时器
+         */
+//        _timer = [NSTimer scheduledTimerWithTimeInterval:0.6 target:self selector:@selector(checkCount) userInfo:nil repeats:YES];
+        _timer = [NSTimer timerWithTimeInterval:0.6 target:self selector:@selector(checkCount) userInfo:nil repeats:YES];
+        [[NSRunLoop currentRunLoop] addTimer:_timer forMode:NSRunLoopCommonModes];
     }
     
     if (_userNames.count > 0) {
@@ -126,11 +137,7 @@ const static NSInteger ITEM_COUNT = 8; // 转盘等比分割
     
     _pointerImgV = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"activity_pointer_icon"]];
     
-    if (dialCount > 0) {
         _pointerImgV.userInteractionEnabled = YES;
-    } else {
-        _pointerImgV.userInteractionEnabled = NO;
-    }
     [cell addSubview:_pointerImgV];
     {
         [_pointerImgV mas_makeConstraints:^(MASConstraintMaker *make) {
@@ -142,42 +149,68 @@ const static NSInteger ITEM_COUNT = 8; // 转盘等比分割
     @weakify(self);
     [_pointerImgV bk_whenTapped:^{
         @strongify(self);
-        if (dialCount > 0) {
-            setDialCount(dialCount-1);
-    
-            orign = 0.0f;
-//            random = (arc4random() % ITEM_COUNT);
-            
-            [_imageRound.layer removeAllAnimations];
-            _imageRound.transform = CGAffineTransformMakeRotation(M_PI/8.);
-            
-            NSInteger arcRan = arc4random() % 100 + 1;
-            
-            if (arcRan >= 1 && arcRan < 80) {
-                random = 3;
-            } else if (arcRan >= 80 && arcRan < 90) {
-                random = 5;
-            } else {
-                random = 1;
-            }
-            
-            CABasicAnimation *anim = [CABasicAnimation animationWithKeyPath:@"transform.rotation"];
-            [anim setFromValue:[NSNumber numberWithFloat:M_PI/8.]];
-            orign = 2 - random / ITEM_COUNT * 2;
-            [anim setToValue:[NSNumber numberWithFloat:M_PI * (ROTATION_EXTEND + orign)+ M_PI/8.]];
-            anim.duration = ANIM_TIME;
-            anim.removedOnCompletion = NO;
-            anim.fillMode = kCAFillModeForwards;
-            [anim setDelegate:self];
-            [anim setTimingFunction:[CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionEaseInEaseOut]];
-            
-            [_imageRound.layer addAnimation:anim forKey:@"rotation"];
-        } else{
-            //noti
-        }
+        [self touchPointer];
     }];
     
     [self setLayoutCell:cell cellHeight:kScreenWidth * 1556/ 750 * 0.68 inRow:0 andSection:section];
+}
+
+- (void)touchPointer {
+    if (dialCount > 0) {
+        setDialCount(dialCount-1);
+        
+        orign = 0.0f;
+        [_imageRound.layer removeAllAnimations];
+        _imageRound.transform = CGAffineTransformMakeRotation(M_PI/8.);
+        
+        NSInteger arcRan = arc4random() % 100 + 1;
+        
+        if (arcRan >= 1 && arcRan < 80) {
+            random = 3;
+        } else if (arcRan >= 80 && arcRan < 90) {
+            random = 5;
+        } else {
+            random = 1;
+        }
+        
+        CABasicAnimation *anim = [CABasicAnimation animationWithKeyPath:@"transform.rotation"];
+        [anim setFromValue:[NSNumber numberWithFloat:M_PI/8.]];
+        orign = 2 - random / ITEM_COUNT * 2;
+        [anim setToValue:[NSNumber numberWithFloat:M_PI * (ROTATION_EXTEND + orign)+ M_PI/8.]];
+        anim.duration = ANIM_TIME;
+        anim.removedOnCompletion = NO;
+        anim.fillMode = kCAFillModeForwards;
+        [anim setDelegate:self];
+        [anim setTimingFunction:[CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionEaseInEaseOut]];
+        
+        [_imageRound.layer addAnimation:anim forKey:@"rotation"];
+    } else{
+        @weakify(self);
+        [self.view beginLoading];
+        YPBLuckyNoticeView *notiView = [[YPBLuckyNoticeView alloc] init];
+        [self.view addSubview:notiView];
+        
+        [notiView.closeBtn bk_addEventHandler:^(id sender) {
+            @strongify(self);
+            [notiView removeFromSuperview];
+            [self.view endLoading];
+        } forControlEvents:UIControlEventTouchUpInside];
+        
+        [notiView.payBtn bk_addEventHandler:^(id sender) {
+            @strongify(self);
+            YPBVIPPriviledgeViewController *vipVC = [[YPBVIPPriviledgeViewController alloc] initWithContentType:YPBPaymnetContentTypeActivity];
+            [self.navigationController pushViewController:vipVC animated:YES];
+            [notiView removeFromSuperview];
+            [self.view endLoading];
+        } forControlEvents:UIControlEventTouchUpInside];
+        
+        {
+            [notiView mas_makeConstraints:^(MASConstraintMaker *make) {
+                make.center.equalTo(self.view);
+                make.size.mas_equalTo(CGSizeMake(kWidth(569), kWidth(590)));
+            }];
+        }
+    }
 }
 
 - (void)animationDidStart:(CAAnimation *)anim {
@@ -186,10 +219,44 @@ const static NSInteger ITEM_COUNT = 8; // 转盘等比分割
 }
 
 - (void)animationDidStop:(CAAnimation *)anim finished:(BOOL)flag {
-    if (dialCount > 0) {
-        _pointerImgV.userInteractionEnabled = YES;
-    }
+    _pointerImgV.userInteractionEnabled = YES;
     DLog(@"%f",random);
+    
+    NSUInteger months = 0;
+    if (random == YPBLuckyTypeMonth) {
+        months = 1;
+    } else if (random == YPBLuckyTypeSeason) {
+        months = 3;
+    } else if (random == YPBLuckyTypeYear) {
+        months = 12;
+    }
+    
+    NSString *vipExpireTime = [YPBUtil renewVIPByMonths:months];
+    [self.VipUpdateModel upgradeToVIPWithExpireTime:vipExpireTime completionHandler:nil];
+    
+    [self.view beginLoading];
+    YPBWinnerView *winnerView = [[YPBWinnerView alloc] initWithType:random];
+    [self.view addSubview:winnerView];
+    @weakify(self);
+    [winnerView.repeatBtn bk_addEventHandler:^(id sender) {
+        @strongify(self);
+        [self.view endLoading];
+        [winnerView removeFromSuperview];
+        [self touchPointer];
+    } forControlEvents:UIControlEventTouchUpInside];
+    
+    [winnerView.closeImgV bk_whenTapped:^{
+        @strongify(self);
+        [self.view endLoading];
+        [winnerView removeFromSuperview];
+    }];
+    
+    {
+        [winnerView mas_makeConstraints:^(MASConstraintMaker *make) {
+            make.center.equalTo(self.view);
+            make.size.mas_equalTo(CGSizeMake(kWidth(468), kWidth(409)));
+        }];
+    }
 }
 
 - (void)initLuckyUsersTitleInSection:(NSUInteger)section {
@@ -215,8 +282,6 @@ const static NSInteger ITEM_COUNT = 8; // 转盘等比分割
     _luckyCell = [[UITableViewCell alloc] init];
     _luckyCell.selectionStyle = UITableViewCellSelectionStyleNone;
     _luckyCell.backgroundColor = [UIColor clearColor];
-    
-    
     
     [self setLayoutCell:_luckyCell cellHeight:kWidth(400) inRow:0 andSection:section];
 }

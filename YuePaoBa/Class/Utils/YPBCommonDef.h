@@ -110,9 +110,17 @@ return _##propertyName; \
 
 #define kRobotContactLogoUrl  (@"http://7xpobi.com2.z0.glb.qiniucdn.com/8201605162225467_20160516153450_avatar.jpg")
 
+#define KactivityProtocolUrl  @"http://7xomw1.com1.z0.glb.clouddn.com/mfw/ayhuodong.html"
 #define KActivityDialCount @"yuepaoba_activity_dialCount"
 #define dialCount [[[NSUserDefaults standardUserDefaults] objectForKey:KActivityDialCount] integerValue]
 #define setDialCount(count) [[NSUserDefaults standardUserDefaults] setObject:@(count) forKey:KActivityDialCount]
+
+typedef NS_ENUM(NSUInteger,YPBLuckyType) {
+    YPBLuckyTypeNone,
+    YPBLuckyTypeMonth = 3,
+    YPBLuckyTypeSeason = 5,
+    YPBLuckyTypeYear = 1
+};
 
 typedef struct _YPBIntRange {
     NSInteger min;
@@ -147,4 +155,5 @@ typedef NS_ENUM(NSInteger, PAYRESULT)
     PAYRESULT_ABANDON   = 2,
     PAYRESULT_UNKNOWN   = 3
 };
+
 #endif /* YPBCommonDef_h */

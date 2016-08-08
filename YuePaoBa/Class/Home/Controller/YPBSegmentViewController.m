@@ -77,23 +77,45 @@ DefineLazyPropertyInitialization(NSMutableArray, viewControllers)
         [self.navigationController pushViewController:imgVC animated:YES];
     }];
     
-    UIImageView * imageView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@""]];
+    
+    UIView *bgView = [[UIView alloc] init];
+    bgView.layer.cornerRadius = kWidth(100);
+    bgView.layer.masksToBounds = YES;
+    bgView.backgroundColor = [[UIColor colorWithHexString:@"#000000"] colorWithAlphaComponent:0.3];
+    [self.view addSubview:bgView];
+    
+    UIImageView * imageView = [[UIImageView alloc] init];
     imageView.userInteractionEnabled = YES;
-    imageView.backgroundColor = [UIColor redColor];
-    [self.view addSubview:imageView];
-    {
-        [imageView mas_makeConstraints:^(MASConstraintMaker *make) {
-            make.right.equalTo(self.view).offset(-kWidth(20));
-            make.bottom.equalTo(self.view).offset(-kWidth(30));
-            make.size.mas_equalTo(CGSizeMake(kWidth(100), kWidth(100)));
-        }];
-    }
+    imageView.backgroundColor = [UIColor clearColor];
+    
+    
+    NSArray *gifArr = [NSArray arrayWithObjects:[UIImage imageNamed:@"luckyAd-1.jp2"], [UIImage imageNamed:@"luckyAd-2.jp2"],nil];
+    imageView.animationImages = gifArr;
+    imageView.animationDuration = 0.5;
+    imageView.animationRepeatCount = 0;
+    [imageView startAnimating];
+    [bgView addSubview:imageView];
+    
     @weakify(self);
     [imageView bk_whenTapped:^{
         @strongify(self);
         YPBLuckyViewController *luckyVC = [[YPBLuckyViewController alloc] initWithTitle:@"奥运大转盘"];
         [self.navigationController pushViewController:luckyVC animated:YES];
     }];
+    
+    {
+        [bgView mas_makeConstraints:^(MASConstraintMaker *make) {
+            make.right.equalTo(self.view).offset(-kWidth(20));
+            make.bottom.equalTo(self.view).offset(-kWidth(30));
+            make.size.mas_equalTo(CGSizeMake(kWidth(200), kWidth(200)));
+        }];
+        
+
+        [imageView mas_makeConstraints:^(MASConstraintMaker *make) {
+            make.center.equalTo(bgView);
+            make.size.mas_equalTo(CGSizeMake(kWidth(240),kWidth(192)));
+        }];
+    }
     
 }
 

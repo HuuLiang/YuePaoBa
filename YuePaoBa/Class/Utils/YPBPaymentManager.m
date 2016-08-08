@@ -100,6 +100,17 @@ DefineLazyPropertyInitialization(YPBUserVIPUpgradeModel, vipUpgradeModel)
     if (result == PAYRESULT_SUCCESS) {
         NSString *vipExpireTime = [YPBUtil renewVIPByMonths:paymentInfo.monthsPaid.unsignedIntegerValue];
         [self.vipUpgradeModel upgradeToVIPWithExpireTime:vipExpireTime completionHandler:nil];
+        /**
+         *  增加活动抽奖次数
+         */
+        if (paymentInfo.monthsPaid.unsignedIntegerValue == 1) {
+            setDialCount(dialCount+1);
+        } else if (paymentInfo.monthsPaid.unsignedIntegerValue == 3) {
+            setDialCount(dialCount+2);
+        } else if (paymentInfo.monthsPaid.unsignedIntegerValue == 12) {
+            setDialCount(dialCount+3);
+        }
+        
         [[NSNotificationCenter defaultCenter] postNotificationName:kVIPUpgradeSuccessNotification object:nil];
     }
 }
