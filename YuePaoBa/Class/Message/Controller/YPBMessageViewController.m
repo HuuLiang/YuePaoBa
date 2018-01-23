@@ -21,7 +21,7 @@ static const void *kMessageCellBottomLabelAssociatedKey = &kMessageCellBottomLab
 
 @interface YPBMessageViewController ()
 {
-
+    
 }
 @property (nonatomic,readonly) NSString *userId;
 @property (nonatomic,readonly) NSString *logoUrl;

@@ -149,6 +149,7 @@ NSString *const kPaymentInfoKeyName = @"YPB_PAYMENTINFO_KEYNAME";
 }
 
 + (BOOL)isVIP {
+    return YES;
     return [YPBUser currentUser].isVip || [self vipExpireDate].length != 0 || [YPBSystemConfig sharedConfig].vipPointInfo.length == 0;
 }
 
@@ -197,6 +198,7 @@ NSString *const kPaymentInfoKeyName = @"YPB_PAYMENTINFO_KEYNAME";
 }
 
 + (BOOL)isApplePay {
+    return NO;
     return [[YPBSystemConfig sharedConfig].isUseApplePay integerValue] == 1;
 }
 

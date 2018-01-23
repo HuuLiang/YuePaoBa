@@ -11,13 +11,13 @@
 
 extern const NSUInteger kSuccessResponseCode;
 
-@interface YPBURLResponseCode : NSObject
+@interface QBURLResponseCode : NSObject
 @property (nonatomic) NSNumber *value;
 @property (nonatomic) NSString *name;
 @property (nonatomic) NSString *message;
 @end
 
-@interface YPBURLResponse : NSObject
+@interface QBURLResponse : NSObject
 
 @property (nonatomic) YPBURLResponseCode *code;
 @property (nonatomic,retain) YPBPaginator *paginator;

@@ -40,7 +40,7 @@ static NSString *const kContactCellReusableIdentifier = @"ContactCellReusableIde
     return self;
 }
 
-- (void)viewDidLoad {
+- (void)viewDidLoad {   
     [super viewDidLoad];
     // Do any additional setup after loading the view.
     _layoutTableView = [[UITableView alloc] init];

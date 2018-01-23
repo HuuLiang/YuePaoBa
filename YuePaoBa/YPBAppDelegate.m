@@ -58,7 +58,7 @@ DefineLazyPropertyInitialization(YPBWeChatPayQueryOrderRequest, wechatPayOrderQu
     homeNav.tabBarItem = [[UITabBarItem alloc] initWithTitle:homeVC.title
                                                        image:[UIImage imageNamed:@"tabbar_home_normal_icon"]
                                                selectedImage:[UIImage imageNamed:@"tabbar_home_selected_icon"]];
-
+    
     YPBVIPCenterViewController *vipCenterVC = [[YPBVIPCenterViewController alloc] initWithTitle:@"视频认证"];
     UINavigationController *vipCenterNav = [[UINavigationController alloc] initWithRootViewController:vipCenterVC];
     vipCenterNav.tabBarItem = [[UITabBarItem alloc] initWithTitle:vipCenterVC.title
@@ -94,7 +94,7 @@ DefineLazyPropertyInitialization(YPBWeChatPayQueryOrderRequest, wechatPayOrderQu
     [[UINavigationBar appearance] setBarTintColor:kThemeColor];
     [[UINavigationBar appearance] setTintColor:[UIColor whiteColor]];
     [[UINavigationBar appearance] setTitleTextAttributes:@{NSFontAttributeName:[UIFont boldSystemFontOfSize:20.],
-                                                          NSForegroundColorAttributeName:[UIColor whiteColor]}];
+                                                           NSForegroundColorAttributeName:[UIColor whiteColor]}];
     
     [UIViewController aspect_hookSelector:@selector(viewDidLoad)
                               withOptions:AspectPositionAfter
@@ -107,14 +107,14 @@ DefineLazyPropertyInitialization(YPBWeChatPayQueryOrderRequest, wechatPayOrderQu
     [UIViewController aspect_hookSelector:@selector(hidesBottomBarWhenPushed)
                               withOptions:AspectPositionInstead
                                usingBlock:^(id<AspectInfo> aspectInfo)
-    {
-        UIViewController *thisVC = [aspectInfo instance];
-        BOOL hidesBottomBar = NO;
-        if (thisVC.navigationController.viewControllers.count > 1) {
-            hidesBottomBar = YES;
-        }
-        [[aspectInfo originalInvocation] setReturnValue:&hidesBottomBar];
-    } error:nil];
+     {
+         UIViewController *thisVC = [aspectInfo instance];
+         BOOL hidesBottomBar = NO;
+         if (thisVC.navigationController.viewControllers.count > 1) {
+             hidesBottomBar = YES;
+         }
+         [[aspectInfo originalInvocation] setReturnValue:&hidesBottomBar];
+     } error:nil];
     
     [UINavigationController aspect_hookSelector:@selector(preferredStatusBarStyle)
                                     withOptions:AspectPositionInstead
@@ -122,7 +122,7 @@ DefineLazyPropertyInitialization(YPBWeChatPayQueryOrderRequest, wechatPayOrderQu
                                          UIStatusBarStyle statusBarStyle = UIStatusBarStyleLightContent;
                                          [[aspectInfo originalInvocation] setReturnValue:&statusBarStyle];
                                      } error:nil];
-
+    
     [UIViewController aspect_hookSelector:@selector(preferredStatusBarStyle)
                               withOptions:AspectPositionInstead
                                usingBlock:^(id<AspectInfo> aspectInfo){
@@ -131,12 +131,12 @@ DefineLazyPropertyInitialization(YPBWeChatPayQueryOrderRequest, wechatPayOrderQu
                                } error:nil];
     
     [UIScrollView aspect_hookSelector:@selector(showsVerticalScrollIndicator)
-                         withOptions:AspectPositionInstead
-                          usingBlock:^(id<AspectInfo> aspectInfo)
-    {
-        BOOL bShow = NO;
-        [[aspectInfo originalInvocation] setReturnValue:&bShow];
-    } error:nil];
+                          withOptions:AspectPositionInstead
+                           usingBlock:^(id<AspectInfo> aspectInfo)
+     {
+         BOOL bShow = NO;
+         [[aspectInfo originalInvocation] setReturnValue:&bShow];
+     } error:nil];
     
     
 }
@@ -153,7 +153,7 @@ DefineLazyPropertyInitialization(YPBWeChatPayQueryOrderRequest, wechatPayOrderQu
     //启动删除所有本地通知
     application.applicationIconBadgeNumber = 0;
     [[UIApplication sharedApplication] cancelAllLocalNotifications];
-
+    
     // 增加个推
     [GeTuiSdk startSdkWithAppId:YPB_GTAPPID appKey:YPB_GTAPPKEY appSecret:YPB_GTAPPSECRET delegate:self];
     [self registerNotification];
@@ -205,7 +205,7 @@ DefineLazyPropertyInitialization(YPBWeChatPayQueryOrderRequest, wechatPayOrderQu
 - (void)loginAccount {
     YPBAccountViewController *accountVC = [[YPBAccountViewController alloc] init];
     UINavigationController *nc = [[UINavigationController alloc] initWithRootViewController:accountVC];
-    self.delegate = accountVC;
+    self.delegate = (id)accountVC;
     self.window.rootViewController = nc;
     [self.window makeKeyAndVisible];
 }
@@ -246,13 +246,13 @@ DefineLazyPropertyInitialization(YPBWeChatPayQueryOrderRequest, wechatPayOrderQu
 }
 
 - (void)checkPayment {
-//    UIAlertView * view = [[UIAlertView alloc] initWithTitle:@"1"
-//                                                    message:@"2"
-//                                                   delegate:self
-//                                          cancelButtonTitle:@"取消"
-//                                          otherButtonTitles:@"好的", nil
-//                          ];
-//    [view show];
+    //    UIAlertView * view = [[UIAlertView alloc] initWithTitle:@"1"
+    //                                                    message:@"2"
+    //                                                   delegate:self
+    //                                          cancelButtonTitle:@"取消"
+    //                                          otherButtonTitles:@"好的", nil
+    //                          ];
+    //    [view show];
     
     NSArray<YPBPaymentInfo *> *payingPaymentInfos = [YPBUtil payingPaymentInfos];
     [payingPaymentInfos enumerateObjectsUsingBlock:^(YPBPaymentInfo * _Nonnull paymentInfo, NSUInteger idx, BOOL * _Nonnull stop) {
@@ -269,8 +269,8 @@ DefineLazyPropertyInitialization(YPBWeChatPayQueryOrderRequest, wechatPayOrderQu
             [[YPBPaymentManager sharedManager] notifyPaymentResult:PAYRESULT_FAIL withPaymentInfo:paymentInfo];
         }
     }];
-
-
+    
+    
 }
 
 - (void)notifyUserLogin {

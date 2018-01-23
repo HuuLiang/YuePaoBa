@@ -129,7 +129,7 @@ DefineLazyPropertyInitialization(YPBSendGiftModel, sendGiftModel)
                 }
             }
         }];
-
+        
         [self.messagePollingView insertMessages:messages forNames:names];
     };
     _videoPlayer.readyAction = ^(id obj) {
@@ -240,7 +240,7 @@ DefineLazyPropertyInitialization(YPBSendGiftModel, sendGiftModel)
         [_inputTextField mas_makeConstraints:^(MASConstraintMaker *make) {
             make.left.equalTo(self.view).offset(15);
             make.right.equalTo(self.view).offset(-15);
-//            make.bottom.equalTo(self.view).offset(44);
+            //            make.bottom.equalTo(self.view).offset(44);
             make.bottom.equalTo(self.view).offset(-15);
             make.height.mas_equalTo(44);
         }];
@@ -389,19 +389,19 @@ DefineLazyPropertyInitialization(YPBSendGiftModel, sendGiftModel)
     [self.fetchBarrageModel fetchBarragesById:self.user.userVideo.id
                                   barrageType:YPBBarrageTypeVideo
                             completionHandler:^(BOOL success, id obj)
-    {
-        @strongify(self);
-        if (!self) {
-            return ;
-        }
-        
-        if (success) {
-            NSArray<YPBBarrage *> *fetchedBarrages = obj;
-            self.barrages = [fetchedBarrages sortedArrayUsingComparator:^NSComparisonResult(id  _Nonnull obj1, id  _Nonnull obj2) {
-                return [((YPBBarrage *)obj1).barrageTime compare:((YPBBarrage *)obj2).barrageTime];
-            }];
-        }
-    }];
+     {
+         @strongify(self);
+         if (!self) {
+             return ;
+         }
+         
+         if (success) {
+             NSArray<YPBBarrage *> *fetchedBarrages = obj;
+             self.barrages = [fetchedBarrages sortedArrayUsingComparator:^NSComparisonResult(id  _Nonnull obj1, id  _Nonnull obj2) {
+                 return [((YPBBarrage *)obj1).barrageTime compare:((YPBBarrage *)obj2).barrageTime];
+             }];
+         }
+     }];
 }
 
 - (void)setBarrages:(NSArray<YPBBarrage *> *)barrages {
@@ -423,20 +423,20 @@ DefineLazyPropertyInitialization(YPBSendGiftModel, sendGiftModel)
                            barrageType:YPBBarrageTypeVideo
                       barrageTimestamp:_videoPlayer.currentTimestamp
                  withCompletionHandler:^(BOOL success, id obj)
-    {
-        @strongify(self);
-        if (!self) {
-            return ;
-        }
-        
-        if (success) {
-            self->_inputTextField.text = nil;
-            [self->_inputTextField resignFirstResponder];
-            [self.messagePollingView insertMessages:@[barrage] forNames:@[[YPBUser currentUser].nickName?:@""]];
-        } else {
-            [self.view showMessageWithTitle:@"Sorry，您想说的话发送失败了~~~"];
-        }
-    }];
+     {
+         @strongify(self);
+         if (!self) {
+             return ;
+         }
+         
+         if (success) {
+             self->_inputTextField.text = nil;
+             [self->_inputTextField resignFirstResponder];
+             [self.messagePollingView insertMessages:@[barrage] forNames:@[[YPBUser currentUser].nickName?:@""]];
+         } else {
+             [self.view showMessageWithTitle:@"Sorry，您想说的话发送失败了~~~"];
+         }
+     }];
 }
 
 - (void)sendToy {
@@ -512,19 +512,19 @@ DefineLazyPropertyInitialization(YPBSendGiftModel, sendGiftModel)
         [self.greetModel accessUserWithUserId:self.user.userId
                                    accessType:YPBUserAccessTypeGreet
                             completionHandler:^(BOOL success, id obj)
-        {
-            @strongify(self);
-            [sender endLoading];
-            
-            if (!self) {
-                return ;
-            }
-            
-            if (success) {
-                self.user.isGreet = YES;
-                self.user.receiveGreetCount = @(self.user.receiveGreetCount.unsignedIntegerValue+1);
-            }
-        }];
+         {
+             @strongify(self);
+             [sender endLoading];
+             
+             if (!self) {
+                 return ;
+             }
+             
+             if (success) {
+                 self.user.isGreet = YES;
+                 self.user.receiveGreetCount = @(self.user.receiveGreetCount.unsignedIntegerValue+1);
+             }
+         }];
     };
     return _userDetailPanel;
 }
@@ -537,7 +537,7 @@ DefineLazyPropertyInitialization(YPBSendGiftModel, sendGiftModel)
     
     CGRect frameInView = [self.view convertRect:keyboardFrame fromView:nil];
     const CGFloat offset = frameInView.origin.y-self.view.bounds.size.height;
-
+    
     _inputTextField.hidden = offset == 0;
     [_inputTextField mas_updateConstraints:^(MASConstraintMaker *make) {
         if (offset == 0) {
@@ -578,7 +578,7 @@ DefineLazyPropertyInitialization(YPBSendGiftModel, sendGiftModel)
         paymentInfo.paymentStatus = @(YPBPaymentStatusPaying);
         paymentInfo.payPointType = @(YPBPayPointTypeGift);
         paymentInfo.contentType = @(YPBPaymentContentTypeGift).stringValue;
-
+        
         [[YPBPaymentManager sharedManager] payWithPaymentInfo:paymentInfo completionHandler:^(BOOL success, id obj) {
             @strongify(self);
             PAYRESULT result = paymentInfo.paymentResult.unsignedIntegerValue;
